@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 public class CameraScript : MonoBehaviour
 {
-    private Vector3     newPosCam = new Vector3(0, 0, -10);
+    /*private Vector3     newPosCam = new Vector3(0, 0, -10);
     public  float       speedCam = 0.15f;
  
 	void Update ()
     {
         Cursor.lockState = CursorLockMode.Confined;
-    /*    if (Input.mousePosition.x <= 0)
+        if (Input.mousePosition.x <= 0)
         {
             newPosCam.x = transform.position.x - speedCam;
             if (newPosCam.x < -3.2f)
@@ -37,6 +37,6 @@ public class CameraScript : MonoBehaviour
             if (newPosCam.y > 1.8f)
                 newPosCam.y = 1.8f;
             transform.position = newPosCam;
-        }*/
-    }
+        }
+    }*/
 }

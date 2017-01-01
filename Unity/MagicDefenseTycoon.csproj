@@ -64,9 +64,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraScript.cs" />
-    <Compile Include="Assets\Scripts\D%C3%A9placements.cs" />
+    <Compile Include="Assets\Scripts\DalleSol.cs" />
+    <Compile Include="Assets\Scripts\Deplacements.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\IAGuerrier.cs" />
+    <Compile Include="Assets\Scripts\Obstacle.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
+    <Compile Include="Assets\Scripts\ProjectileBreak.cs" />
     <Compile Include="Assets\Scripts\Shoots.cs" />
     <Compile Include="Assets\Scripts\StatsPlayer.cs" />
   </ItemGroup>

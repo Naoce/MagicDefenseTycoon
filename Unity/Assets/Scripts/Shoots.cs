@@ -38,8 +38,8 @@ public class Shoots : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && canAttack == true)
 		{
-            GetComponent<Déplacements>().isAttacking = true;
-            GetComponent<Déplacements>().currentNumeroAnim = 1;
+            GetComponent<Deplacements>().isAttacking = true;
+            GetComponent<Deplacements>().currentNumeroAnim = 1;
             FindShootDirection();
             canAttack = false;
             StartCoroutine(InstantiateProjectile(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)));
@@ -50,11 +50,11 @@ public class Shoots : MonoBehaviour
     {
         Vector2 newPosClick = cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
         Vector2 newPosTop = new Vector2(transform.position.x, transform.position.y + 1);
-        Vector2 newPosTopRight = new Vector2(transform.position.x + 1, transform.position.y + 1);
-        Vector2 newPosTopLeft = new Vector2(transform.position.x - 1, transform.position.y + 1);
+        Vector2 newPosTopRight = new Vector2(transform.position.x + 0.8f, transform.position.y + 0.8f);
+        Vector2 newPosTopLeft = new Vector2(transform.position.x - 0.8f, transform.position.y + 0.8f);
         Vector2 newPosBot = new Vector2(transform.position.x, transform.position.y - 1);
-        Vector2 newPosBotRight = new Vector2(transform.position.x + 1, transform.position.y - 1);
-        Vector2 newPosBotLeft = new Vector2(transform.position.x - 1, transform.position.y - 1);
+        Vector2 newPosBotRight = new Vector2(transform.position.x + 0.8f, transform.position.y - 0.8f);
+        Vector2 newPosBotLeft = new Vector2(transform.position.x - 0.8f, transform.position.y - 0.8f);
         Vector2 newPosRight = new Vector2(transform.position.x + 1, transform.position.y);
         Vector2 newPosLeft = new Vector2(transform.position.x - 1, transform.position.y);
 
@@ -74,7 +74,7 @@ public class Shoots : MonoBehaviour
             distanceRight < distanceTopLeft &&
             distanceRight < distanceBotRight &&
             distanceRight < distanceBotLeft)
-            GetComponent<Déplacements>().attackDirection = Direction.RIGHT;
+            GetComponent<Deplacements>().attackDirection = Direction.RIGHT;
         else if (distanceLeft < distanceTop &&
             distanceLeft < distanceBot &&
             distanceLeft < distanceRight &&
@@ -82,7 +82,7 @@ public class Shoots : MonoBehaviour
             distanceLeft < distanceTopLeft &&
             distanceLeft < distanceBotRight &&
             distanceLeft < distanceBotLeft)
-            GetComponent<Déplacements>().attackDirection = Direction.LEFT;
+            GetComponent<Deplacements>().attackDirection = Direction.LEFT;
         else if (distanceBot < distanceTop &&
             distanceBot < distanceLeft &&
             distanceBot < distanceRight &&
@@ -90,7 +90,7 @@ public class Shoots : MonoBehaviour
             distanceBot < distanceTopLeft &&
             distanceBot < distanceBotRight &&
             distanceBot < distanceBotLeft)
-            GetComponent<Déplacements>().attackDirection = Direction.BOTTOM;
+            GetComponent<Deplacements>().attackDirection = Direction.BOTTOM;
         else if (distanceTop < distanceBot &&
             distanceTop < distanceLeft &&
             distanceTop < distanceRight &&
@@ -98,7 +98,7 @@ public class Shoots : MonoBehaviour
             distanceTop < distanceTopLeft &&
             distanceTop < distanceBotRight &&
             distanceTop < distanceBotLeft)
-            GetComponent<Déplacements>().attackDirection = Direction.TOP;
+            GetComponent<Deplacements>().attackDirection = Direction.TOP;
         else if (distanceTopRight < distanceBot &&
             distanceTopRight < distanceLeft &&
             distanceTopRight < distanceRight &&
@@ -106,7 +106,7 @@ public class Shoots : MonoBehaviour
             distanceTopRight < distanceTopLeft &&
             distanceTopRight < distanceBotRight &&
             distanceTopRight < distanceBotLeft)
-            GetComponent<Déplacements>().attackDirection = Direction.TOPRIGHT;
+            GetComponent<Deplacements>().attackDirection = Direction.TOPRIGHT;
         else if (distanceTopLeft < distanceBot &&
             distanceTopLeft < distanceLeft &&
             distanceTopLeft < distanceRight &&
@@ -114,7 +114,7 @@ public class Shoots : MonoBehaviour
             distanceTopLeft < distanceTopRight &&
             distanceTopLeft < distanceBotRight &&
             distanceTopLeft < distanceBotLeft)
-            GetComponent<Déplacements>().attackDirection = Direction.TOPLEFT;
+            GetComponent<Deplacements>().attackDirection = Direction.TOPLEFT;
         else if (distanceBotRight < distanceBot &&
             distanceBotRight < distanceLeft &&
             distanceBotRight < distanceRight &&
@@ -122,7 +122,7 @@ public class Shoots : MonoBehaviour
             distanceBotRight < distanceTopRight &&
             distanceBotRight < distanceTopLeft &&
             distanceBotRight < distanceBotLeft)
-            GetComponent<Déplacements>().attackDirection = Direction.BOTTOMRIGHT;
+            GetComponent<Deplacements>().attackDirection = Direction.BOTTOMRIGHT;
         else if (distanceBotLeft < distanceBot &&
             distanceBotLeft < distanceLeft &&
             distanceBotLeft < distanceRight &&
@@ -130,7 +130,7 @@ public class Shoots : MonoBehaviour
             distanceBotLeft < distanceTopRight &&
             distanceBotLeft < distanceTopLeft &&
             distanceBotLeft < distanceBotRight)
-            GetComponent<Déplacements>().attackDirection = Direction.BOTTOMLEFT;
+            GetComponent<Deplacements>().attackDirection = Direction.BOTTOMLEFT;
     }
 
     IEnumerator InstantiateProjectile(Vector2 directionPos)
@@ -140,20 +140,20 @@ public class Shoots : MonoBehaviour
 
         newPos.x = transform.position.x;
         newPos.y = transform.position.y;
-        if (GetComponent<Déplacements>().attackDirection == Direction.RIGHT ||
-            GetComponent<Déplacements>().attackDirection == Shoots.Direction.TOPRIGHT ||
-            GetComponent<Déplacements>().attackDirection == Shoots.Direction.BOTTOMRIGHT)
+        if (GetComponent<Deplacements>().attackDirection == Direction.RIGHT ||
+            GetComponent<Deplacements>().attackDirection == Shoots.Direction.TOPRIGHT ||
+            GetComponent<Deplacements>().attackDirection == Shoots.Direction.BOTTOMRIGHT)
             newPos.x = transform.position.x + 0.1f;
-        else if (GetComponent<Déplacements>().attackDirection == Direction.LEFT ||
-            GetComponent<Déplacements>().attackDirection == Shoots.Direction.TOPLEFT ||
-            GetComponent<Déplacements>().attackDirection == Shoots.Direction.BOTTOMLEFT)
+        else if (GetComponent<Deplacements>().attackDirection == Direction.LEFT ||
+            GetComponent<Deplacements>().attackDirection == Shoots.Direction.TOPLEFT ||
+            GetComponent<Deplacements>().attackDirection == Shoots.Direction.BOTTOMLEFT)
             newPos.x = transform.position.x - 0.1f;
-        else if (GetComponent<Déplacements>().attackDirection == Direction.BOTTOM)
+        else if (GetComponent<Deplacements>().attackDirection == Direction.BOTTOM)
             newPos.y = transform.position.y - 0.1f;
-        else if (GetComponent<Déplacements>().attackDirection == Direction.TOP)
+        else if (GetComponent<Deplacements>().attackDirection == Direction.TOP)
             newPos.y = transform.position.y + 0.1f;
 
         obj = (GameObject)Instantiate (projectile, newPos, rot);
-		obj.GetComponent<Projectile>().GetPos (directionPos, GetComponent<StatsPlayer>().damage, GetComponent<Déplacements>().attackDirection);
+		obj.GetComponent<Projectile>().GetPos (directionPos, GetComponent<StatsPlayer>().damage, GetComponent<Deplacements>().attackDirection);
 	}
 }

@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class StatsPlayer : MonoBehaviour
 {
-    public  GameObject  healthBarGreen;
-
+    public  GameObject  gm;
+    //public  GameObject  healthBarGreen;
+    public  GameObject  textHP;
+    public  GameObject  textXP;
+    public  GameObject  textLevel;
     public  Sprite      rightDeath1;
     public  Sprite      rightDeath2;
     public  Sprite      rightDeath3;
@@ -20,39 +24,59 @@ public class StatsPlayer : MonoBehaviour
     public  int         damage;
     private int         currHP;
     private int         maxHP;
+    private int         currXP;
+    public  int         level;
     private Vector2     baseScale;
     private Vector2     newScale;
 
     void Start ()
     {
-        damage = 5;
-        maxHP = 20;
+        gm = GameObject.Find("GameManager");
+        damage = gm.GetComponent<GameManager>().playerDamage;
+        maxHP = gm.GetComponent<GameManager>().playerMaxHP;
         currHP = maxHP;
-        baseScale = healthBarGreen.transform.localScale;
+        currXP = gm.GetComponent<GameManager>().playerXP;
+        level = gm.GetComponent<GameManager>().playerLevel;
+        textHP.GetComponent<Text>().text = currHP + " / " + maxHP;
+        textXP.GetComponent<Text>().text = currXP + " / " + GameManager.playerMaxXP[level - 1];
+        // baseScale = healthBarGreen.transform.localScale;
     }
 
     public void     TakeDamage(int damageTaken, Vector2 directionPos)
     {
         currHP -= damageTaken;
 
-        float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
-        float diff;
-        diff = baseScale.x * currHP / maxHP;
-        newScale = new Vector2(diff, baseScale.y);
-        healthBarGreen.transform.localScale = newScale;
+        /*   float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
+           float diff;
+           diff = baseScale.x * currHP / maxHP;
+           newScale = new Vector2(diff, baseScale.y);
+           healthBarGreen.transform.localScale = newScale;
 
-        float newValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
+           float newValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
 
-        float difference = newValue - originalValue;
+           float difference = newValue - originalValue;
 
-        healthBarGreen.transform.Translate(new Vector2(difference, 0));
+           healthBarGreen.transform.Translate(new Vector2(difference, 0));*/
+        textHP.GetComponent<Text>().text = currHP + " / " + maxHP;
+
 
         if (currHP == 0)
         {
-            GetComponent<Déplacements>().isDead = true;
+            GetComponent<Deplacements>().isDead = true;
             StartCoroutine(DeathAnimation(directionPos));
         }
+    }
 
+    public void     EarnXP(int XpGain)
+    {
+        currXP += XpGain;
+        if (currXP >= GameManager.playerMaxXP[level - 1])
+        {
+            currXP -= GameManager.playerMaxXP[level - 1];
+            level++;
+            textLevel.GetComponent<Text>().text = level.ToString();
+        }
+        textXP.GetComponent<Text>().text = currXP + " / " + GameManager.playerMaxXP[level - 1];
     }
 
     IEnumerator DeathAnimation(Vector2 directionPos)
@@ -92,5 +116,7 @@ public class StatsPlayer : MonoBehaviour
         else
             GetComponent<SpriteRenderer>().sprite = leftDeath5;
         yield return new WaitForSeconds(0.08f);
+
+        Application.LoadLevel(0);
     }
 }
