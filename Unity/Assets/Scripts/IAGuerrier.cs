@@ -46,7 +46,8 @@ public class IAGuerrier : MonoBehaviour
     public GameObject   healthBarGreen;
 
     private	GameObject	player;
-	public  Vector2 	newPos = new Vector2(0, 0);
+    private GameObject  gm;
+    public  Vector2 	newPos = new Vector2(0, 0);
     public  Vector2     obstaclePos = new Vector2(0, 0);
     public  bool        isBypassing = false;
     public  GameObject  lastObstacle = null;
@@ -71,6 +72,7 @@ public class IAGuerrier : MonoBehaviour
 
 	void Start () 
 	{
+        gm = GameObject.Find("GameManager");
         currHP = maxHP;
         baseScale = healthBarGreen.transform.localScale;
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -78,7 +80,7 @@ public class IAGuerrier : MonoBehaviour
 
 	void Update ()
 	{
-        if (isDead == false)
+        if (isDead == false && player.GetComponent<Deplacements>().isDead == false)
         {
             if (isAttacking == false && 
                 canAttack == false)
@@ -359,7 +361,7 @@ public class IAGuerrier : MonoBehaviour
         if (other.tag == "Projectile")
         {
             TakeDamageFromPlayer(other.GetComponent<Projectile>().damage, other.transform.position);
-            Destroy(other.gameObject);
+            other.GetComponent<Projectile>().Explosion();
         }
     }
 
@@ -425,6 +427,8 @@ public class IAGuerrier : MonoBehaviour
         else
             GetComponent<SpriteRenderer>().sprite = leftDeath5;
         yield return new WaitForSeconds(0.08f);
+
+        gm.GetComponent<GameManager>().PopEnemy(GetComponent<Enemy>().id);
 
         Destroy(gameObject);
     }

@@ -7,7 +7,7 @@ public class ProjectileBreak : MonoBehaviour
     {
         if (collision.tag == "Projectile")
         {
-            Destroy(collision.gameObject);
+            collision.GetComponent<Projectile>().Explosion();
         }
     }
 }

@@ -43,6 +43,13 @@ public class Projectile : MonoBehaviour
     public Sprite               botright3;
     public Sprite               botright4;
 
+    public Sprite               explosion1;
+    public Sprite               explosion2;
+    public Sprite               explosion3;
+    public Sprite               explosion4;
+    public Sprite               explosion5;
+    public Sprite               explosion6;
+
     public int                  damage;
 
     private Vector2 	        newPos = new Vector2(0, 0);
@@ -52,6 +59,7 @@ public class Projectile : MonoBehaviour
     private float               timer = 0f;
     private float               animTime = 0.08f;
     public  Shoots.Direction    direction;
+    private bool                isExploding = false;
 
     void Start()
 	{
@@ -72,199 +80,249 @@ public class Projectile : MonoBehaviour
 
 	void Update () 
 	{
-		if (Vector2.Distance (originalPos, transform.position) >= 3)
-			Destroy (gameObject);
-		transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * 4);
-        timer += Time.deltaTime;
-        if (timer > animTime)
+        if (isExploding == false)
         {
-            if (direction == Shoots.Direction.RIGHT)
+            if (Vector2.Distance(originalPos, transform.position) >= 3)
             {
-                if (currentNumeroAnim == 1)
-                {
-                    GetComponent<SpriteRenderer>().sprite = right1;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 2)
-                {
-                    GetComponent<SpriteRenderer>().sprite = right2;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 3)
-                {
-                    GetComponent<SpriteRenderer>().sprite = right3;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 4)
-                {
-                    GetComponent<SpriteRenderer>().sprite = right4;
-                    currentNumeroAnim++;
-                }
+                isExploding = true;
+                StartCoroutine(FadeAnimation());
             }
-            else if (direction == Shoots.Direction.LEFT)
+            transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * 4);
+            timer += Time.deltaTime;
+            if (timer > animTime)
             {
-                if (currentNumeroAnim == 1)
+                if (direction == Shoots.Direction.RIGHT)
                 {
-                    GetComponent<SpriteRenderer>().sprite = left1;
-                    currentNumeroAnim++;
+                    if (currentNumeroAnim == 1)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = right1;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 2)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = right2;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 3)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = right3;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 4)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = right4;
+                        currentNumeroAnim++;
+                    }
                 }
-                else if (currentNumeroAnim == 2)
+                else if (direction == Shoots.Direction.LEFT)
                 {
-                    GetComponent<SpriteRenderer>().sprite = left2;
-                    currentNumeroAnim++;
+                    if (currentNumeroAnim == 1)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = left1;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 2)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = left2;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 3)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = left3;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 4)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = left4;
+                        currentNumeroAnim++;
+                    }
                 }
-                else if (currentNumeroAnim == 3)
+                else if (direction == Shoots.Direction.TOP)
                 {
-                    GetComponent<SpriteRenderer>().sprite = left3;
-                    currentNumeroAnim++;
+                    if (currentNumeroAnim == 1)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = top1;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 2)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = top2;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 3)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = top3;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 4)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = top4;
+                        currentNumeroAnim++;
+                    }
                 }
-                else if (currentNumeroAnim == 4)
+                else if (direction == Shoots.Direction.BOTTOM)
                 {
-                    GetComponent<SpriteRenderer>().sprite = left4;
-                    currentNumeroAnim++;
+                    if (currentNumeroAnim == 1)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = bot1;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 2)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = bot2;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 3)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = bot3;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 4)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = bot4;
+                        currentNumeroAnim++;
+                    }
                 }
+                else if (direction == Shoots.Direction.BOTTOMRIGHT)
+                {
+                    if (currentNumeroAnim == 1)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = botright1;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 2)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = botright2;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 3)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = botright3;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 4)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = botright4;
+                        currentNumeroAnim++;
+                    }
+                }
+                else if (direction == Shoots.Direction.BOTTOMLEFT)
+                {
+                    if (currentNumeroAnim == 1)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = botleft1;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 2)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = botleft2;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 3)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = botleft3;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 4)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = botleft4;
+                        currentNumeroAnim++;
+                    }
+                }
+                else if (direction == Shoots.Direction.TOPRIGHT)
+                {
+                    if (currentNumeroAnim == 1)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = topright1;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 2)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = topright2;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 3)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = topright3;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 4)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = topright4;
+                        currentNumeroAnim++;
+                    }
+                }
+                else if (direction == Shoots.Direction.TOPLEFT)
+                {
+                    if (currentNumeroAnim == 1)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = topleft1;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 2)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = topleft2;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 3)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = topleft3;
+                        currentNumeroAnim++;
+                    }
+                    else if (currentNumeroAnim == 4)
+                    {
+                        GetComponent<SpriteRenderer>().sprite = topleft4;
+                        currentNumeroAnim++;
+                    }
+                }
+                if (currentNumeroAnim == 5)
+                    currentNumeroAnim = 1;
+                timer = 0f;
             }
-            else if (direction == Shoots.Direction.TOP)
-            {
-                if (currentNumeroAnim == 1)
-                {
-                    GetComponent<SpriteRenderer>().sprite = top1;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 2)
-                {
-                    GetComponent<SpriteRenderer>().sprite = top2;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 3)
-                {
-                    GetComponent<SpriteRenderer>().sprite = top3;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 4)
-                {
-                    GetComponent<SpriteRenderer>().sprite = top4;
-                    currentNumeroAnim++;
-                }
-            }
-            else if (direction == Shoots.Direction.BOTTOM)
-            {
-                if (currentNumeroAnim == 1)
-                {
-                    GetComponent<SpriteRenderer>().sprite = bot1;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 2)
-                {
-                    GetComponent<SpriteRenderer>().sprite = bot2;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 3)
-                {
-                    GetComponent<SpriteRenderer>().sprite = bot3;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 4)
-                {
-                    GetComponent<SpriteRenderer>().sprite = bot4;
-                    currentNumeroAnim++;
-                }
-            }
-            else if (direction == Shoots.Direction.BOTTOMRIGHT)
-            {
-                if (currentNumeroAnim == 1)
-                {
-                    GetComponent<SpriteRenderer>().sprite = botright1;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 2)
-                {
-                    GetComponent<SpriteRenderer>().sprite = botright2;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 3)
-                {
-                    GetComponent<SpriteRenderer>().sprite = botright3;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 4)
-                {
-                    GetComponent<SpriteRenderer>().sprite = botright4;
-                    currentNumeroAnim++;
-                }
-            }
-            else if (direction == Shoots.Direction.BOTTOMLEFT)
-            {
-                if (currentNumeroAnim == 1)
-                {
-                    GetComponent<SpriteRenderer>().sprite = botleft1;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 2)
-                {
-                    GetComponent<SpriteRenderer>().sprite = botleft2;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 3)
-                {
-                    GetComponent<SpriteRenderer>().sprite = botleft3;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 4)
-                {
-                    GetComponent<SpriteRenderer>().sprite = botleft4;
-                    currentNumeroAnim++;
-                }
-            }
-            else if (direction == Shoots.Direction.TOPRIGHT)
-            {
-                if (currentNumeroAnim == 1)
-                {
-                    GetComponent<SpriteRenderer>().sprite = topright1;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 2)
-                {
-                    GetComponent<SpriteRenderer>().sprite = topright2;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 3)
-                {
-                    GetComponent<SpriteRenderer>().sprite = topright3;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 4)
-                {
-                    GetComponent<SpriteRenderer>().sprite = topright4;
-                    currentNumeroAnim++;
-                }
-            }
-            else if (direction == Shoots.Direction.TOPLEFT)
-            {
-                if (currentNumeroAnim == 1)
-                {
-                    GetComponent<SpriteRenderer>().sprite = topleft1;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 2)
-                {
-                    GetComponent<SpriteRenderer>().sprite = topleft2;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 3)
-                {
-                    GetComponent<SpriteRenderer>().sprite = topleft3;
-                    currentNumeroAnim++;
-                }
-                else if (currentNumeroAnim == 4)
-                {
-                    GetComponent<SpriteRenderer>().sprite = topleft4;
-                    currentNumeroAnim++;
-                }
-            }
-            if (currentNumeroAnim == 5)
-                currentNumeroAnim = 1;
-            timer = 0f;
         }
+    }
+
+    public void Explosion()
+    {
+        isExploding = true;
+        Destroy(gameObject.GetComponent<BoxCollider2D>());
+        StartCoroutine(ExplosionAnimation());
+    }
+
+    IEnumerator ExplosionAnimation()
+    {
+        GetComponent<SpriteRenderer>().sprite = explosion1;
+        yield return new WaitForSeconds(0.08f);
+
+        GetComponent<SpriteRenderer>().sprite = explosion2;
+        yield return new WaitForSeconds(0.08f);
+
+        GetComponent<SpriteRenderer>().sprite = explosion3;
+        yield return new WaitForSeconds(0.08f);
+
+        GetComponent<SpriteRenderer>().sprite = explosion4;
+        yield return new WaitForSeconds(0.08f);
+
+        GetComponent<SpriteRenderer>().sprite = explosion5;
+        yield return new WaitForSeconds(0.08f);
+
+        GetComponent<SpriteRenderer>().sprite = explosion6;
+        yield return new WaitForSeconds(0.08f);
+
+        Destroy(gameObject);
+    }
+
+    IEnumerator FadeAnimation()
+    {
+        GetComponent<SpriteRenderer>().sprite = explosion3;
+        yield return new WaitForSeconds(0.08f);
+
+        GetComponent<SpriteRenderer>().sprite = explosion2;
+        yield return new WaitForSeconds(0.08f);
+
+        GetComponent<SpriteRenderer>().sprite = explosion1;
+        yield return new WaitForSeconds(0.08f);
+
+        Destroy(gameObject);
     }
 }

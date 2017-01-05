@@ -8,16 +8,21 @@ public class Obstacle : MonoBehaviour
     public  Vector2 BypassPosBotLeft;
     public  Vector2 BypassPosBotRight;
 
+    public Vector2 CheckPosTopLeft;
+    public Vector2 CheckPosTopRight;
+    public Vector2 CheckPosBotLeft;
+    public Vector2 CheckPosBotRight;
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "EnemyGuerrier")
         {
             other.GetComponent<IAGuerrier>().isBypassing = true;
             print("bypassingobstacle");
-            float distanceTopLeft = Vector2.Distance(BypassPosTopLeft, other.transform.position);
-            float distanceTopRight = Vector2.Distance(BypassPosTopRight, other.transform.position);
-            float distanceBotLeft = Vector2.Distance(BypassPosBotLeft, other.transform.position);
-            float distanceBotRight = Vector2.Distance(BypassPosBotRight, other.transform.position);
+            float distanceTopLeft = Vector2.Distance(CheckPosTopLeft, other.transform.position);
+            float distanceTopRight = Vector2.Distance(CheckPosTopRight, other.transform.position);
+            float distanceBotLeft = Vector2.Distance(CheckPosBotLeft, other.transform.position);
+            float distanceBotRight = Vector2.Distance(CheckPosBotRight, other.transform.position);
 
             if (distanceTopLeft <= distanceTopRight &&
                 distanceTopLeft <= distanceBotLeft &&

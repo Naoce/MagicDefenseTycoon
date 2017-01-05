@@ -36,7 +36,7 @@ public class Shoots : MonoBehaviour
                 canAttack = true;
             }
         }
-        if (Input.GetMouseButtonDown(0) && canAttack == true)
+        if (Input.GetMouseButton(0) && canAttack == true && GetComponent<Deplacements>().isDead == false)
 		{
             GetComponent<Deplacements>().isAttacking = true;
             GetComponent<Deplacements>().currentNumeroAnim = 1;
