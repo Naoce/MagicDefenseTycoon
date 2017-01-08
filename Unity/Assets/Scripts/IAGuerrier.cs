@@ -57,21 +57,35 @@ public class IAGuerrier : MonoBehaviour
 	private float		animTime = 0.12f;
     private float       attackTimer = 0f;
     private float       attackCooldown = 1f;
+    private float       timerCC = 0f;
+    private float       cooldownCC = 0f;
+    private float       timerFlying = 0f;
+    private float       cooldownFlying = 0f;
+    private float       timerSlow = 0f;
+    private float       cooldownSlow = 0f;
 
     private int         currHP;
     public  int         maxHP;
     public  int         damage;
     public  int         valueXP;
+    private float       speed = 1f;
+    private float       slow = 0f;
     private Vector2     baseScale;
     private Vector2     newScale;
+    private Vector2     initialScale;
     private bool        isDead = false;
+    private bool        canMove = true;
+    private bool        isFlying = false;
+    private bool        isSlowed = false;
     private bool        isAttacking = false;
     private bool        canAttack = true;
     private bool        rightSide = false;
     private bool        needToMove = true;
+    private int         lastDragonTaken = -1;
 
 	void Start () 
 	{
+        initialScale = transform.localScale;
         gm = GameObject.Find("GameManager");
         currHP = maxHP;
         baseScale = healthBarGreen.transform.localScale;
@@ -80,7 +94,39 @@ public class IAGuerrier : MonoBehaviour
 
 	void Update ()
 	{
-        if (isDead == false && player.GetComponent<Deplacements>().isDead == false)
+        if (isSlowed == true)
+        {
+            timerSlow += Time.deltaTime;
+            if (timerSlow > cooldownSlow)
+            {
+                timerSlow = 0f;
+                slow = 0f;
+                isSlowed = false;
+            }
+        }
+        if (canMove == false)
+        {
+            timerCC += Time.deltaTime;
+            if (timerCC > cooldownCC)
+            {
+                canMove = true;
+                timerCC = 0f;
+            }
+            if (isFlying == true)
+            {
+                Vector2 newScaleGo = new Vector2(transform.localScale.x + 0.002f, transform.localScale.y + 0.002f);
+                transform.localScale = newScaleGo;
+                timerFlying += Time.deltaTime;
+                if (timerFlying > cooldownFlying)
+                {
+                    timerFlying = 0f;
+                    isFlying = false;
+                    transform.localScale = initialScale;
+                }
+            }
+        }
+        if (isDead == false && player.GetComponent<Deplacements>().isDead == false &&
+            canMove == true)
         {
             if (isAttacking == false && 
                 canAttack == false)
@@ -120,66 +166,14 @@ public class IAGuerrier : MonoBehaviour
                     isBypassing = false;
                 if (isBypassing == true)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, obstaclePos, Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, obstaclePos, Time.deltaTime * (speed - slow));
                     if (timer > animTime &&
                     (transform.position.y != obstaclePos.y ||
                     transform.position.x != obstaclePos.x))
                     {
-                        if (((rightSide == true &&
-                            obstaclePos.x > transform.position.x) ||
-                            (rightSide == false &&
-                            obstaclePos.x < transform.position.x)) &&
-                            obstaclePos.y < transform.position.y)
-                        {
-                            if (currentNumeroAnim == 1)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot1;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 2)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot2;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 3)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot3;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 4)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot4;
-                                currentNumeroAnim++;
-                            }
-                        }
-                        else if (((rightSide == true &&
-                            obstaclePos.x > transform.position.x) ||
-                            (rightSide == false &&
-                            obstaclePos.x < transform.position.x)) &&
-                            obstaclePos.y > transform.position.y)
-                        {
-                            if (currentNumeroAnim == 1)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top1;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 2)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top2;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 3)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top3;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 4)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top4;
-                                currentNumeroAnim++;
-                            }
-                        }
-                        else if (obstaclePos.x < transform.position.x)
+                        if (!(obstaclePos.x - 0.5f < transform.position.x &&
+                            transform.position.x < obstaclePos.x + 0.5f) &&
+                             transform.position.x > obstaclePos.x)
                         {
                             if (currentNumeroAnim == 1)
                             {
@@ -202,7 +196,9 @@ public class IAGuerrier : MonoBehaviour
                                 currentNumeroAnim++;
                             }
                         }
-                        else
+                        else if (!(obstaclePos.x - 0.5f < transform.position.x &&
+                            transform.position.x < obstaclePos.x + 0.5f) &&
+                             transform.position.x < obstaclePos.x)
                         {
                             if (currentNumeroAnim == 1)
                             {
@@ -225,6 +221,52 @@ public class IAGuerrier : MonoBehaviour
                                 currentNumeroAnim++;
                             }
                         }
+                        else if (obstaclePos.y > transform.position.y)
+                        {
+                            if (currentNumeroAnim == 1)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = top1;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 2)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = top2;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 3)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = top3;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 4)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = top4;
+                                currentNumeroAnim++;
+                            }
+                        }
+                        else if (obstaclePos.y < transform.position.y)
+                        {
+                            if (currentNumeroAnim == 1)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = bot1;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 2)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = bot2;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 3)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = bot3;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 4)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = bot4;
+                                currentNumeroAnim++;
+                            }
+                        }
                         if (currentNumeroAnim == 5)
                             currentNumeroAnim = 1;
                         timer = 0f;
@@ -242,7 +284,7 @@ public class IAGuerrier : MonoBehaviour
                         rightSide = true;
                         newPos = new Vector2(player.transform.position.x + 0.5f, player.transform.position.y);
                     }
-                    transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
                     if (timer > animTime &&
                     (transform.position.y != newPos.y ||
                     transform.position.x != newPos.x))
@@ -361,7 +403,14 @@ public class IAGuerrier : MonoBehaviour
         if (other.tag == "Projectile")
         {
             TakeDamageFromPlayer(other.GetComponent<Projectile>().damage, other.transform.position);
-            other.GetComponent<Projectile>().Explosion();
+            other.GetComponent<Projectile>().ExplosionChar();
+        }
+        else if (other.tag == "DragonDeFeu" &&
+                lastDragonTaken != other.GetComponent<DragonDeFeu>().id)
+        {
+            TakeDamageFromPlayer(other.GetComponent<DragonDeFeu>().damage, other.transform.position);
+            lastDragonTaken = other.GetComponent<DragonDeFeu>().id;
+            Physics2D.IgnoreCollision(other.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
         }
     }
 
@@ -388,6 +437,28 @@ public class IAGuerrier : MonoBehaviour
             isDead = true;
             StartCoroutine(DeathAnimation(damagePos));
         }
+    }
+
+    public void ApplySlow(float duration, float slowValue)
+    {
+        slow = slowValue;
+        isSlowed = true;
+        cooldownSlow = duration;
+        timerSlow = 0f;
+    }
+
+    public void Fly(float duration)
+    {
+        cooldownFlying = duration;
+        isFlying = true;
+        ApplyCC(duration);
+    }
+
+    public void ApplyCC(float duration)
+    {
+        canMove = false;
+        cooldownCC = duration;
+        timerCC = 0f;
     }
 
     IEnumerator DeathAnimation(Vector2 directionPos)

@@ -57,7 +57,7 @@ public class Deplacements : MonoBehaviour
     private bool                    isMovingHorizontally = false;
     public  bool                    isAttacking = false;
     public  Shoots.Direction        attackDirection;
-    private Shoots.Direction        movementDirection = Shoots.Direction.BOTTOM;
+    private Shoots.Direction        movementDirection = Shoots.Direction.TOP;
     public  bool                    isDead = false;
 
     void Update()
@@ -296,6 +296,24 @@ public class Deplacements : MonoBehaviour
             else if (newPosCam.y > 1.8f)
                 newPosCam.y = 1.8f;
             cam.transform.position = newPosCam;
+        }
+        if (transform.position.x > 8.1f)
+        {
+            Vector2 tmpPos = new Vector2(8.1f, transform.position.y);
+            if (transform.position.y > 2f)
+                tmpPos.y = 2f;
+            else if (transform.position.y < -4.4f)
+                tmpPos.y = -4.4f;
+            transform.position = tmpPos;
+        }
+        else if (transform.position.x < -8.2f)
+        {
+            Vector2 tmpPos = new Vector2(-8.2f, transform.position.y);
+            if (transform.position.y > 2f)
+                tmpPos.y = 2f;
+            else if (transform.position.y < -4.4f)
+                tmpPos.y = -4.4f;
+            transform.position = tmpPos;
         }
     }
 

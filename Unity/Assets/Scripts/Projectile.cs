@@ -3,6 +3,10 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
+    public GameObject           explosionChar;
+    public GameObject           explosion;
+    public GameObject           fade;
+
     public Sprite               left1;
     public Sprite               left2;
     public Sprite               left3;
@@ -43,13 +47,6 @@ public class Projectile : MonoBehaviour
     public Sprite               botright3;
     public Sprite               botright4;
 
-    public Sprite               explosion1;
-    public Sprite               explosion2;
-    public Sprite               explosion3;
-    public Sprite               explosion4;
-    public Sprite               explosion5;
-    public Sprite               explosion6;
-
     public int                  damage;
 
     private Vector2 	        newPos = new Vector2(0, 0);
@@ -82,10 +79,12 @@ public class Projectile : MonoBehaviour
 	{
         if (isExploding == false)
         {
+            GetComponent<PolygonCollider2D>().isTrigger = true;
             if (Vector2.Distance(originalPos, transform.position) >= 3)
             {
                 isExploding = true;
-                StartCoroutine(FadeAnimation());
+                Instantiate(fade, transform.position, transform.rotation);
+                Destroy(this.gameObject);
             }
             transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * 4);
             timer += Time.deltaTime;
@@ -96,6 +95,9 @@ public class Projectile : MonoBehaviour
                     if (currentNumeroAnim == 1)
                     {
                         GetComponent<SpriteRenderer>().sprite = right1;
+                        Destroy(GetComponent<PolygonCollider2D>());
+                        gameObject.AddComponent<PolygonCollider2D>();
+                        GetComponent<PolygonCollider2D>().isTrigger = true;
                         currentNumeroAnim++;
                     }
                     else if (currentNumeroAnim == 2)
@@ -119,6 +121,9 @@ public class Projectile : MonoBehaviour
                     if (currentNumeroAnim == 1)
                     {
                         GetComponent<SpriteRenderer>().sprite = left1;
+                        Destroy(GetComponent<PolygonCollider2D>());
+                        gameObject.AddComponent<PolygonCollider2D>();
+                        GetComponent<PolygonCollider2D>().isTrigger = true;
                         currentNumeroAnim++;
                     }
                     else if (currentNumeroAnim == 2)
@@ -142,6 +147,9 @@ public class Projectile : MonoBehaviour
                     if (currentNumeroAnim == 1)
                     {
                         GetComponent<SpriteRenderer>().sprite = top1;
+                        Destroy(GetComponent<PolygonCollider2D>());
+                        gameObject.AddComponent<PolygonCollider2D>();
+                        GetComponent<PolygonCollider2D>().isTrigger = true;
                         currentNumeroAnim++;
                     }
                     else if (currentNumeroAnim == 2)
@@ -165,6 +173,9 @@ public class Projectile : MonoBehaviour
                     if (currentNumeroAnim == 1)
                     {
                         GetComponent<SpriteRenderer>().sprite = bot1;
+                        Destroy(GetComponent<PolygonCollider2D>());
+                        gameObject.AddComponent<PolygonCollider2D>();
+                        GetComponent<PolygonCollider2D>().isTrigger = true;
                         currentNumeroAnim++;
                     }
                     else if (currentNumeroAnim == 2)
@@ -188,6 +199,9 @@ public class Projectile : MonoBehaviour
                     if (currentNumeroAnim == 1)
                     {
                         GetComponent<SpriteRenderer>().sprite = botright1;
+                        Destroy(GetComponent<PolygonCollider2D>());
+                        gameObject.AddComponent<PolygonCollider2D>();
+                        GetComponent<PolygonCollider2D>().isTrigger = true;
                         currentNumeroAnim++;
                     }
                     else if (currentNumeroAnim == 2)
@@ -211,6 +225,9 @@ public class Projectile : MonoBehaviour
                     if (currentNumeroAnim == 1)
                     {
                         GetComponent<SpriteRenderer>().sprite = botleft1;
+                        Destroy(GetComponent<PolygonCollider2D>());
+                        gameObject.AddComponent<PolygonCollider2D>();
+                        GetComponent<PolygonCollider2D>().isTrigger = true;
                         currentNumeroAnim++;
                     }
                     else if (currentNumeroAnim == 2)
@@ -234,6 +251,9 @@ public class Projectile : MonoBehaviour
                     if (currentNumeroAnim == 1)
                     {
                         GetComponent<SpriteRenderer>().sprite = topright1;
+                        Destroy(GetComponent<PolygonCollider2D>());
+                        gameObject.AddComponent<PolygonCollider2D>();
+                        GetComponent<PolygonCollider2D>().isTrigger = true;
                         currentNumeroAnim++;
                     }
                     else if (currentNumeroAnim == 2)
@@ -257,6 +277,9 @@ public class Projectile : MonoBehaviour
                     if (currentNumeroAnim == 1)
                     {
                         GetComponent<SpriteRenderer>().sprite = topleft1;
+                        Destroy(GetComponent<PolygonCollider2D>());
+                        gameObject.AddComponent<PolygonCollider2D>();
+                        GetComponent<PolygonCollider2D>().isTrigger = true;
                         currentNumeroAnim++;
                     }
                     else if (currentNumeroAnim == 2)
@@ -285,44 +308,14 @@ public class Projectile : MonoBehaviour
     public void Explosion()
     {
         isExploding = true;
-        Destroy(gameObject.GetComponent<BoxCollider2D>());
-        StartCoroutine(ExplosionAnimation());
+        Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(this.gameObject);
     }
 
-    IEnumerator ExplosionAnimation()
+    public void ExplosionChar()
     {
-        GetComponent<SpriteRenderer>().sprite = explosion1;
-        yield return new WaitForSeconds(0.08f);
-
-        GetComponent<SpriteRenderer>().sprite = explosion2;
-        yield return new WaitForSeconds(0.08f);
-
-        GetComponent<SpriteRenderer>().sprite = explosion3;
-        yield return new WaitForSeconds(0.08f);
-
-        GetComponent<SpriteRenderer>().sprite = explosion4;
-        yield return new WaitForSeconds(0.08f);
-
-        GetComponent<SpriteRenderer>().sprite = explosion5;
-        yield return new WaitForSeconds(0.08f);
-
-        GetComponent<SpriteRenderer>().sprite = explosion6;
-        yield return new WaitForSeconds(0.08f);
-
-        Destroy(gameObject);
-    }
-
-    IEnumerator FadeAnimation()
-    {
-        GetComponent<SpriteRenderer>().sprite = explosion3;
-        yield return new WaitForSeconds(0.08f);
-
-        GetComponent<SpriteRenderer>().sprite = explosion2;
-        yield return new WaitForSeconds(0.08f);
-
-        GetComponent<SpriteRenderer>().sprite = explosion1;
-        yield return new WaitForSeconds(0.08f);
-
-        Destroy(gameObject);
+        isExploding = true;
+        Instantiate(explosionChar, transform.position, transform.rotation);
+        Destroy(this.gameObject);
     }
 }

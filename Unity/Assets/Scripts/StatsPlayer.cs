@@ -45,7 +45,6 @@ public class StatsPlayer : MonoBehaviour
     public void     TakeDamage(int damageTaken, Vector2 directionPos)
     {
         currHP -= damageTaken;
-        print("HP0 : " + gm.GetComponent<GameManager>().playerMaxHP[level - 1]);
         healthBarGreen.value = (float)currHP / (float)gm.GetComponent<GameManager>().playerMaxHP[level - 1];
         textHP.GetComponent<Text>().text = currHP + " / " + gm.GetComponent<GameManager>().playerMaxHP[level - 1];
 
