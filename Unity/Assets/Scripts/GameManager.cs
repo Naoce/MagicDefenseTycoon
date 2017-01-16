@@ -5,297 +5,239 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private GameObject      cam;
-    private GameObject      player;
+    public  GameObject      cam;
     public  GameObject      jingleDefaite;
-    public  GameObject      EnemyGuerrier;
+    public  GameObject      jingleVictoire;
+    public  GameObject      mapManager;
     public  GameObject      textNbEnemy;
     public  int[]           playerMaxHP = new int[15];
     public  int[]           playerMaxXP = new int[15];
+    public  int[]           agentMaxHP = new int[10];
+    public  int[]           agentMaxXP = new int[10];
     public  int             playerXP;
     public  int             playerLevel;
     public  int             playerDamage;
     public  Texture2D       cursorNormal;
-    public  Texture2D       cursorRight;
-    public  Texture2D       cursorWrong;
-    public  CursorMode      cursorMode = CursorMode.Auto;
-    public  Vector2         hotSpot = Vector2.zero;
+    public  CursorMode      cursorMode;
 
-    private float           timerSpawn = 0f;
-    private float           timerMax = 5f;
-    private bool            spawnLeft = true;
-    private Quaternion      rot = new Quaternion(0, 0, 0, 0);
-    public  Vector2         posLeft = new Vector2(0, 0);
-    public  Vector2         posRight = new Vector2(0, 0);
-    public List<GameObject> enemiesList = new List<GameObject>();
-    private int             idGen = 0;
-    private bool            canSpawn = true;
-    private bool            cursorIsNormal = true;
+    public  bool            isInGame;
+    public  bool            gamePaused;
+    public  bool            gameOver;
+    public  bool            smartcast;
+    public  float           volumeMusic;
+    public  bool            audioOn;
+    public  bool            isInMenu;
+    public  bool            isInOptions;
+    public  bool            bloodless;
 
-    public  GameObject      hudPlayer;
-    public  GameObject      hudHP;
-    public  GameObject      hudHPText;
-    public  GameObject      hudXP;
-    public  GameObject      hudXPText;
-    public  GameObject      hudFiole;
-    public  GameObject      hudSpells;
-    public  GameObject      hudObjects;
-    public  GameObject      hudSpellIcon;
-    public  GameObject      hudSpellUsing;
-    public  GameObject      hudCounter;
+    public  Slider          healthBarGreen;
+    public  Slider          xpBar;
+    public  GameObject      textHP;
+    public  GameObject      textXP;
+    public  GameObject      textLevel;
+    public  GameObject      fioleRed;
+    public  GameObject      fioleOrange;
+    public  GameObject      fioleYellow;
+    public  GameObject      fioleGreen;
+    public  GameObject      levelUpPlayer;
+    public  GameObject      usingSpell1Icon;
+    public  GameObject      usingSpell2Icon;
+    public  GameObject      usingSpell3Icon;
+    public  GameObject      usingSpell4Icon;
+    public  GameObject      usingSpell5Icon;
+    public  GameObject      usingSpell6Icon;
+    public  GameObject      usingSpell7Icon;
+    public  GameObject      usingSpell8Icon;
+    public  GameObject      hudInGame;
     public  GameObject      hudCounterText;
-    public  GameObject      hudLevel;
-    public  GameObject      hudLevelText;
     public  GameObject      hudVictory;
     public  GameObject      hudDefeat;
     public  GameObject      hudStar1;
     public  GameObject      hudStar2;
     public  GameObject      hudStar3;
     public  GameObject      hudButtonTryAgain;
-    public  GameObject      hudButtonQuit;
-    public  GameObject      hudMenuResume;
-    public  GameObject      hudMenuOptions;
-    public  GameObject      hudMenuRestart;
-    public  GameObject      hudMenuAbandon;
+    public  GameObject      hudButtonReturnToMenu;
+    public  GameObject      panelMenu;
+    public  GameObject      hudPanelMenu;
+    public  GameObject      hudPanelOptions;
+    public  GameObject      levelUpAgent1;
+    public  Slider          agenthealthBarGreenHUD;
+    public  Slider          agentxpBarHUD;
+    public  GameObject      agentLevel1;
+    public  GameObject      agentLevel2;
+    public  GameObject      agentLevel3;
+    public  GameObject      agentLevel4;
+    public  GameObject      agentLevel5;
+    public  GameObject      agentLevel6;
+    public  GameObject      agentLevel7;
+    public  GameObject      agentLevel8;
+    public  GameObject      agentLevel9;
+    public  GameObject      agentLevel10;
+    public  GameObject      bulleInfoSpell1;
+    public  GameObject      bulleInfoSpell2;
+    public  GameObject      bulleInfoSpell3;
+    public  GameObject      bulleInfoSpell4;
+    public  GameObject      bulleInfoSpell5;
+    public  GameObject      bulleInfoSpell6;
+    public  GameObject      bulleInfoSpell7;
+    public  GameObject      bulleInfoSpell8;
+    public  GameObject      bulleInfoObject1;
+    public  GameObject      bulleInfoObject2;
+    public  GameObject      cdSpell1;
+    public  GameObject      cdSpell2;
+    public  GameObject      cdSpell3;
+    public  GameObject      cdSpell4;
+    public  GameObject      cdSpell5;
+    public  GameObject      cdSpell6;
+    public  GameObject      cdSpell7;
+    public  GameObject      cdSpell8;
+    public  GameObject      cdObject1;
+    public  GameObject      cdObject2;
 
-    void Start ()
+    void Awake ()
     {
         cam = GameObject.Find("Main Camera");
-        player = GameObject.Find("Player");
-        timerSpawn = timerMax;
-        SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+        SetNormalMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
     }
 
-    void SetNormalMouse(Vector2 pos)
+    public void SetNormalMouse(Vector2 pos)
     {
         Cursor.SetCursor(cursorNormal, pos, cursorMode);
     }
 
-    void SetRightMouse(Vector2 pos)
+    public void SetActiveBulleInfoSpell1()
     {
-        Cursor.SetCursor(cursorRight, pos, cursorMode);
+        bulleInfoSpell1.SetActive(true);
     }
 
-    void SetWrongMouse(Vector2 pos)
+    public void SetInactiveBulleInfoSpell1()
     {
-        Cursor.SetCursor(cursorWrong, pos, cursorMode);
+        bulleInfoSpell1.SetActive(false);
     }
 
-    void Update ()
+    public void SetActiveBulleInfoSpell2()
     {
-        if (canSpawn == true)
-        {
-            timerSpawn += Time.deltaTime;
-            if (timerSpawn > timerMax)
-            {
-                timerMax -= 0.2f;
-                timerSpawn = 0f;
-                if (timerMax < 2f)
-                    timerMax = 2f;
-                InstantiateGuerrier();
+        bulleInfoSpell2.SetActive(true);
+    }
 
-            }
-        }
-        else if (canSpawn == false &&
-                enemiesList.Count == 0)
-        {
-            GameObject.Find("Player").GetComponent<Deplacements>().isDead = true;
-            StartVictory();
-        }
-        if (enemiesList.Count > 0 || canSpawn == true)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Time.timeScale = 0f;
-                GetComponent<GameManager>().hudMenuResume.SetActive(true);
-                GetComponent<GameManager>().hudMenuOptions.SetActive(true);
-                GetComponent<GameManager>().hudMenuRestart.SetActive(true);
-                GetComponent<GameManager>().hudMenuAbandon.SetActive(true);
-            }
-            if (player.GetComponent<Shoots>().spellSelected == 1)
-            {
-                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f &&
-                    cursorIsNormal == false)
-                {
-                    SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = true;
-                }
-                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 0.2f &&
-                        cursorIsNormal == true)
-                {
-                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = false;
-                }
-            }
-            else if (player.GetComponent<Shoots>().spellSelected == 2)
-            {
-                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f)
-                {
-                    RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
-                    if (hit.collider != null)
-                    {
-                        if (hit.collider.tag == "EnemyGuerrier" && cursorIsNormal == false)
-                        {
-                            SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                            cursorIsNormal = true;
-                        }
-                        else if (hit.collider.tag != "EnemyGuerrier" && cursorIsNormal == true)
-                        {
-                            SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                            cursorIsNormal = false;
-                        }
-                    }
-                }
-                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 3f &&
-                        cursorIsNormal == true)
-                {
-                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = false;
-                }
-            }
-            else if (player.GetComponent<Shoots>().spellSelected == 3)
-            {
-                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f &&
-                    cursorIsNormal == false)
-                {
-                    SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = true;
-                }
-                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 0.2f &&
-                        cursorIsNormal == true)
-                {
-                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = false;
-                }
-            }
-            else if (player.GetComponent<Shoots>().spellSelected == 4)
-            {
-                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f &&
-                    cursorIsNormal == false)
-                {
-                    SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = true;
-                }
-                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 3f &&
-                        cursorIsNormal == true)
-                {
-                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = false;
-                }
-            }
-            else if (player.GetComponent<Shoots>().spellSelected == 5)
-            {
-                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f &&
-                    cursorIsNormal == false)
-                {
-                    SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = true;
-                }
-                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 3f &&
-                        cursorIsNormal == true)
-                {
-                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = false;
-                }
-            }
-            else if (player.GetComponent<Shoots>().spellSelected == 6)
-            {
-                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f)
-                {
-                    RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
-                    if (hit.collider != null)
-                    {
-                        if (hit.collider.tag == "EnemyGuerrier" && cursorIsNormal == false)
-                        {
-                            SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                            cursorIsNormal = true;
-                        }
-                        else if (hit.collider.tag != "EnemyGuerrier" && cursorIsNormal == true)
-                        {
-                            SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                            cursorIsNormal = false;
-                        }
-                    }
-                }
-                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 3f &&
-                        cursorIsNormal == true)
-                {
-                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = false;
-                }
-            }
-            else if (player.GetComponent<Shoots>().spellSelected == 8)
-            {
-                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f &&
-                    cursorIsNormal == false)
-                {
-                    SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = true;
-                }
-                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 0.2f &&
-                        cursorIsNormal == true)
-                {
-                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                    cursorIsNormal = false;
-                }
-            }
-        }
-	}
+    public void SetInactiveBulleInfoSpell2()
+    {
+        bulleInfoSpell2.SetActive(false);
+    }
 
+    public void SetActiveBulleInfoSpell3()
+    {
+        bulleInfoSpell3.SetActive(true);
+    }
+
+    public void SetInactiveBulleInfoSpell3()
+    {
+        bulleInfoSpell3.SetActive(false);
+    }
+
+    public void SetActiveBulleInfoSpell4()
+    {
+        bulleInfoSpell4.SetActive(true);
+    }
+
+    public void SetInactiveBulleInfoSpell4()
+    {
+        bulleInfoSpell4.SetActive(false);
+    }
+
+    public void SetActiveBulleInfoSpell5()
+    {
+        bulleInfoSpell5.SetActive(true);
+    }
+
+    public void SetInactiveBulleInfoSpell5()
+    {
+        bulleInfoSpell5.SetActive(false);
+    }
+
+    public void SetActiveBulleInfoSpell6()
+    {
+        bulleInfoSpell6.SetActive(true);
+    }
+
+    public void SetInactiveBulleInfoSpell6()
+    {
+        bulleInfoSpell6.SetActive(false);
+    }
+
+    public void SetActiveBulleInfoSpell7()
+    {
+        bulleInfoSpell7.SetActive(true);
+    }
+
+    public void SetInactiveBulleInfoSpell7()
+    {
+        bulleInfoSpell7.SetActive(false);
+    }
+
+    public void SetActiveBulleInfoSpell8()
+    {
+        bulleInfoSpell8.SetActive(true);
+    }
+
+    public void SetInactiveBulleInfoSpell8()
+    {
+        bulleInfoSpell8.SetActive(false);
+    }
+
+    public void SetActiveBulleInfoObject1()
+    {
+        bulleInfoObject1.SetActive(true);
+    }
+
+    public void SetInactiveBulleInfoObject1()
+    {
+        bulleInfoObject1.SetActive(false);
+    }
+
+    public void SetActiveBulleInfoObject2()
+    {
+        bulleInfoObject2.SetActive(true);
+    }
+
+    public void SetInactiveBulleInfoObject2()
+    {
+        bulleInfoObject2.SetActive(false);
+    }
+
+    public void DesactiveAllBulles()
+    {
+        bulleInfoSpell1.SetActive(false);
+        bulleInfoSpell2.SetActive(false);
+        bulleInfoSpell3.SetActive(false);
+        bulleInfoSpell4.SetActive(false);
+        bulleInfoSpell5.SetActive(false);
+        bulleInfoSpell6.SetActive(false);
+        bulleInfoSpell7.SetActive(false);
+        bulleInfoSpell8.SetActive(false);
+        bulleInfoObject1.SetActive(false);
+        bulleInfoObject2.SetActive(false);
+    }
+    
     public void StartVictory()
     {
+        gamePaused = true;
+        gameOver = true;
+        GameObject obj = (GameObject)Instantiate(jingleVictoire, transform.position, transform.rotation);
+        obj.GetComponent<AudioSource>().volume = volumeMusic / 100;
         SetNormalMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-        hudPlayer.SetActive(false);
-        hudHP.SetActive(false);
-        hudHPText.SetActive(false);
-        hudXP.SetActive(false);
-        hudXPText.SetActive(false);
-        hudFiole.SetActive(false);
-        hudSpells.SetActive(false);
-        hudObjects.SetActive(false);
-        hudSpellIcon.SetActive(false);
-        hudSpellUsing.SetActive(false);
-        hudCounter.SetActive(false);
-        hudCounterText.SetActive(false);
-        hudLevel.SetActive(false);
-        hudLevelText.SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 1").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 2").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 3").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 4").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 5").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 6").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 7").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 8").SetActive(false);
+        hudInGame.SetActive(false);
         StartCoroutine(VictoryAnimation());
     }
 
     public void StartDefeat()
     {
-        Instantiate(jingleDefaite, transform.position, transform.rotation);
+        gamePaused = true;
+        gameOver = true;
+        GameObject obj = (GameObject)Instantiate(jingleDefaite, transform.position, transform.rotation);
+        obj.GetComponent<AudioSource>().volume = volumeMusic / 100;
         SetNormalMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-        hudPlayer.SetActive(false);
-        hudHP.SetActive(false);
-        hudHPText.SetActive(false);
-        hudXP.SetActive(false);
-        hudXPText.SetActive(false);
-        hudFiole.SetActive(false);
-        hudSpells.SetActive(false);
-        hudObjects.SetActive(false);
-        hudSpellIcon.SetActive(false);
-        hudSpellUsing.SetActive(false);
-        hudCounter.SetActive(false);
-        hudCounterText.SetActive(false);
-        hudLevel.SetActive(false);
-        hudLevelText.SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 1").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 2").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 3").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 4").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 5").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 6").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 7").SetActive(false);
-        GameObject.Find("Slider Cooldown Spell 8").SetActive(false);
+        hudInGame.SetActive(false);
         StartCoroutine(DefeatAnimation());
     }
 
@@ -313,10 +255,10 @@ public class GameManager : MonoBehaviour
         hudStar3.SetActive(true);
         yield return new WaitForSeconds(0.4f);
 
-        hudButtonTryAgain.SetActive(true);
-        yield return new WaitForSeconds(0.4f);
+        //hudButtonTryAgain.SetActive(true);
+        //yield return new WaitForSeconds(0.4f);
 
-        hudButtonQuit.SetActive(true);
+        hudButtonReturnToMenu.SetActive(true);
         yield return new WaitForSeconds(0.4f);
     }
 
@@ -328,42 +270,21 @@ public class GameManager : MonoBehaviour
         hudButtonTryAgain.SetActive(true);
         yield return new WaitForSeconds(0.4f);
 
-        hudButtonQuit.SetActive(true);
+        hudButtonReturnToMenu.SetActive(true);
         yield return new WaitForSeconds(0.4f);
     }
 
-    void InstantiateGuerrier()
+    public void ActivateBlood()
     {
-        GameObject obj = null;
-        if (spawnLeft == true)
-        {
-            spawnLeft = false;
-            obj = (GameObject)Instantiate(EnemyGuerrier, posLeft, rot);
-        }
-        else
-        {
-            spawnLeft = true;
-            obj = (GameObject)Instantiate(EnemyGuerrier, posRight, rot);
-        }
-        obj.GetComponent<Enemy>().id = idGen++;
-        foreach (GameObject go in enemiesList)
-        {
-            obj.GetComponent<Enemy>().IgnoreCollider(go);
-        }
-
-        enemiesList.Add(obj);
-        textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
-        if (idGen > 10)
-            canSpawn = false;
+        bloodless = false;
+        if (isInGame == true)
+            mapManager.GetComponent<MapManager>().ActivateBlood();
     }
 
-    public void PopEnemy(int idToCheck)
+    public void DesactivateBlood()
     {
-        for (int i = 0; i < enemiesList.Count; i++)
-        {
-            if (enemiesList[i].GetComponent<Enemy>().id == idToCheck)
-                enemiesList.RemoveAt(i);
-        }
-        textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
+        bloodless = true;
+        if (isInGame == true)
+            mapManager.GetComponent<MapManager>().DesactivateBlood();
     }
 }

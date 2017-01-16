@@ -9,5 +9,9 @@ public class ProjectileBreak : MonoBehaviour
         {
             collision.GetComponent<Projectile>().Explosion();
         }
+        else if (collision.tag == "IceShard")
+        {
+            collision.GetComponent<IceShard>().Explosion();
+        }
     }
 }

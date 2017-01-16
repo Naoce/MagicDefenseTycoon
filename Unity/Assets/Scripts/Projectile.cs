@@ -60,12 +60,13 @@ public class Projectile : MonoBehaviour
 
     void Start()
 	{
+
 		originalPos = transform.position;
 	}
 
-	public void GetPos(Vector2 newVec, int newDamage, Shoots.Direction newDirection)
+	public void GetPos(Vector2 newVec, int newDamage, Shoots.Direction newDirection, GameObject go)
 	{
-		newPos = newVec;
+        newPos = newVec;
 		float distance = Vector2.Distance (transform.position, newPos);
 		if (distance < 3) 
 		{
@@ -79,7 +80,6 @@ public class Projectile : MonoBehaviour
 	{
         if (isExploding == false)
         {
-            GetComponent<PolygonCollider2D>().isTrigger = true;
             if (Vector2.Distance(originalPos, transform.position) >= 3)
             {
                 isExploding = true;
@@ -90,6 +90,7 @@ public class Projectile : MonoBehaviour
             timer += Time.deltaTime;
             if (timer > animTime)
             {
+                GetComponent<PolygonCollider2D>().isTrigger = true;
                 if (direction == Shoots.Direction.RIGHT)
                 {
                     if (currentNumeroAnim == 1)

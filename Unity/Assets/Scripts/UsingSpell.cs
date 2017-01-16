@@ -37,9 +37,10 @@ public class UsingSpell : MonoBehaviour
     public Sprite sprite31;
     public Sprite sprite32;
 
-    private int     numberAnim = 1;
-    private float   timer = 0f;
-    private float   timerMax = 0.04f;
+    private int         numberAnim = 1;
+    private float       timer = 0f;
+    private float       timerMax = 0.04f;
+    public  GameObject  player;
 
 	void Update ()
     {
@@ -115,6 +116,13 @@ public class UsingSpell : MonoBehaviour
             numberAnim++;
             if (numberAnim > 32)
                 numberAnim = 1;
+            if (player != null)
+                player.GetComponent<Shoots>().usingSpellInt = numberAnim;
         }
 	}
+
+    public void SetAnimNb(int nb)
+    {
+        numberAnim = nb;
+    }
 }

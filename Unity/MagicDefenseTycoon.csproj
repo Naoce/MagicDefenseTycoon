@@ -63,21 +63,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Agent.cs" />
     <Compile Include="Assets\Scripts\AnimOnStart.cs" />
+    <Compile Include="Assets\Scripts\BulleInfo.cs" />
     <Compile Include="Assets\Scripts\Buttons.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\DalleSol.cs" />
     <Compile Include="Assets\Scripts\Deplacements.cs" />
+    <Compile Include="Assets\Scripts\DoNotDestroyOnLoad.cs" />
     <Compile Include="Assets\Scripts\DragonDeFeu.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\IAGuerrier.cs" />
+    <Compile Include="Assets\Scripts\IAGuerrierAgent.cs" />
+    <Compile Include="Assets\Scripts\IARange.cs" />
+    <Compile Include="Assets\Scripts\IceShard.cs" />
+    <Compile Include="Assets\Scripts\MapManager.cs" />
     <Compile Include="Assets\Scripts\Obstacle.cs" />
+    <Compile Include="Assets\Scripts\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
     <Compile Include="Assets\Scripts\ProjectileBreak.cs" />
     <Compile Include="Assets\Scripts\Shoots.cs" />
+    <Compile Include="Assets\Scripts\SpriteAnimTimer.cs" />
     <Compile Include="Assets\Scripts\SpriteOnStart.cs" />
     <Compile Include="Assets\Scripts\StatsPlayer.cs" />
+    <Compile Include="Assets\Scripts\Thunderbolt.cs" />
     <Compile Include="Assets\Scripts\UsingSpell.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

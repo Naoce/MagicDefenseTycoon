@@ -3,7 +3,9 @@ using System.Collections;
 
 public class Deplacements : MonoBehaviour 
 {
-    public GameObject cam;
+    public  GameObject  cam;
+    private GameObject  gm;
+    private GameObject  mapManager;
 
     public Sprite leftIdle;
     public Sprite left1;
@@ -60,9 +62,17 @@ public class Deplacements : MonoBehaviour
     private Shoots.Direction        movementDirection = Shoots.Direction.TOP;
     public  bool                    isDead = false;
 
+    void Start()
+    {
+        gm = GameObject.Find("GameManager");
+        cam = GameObject.Find("Main Camera");
+        mapManager = GameObject.Find("MapManager");
+    }
+
     void Update()
     {
-        if (isDead == false)
+        if (isDead == false &&
+            gm.GetComponent<GameManager>().gamePaused == false)
         {
             if (Input.GetKey(KeyCode.D))
             {
@@ -72,8 +82,8 @@ public class Deplacements : MonoBehaviour
                     newPosition.x += 0.015f;
                 else
                     newPosition.x += 0.02f;
-                if (newPosition.x > 8.1f)
-                    newPosition.x = 8.1f;
+                if (newPosition.x > mapManager.GetComponent<MapManager>().LimitD)
+                    newPosition.x = mapManager.GetComponent<MapManager>().LimitD;
                 transform.position = newPosition;
                 timer += Time.deltaTime;
                 if (timer > animTime)
@@ -117,8 +127,8 @@ public class Deplacements : MonoBehaviour
                     newPosition.x -= 0.015f;
                 else
                     newPosition.x -= 0.02f;
-                if (newPosition.x < -8.2f)
-                    newPosition.x = -8.2f;
+                if (newPosition.x < mapManager.GetComponent<MapManager>().LimitG)
+                    newPosition.x = mapManager.GetComponent<MapManager>().LimitG;
                 transform.position = newPosition;
                 timer += Time.deltaTime;
                 if (timer > animTime)
@@ -162,15 +172,15 @@ public class Deplacements : MonoBehaviour
                 if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.D))
                 {
                     newPosition.y += 0.015f;
-                    if (newPosition.y > 2f)
-                        newPosition.y = 2f;
+                    if (newPosition.y > mapManager.GetComponent<MapManager>().LimitH)
+                        newPosition.y = mapManager.GetComponent<MapManager>().LimitH;
                     transform.position = newPosition;
                 }
                 else
                 {
                     newPosition.y += 0.02f;
-                    if (newPosition.y > 2)
-                        newPosition.y = 2f;
+                    if (newPosition.y > mapManager.GetComponent<MapManager>().LimitH)
+                        newPosition.y = mapManager.GetComponent<MapManager>().LimitH;
                     transform.position = newPosition;
                     timer += Time.deltaTime;
                     if (timer > animTime)
@@ -213,15 +223,15 @@ public class Deplacements : MonoBehaviour
                 if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.D))
                 {
                    newPosition.y -= 0.015f;
-                    if (newPosition.y < -4.4f)
-                        newPosition.y = -4.4f;
+                    if (newPosition.y < mapManager.GetComponent<MapManager>().LimitB)
+                        newPosition.y = mapManager.GetComponent<MapManager>().LimitB;
                    transform.position = newPosition;
                 }
                 else
                 {
                     newPosition.y -= 0.02f;
-                    if (newPosition.y < -4.4f)
-                        newPosition.y = -4.4f;
+                    if (newPosition.y < mapManager.GetComponent<MapManager>().LimitB)
+                        newPosition.y = mapManager.GetComponent<MapManager>().LimitB;
                     transform.position = newPosition;
                     timer += Time.deltaTime;
                     if (timer > animTime)

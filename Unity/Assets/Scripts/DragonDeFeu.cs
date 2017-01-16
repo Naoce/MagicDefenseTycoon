@@ -47,18 +47,11 @@ public class DragonDeFeu : MonoBehaviour
     public int id;
 
     private Vector2 newPos = new Vector2(0, 0);
-    private Vector2 originalPos = new Vector2(0, 0);
 
     private int currentNumeroAnim = 1;
     private float timer = 0f;
     private float animTime = 0.08f;
     public  Shoots.Direction direction;
-    private bool isExploding = false;
-
-    void Start()
-    {
-        originalPos = transform.position;
-    }
 
     public void GetPos(Vector2 newVec, int newDamage, Shoots.Direction newDirection)
     {
@@ -70,6 +63,7 @@ public class DragonDeFeu : MonoBehaviour
         }
         damage = newDamage;
         direction = newDirection;
+        print(newPos);
     }
 
     void Update()

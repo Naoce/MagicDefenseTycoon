@@ -4,12 +4,25 @@ using UnityEngine.UI;
 
 public class StatsPlayer : MonoBehaviour
 {
+    public enum Fiole
+    {
+        RED,
+        ORANGE,
+        YELLOW,
+        GREEN
+    };
+
     public  GameObject  gm;
-    public  Slider      healthBarGreen;
-    public  Slider      xpBar;
-    public  GameObject  textHP;
-    public  GameObject  textXP;
-    public  GameObject  textLevel;
+    public  GameObject  fioleRed;
+    public  GameObject  fioleOrange;
+    public  GameObject  fioleYellow;
+    public  GameObject  fioleGreen;
+    public  GameObject  levelUp;
+    private Slider      healthBarGreen;
+    private Slider      xpBar;
+    private GameObject  textHP;
+    private GameObject  textXP;
+    private GameObject  textLevel;
     public  Sprite      rightDeath1;
     public  Sprite      rightDeath2;
     public  Sprite      rightDeath3;
@@ -29,10 +42,25 @@ public class StatsPlayer : MonoBehaviour
     public  int         level;
     private Vector2     baseScale;
     private Vector2     newScale;
+    public  int         animFiole;
+    private Fiole       fioleState = Fiole.GREEN;
 
     void Start ()
     {
         gm = GameObject.Find("GameManager");
+        textHP = gm.GetComponent<GameManager>().textHP;
+        textXP = gm.GetComponent<GameManager>().textXP;
+        textLevel = gm.GetComponent<GameManager>().textLevel;
+        levelUp = gm.GetComponent<GameManager>().levelUpPlayer;
+        fioleGreen = gm.GetComponent<GameManager>().fioleGreen;
+        fioleYellow = gm.GetComponent<GameManager>().fioleYellow;
+        fioleOrange = gm.GetComponent<GameManager>().fioleOrange;
+        fioleRed = gm.GetComponent<GameManager>().fioleRed;
+        healthBarGreen = gm.GetComponent<GameManager>().healthBarGreen;
+        xpBar = gm.GetComponent<GameManager>().xpBar;
+        levelUp.SetActive(false);
+        fioleGreen.GetComponent<AnimOnStart>().player = this.gameObject;
+        fioleGreen.GetComponent<AnimOnStart>().StartAnimationByScript();
         level = gm.GetComponent<GameManager>().playerLevel;
         damage = gm.GetComponent<GameManager>().playerDamage;
         maxHP = gm.GetComponent<GameManager>().playerMaxHP[level - 1];
@@ -40,6 +68,9 @@ public class StatsPlayer : MonoBehaviour
         currXP = gm.GetComponent<GameManager>().playerXP;
         textHP.GetComponent<Text>().text = currHP + " / " + maxHP;
         textXP.GetComponent<Text>().text = currXP + " / " + gm.GetComponent<GameManager>().playerMaxXP[level - 1];
+        Heal(0);
+        textXP.GetComponent<Text>().text = currXP + " / " + gm.GetComponent<GameManager>().playerMaxXP[level - 1];
+        xpBar.value = (float)currXP / (float)gm.GetComponent<GameManager>().playerMaxXP[level - 1];
     }
 
     public void     TakeDamage(int damageTaken, Vector2 directionPos)
@@ -47,11 +78,114 @@ public class StatsPlayer : MonoBehaviour
         currHP -= damageTaken;
         healthBarGreen.value = (float)currHP / (float)gm.GetComponent<GameManager>().playerMaxHP[level - 1];
         textHP.GetComponent<Text>().text = currHP + " / " + gm.GetComponent<GameManager>().playerMaxHP[level - 1];
-
+        if (healthBarGreen.value > 0.75 &&
+            fioleState != Fiole.GREEN)
+        {
+            fioleRed.SetActive(false);
+            fioleOrange.SetActive(false);
+            fioleYellow.SetActive(false);
+            fioleGreen.SetActive(true);
+            fioleGreen.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+            fioleGreen.GetComponent<AnimOnStart>().StartAnimationByScript();
+            fioleState = Fiole.GREEN;
+        }
+        else if (healthBarGreen.value > 0.5 &&
+            healthBarGreen.value <= 0.75 &&
+            fioleState != Fiole.YELLOW)
+        {
+            fioleRed.SetActive(false);
+            fioleOrange.SetActive(false);
+            fioleYellow.SetActive(true);
+            fioleYellow.GetComponent<AnimOnStart>().player = this.gameObject;
+            fioleYellow.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+            fioleYellow.GetComponent<AnimOnStart>().StartAnimationByScript();
+            fioleGreen.SetActive(false);
+            fioleState = Fiole.YELLOW;
+        }
+        else if (healthBarGreen.value > 0.25 &&
+            healthBarGreen.value <= 0.5 &&
+            fioleState != Fiole.ORANGE)
+        {
+            fioleRed.SetActive(false);
+            fioleOrange.SetActive(true);
+            fioleOrange.GetComponent<AnimOnStart>().player = this.gameObject;
+            fioleOrange.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+            fioleOrange.GetComponent<AnimOnStart>().StartAnimationByScript();
+            fioleYellow.SetActive(false);
+            fioleGreen.SetActive(false);
+            fioleState = Fiole.ORANGE;
+        }
+        else if (healthBarGreen.value <= 0.25 &&
+            fioleState != Fiole.RED)
+        {
+            fioleRed.SetActive(true);
+            fioleRed.GetComponent<AnimOnStart>().player = this.gameObject;
+            fioleRed.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+            fioleRed.GetComponent<AnimOnStart>().StartAnimationByScript();
+            fioleOrange.SetActive(false);
+            fioleYellow.SetActive(false);
+            fioleGreen.SetActive(false);
+            fioleState = Fiole.RED;
+        }
         if (currHP == 0)
         {
             GetComponent<Deplacements>().isDead = true;
             StartCoroutine(DeathAnimation(directionPos));
+        }
+    }
+
+    public void Heal(int healValue)
+    {
+        currHP += healValue;
+        if (currHP > gm.GetComponent<GameManager>().playerMaxHP[level - 1])
+            currHP = gm.GetComponent<GameManager>().playerMaxHP[level - 1];
+        healthBarGreen.value = (float)currHP / (float)gm.GetComponent<GameManager>().playerMaxHP[level - 1];
+        textHP.GetComponent<Text>().text = currHP + " / " + gm.GetComponent<GameManager>().playerMaxHP[level - 1];
+        if (healthBarGreen.value > 0.75 &&
+            fioleState != Fiole.GREEN)
+        {
+            fioleRed.SetActive(false);
+            fioleOrange.SetActive(false);
+            fioleYellow.SetActive(false);
+            fioleGreen.SetActive(true);
+            fioleGreen.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+            fioleGreen.GetComponent<AnimOnStart>().StartAnimationByScript();
+            fioleState = Fiole.GREEN;
+        }
+        else if (healthBarGreen.value > 0.5 &&
+            healthBarGreen.value <= 0.75 &&
+            fioleState != Fiole.YELLOW)
+        {
+            fioleRed.SetActive(false);
+            fioleOrange.SetActive(false);
+            fioleYellow.SetActive(true);
+            fioleYellow.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+            fioleYellow.GetComponent<AnimOnStart>().StartAnimationByScript();
+            fioleGreen.SetActive(false);
+            fioleState = Fiole.YELLOW;
+        }
+        else if (healthBarGreen.value > 0.25 &&
+            healthBarGreen.value <= 0.5 &&
+            fioleState != Fiole.ORANGE)
+        {
+            fioleRed.SetActive(false);
+            fioleOrange.SetActive(true);
+            fioleOrange.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+            fioleOrange.GetComponent<AnimOnStart>().StartAnimationByScript();
+            fioleYellow.SetActive(false);
+            fioleGreen.SetActive(false);
+            fioleState = Fiole.ORANGE;
+        }
+        else if (healthBarGreen.value <= 0.25 &&
+            fioleState != Fiole.RED)
+        {
+            fioleRed.SetActive(true);
+            fioleRed.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+            fioleRed.GetComponent<AnimOnStart>().StartAnimationByScript();
+            fioleOrange.SetActive(false);
+            fioleYellow.SetActive(false);
+            fioleGreen.SetActive(false);
+            fioleState = Fiole.RED;
         }
     }
 
@@ -60,11 +194,13 @@ public class StatsPlayer : MonoBehaviour
         currXP += XpGain;
         if (currXP >= gm.GetComponent<GameManager>().playerMaxXP[level - 1])
         {
+            levelUp.SetActive(true);
+            levelUp.GetComponent<AnimOnStart>().StartAnimationByScript();
             currXP -= gm.GetComponent<GameManager>().playerMaxXP[level - 1];
             level++;
             textLevel.GetComponent<Text>().text = level.ToString();
             maxHP = gm.GetComponent<GameManager>().playerMaxHP[level - 1];
-            TakeDamage(-5, Vector2.zero);
+            Heal(5);
         }
         textXP.GetComponent<Text>().text = currXP + " / " + gm.GetComponent<GameManager>().playerMaxXP[level - 1];
         xpBar.value = (float)currXP / (float)gm.GetComponent<GameManager>().playerMaxXP[level - 1];
