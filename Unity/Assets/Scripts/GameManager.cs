@@ -30,6 +30,12 @@ public class GameManager : MonoBehaviour
     public  bool            isInOptions;
     public  bool            bloodless;
 
+    public  GameObject      bossPanel;
+    public  Slider          bossHealth;
+    public  GameObject      capturePanel;
+    public  Slider          captureHealth;
+    public  GameObject      defensePanel;
+    public  Slider          defenseHealth;
     public  Slider          healthBarGreen;
     public  Slider          xpBar;
     public  GameObject      textHP;
@@ -219,6 +225,21 @@ public class GameManager : MonoBehaviour
         bulleInfoObject2.SetActive(false);
     }
     
+    public void BossTakeDamage(int currHP, int maxHP)
+    {
+        bossHealth.value = (float)currHP / (float)maxHP;
+    }
+
+    public void CaptureTakeDamage(int currHP, int maxHP)
+    {
+        captureHealth.value = (float)currHP / (float)maxHP;
+    }
+
+    public void DefenseTakeDamage(int currHP, int maxHP)
+    {
+        defenseHealth.value = (float)currHP / (float)maxHP;
+    }
+
     public void StartVictory()
     {
         gamePaused = true;

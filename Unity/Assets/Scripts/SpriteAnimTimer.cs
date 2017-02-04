@@ -3,11 +3,12 @@ using System.Collections;
 
 public class SpriteAnimTimer : MonoBehaviour
 {
-    public Sprite[] spriteTab;
-    public float timeAnim;
-    private int iTab = 0;
-    private float timer = 0f;
-    public  float timerMax;
+    public  Sprite[]    spriteTab;
+    public  float       timeAnim;
+    private int         iTab = 0;
+    private float       timer = 0f;
+    public  float       timerMax;
+    public  bool        loop;
 
     private void Update()
     {
@@ -23,6 +24,12 @@ public class SpriteAnimTimer : MonoBehaviour
 
         if (iTab < spriteTab.Length)
             StartCoroutine(StartAnimation());
+        else if (iTab >= spriteTab.Length &&
+                loop == true)
+        {
+            iTab = 0;
+            StartCoroutine(StartAnimation());
+        }
     }
 
 

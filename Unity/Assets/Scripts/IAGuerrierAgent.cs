@@ -93,7 +93,6 @@ public class IAGuerrierAgent : MonoBehaviour
         healthBarGreenHUD = gm.GetComponent<GameManager>().agenthealthBarGreenHUD;
         xpBarHUD = gm.GetComponent<GameManager>().agentxpBarHUD;
 
-        float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
         healthBarGreenHUD.value = (float)currHP / (float)gm.GetComponent<GameManager>().agentMaxHP[level - 1];
         xpBarHUD.value = (float)currXP / (float)gm.GetComponent<GameManager>().agentMaxXP[level - 1];
     }
@@ -109,7 +108,7 @@ public class IAGuerrierAgent : MonoBehaviour
                     RaycastHit2D hit = Physics2D.Raycast(player.GetComponent<Deplacements>().cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
                     if (hit.collider != null)
                     {
-                        if (hit.collider.tag == "EnemyGuerrier")
+                        if (hit.collider.tag == "EnemyGuerrier" || hit.collider.tag == "BossGuerrier" || hit.collider.tag == "Capture")
                         {
                             targetPlayer = hit.collider.gameObject;
                             target = targetPlayer;
@@ -132,7 +131,7 @@ public class IAGuerrierAgent : MonoBehaviour
                         }
                     }
                     if (Vector2.Distance(target.transform.position, transform.position) <= 0.51f &&
-                        target.GetComponent<IAGuerrier>().isDead == false)
+                        target.GetComponent<Enemy>().isDead == false)
                     {
                         needToMove = false;
                         if (canAttack == true)
@@ -527,9 +526,14 @@ public class IAGuerrierAgent : MonoBehaviour
         yield return new WaitForSeconds(0.08f);
 
         if (target != null && 
-            target.tag == "EnemyGuerrier")
+            (target.tag == "EnemyGuerrier" || target.tag == "BossGuerrier"))
         {
             target.GetComponent<IAGuerrier>().TakeDamageFromAgent(damage, transform.position, gameObject);
+        }
+        else if (target != null &&
+            target.tag == "Capture")
+        {
+            target.GetComponent<Capture>().TakeDamage(damage);
         }
         isAttacking = false;
         canAttack = false;

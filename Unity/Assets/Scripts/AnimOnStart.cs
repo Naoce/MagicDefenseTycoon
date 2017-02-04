@@ -28,7 +28,7 @@ public class AnimOnStart : MonoBehaviour
         GetComponent<Image>().sprite = spriteTab[iTab];
         iTab++;
 
-        if (isFiole == true)
+        if (isFiole == true && player != null)
             player.GetComponent<StatsPlayer>().animFiole = iTab;
         yield return new WaitForSeconds(timeAnim);
 

@@ -68,7 +68,9 @@
     <Compile Include="Assets\Scripts\BulleInfo.cs" />
     <Compile Include="Assets\Scripts\Buttons.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
+    <Compile Include="Assets\Scripts\Capture.cs" />
     <Compile Include="Assets\Scripts\DalleSol.cs" />
+    <Compile Include="Assets\Scripts\Defense.cs" />
     <Compile Include="Assets\Scripts\Deplacements.cs" />
     <Compile Include="Assets\Scripts\DoNotDestroyOnLoad.cs" />
     <Compile Include="Assets\Scripts\DragonDeFeu.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Assets\Scripts\SpriteOnStart.cs" />
     <Compile Include="Assets\Scripts\StatsPlayer.cs" />
     <Compile Include="Assets\Scripts\Thunderbolt.cs" />
+    <Compile Include="Assets\Scripts\Tornado.cs" />
     <Compile Include="Assets\Scripts\UsingSpell.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

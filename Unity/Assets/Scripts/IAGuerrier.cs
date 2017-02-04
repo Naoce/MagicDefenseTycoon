@@ -3,6 +3,12 @@ using System.Collections;
 
 public class IAGuerrier : MonoBehaviour 
 {
+    public enum EnemyType
+    {
+        Normal,
+        Player,
+        Objectif
+    };
     public  Sprite      leftIdle;
     public	Sprite 		left1;
 	public	Sprite 		left2;
@@ -44,6 +50,7 @@ public class IAGuerrier : MonoBehaviour
     public  Sprite      bot4;
 
     public GameObject   healthBarGreen;
+    public EnemyType    type;
 
     public 	GameObject	player;
     private GameObject  gm;
@@ -73,7 +80,6 @@ public class IAGuerrier : MonoBehaviour
     private Vector2     baseScale;
     private Vector2     newScale;
     private Vector2     initialScale;
-    public  bool        isDead;
     private bool        canMove = true;
     private bool        isFlying = false;
     private bool        isSlowed = false;
@@ -83,13 +89,16 @@ public class IAGuerrier : MonoBehaviour
     private bool        needToMove = true;
     public  GameObject  target = null;
     private int         lastDragonTaken = -1;
+    private int         lastTornadoTaken = -1;
+    public  bool        isBoss;
 
 	void Start () 
 	{
         initialScale = transform.localScale;
         gm = GameObject.Find("MapManager");
         currHP = maxHP;
-        baseScale = healthBarGreen.transform.localScale;
+        if (isBoss == false)
+            baseScale = healthBarGreen.transform.localScale;
 	}
 
 	void Update ()
@@ -129,7 +138,7 @@ public class IAGuerrier : MonoBehaviour
                     }
                 }
             }
-            if (isDead == false && player.GetComponent<Deplacements>().isDead == false &&
+            if (GetComponent<Enemy>().isDead == false && player.GetComponent<Deplacements>().isDead == false &&
                 canMove == true)
             {
                 target = FindClosestTarget();
@@ -148,7 +157,9 @@ public class IAGuerrier : MonoBehaviour
                     ((target.tag == "Player" &&
                     target.GetComponent<Deplacements>().isDead == false) || 
                     (target.tag == "AgentGuerrier" &&
-                    target.GetComponent<IAGuerrierAgent>().isDead == false)))
+                    target.GetComponent<IAGuerrierAgent>().isDead == false) ||
+                    (target.tag == "Defense" &&
+                    target.GetComponent<Defense>().isDead == false)))
                 {
                     needToMove = false;
                     if (canAttack == true)
@@ -429,6 +440,13 @@ public class IAGuerrier : MonoBehaviour
         {
             TakeDamageFromPlayer(other.GetComponent<DragonDeFeu>().damage, other.transform.position);
             lastDragonTaken = other.GetComponent<DragonDeFeu>().id;
+            Physics2D.IgnoreCollision(other.GetComponent<PolygonCollider2D>(), GetComponent<BoxCollider2D>());
+        }
+        else if (other.tag == "Tornado" &&
+                lastTornadoTaken != other.GetComponent<Tornado>().id)
+        {
+            Fly(other.GetComponent<Tornado>().CCDuration);
+            lastTornadoTaken = other.GetComponent<Tornado>().id;
             Physics2D.IgnoreCollision(other.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
         }
     }
@@ -438,22 +456,27 @@ public class IAGuerrier : MonoBehaviour
         currHP -= damageTaken;
         if (currHP < 0)
             currHP = 0;
-        float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
-        float diff;
-        diff = baseScale.x * currHP / maxHP;
-        newScale = new Vector2(diff, baseScale.y);
-        healthBarGreen.transform.localScale = newScale;
+        if (isBoss == false)
+        {
+            float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
+            float diff;
+            diff = baseScale.x * currHP / maxHP;
+            newScale = new Vector2(diff, baseScale.y);
+            healthBarGreen.transform.localScale = newScale;
 
-        float newValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
+            float newValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
 
-        float difference = newValue - originalValue;
+            float difference = newValue - originalValue;
 
-        healthBarGreen.transform.Translate(new Vector2(difference, 0));
+            healthBarGreen.transform.Translate(new Vector2(difference, 0));
+        }
+        else
+            gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().BossTakeDamage(currHP, maxHP);
 
         if (currHP == 0)
         {
             player.GetComponent<StatsPlayer>().EarnXP(valueXP);
-            isDead = true;
+            GetComponent<Enemy>().isDead = true;
             Destroy(GetComponent<BoxCollider2D>());
             Destroy(GetComponent<CircleCollider2D>());
             StartCoroutine(DeathAnimation(damagePos));
@@ -465,22 +488,28 @@ public class IAGuerrier : MonoBehaviour
         currHP -= damageTaken;
         if (currHP < 0)
             currHP = 0;
-        float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
-        float diff;
-        diff = baseScale.x * currHP / maxHP;
-        newScale = new Vector2(diff, baseScale.y);
-        healthBarGreen.transform.localScale = newScale;
+        if (isBoss == false)
+        {
+            float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
+            float diff;
+            diff = baseScale.x * currHP / maxHP;
+            newScale = new Vector2(diff, baseScale.y);
+            healthBarGreen.transform.localScale = newScale;
 
-        float newValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
+            float newValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
 
-        float difference = newValue - originalValue;
+            float difference = newValue - originalValue;
 
-        healthBarGreen.transform.Translate(new Vector2(difference, 0));
+            healthBarGreen.transform.Translate(new Vector2(difference, 0));
+        }
+        else
+            gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().BossTakeDamage(currHP, maxHP);
+
 
         if (currHP == 0)
         {
             go.GetComponent<IAGuerrierAgent>().EarnXP(valueXP);
-            isDead = true;
+            GetComponent<Enemy>().isDead = true;
             Destroy(GetComponent<BoxCollider2D>());
             Destroy(GetComponent<CircleCollider2D>());
             StartCoroutine(DeathAnimation(damagePos));
@@ -550,7 +579,8 @@ public class IAGuerrier : MonoBehaviour
         yield return new WaitForSeconds(0.08f);
 
         gm.GetComponent<MapManager>().PopEnemy(GetComponent<Enemy>().id);
-
+        if (isBoss == true)
+            gm.GetComponent<MapManager>().WinGame();
         Destroy(gameObject);
     }
 
@@ -590,6 +620,8 @@ public class IAGuerrier : MonoBehaviour
             player.GetComponent<StatsPlayer>().TakeDamage(damage, transform.position);
         else if (target.tag == "AgentGuerrier")
             target.GetComponent<IAGuerrierAgent>().TakeDamage(damage, transform.position);
+        else if (target.tag == "Defense")
+            target.GetComponent<Defense>().TakeDamage(damage);
         isAttacking = false;
         canAttack = false;
         timer = 0.09f;
@@ -607,24 +639,33 @@ public class IAGuerrier : MonoBehaviour
         float distanceNew;
         bool first = true;
 
-        foreach (GameObject go in gm.GetComponent<MapManager>().alliesList)
+        if (type == EnemyType.Normal)
         {
-            distanceNew = Vector2.Distance(transform.position, go.transform.position);
-            if (first == false)
+            foreach (GameObject go in gm.GetComponent<MapManager>().alliesList)
             {
-                if (distanceNew < distanceTarget)
+                distanceNew = Vector2.Distance(transform.position, go.transform.position);
+                if (first == false)
+                {
+                    if (distanceNew < distanceTarget)
+                    {
+                        distanceTarget = distanceNew;
+                        obj = go;
+                    }
+                }
+                else
                 {
                     distanceTarget = distanceNew;
                     obj = go;
+                    first = false;
                 }
             }
-            else
-            {
-                distanceTarget = distanceNew;
-                obj = go;
-                first = false;
-            }
         }
+        else if (type == EnemyType.Player)
+            return (player);
+        else if (type == EnemyType.Objectif)
+            return (gm.GetComponent<MapManager>().defense);
+
+
         return (obj);
     }
 }

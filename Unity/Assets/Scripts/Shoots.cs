@@ -20,6 +20,8 @@ public class Shoots : MonoBehaviour
 	public  GameObject	projectile;
     public  GameObject  thunderbolt;
     public  GameObject  thunderboltBase;
+    public  GameObject  tornado;
+    public  GameObject  tornadoBase;
     public  GameObject  iceShard;
     public  GameObject  meteor;
     public  GameObject  icePrison;
@@ -92,6 +94,7 @@ public class Shoots : MonoBehaviour
     private GameObject  cdObject1;
     private GameObject  cdObject2;
     private int         idSpell8 = 0;
+    private int         idSpell4 = 0;
 
     void Start()
     {
@@ -559,7 +562,7 @@ public class Shoots : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
             if (hit.collider != null)
             {
-                if (hit.collider.tag == "EnemyGuerrier")
+                if (hit.collider.tag == "EnemyGuerrier" || hit.collider.tag == "BossGuerrier" || hit.collider.tag == "Capture")
                 {
                     cdSpell2.GetComponent<Slider>().value = 1;
                     StartCoroutine(SpellFoudre(hit.collider.gameObject));
@@ -634,7 +637,7 @@ public class Shoots : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
             if (hit.collider != null)
             {
-                if (hit.collider.tag == "EnemyGuerrier")
+                if (hit.collider.tag == "EnemyGuerrier" || hit.collider.tag == "BossGuerrier" || hit.collider.tag == "Capture")
                 {
                     cdSpell6.GetComponent<Slider>().value = 1;
                     StartCoroutine(SpellPrisonGlace(hit.collider.gameObject));
@@ -782,7 +785,10 @@ public class Shoots : MonoBehaviour
             vectorTmp.y += 0.5f;
             GameObject obj2 = (GameObject)Instantiate(thunderboltBase, vectorTmp, transform.rotation);
             obj2.GetComponent<Thunderbolt>().enemy = go;
-            go.GetComponent<IAGuerrier>().TakeDamageFromPlayer(8, transform.position);
+            if (go.tag != "Capture")
+                go.GetComponent<IAGuerrier>().TakeDamageFromPlayer(8, transform.position);
+            else if (go.tag == "Capture")
+                go.GetComponent<Capture>().TakeDamage(8);
         }
     }
 
@@ -809,20 +815,26 @@ public class Shoots : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         foreach(GameObject go in mapManager.GetComponent<MapManager>().enemiesList)
         {
-            if (Vector2.Distance(go.transform.position, mousePos) < 1)
+            if (Vector2.Distance(go.transform.position, mousePos) < 1 &&
+                go.tag != "Capture")
                go.GetComponent<IAGuerrier>().TakeDamageFromPlayer(6, mousePos);
+            else if (Vector2.Distance(go.transform.position, mousePos) < 1 &&
+                go.tag == "Capture")
+                go.GetComponent<Capture>().TakeDamage(6);
         }
     }
 
     IEnumerator SpellTornade()
     {
         Vector2 mousePos = cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+        mousePos.y += 0.6f;
         yield return new WaitForSeconds(0.2f);
-        foreach (GameObject go in mapManager.GetComponent<MapManager>().enemiesList)
-        {
-            if (Vector2.Distance(go.transform.position, mousePos) < 1.5f)
-                go.GetComponent<IAGuerrier>().Fly(2);
-        }
+        Instantiate(tornadoBase, mousePos, transform.rotation);
+        yield return new WaitForSeconds(0.16f);
+        GameObject obj1 = (GameObject)Instantiate(tornado, mousePos, transform.rotation);
+        obj1.GetComponent<SpriteAnimTimer>().StartAnim(2);
+        obj1.GetComponent<Tornado>().id = idSpell4++;
+        obj1.GetComponent<Tornado>().CCDuration = 2;
     }
 
     IEnumerator SpellPrisonGlace(GameObject go)
@@ -834,8 +846,13 @@ public class Shoots : MonoBehaviour
             vectorTmp.y -= 0.2f;
             GameObject tmp = (GameObject)Instantiate(icePrison, vectorTmp, go.transform.rotation);
             tmp.GetComponent<SpriteAnimTimer>().StartAnim(2);
-            go.GetComponent<IAGuerrier>().TakeDamageFromPlayer(5, transform.position);
-            go.GetComponent<IAGuerrier>().ApplyCC(2);
+            if (go.tag != "Capture")
+            {
+                go.GetComponent<IAGuerrier>().TakeDamageFromPlayer(5, transform.position);
+                go.GetComponent<IAGuerrier>().ApplyCC(2);
+            }
+            else if (go.tag == "Capture")
+                go.GetComponent<Capture>().TakeDamage(5);
         }
     }
 
@@ -844,10 +861,16 @@ public class Shoots : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         foreach (GameObject go in mapManager.GetComponent<MapManager>().enemiesList)
         {
-            if (Vector2.Distance(go.transform.position, transform.position) < 2)
+            if (Vector2.Distance(go.transform.position, transform.position) < 2 &&
+                go.tag != "Capture")
             {
                 go.GetComponent<IAGuerrier>().TakeDamageFromPlayer(7, transform.position);
                 go.GetComponent<IAGuerrier>().ApplySlow(2f, 0.7f);
+            }
+            else if (Vector2.Distance(go.transform.position, transform.position) < 2 &&
+                go.tag == "Capture")
+            {
+                go.GetComponent<Capture>().TakeDamage(7);
             }
         }
     }

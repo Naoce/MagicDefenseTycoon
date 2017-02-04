@@ -65,12 +65,13 @@ public class PlayerManager : MonoBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
                 if (hit.collider != null)
                 {
-                    if (hit.collider.tag == "EnemyGuerrier" && cursorIsNormal == false)
+                    if ((hit.collider.tag == "EnemyGuerrier" || hit.collider.tag == "BossGuerrier") && cursorIsNormal == false)
                     {
                         SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
                         cursorIsNormal = true;
                     }
-                    else if (hit.collider.tag != "EnemyGuerrier" && cursorIsNormal == true)
+                    else if (hit.collider.tag != "EnemyGuerrier" && cursorIsNormal == true &&
+                            hit.collider.tag != "BossGuerrier")
                     {
                         SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
                         cursorIsNormal = false;
@@ -136,12 +137,13 @@ public class PlayerManager : MonoBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
                 if (hit.collider != null)
                 {
-                    if (hit.collider.tag == "EnemyGuerrier" && cursorIsNormal == false)
+                    if ((hit.collider.tag == "EnemyGuerrier" || hit.collider.tag == "BossGuerrier") && cursorIsNormal == false)
                     {
                         SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
                         cursorIsNormal = true;
                     }
-                    else if (hit.collider.tag != "EnemyGuerrier" && cursorIsNormal == true)
+                    else if (hit.collider.tag != "EnemyGuerrier" && cursorIsNormal == true &&
+                            hit.collider.tag != "BossGuerrier")
                     {
                         SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
                         cursorIsNormal = false;

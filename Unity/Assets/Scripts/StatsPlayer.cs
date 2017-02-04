@@ -38,7 +38,7 @@ public class StatsPlayer : MonoBehaviour
     public  int         damage;
     private int         currHP;
     private int         maxHP;
-    private int         currXP;
+    public  int         currXP;
     public  int         level;
     private Vector2     baseScale;
     private Vector2     newScale;
@@ -197,7 +197,8 @@ public class StatsPlayer : MonoBehaviour
             levelUp.SetActive(true);
             levelUp.GetComponent<AnimOnStart>().StartAnimationByScript();
             currXP -= gm.GetComponent<GameManager>().playerMaxXP[level - 1];
-            level++;
+            if (level < 15)
+                level++;
             textLevel.GetComponent<Text>().text = level.ToString();
             maxHP = gm.GetComponent<GameManager>().playerMaxHP[level - 1];
             Heal(5);

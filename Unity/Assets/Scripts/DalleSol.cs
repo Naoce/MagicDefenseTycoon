@@ -8,7 +8,7 @@ public class DalleSol : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "EnemyGuerrier")
+        if (other.tag == "EnemyGuerrier" || other.tag == "BossGuerrier")
         {
             float distanceNewPos = Vector2.Distance(other.GetComponent<IAGuerrier>().newPos, other.transform.position);
             float distanceAfter = Vector2.Distance(positionStart, other.GetComponent<IAGuerrier>().newPos);

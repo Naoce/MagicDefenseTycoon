@@ -19,8 +19,32 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().isInOptions = true;
     }
 
-    public void StartGame()
+    public void StartBoss()
     {
+        NewGame();
+        Application.LoadLevel("TestGameplay");
+        GetComponent<GameManager>().cam = GameObject.Find("Main Camera");
+    }
+
+    public void StartCapture()
+    {
+        NewGame();
+        Application.LoadLevel("GameplayCapture");
+        GetComponent<GameManager>().cam = GameObject.Find("Main Camera");
+    }
+
+    public void StartDefense()
+    {
+        NewGame();
+        Application.LoadLevel("GameplayDefense");
+        GetComponent<GameManager>().cam = GameObject.Find("Main Camera");
+    }
+
+    void NewGame()
+    {
+        GetComponent<GameManager>().capturePanel.SetActive(false);
+        GetComponent<GameManager>().defensePanel.SetActive(false);
+        GetComponent<GameManager>().bossPanel.SetActive(false);
         GetComponent<GameManager>().hudStar1.SetActive(false);
         GetComponent<GameManager>().hudStar2.SetActive(false);
         GetComponent<GameManager>().hudStar3.SetActive(false);
@@ -61,9 +85,7 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().gameOver = false;
         GetComponent<GameManager>().isInGame = true;
         GetComponent<GameManager>().panelMenu.SetActive(false);
-        GetComponent<GameManager>().hudInGame.SetActive(true);  
-        Application.LoadLevel("TestGameplay");
-        GetComponent<GameManager>().cam = GameObject.Find("Main Camera");
+        GetComponent<GameManager>().hudInGame.SetActive(true);
     }
 
     public void LeaveOptions()
@@ -73,47 +95,15 @@ public class Buttons : MonoBehaviour
 
     public void PlayAgain()
     {
-        GetComponent<GameManager>().hudStar1.SetActive(false);
-        GetComponent<GameManager>().hudStar2.SetActive(false);
-        GetComponent<GameManager>().hudStar3.SetActive(false);
-        GetComponent<GameManager>().hudVictory.SetActive(false);
-        GetComponent<GameManager>().hudDefeat.SetActive(false);
-        GetComponent<GameManager>().hudButtonTryAgain.SetActive(false);
-        GetComponent<GameManager>().hudButtonReturnToMenu.SetActive(false);
-        GetComponent<GameManager>().fioleRed.SetActive(false);
-        GetComponent<GameManager>().fioleOrange.SetActive(false);
-        GetComponent<GameManager>().fioleYellow.SetActive(false);
-        GetComponent<GameManager>().fioleGreen.SetActive(true);
-        GetComponent<GameManager>().agentLevel2.SetActive(false);
-        GetComponent<GameManager>().agentLevel3.SetActive(false);
-        GetComponent<GameManager>().agentLevel4.SetActive(false);
-        GetComponent<GameManager>().agentLevel5.SetActive(false);
-        GetComponent<GameManager>().agentLevel6.SetActive(false);
-        GetComponent<GameManager>().agentLevel7.SetActive(false);
-        GetComponent<GameManager>().agentLevel8.SetActive(false);
-        GetComponent<GameManager>().agentLevel9.SetActive(false);
-        GetComponent<GameManager>().agentLevel10.SetActive(false);
-        GetComponent<GameManager>().usingSpell1Icon.SetActive(false);
-        GetComponent<GameManager>().usingSpell2Icon.SetActive(false);
-        GetComponent<GameManager>().usingSpell3Icon.SetActive(false);
-        GetComponent<GameManager>().usingSpell4Icon.SetActive(false);
-        GetComponent<GameManager>().usingSpell5Icon.SetActive(false);
-        GetComponent<GameManager>().usingSpell6Icon.SetActive(false);
-        GetComponent<GameManager>().usingSpell7Icon.SetActive(false);
-        GetComponent<GameManager>().usingSpell8Icon.SetActive(false);
-        GetComponent<GameManager>().usingSpell1Icon.GetComponent<UsingSpell>().player = null;
-        GetComponent<GameManager>().usingSpell2Icon.GetComponent<UsingSpell>().player = null;
-        GetComponent<GameManager>().usingSpell3Icon.GetComponent<UsingSpell>().player = null;
-        GetComponent<GameManager>().usingSpell4Icon.GetComponent<UsingSpell>().player = null;
-        GetComponent<GameManager>().usingSpell5Icon.GetComponent<UsingSpell>().player = null;
-        GetComponent<GameManager>().usingSpell6Icon.GetComponent<UsingSpell>().player = null;
-        GetComponent<GameManager>().usingSpell7Icon.GetComponent<UsingSpell>().player = null;
-        GetComponent<GameManager>().usingSpell8Icon.GetComponent<UsingSpell>().player = null;
-        GetComponent<GameManager>().gamePaused = false;
-        GetComponent<GameManager>().gameOver = false;
-        GetComponent<GameManager>().isInGame = true;
-        Application.LoadLevel("TestGameplay");
+        NewGame();
+        if (Application.loadedLevel == 2)
+            Application.LoadLevel(2);
+        else if (Application.loadedLevel == 3)
+            Application.LoadLevel(3);
+        else if (Application.loadedLevel == 4)
+            Application.LoadLevel(4);
         Resume();
+
     }
 
     public void ReturnToMenu()
