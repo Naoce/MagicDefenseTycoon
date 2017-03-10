@@ -54,11 +54,8 @@ public class IAGuerrier : MonoBehaviour
 
     public 	GameObject	player;
     private GameObject  gm;
-    public  Vector2 	newPos = new Vector2(0, 0);
-    public  Vector2     obstaclePos = new Vector2(0, 0);
-    public  bool        isBypassing = false;
-    public  GameObject  lastObstacle = null;
-    public  int         lastObstacleCorner = 0;
+    public  Vector2     newPos;
+    public  GameObject  currFlag;
     private int         currentNumeroAnim = 1;
 	private	float		timer = 0f;
 	private float		animTime = 0.12f;
@@ -99,11 +96,15 @@ public class IAGuerrier : MonoBehaviour
         currHP = maxHP;
         if (isBoss == false)
             baseScale = healthBarGreen.transform.localScale;
-	}
+    }
 
 	void Update ()
 	{
-        if (gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().gamePaused == false)
+        
+        transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
+        if (Vector2.Distance(newPos, transform.position) < 0.05f)
+            newPos = GetComponent<AStar>().StartPathFinding(gm.GetComponent<MapManager>().player.transform.position);
+        /*if (gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().gamePaused == false)
         {
             if (isSlowed == true)
             {
@@ -142,7 +143,6 @@ public class IAGuerrier : MonoBehaviour
                 canMove == true)
             {
                 target = FindClosestTarget();
-                newPos = target.transform.position;
                 if (isAttacking == false &&
                     canAttack == false)
                 {
@@ -181,247 +181,125 @@ public class IAGuerrier : MonoBehaviour
                 if (isAttacking == false && needToMove == true)
                 {
                     timer += Time.deltaTime;
-                    if (transform.position.x == obstaclePos.x &&
-                            transform.position.y == obstaclePos.y)
-                        isBypassing = false;
-                    if (isBypassing == true)
+                    if (currFlag == null ||
+                        Vector2.Distance(newPos, transform.position) <= 0.05f)
                     {
-                        transform.position = Vector3.MoveTowards(transform.position, obstaclePos, Time.deltaTime * (speed - slow));
-                        if (timer > animTime &&
-                        (transform.position.y != obstaclePos.y ||
-                        transform.position.x != obstaclePos.x))
-                        {
-                            if ((!(obstaclePos.x - 0.5f < transform.position.x &&
-                                transform.position.x < obstaclePos.x + 0.5f) &&
-                                 transform.position.x > obstaclePos.x) || 
-                                 (transform.position.x > obstaclePos.x &&
-                                 Vector2.Distance(transform.position, obstaclePos) < 0.5f))
-                            {
-                                if (currentNumeroAnim == 1)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = left1;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 2)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = left2;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 3)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = left3;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 4)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = left4;
-                                    currentNumeroAnim++;
-                                }
-                            }
-                            else if ((!(obstaclePos.x - 0.5f < transform.position.x &&
-                                transform.position.x < obstaclePos.x + 0.5f) &&
-                                 transform.position.x < obstaclePos.x) ||
-                                    (transform.position.x < obstaclePos.x &&
-                                    Vector2.Distance(transform.position, obstaclePos) < 0.5f))
-                            {
-                                if (currentNumeroAnim == 1)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = right1;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 2)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = right2;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 3)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = right3;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 4)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = right4;
-                                    currentNumeroAnim++;
-                                }
-                            }
-                            else if (obstaclePos.y > transform.position.y)
-                            {
-                                if (currentNumeroAnim == 1)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = top1;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 2)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = top2;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 3)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = top3;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 4)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = top4;
-                                    currentNumeroAnim++;
-                                }
-                            }
-                            else if (obstaclePos.y < transform.position.y)
-                            {
-                                if (currentNumeroAnim == 1)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = bot1;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 2)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = bot2;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 3)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = bot3;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 4)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = bot4;
-                                    currentNumeroAnim++;
-                                }
-                            }
-                            if (currentNumeroAnim == 5)
-                                currentNumeroAnim = 1;
-                            timer = 0f;
-                        }
+                        currFlag = gm.GetComponent<MapManager>().GetClosestFlag(transform.position);
+                    //    newPos = currFlag.GetComponent<Flag>().GetNewFlagPos(target);
                     }
-                    else
+                    transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
+                    if (timer > animTime &&
+                    (transform.position.y != newPos.y ||
+                    transform.position.x != newPos.x))
                     {
-                        if (transform.position.x < target.transform.position.x)
+                        if ((!(newPos.x - 0.5f < transform.position.x &&
+                            transform.position.x < newPos.x + 0.5f) &&
+                             transform.position.x > newPos.x) ||
+                             (transform.position.x > newPos.x &&
+                             Vector2.Distance(transform.position, newPos) < 0.5f))
                         {
-                            rightSide = false;
-                            newPos = new Vector2(target.transform.position.x - 0.5f, target.transform.position.y);
+                            if (currentNumeroAnim == 1)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = left1;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 2)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = left2;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 3)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = left3;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 4)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = left4;
+                                currentNumeroAnim++;
+                            }
                         }
-                        else
+                        else if ((!(newPos.x - 0.5f < transform.position.x &&
+                            transform.position.x < newPos.x + 0.5f) &&
+                             transform.position.x < newPos.x) ||
+                                (transform.position.x < newPos.x &&
+                                Vector2.Distance(transform.position, newPos) < 0.5f))
                         {
-                            rightSide = true;
-                            newPos = new Vector2(target.transform.position.x + 0.5f, target.transform.position.y);
+                            if (currentNumeroAnim == 1)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = right1;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 2)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = right2;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 3)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = right3;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 4)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = right4;
+                                currentNumeroAnim++;
+                            }
                         }
-                        transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
-                        if (timer > animTime &&
-                        (transform.position.y != newPos.y ||
-                        transform.position.x != newPos.x))
+                        else if (newPos.y > transform.position.y)
                         {
-                            if (((rightSide == true &&
-                                newPos.x > transform.position.x) ||
-                                (rightSide == false &&
-                                newPos.x < transform.position.x)) &&
-                                newPos.y < transform.position.y)
+                            if (currentNumeroAnim == 1)
                             {
-                                if (currentNumeroAnim == 1)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = bot1;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 2)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = bot2;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 3)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = bot3;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 4)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = bot4;
-                                    currentNumeroAnim++;
-                                }
+                                GetComponent<SpriteRenderer>().sprite = top1;
+                                currentNumeroAnim++;
                             }
-                            else if (((rightSide == true &&
-                                newPos.x > transform.position.x) ||
-                                (rightSide == false &&
-                                newPos.x < transform.position.x)) &&
-                                newPos.y > transform.position.y)
+                            else if (currentNumeroAnim == 2)
                             {
-                                if (currentNumeroAnim == 1)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = top1;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 2)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = top2;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 3)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = top3;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 4)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = top4;
-                                    currentNumeroAnim++;
-                                }
+                                GetComponent<SpriteRenderer>().sprite = top2;
+                                currentNumeroAnim++;
                             }
-                            else if (newPos.x < transform.position.x)
+                            else if (currentNumeroAnim == 3)
                             {
-                                if (currentNumeroAnim == 1)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = left1;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 2)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = left2;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 3)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = left3;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 4)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = left4;
-                                    currentNumeroAnim++;
-                                }
+                                GetComponent<SpriteRenderer>().sprite = top3;
+                                currentNumeroAnim++;
                             }
-                            else
+                            else if (currentNumeroAnim == 4)
                             {
-                                if (currentNumeroAnim == 1)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = right1;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 2)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = right2;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 3)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = right3;
-                                    currentNumeroAnim++;
-                                }
-                                else if (currentNumeroAnim == 4)
-                                {
-                                    GetComponent<SpriteRenderer>().sprite = right4;
-                                    currentNumeroAnim++;
-                                }
+                                GetComponent<SpriteRenderer>().sprite = top4;
+                                currentNumeroAnim++;
                             }
-                            if (currentNumeroAnim == 5)
-                                currentNumeroAnim = 1;
-                            timer = 0f;
                         }
+                        else if (newPos.y < transform.position.y)
+                        {
+                            if (currentNumeroAnim == 1)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = bot1;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 2)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = bot2;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 3)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = bot3;
+                                currentNumeroAnim++;
+                            }
+                            else if (currentNumeroAnim == 4)
+                            {
+                                GetComponent<SpriteRenderer>().sprite = bot4;
+                                currentNumeroAnim++;
+                            }
+                        }
+                        if (currentNumeroAnim == 5)
+                            currentNumeroAnim = 1;
+                        timer = 0f;
                     }
                 }
             }
-        }
-	}
+        }*/
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -473,7 +351,7 @@ public class IAGuerrier : MonoBehaviour
         else
             gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().BossTakeDamage(currHP, maxHP);
 
-        if (currHP == 0)
+        if (currHP <= 0)
         {
             player.GetComponent<StatsPlayer>().EarnXP(valueXP);
             GetComponent<Enemy>().isDead = true;
@@ -508,11 +386,15 @@ public class IAGuerrier : MonoBehaviour
 
         if (currHP == 0)
         {
-            go.GetComponent<IAGuerrierAgent>().EarnXP(valueXP);
-            GetComponent<Enemy>().isDead = true;
-            Destroy(GetComponent<BoxCollider2D>());
-            Destroy(GetComponent<CircleCollider2D>());
-            StartCoroutine(DeathAnimation(damagePos));
+            if (gm.GetComponent<MapManager>().IsEnemyAlreadyDead(GetComponent<Enemy>().id) == false)
+            {
+                go.GetComponent<IAGuerrierAgent>().EarnXP(valueXP);
+                gm.GetComponent<MapManager>().FillDeadList(GetComponent<Enemy>().id);
+                GetComponent<Enemy>().isDead = true;
+                Destroy(GetComponent<BoxCollider2D>());
+                Destroy(GetComponent<CircleCollider2D>());
+                StartCoroutine(DeathAnimation(damagePos));
+            }
         }
     }
 

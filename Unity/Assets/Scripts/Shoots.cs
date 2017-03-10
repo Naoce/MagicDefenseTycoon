@@ -685,8 +685,11 @@ public class Shoots : MonoBehaviour
     {
         if (object1Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
-            GetComponent<Deplacements>().isAttacking == false)
+            GetComponent<Deplacements>().isAttacking == false &&
+            GetComponent<StatsPlayer>().stockHealthPotion > 0)
         {
+            GetComponent<StatsPlayer>().stockHealthPotion--;
+            gm.GetComponent<GameManager>().textStockHealthPotion.GetComponent<Text>().text = GetComponent<StatsPlayer>().stockHealthPotion.ToString();
             cdObject1.GetComponent<Slider>().value = 1;
             GetComponent<Deplacements>().isAttacking = true;
             GetComponent<Deplacements>().currentNumeroAnim = 1;
@@ -699,8 +702,11 @@ public class Shoots : MonoBehaviour
     {
         if (object2Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
-            GetComponent<Deplacements>().isAttacking == false)
+            GetComponent<Deplacements>().isAttacking == false &&
+            GetComponent<StatsPlayer>().stockManaPotion > 0)
         {
+            GetComponent<StatsPlayer>().stockManaPotion--;
+            gm.GetComponent<GameManager>().textStockManaPotion.GetComponent<Text>().text = GetComponent<StatsPlayer>().stockManaPotion.ToString();
             cdObject2.GetComponent<Slider>().value = 1;
             GetComponent<Deplacements>().isAttacking = true;
             GetComponent<Deplacements>().currentNumeroAnim = 1;

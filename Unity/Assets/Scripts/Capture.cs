@@ -21,8 +21,12 @@ public class Capture : MonoBehaviour
         mapManager.GetComponent<MapManager>().gm.GetComponent<GameManager>().CaptureTakeDamage(currHP, maxHP);
         if (currHP == 0)
         {
-            GetComponent<Enemy>().isDead = true;
-            StartCoroutine(DeathAnimation());
+            if (mapManager.GetComponent<MapManager>().IsEnemyAlreadyDead(GetComponent<Enemy>().id) == false)
+            {
+                mapManager.GetComponent<MapManager>().FillDeadList(GetComponent<Enemy>().id);
+                GetComponent<Enemy>().isDead = true;
+                StartCoroutine(DeathAnimation());
+            }
         }
     }
 

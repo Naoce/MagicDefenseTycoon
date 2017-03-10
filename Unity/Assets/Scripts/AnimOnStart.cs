@@ -49,8 +49,8 @@ public class AnimOnStart : MonoBehaviour
 
     public void StartAnimationByScript()
     {
-        //if (gameObject.active)
-        StartCoroutine(StartAnimation());
+        if (gameObject.active)
+            StartCoroutine(StartAnimation());
     }
 
     public void SetAnimNb(int nb)

@@ -44,10 +44,33 @@ public class StatsPlayer : MonoBehaviour
     private Vector2     newScale;
     public  int         animFiole;
     private Fiole       fioleState = Fiole.GREEN;
+    public  int         stockHealthPotion;
+    public  int         stockManaPotion;
 
     void Start ()
     {
         gm = GameObject.Find("GameManager");
+        if (gm.GetComponent<GameManager>().currSave == 1)
+        {
+            level = PlayerPrefs.GetInt("Load1PlayerLevel");
+            currXP = PlayerPrefs.GetInt("Load1PlayerXP");
+            stockHealthPotion = PlayerPrefs.GetInt("Load1PlayerStockHealthPotion");
+            stockManaPotion = PlayerPrefs.GetInt("Load1PlayerStockManaPotion");
+        }
+        else if (gm.GetComponent<GameManager>().currSave == 2)
+        {
+            level = PlayerPrefs.GetInt("Load2PlayerLevel");
+            currXP = PlayerPrefs.GetInt("Load2PlayerXP");
+            stockHealthPotion = PlayerPrefs.GetInt("Load2PlayerStockHealthPotion");
+            stockManaPotion = PlayerPrefs.GetInt("Load2PlayerStockManaPotion");
+        }
+        else if (gm.GetComponent<GameManager>().currSave == 3)
+        {
+            level = PlayerPrefs.GetInt("Load3PlayerLevel");
+            currXP = PlayerPrefs.GetInt("Load3PlayerXP");
+            stockHealthPotion = PlayerPrefs.GetInt("Load3PlayerStockHealthPotion");
+            stockManaPotion = PlayerPrefs.GetInt("Load3PlayerStockManaPotion");
+        }
         textHP = gm.GetComponent<GameManager>().textHP;
         textXP = gm.GetComponent<GameManager>().textXP;
         textLevel = gm.GetComponent<GameManager>().textLevel;
@@ -61,21 +84,26 @@ public class StatsPlayer : MonoBehaviour
         levelUp.SetActive(false);
         fioleGreen.GetComponent<AnimOnStart>().player = this.gameObject;
         fioleGreen.GetComponent<AnimOnStart>().StartAnimationByScript();
-        level = gm.GetComponent<GameManager>().playerLevel;
+        if (level == 0)
+            level = 1;
+        textLevel.GetComponent<Text>().text = level.ToString();
         damage = gm.GetComponent<GameManager>().playerDamage;
         maxHP = gm.GetComponent<GameManager>().playerMaxHP[level - 1];
         currHP = maxHP;
-        currXP = gm.GetComponent<GameManager>().playerXP;
         textHP.GetComponent<Text>().text = currHP + " / " + maxHP;
         textXP.GetComponent<Text>().text = currXP + " / " + gm.GetComponent<GameManager>().playerMaxXP[level - 1];
         Heal(0);
         textXP.GetComponent<Text>().text = currXP + " / " + gm.GetComponent<GameManager>().playerMaxXP[level - 1];
         xpBar.value = (float)currXP / (float)gm.GetComponent<GameManager>().playerMaxXP[level - 1];
+        gm.GetComponent<GameManager>().textStockHealthPotion.GetComponent<Text>().text = GetComponent<StatsPlayer>().stockHealthPotion.ToString();
+        gm.GetComponent<GameManager>().textStockManaPotion.GetComponent<Text>().text = GetComponent<StatsPlayer>().stockManaPotion.ToString();
     }
 
     public void     TakeDamage(int damageTaken, Vector2 directionPos)
     {
         currHP -= damageTaken;
+        if (currHP < 0)
+            currHP = 0;
         healthBarGreen.value = (float)currHP / (float)gm.GetComponent<GameManager>().playerMaxHP[level - 1];
         textHP.GetComponent<Text>().text = currHP + " / " + gm.GetComponent<GameManager>().playerMaxHP[level - 1];
         if (healthBarGreen.value > 0.75 &&
@@ -127,7 +155,7 @@ public class StatsPlayer : MonoBehaviour
             fioleGreen.SetActive(false);
             fioleState = Fiole.RED;
         }
-        if (currHP == 0)
+        if (currHP <= 0)
         {
             GetComponent<Deplacements>().isDead = true;
             StartCoroutine(DeathAnimation(directionPos));

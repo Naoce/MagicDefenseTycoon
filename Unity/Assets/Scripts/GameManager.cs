@@ -5,6 +5,21 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public  bool            load1Created;
+    public  GameObject      inputFieldLoad1Name;
+    public  GameObject      load1Name;
+
+    public  bool            load2Created;
+    public  GameObject      inputFieldLoad2Name;
+    public  GameObject      load2Name;
+
+    public  bool            load3Created;
+    public  GameObject      inputFieldLoad3Name;
+    public  GameObject      load3Name;
+
+    public  GameObject      bulleInfoCreateSave;
+    public  int             currSave;
+
     public  GameObject      cam;
     public  GameObject      jingleDefaite;
     public  GameObject      jingleVictoire;
@@ -12,10 +27,9 @@ public class GameManager : MonoBehaviour
     public  GameObject      textNbEnemy;
     public  int[]           playerMaxHP = new int[15];
     public  int[]           playerMaxXP = new int[15];
-    public  int[]           agentMaxHP = new int[10];
+    public  int[]           agentType0MaxHP = new int[10];
     public  int[]           agentMaxXP = new int[10];
-    public  int             playerXP;
-    public  int             playerLevel;
+    public  GameObject[]    tabAgents = new GameObject[4];
     public  int             playerDamage;
     public  Texture2D       cursorNormal;
     public  CursorMode      cursorMode;
@@ -29,6 +43,7 @@ public class GameManager : MonoBehaviour
     public  bool            isInMenu;
     public  bool            isInOptions;
     public  bool            bloodless;
+    public  bool            showSpellsInfo;
 
     public  GameObject      bossPanel;
     public  Slider          bossHealth;
@@ -63,22 +78,37 @@ public class GameManager : MonoBehaviour
     public  GameObject      hudStar3;
     public  GameObject      hudButtonTryAgain;
     public  GameObject      hudButtonReturnToMenu;
+    public  GameObject      panelSave;
     public  GameObject      panelMenu;
     public  GameObject      hudPanelMenu;
     public  GameObject      hudPanelOptions;
+    public  GameObject      textStockHealthPotion;
+    public  GameObject      textStockManaPotion;
+
+    public  GameObject      agent1Panel;
+    public  GameObject[]    agent1Levels = new GameObject[10];
     public  GameObject      levelUpAgent1;
-    public  Slider          agenthealthBarGreenHUD;
-    public  Slider          agentxpBarHUD;
-    public  GameObject      agentLevel1;
-    public  GameObject      agentLevel2;
-    public  GameObject      agentLevel3;
-    public  GameObject      agentLevel4;
-    public  GameObject      agentLevel5;
-    public  GameObject      agentLevel6;
-    public  GameObject      agentLevel7;
-    public  GameObject      agentLevel8;
-    public  GameObject      agentLevel9;
-    public  GameObject      agentLevel10;
+    public  Slider          agent1healthBarGreenHUD;
+    public  Slider          agent1xpBarHUD;
+
+    public  GameObject      agent2Panel;
+    public  GameObject[]    agent2Levels = new GameObject[10];
+    public  GameObject      levelUpAgent2;
+    public  Slider          agent2healthBarGreenHUD;
+    public  Slider          agent2xpBarHUD;
+
+    public GameObject       agent3Panel;
+    public GameObject[]     agent3Levels = new GameObject[10];
+    public GameObject       levelUpAgent3;
+    public Slider           agent3healthBarGreenHUD;
+    public Slider           agent3xpBarHUD;
+
+    public GameObject       agent4Panel;
+    public GameObject[]     agent4Levels = new GameObject[10];
+    public GameObject       levelUpAgent4;
+    public Slider           agent4healthBarGreenHUD;
+    public Slider           agent4xpBarHUD;
+
     public  GameObject      bulleInfoSpell1;
     public  GameObject      bulleInfoSpell2;
     public  GameObject      bulleInfoSpell3;
@@ -104,6 +134,21 @@ public class GameManager : MonoBehaviour
     {
         cam = GameObject.Find("Main Camera");
         SetNormalMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+        if (PlayerPrefs.GetInt("Load1Created") == 1)
+        {
+            load1Created = true;
+            load1Name.GetComponent<Text>().text = PlayerPrefs.GetString("Load1Name");
+        }
+        if (PlayerPrefs.GetInt("Load2Created") == 1)
+        {
+            load2Created = true;
+            load2Name.GetComponent<Text>().text = PlayerPrefs.GetString("Load2Name");
+        }
+        if (PlayerPrefs.GetInt("Load3Created") == 1)
+        {
+            load3Created = true;
+            load3Name.GetComponent<Text>().text = PlayerPrefs.GetString("Load3Name");
+        }
     }
 
     public void SetNormalMouse(Vector2 pos)
@@ -113,7 +158,8 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveBulleInfoSpell1()
     {
-        bulleInfoSpell1.SetActive(true);
+        if (showSpellsInfo == true)
+            bulleInfoSpell1.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell1()
@@ -123,7 +169,8 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveBulleInfoSpell2()
     {
-        bulleInfoSpell2.SetActive(true);
+        if (showSpellsInfo == true)
+            bulleInfoSpell2.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell2()
@@ -133,7 +180,8 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveBulleInfoSpell3()
     {
-        bulleInfoSpell3.SetActive(true);
+        if (showSpellsInfo == true)
+            bulleInfoSpell3.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell3()
@@ -143,7 +191,8 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveBulleInfoSpell4()
     {
-        bulleInfoSpell4.SetActive(true);
+        if (showSpellsInfo == true)
+            bulleInfoSpell4.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell4()
@@ -153,7 +202,8 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveBulleInfoSpell5()
     {
-        bulleInfoSpell5.SetActive(true);
+        if (showSpellsInfo == true)
+            bulleInfoSpell5.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell5()
@@ -163,7 +213,8 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveBulleInfoSpell6()
     {
-        bulleInfoSpell6.SetActive(true);
+        if (showSpellsInfo == true)
+            bulleInfoSpell6.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell6()
@@ -173,7 +224,8 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveBulleInfoSpell7()
     {
-        bulleInfoSpell7.SetActive(true);
+        if (showSpellsInfo == true)
+            bulleInfoSpell7.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell7()
@@ -183,17 +235,20 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveBulleInfoSpell8()
     {
-        bulleInfoSpell8.SetActive(true);
+        if (showSpellsInfo == true)
+            bulleInfoSpell8.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell8()
     {
-        bulleInfoSpell8.SetActive(false);
+        if (showSpellsInfo == true)
+            bulleInfoSpell8.SetActive(false);
     }
 
     public void SetActiveBulleInfoObject1()
     {
-        bulleInfoObject1.SetActive(true);
+        if (showSpellsInfo == true)
+            bulleInfoObject1.SetActive(true);
     }
 
     public void SetInactiveBulleInfoObject1()
@@ -203,7 +258,8 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveBulleInfoObject2()
     {
-        bulleInfoObject2.SetActive(true);
+        if (showSpellsInfo == true)
+            bulleInfoObject2.SetActive(true);
     }
 
     public void SetInactiveBulleInfoObject2()
