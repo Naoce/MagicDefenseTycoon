@@ -100,9 +100,10 @@ public class IAGuerrier : MonoBehaviour
 
 	void Update ()
 	{
-        
+        target = FindClosestTarget();
         transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
-        if (Vector2.Distance(newPos, transform.position) < 0.05f)
+        if (Vector2.Distance(newPos, transform.position) < 0.05f &&
+            Vector2.Distance(target.transform.position, transform.position) > 0.5f)
             newPos = GetComponent<AStar>().StartPathFinding(gm.GetComponent<MapManager>().player.transform.position);
         /*if (gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().gamePaused == false)
         {
@@ -546,7 +547,6 @@ public class IAGuerrier : MonoBehaviour
             return (player);
         else if (type == EnemyType.Objectif)
             return (gm.GetComponent<MapManager>().defense);
-
 
         return (obj);
     }
