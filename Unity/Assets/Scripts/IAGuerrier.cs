@@ -55,7 +55,6 @@ public class IAGuerrier : MonoBehaviour
     public 	GameObject	player;
     private GameObject  gm;
     public  Vector2     newPos;
-    public  GameObject  currFlag;
     private int         currentNumeroAnim = 1;
 	private	float		timer = 0f;
 	private float		animTime = 0.12f;
@@ -100,12 +99,7 @@ public class IAGuerrier : MonoBehaviour
 
 	void Update ()
 	{
-        target = FindClosestTarget();
-        transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
-        if (Vector2.Distance(newPos, transform.position) < 0.05f &&
-            Vector2.Distance(target.transform.position, transform.position) > 0.5f)
-            newPos = GetComponent<AStar>().StartPathFinding(gm.GetComponent<MapManager>().player.transform.position);
-        /*if (gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().gamePaused == false)
+        if (gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().gamePaused == false)
         {
             if (isSlowed == true)
             {
@@ -182,11 +176,11 @@ public class IAGuerrier : MonoBehaviour
                 if (isAttacking == false && needToMove == true)
                 {
                     timer += Time.deltaTime;
-                    if (currFlag == null ||
-                        Vector2.Distance(newPos, transform.position) <= 0.05f)
+                    if (Vector2.Distance(newPos, transform.position) <= 0.05f ||
+                        Vector2.Distance(transform.position, target.transform.position) <= 2f)
                     {
-                        currFlag = gm.GetComponent<MapManager>().GetClosestFlag(transform.position);
-                    //    newPos = currFlag.GetComponent<Flag>().GetNewFlagPos(target);
+                        target = FindClosestTarget();
+                        newPos = GetComponent<AStar>().StartPathFinding(target.transform.position);
                     }
                     transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
                     if (timer > animTime &&
@@ -299,7 +293,7 @@ public class IAGuerrier : MonoBehaviour
                     }
                 }
             }
-        }*/
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)

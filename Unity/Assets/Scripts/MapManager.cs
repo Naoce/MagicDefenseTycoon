@@ -198,7 +198,7 @@ public class MapManager : MonoBehaviour
                 else
                 {
                     spawnLeft = true;
-                    InstantiateGuerrierPlayer(posRight);
+                    InstantiateGuerrierPlayer(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
                 }
             }
         }
@@ -210,6 +210,8 @@ public class MapManager : MonoBehaviour
             obj = (GameObject)Instantiate(EnemyBossGuerrier, posBoss, transform.rotation);
             obj.GetComponent<Enemy>().id = idGen++;
             obj.GetComponent<IAGuerrier>().player = player;
+            obj.GetComponent<IAGuerrier>().newPos = new Vector2(posBoss.x, posBoss.y - 0.5f);
+
             enemiesList.Add(obj);
             gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
             canSpawn = false;
@@ -256,7 +258,7 @@ public class MapManager : MonoBehaviour
                 else
                 {
                     spawnLeft = true;
-                    InstantiateGuerrierPlayer(posRight);
+                    InstantiateGuerrierPlayer(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
                 }
             }
         }
@@ -295,7 +297,7 @@ public class MapManager : MonoBehaviour
                 else
                 {
                     spawnLeft = true;
-                    InstantiateGuerrierObjectif(posRight);
+                    InstantiateGuerrierObjectif(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
                 }
             }
         }
@@ -568,26 +570,28 @@ public class MapManager : MonoBehaviour
             canSpawn = false;
     }
 
-    void InstantiateGuerrierPlayer(Vector2 pos)
+    void InstantiateGuerrierPlayer(Vector2 pos, Vector2 targetPos)
     {
         GameObject obj = null;
 
         obj = (GameObject)Instantiate(EnemyGuerrierPlayer, pos, transform.rotation);
         obj.GetComponent<Enemy>().id = idGen++;
         obj.GetComponent<IAGuerrier>().player = player;
+        obj.GetComponent<IAGuerrier>().newPos = targetPos;
         enemiesList.Add(obj);
         gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
         if (idGen > maxIdGen && type == MapType.Defense)
             canSpawn = false;
     }
 
-    void InstantiateGuerrierObjectif(Vector2 pos)
+    void InstantiateGuerrierObjectif(Vector2 pos, Vector2 targetPos)
     {
         GameObject obj = null;
 
         obj = (GameObject)Instantiate(EnemyGuerrierCapture, pos, transform.rotation);
         obj.GetComponent<Enemy>().id = idGen++;
         obj.GetComponent<IAGuerrier>().player = player;
+        obj.GetComponent<IAGuerrier>().newPos = targetPos;
         enemiesList.Add(obj);
         gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
         if (idGen > maxIdGen && type == MapType.Defense)
@@ -602,26 +606,6 @@ public class MapManager : MonoBehaviour
     public void DesactivateBlood()
     {
         Destroy(bloodObj.gameObject);
-    }
-
-    public GameObject GetClosestFlag(Vector2 posObj)
-    {
-        GameObject flagReturn = null;
-       /* float shortestDistance = 0;
-        float distance;
-
-        for (int i = 0; i < flagsList.Count; i++)
-        {
-            distance = Vector2.Distance(flagsList[i].transform.position, posObj);
-            if (i == 0 ||
-                distance < shortestDistance)
-            {
-                shortestDistance = distance;
-                flagReturn = flagsList[i];
-            }
-        }
-        */
-        return (flagReturn);
     }
 
     IEnumerator Map1()

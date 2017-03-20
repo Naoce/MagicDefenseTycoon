@@ -4,9 +4,13 @@ using System.Collections.Generic;
 
 public class AStar : MonoBehaviour
 {
+    public  GameObject          checkPath;
     private GameObject[][]      tabNodes = null;
-    public List<GameObject>     openList = new List<GameObject>();
-    public List<GameObject>     closedList = new List<GameObject>();
+    public  List<GameObject>    openList = new List<GameObject>();
+    public  List<GameObject>    closedList = new List<GameObject>();
+    private bool                directPath;
+    private bool                knowIfPathClear;
+    private GameObject          returnNode;
     private int                 targetX;
     private int                 targetY;
     private int                 initialID;
@@ -21,6 +25,7 @@ public class AStar : MonoBehaviour
     private int                 yTmp;
     private int                 targetI;
 
+
     private void Start()
     {
         mapManager = GameObject.Find("MapManager");
@@ -28,6 +33,38 @@ public class AStar : MonoBehaviour
     }
 
     public Vector2 StartPathFinding(Vector2 targetPos)
+    {
+        /*if (Vector2.Distance(targetPos, transform.position) < 2f)
+        {
+            directPath = false;
+            knowIfPathClear = false;
+
+            GameObject obj = (GameObject)Instantiate(checkPath, transform.position, transform.rotation);
+            obj.GetComponent<CheckPath>().parentAStar = gameObject;
+            obj.GetComponent<CheckPath>().target = targetPos;
+
+            float timer = 0f;
+            while (timer < 0.03f)
+            {
+                timer += Time.deltaTime;
+            }
+
+            if (directPath == true)
+                return (targetPos);
+            else
+                return (FindPath(targetPos));
+        }
+        else*/
+            return (FindPath(targetPos));
+    }
+
+    public void SetDirectPath(bool path)
+    {
+        knowIfPathClear = true;
+        directPath = path;
+    }
+
+    private Vector2 FindPath(Vector2 targetPos)
     {
         openList.Clear();
         closedList.Clear();
@@ -46,10 +83,12 @@ public class AStar : MonoBehaviour
             FillClosedList();
         }
 
-        GameObject returnNode = closedList[targetI];
+        returnNode = closedList[targetI];
 
         if (returnNode.GetComponent<Node>().parent.GetComponent<Node>().id == initialID)
-            return (new Vector2(tabNodes[selfY][selfX].transform.position.x, tabNodes[selfY][selfX].transform.position.y));
+        {
+            return (targetPos);
+        }
 
         while (returnNode.GetComponent<Node>().parent.GetComponent<Node>().id != initialID)
         {
