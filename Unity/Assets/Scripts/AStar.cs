@@ -8,6 +8,8 @@ public class AStar : MonoBehaviour
     private GameObject[][]      tabNodes = null;
     public  List<GameObject>    openList = new List<GameObject>();
     public  List<GameObject>    closedList = new List<GameObject>();
+    public  IAGuerrier.EnemyType type;
+    private bool                cantFind;
     private bool                directPath;
     private bool                knowIfPathClear;
     private GameObject          returnNode;
@@ -29,7 +31,7 @@ public class AStar : MonoBehaviour
     private void Start()
     {
         mapManager = GameObject.Find("MapManager");
-        tabNodes = mapManager.GetComponent<MapManager>().tabNodes;
+        tabNodes = mapManager.GetComponent<MapManager>().GetTabNodes();
     }
 
     public Vector2 StartPathFinding(Vector2 targetPos)
@@ -69,6 +71,7 @@ public class AStar : MonoBehaviour
         openList.Clear();
         closedList.Clear();
         targetFound = false;
+        cantFind = false;
 
         FindTargetClosestNode(targetPos);
 
@@ -81,6 +84,8 @@ public class AStar : MonoBehaviour
         {
             FillOpenList(xTmp, yTmp);
             FillClosedList();
+            if (cantFind == true)
+                return (transform.position);
         }
 
         returnNode = closedList[targetI];
@@ -213,6 +218,12 @@ public class AStar : MonoBehaviour
         int nodeID = 0;
         int lowestF = 10000;
 
+        if (openList.Count == 0)
+        {
+            cantFind = true;
+            return;
+        }
+
         for (int j = 0; j < openList.Count; j++)
         {
             if (j == 0 ||
@@ -253,7 +264,10 @@ public class AStar : MonoBehaviour
         int y = 0;
         int i = 0;
         float distance = 0;
+        float selfDistance = 0;
         float closestDistance = 10000;
+        float selfClosestDistance = 10000;
+
         maxX = mapManager.GetComponent<MapManager>().tabNodesMaxX;
         maxY = mapManager.GetComponent<MapManager>().tabNodesMaxY;
 
@@ -279,8 +293,10 @@ public class AStar : MonoBehaviour
                         targetY = y;
                         targetID = tabNodes[y][x].GetComponent<Node>().id;
                     }
-                    if (Vector2.Distance(tabNodes[y][x].transform.position, transform.position) < 0.05f)
+                    selfDistance = Vector2.Distance(tabNodes[y][x].transform.position, transform.position);
+                    if (selfDistance < selfClosestDistance)
                     {
+                        selfClosestDistance = selfDistance;
                         selfX = x;
                         selfY = y;
                         initialID = tabNodes[y][x].GetComponent<Node>().id;

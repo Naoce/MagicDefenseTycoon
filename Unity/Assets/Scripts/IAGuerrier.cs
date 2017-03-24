@@ -180,7 +180,8 @@ public class IAGuerrier : MonoBehaviour
                         Vector2.Distance(transform.position, target.transform.position) <= 2f)
                     {
                         target = FindClosestTarget();
-                        newPos = GetComponent<AStar>().StartPathFinding(target.transform.position);
+                        if (target != null)
+                            newPos = GetComponent<AStar>().StartPathFinding(target.transform.position);
                     }
                     transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
                     if (timer > animTime &&
@@ -520,20 +521,24 @@ public class IAGuerrier : MonoBehaviour
         {
             foreach (GameObject go in gm.GetComponent<MapManager>().alliesList)
             {
-                distanceNew = Vector2.Distance(transform.position, go.transform.position);
-                if (first == false)
+                if (go.gameObject == player.gameObject ||
+                    go.GetComponent<IAGuerrierAgent>().isDead == false)
                 {
-                    if (distanceNew < distanceTarget)
+                    distanceNew = Vector2.Distance(transform.position, go.transform.position);
+                    if (first == false)
+                    {
+                        if (distanceNew < distanceTarget)
+                        {
+                            distanceTarget = distanceNew;
+                            obj = go;
+                        }
+                    }
+                    else
                     {
                         distanceTarget = distanceNew;
                         obj = go;
+                        first = false;
                     }
-                }
-                else
-                {
-                    distanceTarget = distanceNew;
-                    obj = go;
-                    first = false;
                 }
             }
         }

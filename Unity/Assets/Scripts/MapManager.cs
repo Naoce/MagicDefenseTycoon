@@ -17,7 +17,7 @@ public class MapManager : MonoBehaviour
     public  GameObject          capture;
     public  GameObject          defense;
     public  GameObject          playerManager;
-    public  GameObject[][]      tabNodes;
+    private GameObject[][]      tabNodes;
     public  int                 tabNodesMaxX;
     public  int                 tabNodesMaxY;
     public  List<GameObject>    flagsList = new List<GameObject>();
@@ -640,6 +640,11 @@ public class MapManager : MonoBehaviour
         obj2.GetComponent<IAGuerrier>().player = player;
         enemiesList.Add(obj2);
         gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
+    }
+
+    public GameObject[][] GetTabNodes()
+    {
+        return (tabNodes);
     }
 
     private void FillTabNodes()
