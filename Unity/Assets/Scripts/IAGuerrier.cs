@@ -7,54 +7,33 @@ public class IAGuerrier : MonoBehaviour
     {
         Normal,
         Player,
-        Objectif
+        Objectif,
+        Magician
     };
+
+    public  Sprite[]    leftSprites;
     public  Sprite      leftIdle;
-    public	Sprite 		left1;
-	public	Sprite 		left2;
-	public	Sprite 		left3;
-	public	Sprite 		left4;
-    public  Sprite      leftDeath1;
-    public  Sprite      leftDeath2;
-    public  Sprite      leftDeath3;
-    public  Sprite      leftDeath4;
-    public  Sprite      leftDeath5;
-    public  Sprite      leftAttack1;
-    public  Sprite      leftAttack2;
-    public  Sprite      leftAttack3;
+    public  Sprite[]    leftDeathSprites;
+    public  Sprite[]    leftAttackSprites;
 
+    public  Sprite[]    rightSprites;
     public  Sprite      rightIdle;
-    public	Sprite 		right1;
-	public	Sprite 		right2;
-	public	Sprite 		right3;
-	public	Sprite 		right4;
-    public  Sprite      rightDeath1;
-    public  Sprite      rightDeath2;
-    public  Sprite      rightDeath3;
-    public  Sprite      rightDeath4;
-    public  Sprite      rightDeath5;
-    public  Sprite      rightAttack1;
-    public  Sprite      rightAttack2;
-    public  Sprite      rightAttack3;
+    public  Sprite[]    rightDeathSprites;
+    public  Sprite[]    rightAttackSprites;
 
+    public  Sprite[]    topSprites;
     public  Sprite      topIdle;
-    public  Sprite      top1;
-    public  Sprite      top2;
-    public  Sprite      top3;
-    public  Sprite      top4;
 
+    public  Sprite[]    botSprites;
     public  Sprite      botIdle;
-    public  Sprite      bot1;
-    public  Sprite      bot2;
-    public  Sprite      bot3;
-    public  Sprite      bot4;
 
-    public GameObject   healthBarGreen;
-    public EnemyType    type;
+    public  GameObject  healthBarGreen;
+    public  EnemyType   type;
 
     public 	GameObject	player;
     private GameObject  gm;
     public  Vector2     newPos;
+    public  float       range;
     private int         currentNumeroAnim = 1;
 	private	float		timer = 0f;
 	private float		animTime = 0.12f;
@@ -148,7 +127,7 @@ public class IAGuerrier : MonoBehaviour
                         canAttack = true;
                     }
                 }
-                if (Vector2.Distance(target.transform.position, transform.position) <= 0.51f &&
+                if (Vector2.Distance(target.transform.position, transform.position) <= range &&
                     ((target.tag == "Player" &&
                     target.GetComponent<Deplacements>().isDead == false) || 
                     (target.tag == "AgentGuerrier" &&
@@ -177,7 +156,7 @@ public class IAGuerrier : MonoBehaviour
                 {
                     timer += Time.deltaTime;
                     if (Vector2.Distance(newPos, transform.position) <= 0.05f ||
-                        Vector2.Distance(transform.position, target.transform.position) <= 2f)
+                        Vector2.Distance(transform.position, target.transform.position) <= 1f)
                     {
                         target = FindClosestTarget();
                         if (target != null)
@@ -192,104 +171,28 @@ public class IAGuerrier : MonoBehaviour
                             transform.position.x < newPos.x + 0.5f) &&
                              transform.position.x > newPos.x) ||
                              (transform.position.x > newPos.x &&
-                             Vector2.Distance(transform.position, newPos) < 0.5f))
+                             Vector2.Distance(transform.position, newPos) < 0.55f))
                         {
-                            if (currentNumeroAnim == 1)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = left1;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 2)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = left2;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 3)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = left3;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 4)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = left4;
-                                currentNumeroAnim++;
-                            }
+                            GetComponent<SpriteRenderer>().sprite = leftSprites[currentNumeroAnim++];
                         }
                         else if ((!(newPos.x - 0.5f < transform.position.x &&
                             transform.position.x < newPos.x + 0.5f) &&
                              transform.position.x < newPos.x) ||
                                 (transform.position.x < newPos.x &&
-                                Vector2.Distance(transform.position, newPos) < 0.5f))
+                                Vector2.Distance(transform.position, newPos) < 0.55f))
                         {
-                            if (currentNumeroAnim == 1)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = right1;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 2)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = right2;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 3)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = right3;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 4)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = right4;
-                                currentNumeroAnim++;
-                            }
+                            GetComponent<SpriteRenderer>().sprite = rightSprites[currentNumeroAnim++];
                         }
                         else if (newPos.y > transform.position.y)
                         {
-                            if (currentNumeroAnim == 1)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top1;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 2)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top2;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 3)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top3;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 4)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top4;
-                                currentNumeroAnim++;
-                            }
+                            GetComponent<SpriteRenderer>().sprite = topSprites[currentNumeroAnim++];
                         }
                         else if (newPos.y < transform.position.y)
                         {
-                            if (currentNumeroAnim == 1)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot1;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 2)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot2;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 3)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot3;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 4)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot4;
-                                currentNumeroAnim++;
-                            }
+                            GetComponent<SpriteRenderer>().sprite = botSprites[currentNumeroAnim++];
                         }
-                        if (currentNumeroAnim == 5)
-                            currentNumeroAnim = 1;
+                        if (currentNumeroAnim == leftSprites.Length)
+                            currentNumeroAnim = 0;
                         timer = 0f;
                     }
                 }
@@ -426,35 +329,16 @@ public class IAGuerrier : MonoBehaviour
         else
             animRight = true;
 
-        if (animRight == true)
-            GetComponent<SpriteRenderer>().sprite = rightDeath1;
-        else
-            GetComponent<SpriteRenderer>().sprite = leftDeath1;
-        yield return new WaitForSeconds(0.08f);
-
-        if (animRight == true)
-            GetComponent<SpriteRenderer>().sprite = rightDeath2;
-        else
-            GetComponent<SpriteRenderer>().sprite = leftDeath2;
-        yield return new WaitForSeconds(0.08f);
-
-        if (animRight == true)
-            GetComponent<SpriteRenderer>().sprite = rightDeath3;
-        else
-            GetComponent<SpriteRenderer>().sprite = leftDeath3;
-        yield return new WaitForSeconds(0.08f);
-
-        if (animRight == true)
-            GetComponent<SpriteRenderer>().sprite = rightDeath4;
-        else
-            GetComponent<SpriteRenderer>().sprite = leftDeath4;
-        yield return new WaitForSeconds(0.08f);
-
-        if (animRight == true)
-            GetComponent<SpriteRenderer>().sprite = rightDeath5;
-        else
-            GetComponent<SpriteRenderer>().sprite = leftDeath5;
-        yield return new WaitForSeconds(0.08f);
+        int animDeath = 0;
+        while (animDeath < rightDeathSprites.Length)
+        {
+            if (animRight == true)
+                GetComponent<SpriteRenderer>().sprite = rightDeathSprites[animDeath];
+            else
+                GetComponent<SpriteRenderer>().sprite = leftDeathSprites[animDeath];
+            yield return new WaitForSeconds(0.08f);
+            animDeath++;
+        }
 
         gm.GetComponent<MapManager>().PopEnemy(GetComponent<Enemy>().id);
         if (isBoss == true)
@@ -476,23 +360,16 @@ public class IAGuerrier : MonoBehaviour
             animRight = true;
         }
 
-        if (animRight == true)
-            GetComponent<SpriteRenderer>().sprite = rightAttack1;
-        else
-            GetComponent<SpriteRenderer>().sprite = leftAttack1;
-        yield return new WaitForSeconds(0.08f);
-
-        if (animRight == true)
-            GetComponent<SpriteRenderer>().sprite = rightAttack2;
-        else
-            GetComponent<SpriteRenderer>().sprite = leftAttack2;
-        yield return new WaitForSeconds(0.08f);
-
-        if (animRight == true)
-            GetComponent<SpriteRenderer>().sprite = rightAttack3;
-        else
-            GetComponent<SpriteRenderer>().sprite = leftAttack3;
-        yield return new WaitForSeconds(0.08f);
+        int animAttack = 0;
+        while (animAttack < rightAttackSprites.Length)
+        {
+            if (animRight == true)
+                GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
+            else
+                GetComponent<SpriteRenderer>().sprite = leftAttackSprites[animAttack];
+            yield return new WaitForSeconds(0.08f);
+            animAttack++;
+        }
 
         if (target.tag == "Player")
             player.GetComponent<StatsPlayer>().TakeDamage(damage, transform.position);
