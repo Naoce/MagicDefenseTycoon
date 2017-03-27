@@ -45,6 +45,8 @@ public class IAGuerrier : MonoBehaviour
     private float       cooldownFlying = 0f;
     private float       timerSlow = 0f;
     private float       cooldownSlow = 0f;
+    private bool        changedTarget = false;
+    private GameObject  targetAttacking = null;
 
     private int         currHP;
     public  int         maxHP;
@@ -139,6 +141,7 @@ public class IAGuerrier : MonoBehaviour
                     if (canAttack == true)
                     {
                         isAttacking = true;
+                        targetAttacking = target;
                         canAttack = false;
                         StartCoroutine(AttackAnimation(target.transform.position));
                     }
@@ -155,14 +158,26 @@ public class IAGuerrier : MonoBehaviour
                 if (isAttacking == false && needToMove == true)
                 {
                     timer += Time.deltaTime;
-                    if (Vector2.Distance(newPos, transform.position) <= 0.05f ||
+
+                    GameObject targetTmp = FindClosestTarget();
+                    if (targetTmp != target)
+                    {
+                        target = targetTmp;
+                        changedTarget = true;
+                    }
+
+                    if (changedTarget == true ||
+                        Vector2.Distance(newPos, transform.position) <= 0.05f ||
                         Vector2.Distance(transform.position, target.transform.position) <= 1f)
                     {
-                        target = FindClosestTarget();
+                        changedTarget = false;
+
                         if (target != null)
                             newPos = GetComponent<AStar>().StartPathFinding(target.transform.position);
                     }
+
                     transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
+
                     if (timer > animTime &&
                     (transform.position.y != newPos.y ||
                     transform.position.x != newPos.x))
@@ -172,25 +187,18 @@ public class IAGuerrier : MonoBehaviour
                              transform.position.x > newPos.x) ||
                              (transform.position.x > newPos.x &&
                              Vector2.Distance(transform.position, newPos) < 0.55f))
-                        {
                             GetComponent<SpriteRenderer>().sprite = leftSprites[currentNumeroAnim++];
-                        }
                         else if ((!(newPos.x - 0.5f < transform.position.x &&
                             transform.position.x < newPos.x + 0.5f) &&
                              transform.position.x < newPos.x) ||
                                 (transform.position.x < newPos.x &&
                                 Vector2.Distance(transform.position, newPos) < 0.55f))
-                        {
                             GetComponent<SpriteRenderer>().sprite = rightSprites[currentNumeroAnim++];
-                        }
                         else if (newPos.y > transform.position.y)
-                        {
                             GetComponent<SpriteRenderer>().sprite = topSprites[currentNumeroAnim++];
-                        }
                         else if (newPos.y < transform.position.y)
-                        {
                             GetComponent<SpriteRenderer>().sprite = botSprites[currentNumeroAnim++];
-                        }
+
                         if (currentNumeroAnim == leftSprites.Length)
                             currentNumeroAnim = 0;
                         timer = 0f;
@@ -371,12 +379,16 @@ public class IAGuerrier : MonoBehaviour
             animAttack++;
         }
 
-        if (target.tag == "Player")
-            player.GetComponent<StatsPlayer>().TakeDamage(damage, transform.position);
-        else if (target.tag == "AgentGuerrier")
-            target.GetComponent<IAGuerrierAgent>().TakeDamage(damage, transform.position);
-        else if (target.tag == "Defense")
-            target.GetComponent<Defense>().TakeDamage(damage);
+        if (targetAttacking == target)
+        {
+            if (target.tag == "Player")
+                player.GetComponent<StatsPlayer>().TakeDamage(damage, transform.position);
+            else if (target.tag == "AgentGuerrier")
+                target.GetComponent<IAGuerrierAgent>().TakeDamage(damage, transform.position);
+            else if (target.tag == "Defense")
+                target.GetComponent<Defense>().TakeDamage(damage);
+        }
+        
         isAttacking = false;
         canAttack = false;
         timer = 0.09f;
@@ -398,7 +410,8 @@ public class IAGuerrier : MonoBehaviour
         {
             foreach (GameObject go in gm.GetComponent<MapManager>().alliesList)
             {
-                if (go.gameObject == player.gameObject ||
+                if (go.name == "Defense" ||
+                    go.gameObject == player.gameObject ||
                     go.GetComponent<IAGuerrierAgent>().isDead == false)
                 {
                     distanceNew = Vector2.Distance(transform.position, go.transform.position);

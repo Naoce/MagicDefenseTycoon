@@ -10,8 +10,6 @@ public class AStar : MonoBehaviour
     public  List<GameObject>    closedList = new List<GameObject>();
     public  IAGuerrier.EnemyType type;
     private bool                cantFind;
-    private bool                directPath;
-    private bool                knowIfPathClear;
     private GameObject          returnNode;
     private int                 targetX;
     private int                 targetY;
@@ -26,44 +24,53 @@ public class AStar : MonoBehaviour
     private int                 xTmp;
     private int                 yTmp;
     private int                 targetI;
+    private bool                tabIsFilled = false;
 
 
     private void Start()
     {
         mapManager = GameObject.Find("MapManager");
-        tabNodes = mapManager.GetComponent<MapManager>().GetTabNodes();
+        StartCoroutine(FillTab());
     }
+
+    IEnumerator FillTab()
+    {
+        yield return new WaitForSeconds(0.1f);
+        tabNodes = mapManager.GetComponent<MapManager>().GetTabNodes();
+
+        if (tabNodes == null)
+            StartCoroutine(FillTab());
+        else
+            tabIsFilled = true;
+    }
+
+   /* void Update()
+    {
+        if (Vector2.Distance(transform.position, targetPosMemory) < 1.5f &&
+            checkLaunched == false &&
+            tabIsFilled == true)
+        {
+            checkLaunched = true;
+            GameObject obj = (GameObject)Instantiate(checkPath, transform.position, transform.rotation);
+            obj.GetComponent<CheckPath>().parentAStar = gameObject;
+            obj.GetComponent<CheckPath>().target = targetPosMemory;
+        }
+        else if (Vector2.Distance(transform.position, targetPosMemory) >= 1.5f)
+            directPath = false;
+    }*/
 
     public Vector2 StartPathFinding(Vector2 targetPos)
     {
-        /*if (Vector2.Distance(targetPos, transform.position) < 2f)
-        {
-            directPath = false;
-            knowIfPathClear = false;
-
-            GameObject obj = (GameObject)Instantiate(checkPath, transform.position, transform.rotation);
-            obj.GetComponent<CheckPath>().parentAStar = gameObject;
-            obj.GetComponent<CheckPath>().target = targetPos;
-
-            float timer = 0f;
-            while (timer < 0.03f)
-            {
-                timer += Time.deltaTime;
-            }
-
-            if (directPath == true)
-                return (targetPos);
-            else
-                return (FindPath(targetPos));
-        }
-        else*/
+        if (tabIsFilled == false)
+            return (targetPos);
+        else
             return (FindPath(targetPos));
     }
 
     public void SetDirectPath(bool path)
     {
-        knowIfPathClear = true;
-        directPath = path;
+     //   checkLaunched = false;
+      //  directPath = path;
     }
 
     private Vector2 FindPath(Vector2 targetPos)

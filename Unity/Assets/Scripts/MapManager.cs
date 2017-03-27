@@ -20,7 +20,6 @@ public class MapManager : MonoBehaviour
     private GameObject[][]      tabNodes;
     public  int                 tabNodesMaxX;
     public  int                 tabNodesMaxY;
-    public  List<GameObject>    flagsList = new List<GameObject>();
     private GameObject          cam;
     public  Vector2             playerStartPos;
     public  Vector2[]           agentStartPos;
@@ -85,6 +84,7 @@ public class MapManager : MonoBehaviour
             agentTmp = (GameObject)Instantiate(gm.GetComponent<GameManager>().tabAgents[0], agentStartPos[0], transform.rotation);
             agentTmp.GetComponent<Agent>().id = idGenAgent++;
             agentTmp.GetComponent<Agent>().idAgent = 0;
+            agentTmp.GetComponent<IAGuerrierAgent>().newPos = agentStartPos[0];
             alliesList.Add(agentTmp);
         }
         else
@@ -98,6 +98,7 @@ public class MapManager : MonoBehaviour
             agentTmp = (GameObject)Instantiate(gm.GetComponent<GameManager>().tabAgents[1], agentStartPos[1], transform.rotation);
             agentTmp.GetComponent<Agent>().id = idGenAgent++;
             agentTmp.GetComponent<Agent>().idAgent = 1;
+            agentTmp.GetComponent<IAGuerrierAgent>().newPos = agentStartPos[1];
             alliesList.Add(agentTmp);
         }
         else
@@ -111,6 +112,7 @@ public class MapManager : MonoBehaviour
             agentTmp = (GameObject)Instantiate(gm.GetComponent<GameManager>().tabAgents[2], agentStartPos[2], transform.rotation);
             agentTmp.GetComponent<Agent>().id = idGenAgent++;
             agentTmp.GetComponent<Agent>().idAgent = 2;
+            agentTmp.GetComponent<IAGuerrierAgent>().newPos = agentStartPos[2];
             alliesList.Add(agentTmp);
         }
         else
@@ -124,6 +126,7 @@ public class MapManager : MonoBehaviour
             agentTmp = (GameObject)Instantiate(gm.GetComponent<GameManager>().tabAgents[3], agentStartPos[3], transform.rotation);
             agentTmp.GetComponent<Agent>().id = idGenAgent++;
             agentTmp.GetComponent<Agent>().idAgent = 3;
+            agentTmp.GetComponent<IAGuerrierAgent>().newPos = agentStartPos[3];
             alliesList.Add(agentTmp);
         }
         else
@@ -610,7 +613,7 @@ public class MapManager : MonoBehaviour
 
     IEnumerator Map1()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.25f);
         Vector2 vec1 = new Vector2(-1, 1.75f);
         Vector2 vec2 = new Vector2(1, 1.75f);
         GameObject obj1;
@@ -628,7 +631,7 @@ public class MapManager : MonoBehaviour
 
     IEnumerator Map2()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.25f);
         GameObject obj1;
         obj1 = (GameObject)Instantiate(EnemyGuerrierCapture, posLeft, transform.rotation);
         obj1.GetComponent<Enemy>().id = idGen++;

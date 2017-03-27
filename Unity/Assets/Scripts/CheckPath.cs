@@ -8,11 +8,12 @@ public class CheckPath : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * 100);
+        transform.position = Vector2.MoveTowards(transform.position, target, Time.deltaTime * 10);
         if (transform.position.x == target.x &&
             transform.position.y == target.y)
         {
-            parentAStar.GetComponent<AStar>().SetDirectPath(true);
+            if (parentAStar.gameObject != null)
+                parentAStar.GetComponent<AStar>().SetDirectPath(true);
             Destroy(gameObject);
         }
     }
@@ -21,7 +22,8 @@ public class CheckPath : MonoBehaviour
     {
         if (collision.tag == "DecorCollider")
         {
-            parentAStar.GetComponent<AStar>().SetDirectPath(false);
+            if (parentAStar.gameObject != null)
+                parentAStar.GetComponent<AStar>().SetDirectPath(false);
             Destroy(gameObject);
         }
     }
