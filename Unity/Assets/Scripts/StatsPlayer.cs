@@ -275,4 +275,13 @@ public class StatsPlayer : MonoBehaviour
 
         gm.GetComponent<GameManager>().StartDefeat();
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "ProjectileEnemy")
+        {
+            TakeDamage(other.GetComponent<ProjectileEnemy>().damage, other.transform.position);
+            other.GetComponent<ProjectileEnemy>().ExplosionChar();
+        }
+    }
 }

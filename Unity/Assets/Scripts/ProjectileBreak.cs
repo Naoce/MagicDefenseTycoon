@@ -13,5 +13,13 @@ public class ProjectileBreak : MonoBehaviour
         {
             collision.GetComponent<IceShard>().Explosion();
         }
+        else if (collision.tag == "CheckPathEnemyProjectile")
+        {
+            collision.GetComponent<CheckPath>().HasCollided();
+        }
+        else if (collision.tag == "ProjectileEnemy")
+        {
+            collision.GetComponent<ProjectileEnemy>().Explosion();
+        }
     }
 }

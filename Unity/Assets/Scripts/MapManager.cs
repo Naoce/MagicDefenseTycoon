@@ -27,10 +27,13 @@ public class MapManager : MonoBehaviour
     public  float               LimitD;
     public  float               LimitG;
     public  float               LimitB;
+
+    public  GameObject          EnemyMagician;
     public  GameObject          EnemyGuerrierNormal;
     public  GameObject          EnemyGuerrierPlayer;
     public  GameObject          EnemyGuerrierCapture;
     public  GameObject          EnemyBossGuerrier;
+
     public  List<GameObject>    alliesList = new List<GameObject>();
     public  List<GameObject>    enemiesList = new List<GameObject>();
     public  List<int>           enemiesDeadList = new List<int>();
@@ -196,7 +199,7 @@ public class MapManager : MonoBehaviour
                 if (spawnLeft == true)
                 {
                     spawnLeft = false;
-                    InstantiateGuerrierNormal(posLeft, new Vector2(posLeft.x, posLeft.y - 0.5f));
+                    InstantiateMagicianEnemy(posLeft, new Vector2(posLeft.x, posLeft.y - 0.5f));
                 }
                 else
                 {
@@ -564,6 +567,20 @@ public class MapManager : MonoBehaviour
         GameObject obj = null;
 
         obj = (GameObject)Instantiate(EnemyGuerrierNormal, pos, transform.rotation);
+        obj.GetComponent<Enemy>().id = idGen++;
+        obj.GetComponent<IAGuerrier>().player = player;
+        obj.GetComponent<IAGuerrier>().newPos = targetPos;
+        enemiesList.Add(obj);
+        gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
+        if (idGen > maxIdGen && type == MapType.Defense)
+            canSpawn = false;
+    }
+
+    void InstantiateMagicianEnemy(Vector2 pos, Vector2 targetPos)
+    {
+        GameObject obj = null;
+
+        obj = (GameObject)Instantiate(EnemyMagician, pos, transform.rotation);
         obj.GetComponent<Enemy>().id = idGen++;
         obj.GetComponent<IAGuerrier>().player = player;
         obj.GetComponent<IAGuerrier>().newPos = targetPos;

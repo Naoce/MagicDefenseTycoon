@@ -60,7 +60,6 @@ public class Projectile : MonoBehaviour
 
     void Start()
 	{
-
 		originalPos = transform.position;
 	}
 

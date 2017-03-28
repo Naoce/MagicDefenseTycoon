@@ -23,9 +23,13 @@ public class IAGuerrier : MonoBehaviour
 
     public  Sprite[]    topSprites;
     public  Sprite      topIdle;
+    public Sprite[]     topDeathSprites;
+    public Sprite[]     topAttackSprites;
 
     public  Sprite[]    botSprites;
     public  Sprite      botIdle;
+    public Sprite[]     botDeathSprites;
+    public Sprite[]     botAttackSprites;
 
     public  GameObject  healthBarGreen;
     public  EnemyType   type;
@@ -33,8 +37,10 @@ public class IAGuerrier : MonoBehaviour
     public 	GameObject	player;
     private GameObject  gm;
     public  Vector2     newPos;
+    public  GameObject  projectileMagic;
+    public  GameObject  projectileCheck;
     public  float       range;
-    private int         currentNumeroAnim = 1;
+    private int         currentNumeroAnim = 0;
 	private	float		timer = 0f;
 	private float		animTime = 0.12f;
     private float       attackTimer = 0f;
@@ -68,6 +74,9 @@ public class IAGuerrier : MonoBehaviour
     private int         lastDragonTaken = -1;
     private int         lastTornadoTaken = -1;
     public  bool        isBoss;
+    private bool        hasLaunched = false;
+    private bool        canShootProjectile = false;
+    private Shoots.Direction directionAttack;
 
 	void Start () 
 	{
@@ -82,6 +91,13 @@ public class IAGuerrier : MonoBehaviour
 	{
         if (gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().gamePaused == false)
         {
+            if (type == EnemyType.Magician &&
+                hasLaunched == false &&
+                target != null)
+            {
+                hasLaunched = true;
+                InstantiateCheck(target.transform.position);
+            }
             if (isSlowed == true)
             {
                 timerSlow += Time.deltaTime;
@@ -131,26 +147,36 @@ public class IAGuerrier : MonoBehaviour
                 }
                 if (Vector2.Distance(target.transform.position, transform.position) <= range &&
                     ((target.tag == "Player" &&
-                    target.GetComponent<Deplacements>().isDead == false) || 
+                    target.GetComponent<Deplacements>().isDead == false) ||
                     (target.tag == "AgentGuerrier" &&
                     target.GetComponent<IAGuerrierAgent>().isDead == false) ||
                     (target.tag == "Defense" &&
                     target.GetComponent<Defense>().isDead == false)))
                 {
-                    needToMove = false;
-                    if (canAttack == true)
+                    if (type == EnemyType.Magician &&
+                        canShootProjectile == false)
+                        needToMove = true;
+                    else
                     {
-                        isAttacking = true;
-                        targetAttacking = target;
-                        canAttack = false;
-                        StartCoroutine(AttackAnimation(target.transform.position));
-                    }
-                    else if (isAttacking == false)
-                    {
-                        if (rightSide == true)
-                            GetComponent<SpriteRenderer>().sprite = leftIdle;
-                        else
-                            GetComponent<SpriteRenderer>().sprite = rightIdle;
+                        needToMove = false;
+                        if (canAttack == true)
+                        {
+                            isAttacking = true;
+                            targetAttacking = target;
+                            canAttack = false;
+                            if (type != EnemyType.Magician)
+                                StartCoroutine(AttackAnimation(target.transform.position));
+                            else if (type == EnemyType.Magician &&
+                                    canShootProjectile == true)
+                                StartCoroutine(AttackDistanceAnimation(target.transform.position));
+                        }
+                        else if (isAttacking == false)
+                        {
+                            if (rightSide == true)
+                                GetComponent<SpriteRenderer>().sprite = leftIdle;
+                            else
+                                GetComponent<SpriteRenderer>().sprite = rightIdle;
+                        }
                     }
                 }
                 else
@@ -238,69 +264,75 @@ public class IAGuerrier : MonoBehaviour
 
     public void TakeDamageFromPlayer(int damageTaken, Vector2 damagePos)
     {
-        currHP -= damageTaken;
-        if (currHP < 0)
-            currHP = 0;
-        if (isBoss == false)
+        if (GetComponent<Enemy>().isDead == false)
         {
-            float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
-            float diff;
-            diff = baseScale.x * currHP / maxHP;
-            newScale = new Vector2(diff, baseScale.y);
-            healthBarGreen.transform.localScale = newScale;
+            currHP -= damageTaken;
+            if (currHP < 0)
+                currHP = 0;
+            if (isBoss == false)
+            {
+                float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
+                float diff;
+                diff = baseScale.x * currHP / maxHP;
+                newScale = new Vector2(diff, baseScale.y);
+                healthBarGreen.transform.localScale = newScale;
 
-            float newValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
+                float newValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
 
-            float difference = newValue - originalValue;
+                float difference = newValue - originalValue;
 
-            healthBarGreen.transform.Translate(new Vector2(difference, 0));
-        }
-        else
-            gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().BossTakeDamage(currHP, maxHP);
+                healthBarGreen.transform.Translate(new Vector2(difference, 0));
+            }
+            else
+                gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().BossTakeDamage(currHP, maxHP);
 
-        if (currHP <= 0)
-        {
-            player.GetComponent<StatsPlayer>().EarnXP(valueXP);
-            GetComponent<Enemy>().isDead = true;
-            Destroy(GetComponent<BoxCollider2D>());
-            Destroy(GetComponent<CircleCollider2D>());
-            StartCoroutine(DeathAnimation(damagePos));
+            if (currHP <= 0)
+            {
+                player.GetComponent<StatsPlayer>().EarnXP(valueXP);
+                GetComponent<Enemy>().isDead = true;
+                Destroy(GetComponent<BoxCollider2D>());
+                Destroy(GetComponent<CircleCollider2D>());
+                StartCoroutine(DeathAnimation(damagePos));
+            }
         }
     }
 
     public void TakeDamageFromAgent(int damageTaken, Vector2 damagePos, GameObject go)
     {
-        currHP -= damageTaken;
-        if (currHP < 0)
-            currHP = 0;
-        if (isBoss == false)
+        if (GetComponent<Enemy>().isDead == false)
         {
-            float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
-            float diff;
-            diff = baseScale.x * currHP / maxHP;
-            newScale = new Vector2(diff, baseScale.y);
-            healthBarGreen.transform.localScale = newScale;
-
-            float newValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
-
-            float difference = newValue - originalValue;
-
-            healthBarGreen.transform.Translate(new Vector2(difference, 0));
-        }
-        else
-            gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().BossTakeDamage(currHP, maxHP);
-
-
-        if (currHP == 0)
-        {
-            if (gm.GetComponent<MapManager>().IsEnemyAlreadyDead(GetComponent<Enemy>().id) == false)
+            currHP -= damageTaken;
+            if (currHP < 0)
+                currHP = 0;
+            if (isBoss == false)
             {
-                go.GetComponent<IAGuerrierAgent>().EarnXP(valueXP);
-                gm.GetComponent<MapManager>().FillDeadList(GetComponent<Enemy>().id);
-                GetComponent<Enemy>().isDead = true;
-                Destroy(GetComponent<BoxCollider2D>());
-                Destroy(GetComponent<CircleCollider2D>());
-                StartCoroutine(DeathAnimation(damagePos));
+                float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
+                float diff;
+                diff = baseScale.x * currHP / maxHP;
+                newScale = new Vector2(diff, baseScale.y);
+                healthBarGreen.transform.localScale = newScale;
+
+                float newValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
+
+                float difference = newValue - originalValue;
+
+                healthBarGreen.transform.Translate(new Vector2(difference, 0));
+            }
+            else
+                gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().BossTakeDamage(currHP, maxHP);
+
+
+            if (currHP == 0)
+            {
+                if (gm.GetComponent<MapManager>().IsEnemyAlreadyDead(GetComponent<Enemy>().id) == false)
+                {
+                    go.GetComponent<IAGuerrierAgent>().EarnXP(valueXP);
+                    gm.GetComponent<MapManager>().FillDeadList(GetComponent<Enemy>().id);
+                    GetComponent<Enemy>().isDead = true;
+                    Destroy(GetComponent<BoxCollider2D>());
+                    Destroy(GetComponent<CircleCollider2D>());
+                    StartCoroutine(DeathAnimation(damagePos));
+                }
             }
         }
     }
@@ -399,6 +431,148 @@ public class IAGuerrier : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = leftIdle;
     }
 
+    IEnumerator AttackDistanceAnimation(Vector2 targetPos)
+    {
+        FindShootDirection(targetPos);
+
+        int animAttack = 0;
+        while (animAttack < rightAttackSprites.Length)
+        {
+            if (directionAttack == Shoots.Direction.RIGHT ||
+                directionAttack == Shoots.Direction.TOPRIGHT ||
+                directionAttack == Shoots.Direction.BOTTOMRIGHT)
+                GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
+            else if (directionAttack == Shoots.Direction.LEFT ||
+                directionAttack == Shoots.Direction.TOPLEFT ||
+                directionAttack == Shoots.Direction.BOTTOMLEFT)
+                GetComponent<SpriteRenderer>().sprite = leftAttackSprites[animAttack];
+            else if (directionAttack == Shoots.Direction.BOTTOM)
+                GetComponent<SpriteRenderer>().sprite = botAttackSprites[animAttack];
+            else if (directionAttack == Shoots.Direction.TOP)
+                GetComponent<SpriteRenderer>().sprite = topAttackSprites[animAttack];
+
+            yield return new WaitForSeconds(0.08f);
+            animAttack++;
+        }
+
+
+        GameObject obj = null;
+
+        newPos.x = transform.position.x;
+        newPos.y = transform.position.y;
+        if (directionAttack == Shoots.Direction.RIGHT ||
+            directionAttack == Shoots.Direction.TOPRIGHT ||
+            directionAttack == Shoots.Direction.BOTTOMRIGHT)
+            newPos.x = transform.position.x + 0.1f;
+        else if (directionAttack == Shoots.Direction.LEFT ||
+            directionAttack == Shoots.Direction.TOPLEFT ||
+            directionAttack == Shoots.Direction.BOTTOMLEFT)
+            newPos.x = transform.position.x - 0.1f;
+        else if (directionAttack == Shoots.Direction.BOTTOM)
+            newPos.y = transform.position.y - 0.1f;
+        else if (directionAttack == Shoots.Direction.TOP)
+            newPos.y = transform.position.y + 0.1f;
+
+        obj = (GameObject)Instantiate(projectileMagic, newPos, transform.rotation);
+        obj.GetComponent<ProjectileEnemy>().GetPos(targetPos, damage, directionAttack, gameObject);
+
+
+        isAttacking = false;
+        canAttack = false;
+        timer = 0.09f;
+
+        if (rightSide == true)
+            GetComponent<SpriteRenderer>().sprite = rightIdle;
+        else
+            GetComponent<SpriteRenderer>().sprite = leftIdle;
+    }
+
+    void FindShootDirection(Vector2 targetPos)
+    {
+        Vector2 newPosTop = new Vector2(transform.position.x, transform.position.y + 1);
+        Vector2 newPosTopRight = new Vector2(transform.position.x + 0.8f, transform.position.y + 0.8f);
+        Vector2 newPosTopLeft = new Vector2(transform.position.x - 0.8f, transform.position.y + 0.8f);
+        Vector2 newPosBot = new Vector2(transform.position.x, transform.position.y - 1);
+        Vector2 newPosBotRight = new Vector2(transform.position.x + 0.8f, transform.position.y - 0.8f);
+        Vector2 newPosBotLeft = new Vector2(transform.position.x - 0.8f, transform.position.y - 0.8f);
+        Vector2 newPosRight = new Vector2(transform.position.x + 1, transform.position.y);
+        Vector2 newPosLeft = new Vector2(transform.position.x - 1, transform.position.y);
+
+        float distanceTop = Vector2.Distance(newPosTop, targetPos);
+        float distanceTopRight = Vector2.Distance(newPosTopRight, targetPos);
+        float distanceTopLeft = Vector2.Distance(newPosTopLeft, targetPos);
+        float distanceBot = Vector2.Distance(newPosBot, targetPos);
+        float distanceBotRight = Vector2.Distance(newPosBotRight, targetPos);
+        float distanceBotLeft = Vector2.Distance(newPosBotLeft, targetPos);
+        float distanceRight = Vector2.Distance(newPosRight, targetPos);
+        float distanceLeft = Vector2.Distance(newPosLeft, targetPos);
+
+        if (distanceRight < distanceTop &&
+            distanceRight < distanceBot &&
+            distanceRight < distanceLeft &&
+            distanceRight < distanceTopRight &&
+            distanceRight < distanceTopLeft &&
+            distanceRight < distanceBotRight &&
+            distanceRight < distanceBotLeft)
+            directionAttack = Shoots.Direction.RIGHT;
+        else if (distanceLeft < distanceTop &&
+            distanceLeft < distanceBot &&
+            distanceLeft < distanceRight &&
+            distanceLeft < distanceTopRight &&
+            distanceLeft < distanceTopLeft &&
+            distanceLeft < distanceBotRight &&
+            distanceLeft < distanceBotLeft)
+            directionAttack = Shoots.Direction.LEFT;
+        else if (distanceBot < distanceTop &&
+            distanceBot < distanceLeft &&
+            distanceBot < distanceRight &&
+            distanceBot < distanceTopRight &&
+            distanceBot < distanceTopLeft &&
+            distanceBot < distanceBotRight &&
+            distanceBot < distanceBotLeft)
+            directionAttack = Shoots.Direction.BOTTOM;
+        else if (distanceTop < distanceBot &&
+            distanceTop < distanceLeft &&
+            distanceTop < distanceRight &&
+            distanceTop < distanceTopRight &&
+            distanceTop < distanceTopLeft &&
+            distanceTop < distanceBotRight &&
+            distanceTop < distanceBotLeft)
+            directionAttack = Shoots.Direction.TOP;
+        else if (distanceTopRight < distanceBot &&
+            distanceTopRight < distanceLeft &&
+            distanceTopRight < distanceRight &&
+            distanceTopRight < distanceTop &&
+            distanceTopRight < distanceTopLeft &&
+            distanceTopRight < distanceBotRight &&
+            distanceTopRight < distanceBotLeft)
+            directionAttack = Shoots.Direction.TOPRIGHT;
+        else if (distanceTopLeft < distanceBot &&
+            distanceTopLeft < distanceLeft &&
+            distanceTopLeft < distanceRight &&
+            distanceTopLeft < distanceTop &&
+            distanceTopLeft < distanceTopRight &&
+            distanceTopLeft < distanceBotRight &&
+            distanceTopLeft < distanceBotLeft)
+            directionAttack = Shoots.Direction.TOPLEFT;
+        else if (distanceBotRight < distanceBot &&
+            distanceBotRight < distanceLeft &&
+            distanceBotRight < distanceRight &&
+            distanceBotRight < distanceTop &&
+            distanceBotRight < distanceTopRight &&
+            distanceBotRight < distanceTopLeft &&
+            distanceBotRight < distanceBotLeft)
+            directionAttack = Shoots.Direction.BOTTOMRIGHT;
+        else if (distanceBotLeft < distanceBot &&
+            distanceBotLeft < distanceLeft &&
+            distanceBotLeft < distanceRight &&
+            distanceBotLeft < distanceTop &&
+            distanceBotLeft < distanceTopRight &&
+            distanceBotLeft < distanceTopLeft &&
+            distanceBotLeft < distanceBotRight)
+            directionAttack = Shoots.Direction.BOTTOMLEFT;
+    }
+
     GameObject FindClosestTarget()
     {
         GameObject obj = null;
@@ -406,7 +580,8 @@ public class IAGuerrier : MonoBehaviour
         float distanceNew;
         bool first = true;
 
-        if (type == EnemyType.Normal)
+        if (type == EnemyType.Normal ||
+            type == EnemyType.Magician)
         {
             foreach (GameObject go in gm.GetComponent<MapManager>().alliesList)
             {
@@ -438,5 +613,18 @@ public class IAGuerrier : MonoBehaviour
             return (gm.GetComponent<MapManager>().defense);
 
         return (obj);
+    }
+
+    public void CanShootProjectile(bool canShoot)
+    {
+        hasLaunched = false;
+        canShootProjectile = canShoot;
+    }
+
+    private void InstantiateCheck(Vector2 targetCheck)
+    {
+        GameObject obj = (GameObject)Instantiate(projectileCheck, transform.position, transform.rotation);
+        obj.GetComponent<CheckPath>().target = targetCheck;
+        obj.GetComponent<CheckPath>().parentAStar = gameObject;
     }
 }

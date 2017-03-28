@@ -13,18 +13,15 @@ public class CheckPath : MonoBehaviour
             transform.position.y == target.y)
         {
             if (parentAStar.gameObject != null)
-                parentAStar.GetComponent<AStar>().SetDirectPath(true);
+                parentAStar.GetComponent<IAGuerrier>().CanShootProjectile(true);
             Destroy(gameObject);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void HasCollided()
     {
-        if (collision.tag == "DecorCollider")
-        {
-            if (parentAStar.gameObject != null)
-                parentAStar.GetComponent<AStar>().SetDirectPath(false);
-            Destroy(gameObject);
-        }
+        if (parentAStar.gameObject != null)
+            parentAStar.GetComponent<IAGuerrier>().CanShootProjectile(false);
+        Destroy(gameObject);
     }
 }

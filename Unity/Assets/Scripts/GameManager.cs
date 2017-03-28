@@ -321,19 +321,20 @@ public class GameManager : MonoBehaviour
     IEnumerator VictoryAnimation()
     {
         hudVictory.SetActive(true);
+        hudVictory.GetComponent<AnimOnStart>().StartAnimationByScript();
         yield return new WaitForSeconds(0.4f);
 
         hudStar1.SetActive(true);
+        hudStar1.GetComponent<AnimOnStart>().StartAnimationByScript();
         yield return new WaitForSeconds(0.4f);
 
         hudStar2.SetActive(true);
+        hudStar2.GetComponent<AnimOnStart>().StartAnimationByScript();
         yield return new WaitForSeconds(0.4f);
 
         hudStar3.SetActive(true);
+        hudStar3.GetComponent<AnimOnStart>().StartAnimationByScript();
         yield return new WaitForSeconds(0.4f);
-
-        //hudButtonTryAgain.SetActive(true);
-        //yield return new WaitForSeconds(0.4f);
 
         hudButtonReturnToMenu.SetActive(true);
         yield return new WaitForSeconds(0.4f);
@@ -342,6 +343,7 @@ public class GameManager : MonoBehaviour
     IEnumerator DefeatAnimation()
     {
         hudDefeat.SetActive(true);
+        hudDefeat.GetComponent<AnimOnStart>().StartAnimationByScript();
         yield return new WaitForSeconds(0.4f);
 
         hudButtonTryAgain.SetActive(true);

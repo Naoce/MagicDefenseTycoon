@@ -15,15 +15,12 @@ public class AnimOnStart : MonoBehaviour
 
     void Start ()
     {
-        //print("itabMax : " + spriteTab.Length);
         if (playOnStart == true)
             StartCoroutine(StartAnimation());
 	} 
 
     IEnumerator StartAnimation()
     {
-        //print("itab : " + iTab);
-
         if (iTab < spriteTab.Length)
         GetComponent<Image>().sprite = spriteTab[iTab];
         iTab++;
@@ -50,7 +47,11 @@ public class AnimOnStart : MonoBehaviour
     public void StartAnimationByScript()
     {
         if (gameObject.active)
+        {
+            iTab = 0;
             StartCoroutine(StartAnimation());
+        }
+
     }
 
     public void SetAnimNb(int nb)
