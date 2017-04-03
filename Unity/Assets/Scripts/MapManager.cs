@@ -216,7 +216,7 @@ public class MapManager : MonoBehaviour
             obj = (GameObject)Instantiate(EnemyBossGuerrier, posBoss, transform.rotation);
             obj.GetComponent<Enemy>().id = idGen++;
             obj.GetComponent<IAGuerrier>().player = player;
-            obj.GetComponent<IAGuerrier>().newPos = new Vector2(posBoss.x, posBoss.y - 0.5f);
+            obj.GetComponent<IAGuerrier>().newPos = new Vector2(posBoss.x, posBoss.y);
 
             enemiesList.Add(obj);
             gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
@@ -303,7 +303,7 @@ public class MapManager : MonoBehaviour
                 else
                 {
                     spawnLeft = true;
-                    InstantiateGuerrierObjectif(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
+                    InstantiateGuerrierObjectif(posRight, new Vector2(posRight.x, posRight.y + 0.5f));
                 }
             }
         }
@@ -569,7 +569,7 @@ public class MapManager : MonoBehaviour
         obj = (GameObject)Instantiate(EnemyGuerrierNormal, pos, transform.rotation);
         obj.GetComponent<Enemy>().id = idGen++;
         obj.GetComponent<IAGuerrier>().player = player;
-        obj.GetComponent<IAGuerrier>().newPos = targetPos;
+        obj.GetComponent<IAGuerrier>().newPos = pos;
         enemiesList.Add(obj);
         gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
         if (idGen > maxIdGen && type == MapType.Defense)
@@ -583,7 +583,7 @@ public class MapManager : MonoBehaviour
         obj = (GameObject)Instantiate(EnemyMagician, pos, transform.rotation);
         obj.GetComponent<Enemy>().id = idGen++;
         obj.GetComponent<IAGuerrier>().player = player;
-        obj.GetComponent<IAGuerrier>().newPos = targetPos;
+        obj.GetComponent<IAGuerrier>().newPos = pos;
         enemiesList.Add(obj);
         gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
         if (idGen > maxIdGen && type == MapType.Defense)
@@ -597,7 +597,7 @@ public class MapManager : MonoBehaviour
         obj = (GameObject)Instantiate(EnemyGuerrierPlayer, pos, transform.rotation);
         obj.GetComponent<Enemy>().id = idGen++;
         obj.GetComponent<IAGuerrier>().player = player;
-        obj.GetComponent<IAGuerrier>().newPos = targetPos;
+        obj.GetComponent<IAGuerrier>().newPos = pos;
         enemiesList.Add(obj);
         gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
         if (idGen > maxIdGen && type == MapType.Defense)
@@ -611,7 +611,7 @@ public class MapManager : MonoBehaviour
         obj = (GameObject)Instantiate(EnemyGuerrierCapture, pos, transform.rotation);
         obj.GetComponent<Enemy>().id = idGen++;
         obj.GetComponent<IAGuerrier>().player = player;
-        obj.GetComponent<IAGuerrier>().newPos = targetPos;
+        obj.GetComponent<IAGuerrier>().newPos = pos;
         enemiesList.Add(obj);
         gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
         if (idGen > maxIdGen && type == MapType.Defense)
@@ -637,11 +637,13 @@ public class MapManager : MonoBehaviour
         obj1 = (GameObject)Instantiate(EnemyGuerrierNormal, vec1, transform.rotation);
         obj1.GetComponent<Enemy>().id = idGen++;
         obj1.GetComponent<IAGuerrier>().player = player;
+        obj1.GetComponent<IAGuerrier>().newPos = vec1;
         enemiesList.Add(obj1);
         GameObject obj2;
         obj2 = (GameObject)Instantiate(EnemyGuerrierPlayer, vec2, transform.rotation);
         obj2.GetComponent<Enemy>().id = idGen++;
         obj2.GetComponent<IAGuerrier>().player = player;
+        obj2.GetComponent<IAGuerrier>().newPos = vec2;
         enemiesList.Add(obj2);
         gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
     }
@@ -653,11 +655,13 @@ public class MapManager : MonoBehaviour
         obj1 = (GameObject)Instantiate(EnemyGuerrierCapture, posLeft, transform.rotation);
         obj1.GetComponent<Enemy>().id = idGen++;
         obj1.GetComponent<IAGuerrier>().player = player;
+        obj1.GetComponent<IAGuerrier>().newPos = posLeft;
         enemiesList.Add(obj1);
         GameObject obj2;
         obj2 = (GameObject)Instantiate(EnemyGuerrierCapture, posRight, transform.rotation);
         obj2.GetComponent<Enemy>().id = idGen++;
         obj2.GetComponent<IAGuerrier>().player = player;
+        obj2.GetComponent<IAGuerrier>().newPos = posRight;
         enemiesList.Add(obj2);
         gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
     }
@@ -669,7 +673,9 @@ public class MapManager : MonoBehaviour
 
     private void FillTabNodes()
     {
-        if (mapID == 0)
+        if (mapID == 0 ||
+            mapID == 1 ||
+            mapID == 2)
         {
             tabNodes = new GameObject[19][];
             tabNodes[0] = new GameObject[35];

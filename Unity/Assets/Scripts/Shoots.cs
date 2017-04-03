@@ -49,6 +49,7 @@ public class Shoots : MonoBehaviour
 	private Quaternion 	rot = new Quaternion (0, 0, 0, 0);
 
     private float       speedCD = 1f;
+    public  bool        canShoot = true;
     private float       manaTimer = 0f;
     private bool        isUnderMana = false;
     private float       timerAttack = 0f;
@@ -262,122 +263,27 @@ public class Shoots : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                if (gm.GetComponent<GameManager>().smartcast == true)
-                {
-                    UseSpell1();
-                }
-                else
-                {
-                    spellSelected = 1;
-                    usingSpell1Icon.SetActive(true);
-                    usingSpell1Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
-                    usingSpell2Icon.SetActive(false);
-                    usingSpell3Icon.SetActive(false);
-                    usingSpell4Icon.SetActive(false);
-                    usingSpell5Icon.SetActive(false);
-                    usingSpell6Icon.SetActive(false);
-                    usingSpell8Icon.SetActive(false);
-                }
+                SelectSpell1();
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                if (gm.GetComponent<GameManager>().smartcast == true)
-                {
-                    UseSpell2();
-                }
-                else
-                {
-                    spellSelected = 2;
-                    usingSpell1Icon.SetActive(false);
-                    usingSpell2Icon.SetActive(true);
-                    usingSpell2Icon.GetComponent<UsingSpell>().player = gameObject;
-                    usingSpell2Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
-                    usingSpell3Icon.SetActive(false);
-                    usingSpell4Icon.SetActive(false);
-                    usingSpell5Icon.SetActive(false);
-                    usingSpell6Icon.SetActive(false);
-                    usingSpell8Icon.SetActive(false);
-                }
+                SelectSpell2();
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                if (gm.GetComponent<GameManager>().smartcast == true)
-                {
-                    UseSpell3();
-                }
-                else
-                {
-                    spellSelected = 3;
-                    usingSpell1Icon.SetActive(false);
-                    usingSpell2Icon.SetActive(false);
-                    usingSpell3Icon.SetActive(true);
-                    usingSpell3Icon.GetComponent<UsingSpell>().player = gameObject;
-                    usingSpell3Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
-                    usingSpell4Icon.SetActive(false);
-                    usingSpell5Icon.SetActive(false);
-                    usingSpell6Icon.SetActive(false);
-                    usingSpell8Icon.SetActive(false);
-                }
+                SelectSpell3();
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4))
             {
-                if (gm.GetComponent<GameManager>().smartcast == true)
-                {
-                    UseSpell4();
-                }
-                else
-                {
-                    spellSelected = 4;
-                    usingSpell1Icon.SetActive(false);
-                    usingSpell2Icon.SetActive(false);
-                    usingSpell3Icon.SetActive(false);
-                    usingSpell4Icon.SetActive(true);
-                    usingSpell4Icon.GetComponent<UsingSpell>().player = gameObject;
-                    usingSpell4Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
-                    usingSpell5Icon.SetActive(false);
-                    usingSpell6Icon.SetActive(false);
-                    usingSpell8Icon.SetActive(false);
-                }
+                SelectSpell4();
             }
             else if (Input.GetKeyDown(KeyCode.Alpha5))
             {
-                if (gm.GetComponent<GameManager>().smartcast == true)
-                {
-                    UseSpell5();
-                }
-                else
-                {
-                    spellSelected = 5;
-                    usingSpell1Icon.SetActive(false);
-                    usingSpell2Icon.SetActive(false);
-                    usingSpell3Icon.SetActive(false);
-                    usingSpell4Icon.SetActive(false);
-                    usingSpell5Icon.SetActive(true);
-                    usingSpell5Icon.GetComponent<UsingSpell>().player = gameObject;
-                    usingSpell5Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
-                    usingSpell6Icon.SetActive(false);
-                    usingSpell8Icon.SetActive(false);
-                }
+                SelectSpell5();
             }
             else if (Input.GetKeyDown(KeyCode.Alpha6))
             {
-                if (gm.GetComponent<GameManager>().smartcast == true)
-                {
-                    UseSpell6();
-                }
-                else
-                {
-                    spellSelected = 6;
-                    usingSpell1Icon.SetActive(false);
-                    usingSpell2Icon.SetActive(false);
-                    usingSpell3Icon.SetActive(false);
-                    usingSpell4Icon.SetActive(false);
-                    usingSpell5Icon.SetActive(false);
-                    usingSpell6Icon.SetActive(true);
-                    usingSpell6Icon.GetComponent<UsingSpell>().player = gameObject;
-                    usingSpell6Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
-                    usingSpell8Icon.SetActive(false);
-                }
+                SelectSpell6();
             }
             else if (Input.GetKeyDown(KeyCode.Alpha7))
             {
@@ -385,23 +291,7 @@ public class Shoots : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Alpha8))
             {
-                if (gm.GetComponent<GameManager>().smartcast == true)
-                {
-                    UseSpell8();
-                }
-                else
-                {
-                    spellSelected = 8;
-                    usingSpell1Icon.SetActive(false);
-                    usingSpell2Icon.SetActive(false);
-                    usingSpell3Icon.SetActive(false);
-                    usingSpell4Icon.SetActive(false);
-                    usingSpell5Icon.SetActive(false);
-                    usingSpell6Icon.SetActive(false);
-                    usingSpell8Icon.SetActive(true);
-                    usingSpell8Icon.GetComponent<UsingSpell>().player = gameObject;
-                    usingSpell8Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
-                }
+                SelectSpell8();
             }
             else if (Input.GetKeyDown(KeyCode.A))
             {
@@ -446,6 +336,157 @@ public class Shoots : MonoBehaviour
             {
                 UseSpell8();
             }
+        }
+    }
+
+    public void SelectSpell1()
+    {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+        {
+            UseSpell1();
+        }
+        else
+        {
+            spellSelected = 1;
+            usingSpell1Icon.SetActive(true);
+            usingSpell1Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
+            usingSpell2Icon.SetActive(false);
+            usingSpell3Icon.SetActive(false);
+            usingSpell4Icon.SetActive(false);
+            usingSpell5Icon.SetActive(false);
+            usingSpell6Icon.SetActive(false);
+            usingSpell8Icon.SetActive(false);
+        }
+    }
+
+    public void SelectSpell2()
+    {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+        {
+            UseSpell2();
+        }
+        else
+        {
+            spellSelected = 2;
+            usingSpell1Icon.SetActive(false);
+            usingSpell2Icon.SetActive(true);
+            usingSpell2Icon.GetComponent<UsingSpell>().player = gameObject;
+            usingSpell2Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
+            usingSpell3Icon.SetActive(false);
+            usingSpell4Icon.SetActive(false);
+            usingSpell5Icon.SetActive(false);
+            usingSpell6Icon.SetActive(false);
+            usingSpell8Icon.SetActive(false);
+        }
+    }
+
+    public void SelectSpell3()
+    {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+        {
+            UseSpell3();
+        }
+        else
+        {
+            spellSelected = 3;
+            usingSpell1Icon.SetActive(false);
+            usingSpell2Icon.SetActive(false);
+            usingSpell3Icon.SetActive(true);
+            usingSpell3Icon.GetComponent<UsingSpell>().player = gameObject;
+            usingSpell3Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
+            usingSpell4Icon.SetActive(false);
+            usingSpell5Icon.SetActive(false);
+            usingSpell6Icon.SetActive(false);
+            usingSpell8Icon.SetActive(false);
+        }
+    }
+
+    public void SelectSpell4()
+    {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+        {
+            UseSpell4();
+        }
+        else
+        {
+            spellSelected = 4;
+            usingSpell1Icon.SetActive(false);
+            usingSpell2Icon.SetActive(false);
+            usingSpell3Icon.SetActive(false);
+            usingSpell4Icon.SetActive(true);
+            usingSpell4Icon.GetComponent<UsingSpell>().player = gameObject;
+            usingSpell4Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
+            usingSpell5Icon.SetActive(false);
+            usingSpell6Icon.SetActive(false);
+            usingSpell8Icon.SetActive(false);
+        }
+    }
+
+    public void SelectSpell5()
+    {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+        {
+            UseSpell5();
+        }
+        else
+        {
+            spellSelected = 5;
+            usingSpell1Icon.SetActive(false);
+            usingSpell2Icon.SetActive(false);
+            usingSpell3Icon.SetActive(false);
+            usingSpell4Icon.SetActive(false);
+            usingSpell5Icon.SetActive(true);
+            usingSpell5Icon.GetComponent<UsingSpell>().player = gameObject;
+            usingSpell5Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
+            usingSpell6Icon.SetActive(false);
+            usingSpell8Icon.SetActive(false);
+        }
+    }
+
+    public void SelectSpell6()
+    {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+        {
+            UseSpell6();
+        }
+        else
+        {
+            spellSelected = 6;
+            usingSpell1Icon.SetActive(false);
+            usingSpell2Icon.SetActive(false);
+            usingSpell3Icon.SetActive(false);
+            usingSpell4Icon.SetActive(false);
+            usingSpell5Icon.SetActive(false);
+            usingSpell6Icon.SetActive(true);
+            usingSpell6Icon.GetComponent<UsingSpell>().player = gameObject;
+            usingSpell6Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
+            usingSpell8Icon.SetActive(false);
+        }
+    }
+
+    public void SelectSpell7()
+    {
+        UseSpell7();
+    }
+
+    public void SelectSpell8()
+    {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+        {
+            UseSpell8();
+        }
+        else
+        {
+            spellSelected = 8;
+            usingSpell1Icon.SetActive(false);
+            usingSpell2Icon.SetActive(false);
+            usingSpell3Icon.SetActive(false);
+            usingSpell4Icon.SetActive(false);
+            usingSpell5Icon.SetActive(false);
+            usingSpell6Icon.SetActive(false);
+            usingSpell8Icon.SetActive(true);
+            usingSpell8Icon.GetComponent<UsingSpell>().player = gameObject;
+            usingSpell8Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
         }
     }
 
@@ -538,7 +579,8 @@ public class Shoots : MonoBehaviour
 
     void UseSpell1()
     {
-        if (spell1Ready == true &&
+        if (canShoot == true &&
+            spell1Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
             GetComponent<Deplacements>().isAttacking == false &&
             Vector2.Distance(transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f)
@@ -554,7 +596,8 @@ public class Shoots : MonoBehaviour
 
     void UseSpell2()
     {
-        if (spell2Ready == true &&
+        if (canShoot == true && 
+            spell2Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
             GetComponent<Deplacements>().isAttacking == false &&
             Vector2.Distance(transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f)
@@ -578,7 +621,8 @@ public class Shoots : MonoBehaviour
 
     void UseSpell3()
     {
-        if (spell3Ready == true &&
+        if (canShoot == true && 
+            spell3Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
             GetComponent<Deplacements>().isAttacking == false &&
             Vector2.Distance(transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f)
@@ -595,7 +639,8 @@ public class Shoots : MonoBehaviour
 
     void UseSpell4()
     {
-        if (spell4Ready == true &&
+        if (canShoot == true && 
+            spell4Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
             GetComponent<Deplacements>().isAttacking == false &&
             Vector2.Distance(transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f)
@@ -612,7 +657,8 @@ public class Shoots : MonoBehaviour
 
     void UseSpell5()
     {
-        if (spell5Ready == true &&
+        if (canShoot == true &&
+            spell5Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
             GetComponent<Deplacements>().isAttacking == false &&
             Vector2.Distance(transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f)
@@ -629,7 +675,8 @@ public class Shoots : MonoBehaviour
 
     void UseSpell6()
     {
-        if (spell6Ready == true &&
+        if (canShoot == true && 
+            spell6Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
             GetComponent<Deplacements>().isAttacking == false &&
             Vector2.Distance(transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f)
@@ -666,7 +713,8 @@ public class Shoots : MonoBehaviour
 
     void UseSpell8()
     {
-        if (spell8Ready == true &&
+        if (canShoot == true && 
+            spell8Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
             GetComponent<Deplacements>().isAttacking == false &&
             Vector2.Distance(transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f)

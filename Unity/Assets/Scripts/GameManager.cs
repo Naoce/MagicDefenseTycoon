@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     public  GameObject      bulleInfoCreateSave;
     public  int             currSave;
+    public  int             difficulty;
 
     public  GameObject      cam;
     public  GameObject      jingleDefaite;
@@ -158,89 +159,105 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveBulleInfoSpell1()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
             bulleInfoSpell1.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell1()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
         bulleInfoSpell1.SetActive(false);
     }
 
     public void SetActiveBulleInfoSpell2()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
             bulleInfoSpell2.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell2()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
         bulleInfoSpell2.SetActive(false);
     }
 
     public void SetActiveBulleInfoSpell3()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
             bulleInfoSpell3.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell3()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
         bulleInfoSpell3.SetActive(false);
     }
 
     public void SetActiveBulleInfoSpell4()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
             bulleInfoSpell4.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell4()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
         bulleInfoSpell4.SetActive(false);
     }
 
     public void SetActiveBulleInfoSpell5()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
             bulleInfoSpell5.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell5()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
         bulleInfoSpell5.SetActive(false);
     }
 
     public void SetActiveBulleInfoSpell6()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
             bulleInfoSpell6.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell6()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
         bulleInfoSpell6.SetActive(false);
     }
 
     public void SetActiveBulleInfoSpell7()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
             bulleInfoSpell7.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell7()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
         bulleInfoSpell7.SetActive(false);
     }
 
     public void SetActiveBulleInfoSpell8()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
             bulleInfoSpell8.SetActive(true);
     }
 
     public void SetInactiveBulleInfoSpell8()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
         if (showSpellsInfo == true)
             bulleInfoSpell8.SetActive(false);
     }
@@ -316,6 +333,46 @@ public class GameManager : MonoBehaviour
         SetNormalMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
         hudInGame.SetActive(false);
         StartCoroutine(DefeatAnimation());
+    }
+
+    public void SelectSpell1()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell1();
+    }
+
+    public void SelectSpell2()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell2();
+    }
+
+    public void SelectSpell3()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell3();
+    }
+
+    public void SelectSpell4()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell4();
+    }
+
+    public void SelectSpell5()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell5();
+    }
+
+    public void SelectSpell6()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell6();
+    }
+
+    public void SelectSpell7()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell7();
+    }
+
+    public void SelectSpell8()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell8();
     }
 
     IEnumerator VictoryAnimation()

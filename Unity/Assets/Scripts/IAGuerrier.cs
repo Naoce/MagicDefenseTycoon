@@ -36,6 +36,7 @@ public class IAGuerrier : MonoBehaviour
 
     public 	GameObject	player;
     private GameObject  gm;
+    private GameObject  gameManager;
     public  Vector2     newPos;
     public  GameObject  projectileMagic;
     public  GameObject  projectileCheck;
@@ -54,9 +55,10 @@ public class IAGuerrier : MonoBehaviour
     private bool        changedTarget = false;
     private GameObject  targetAttacking = null;
 
+    private int         difficulty;
     private int         currHP;
-    public  int         maxHP;
-    public  int         damage;
+    public  int[]       maxHP;
+    public  int[]       damage;
     public  int         valueXP;
     private float       speed = 1f;
     private float       slow = 0f;
@@ -82,7 +84,9 @@ public class IAGuerrier : MonoBehaviour
 	{
         initialScale = transform.localScale;
         gm = GameObject.Find("MapManager");
-        currHP = maxHP;
+        gameManager = gm.GetComponent<MapManager>().gm;
+        difficulty = gameManager.GetComponent<GameManager>().difficulty;
+        currHP = maxHP[difficulty];
         if (isBoss == false)
             baseScale = healthBarGreen.transform.localScale;
     }
@@ -194,6 +198,7 @@ public class IAGuerrier : MonoBehaviour
 
                     if (changedTarget == true ||
                         Vector2.Distance(newPos, transform.position) <= 0.05f ||
+                        Vector2.Distance(newPos, transform.position) >= 1f ||
                         Vector2.Distance(transform.position, target.transform.position) <= 1f)
                     {
                         changedTarget = false;
@@ -273,7 +278,7 @@ public class IAGuerrier : MonoBehaviour
             {
                 float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
                 float diff;
-                diff = baseScale.x * currHP / maxHP;
+                diff = baseScale.x * currHP / maxHP[difficulty];
                 newScale = new Vector2(diff, baseScale.y);
                 healthBarGreen.transform.localScale = newScale;
 
@@ -284,7 +289,7 @@ public class IAGuerrier : MonoBehaviour
                 healthBarGreen.transform.Translate(new Vector2(difference, 0));
             }
             else
-                gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().BossTakeDamage(currHP, maxHP);
+                gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().BossTakeDamage(currHP, maxHP[difficulty]);
 
             if (currHP <= 0)
             {
@@ -308,7 +313,7 @@ public class IAGuerrier : MonoBehaviour
             {
                 float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
                 float diff;
-                diff = baseScale.x * currHP / maxHP;
+                diff = baseScale.x * currHP / maxHP[difficulty];
                 newScale = new Vector2(diff, baseScale.y);
                 healthBarGreen.transform.localScale = newScale;
 
@@ -319,7 +324,7 @@ public class IAGuerrier : MonoBehaviour
                 healthBarGreen.transform.Translate(new Vector2(difference, 0));
             }
             else
-                gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().BossTakeDamage(currHP, maxHP);
+                gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().BossTakeDamage(currHP, maxHP[difficulty]);
 
 
             if (currHP == 0)
@@ -414,11 +419,11 @@ public class IAGuerrier : MonoBehaviour
         if (targetAttacking == target)
         {
             if (target.tag == "Player")
-                player.GetComponent<StatsPlayer>().TakeDamage(damage, transform.position);
+                player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position);
             else if (target.tag == "AgentGuerrier")
-                target.GetComponent<IAGuerrierAgent>().TakeDamage(damage, transform.position);
+                target.GetComponent<IAGuerrierAgent>().TakeDamage(damage[difficulty], transform.position);
             else if (target.tag == "Defense")
-                target.GetComponent<Defense>().TakeDamage(damage);
+                target.GetComponent<Defense>().TakeDamage(damage[difficulty]);
         }
         
         isAttacking = false;
@@ -473,9 +478,11 @@ public class IAGuerrier : MonoBehaviour
         else if (directionAttack == Shoots.Direction.TOP)
             newPos.y = transform.position.y + 0.1f;
 
-        obj = (GameObject)Instantiate(projectileMagic, newPos, transform.rotation);
-        obj.GetComponent<ProjectileEnemy>().GetPos(targetPos, damage, directionAttack, gameObject);
-
+        if (GetComponent<Enemy>().isDead == false)
+        {
+            obj = (GameObject)Instantiate(projectileMagic, newPos, transform.rotation);
+            obj.GetComponent<ProjectileEnemy>().GetPos(targetPos, damage[difficulty], directionAttack, gameObject);
+        }
 
         isAttacking = false;
         canAttack = false;
