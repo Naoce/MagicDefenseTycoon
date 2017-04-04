@@ -128,12 +128,7 @@ public class Buttons : MonoBehaviour
     public void PlayAgain()
     {
         NewGame();
-        if (Application.loadedLevel == 2)
-            Application.LoadLevel(2);
-        else if (Application.loadedLevel == 3)
-            Application.LoadLevel(3);
-        else if (Application.loadedLevel == 4)
-            Application.LoadLevel(4);
+        Application.LoadLevel(Application.loadedLevel);
         Resume();
 
     }
@@ -276,6 +271,94 @@ public class Buttons : MonoBehaviour
         }
     }
 
+    public void SetOnTextDifficulty(int difficulty)
+    {
+        GetComponent<GameManager>().textDifficulty.SetActive(true);
+        if (difficulty == 0)
+            GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "For beginners, or players with poor\ncoordination and reflexes." ;
+        else if (difficulty == 1)
+            GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "For players that search for a\nnormal experience.";
+        else if (difficulty == 2)
+            GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "Are you insane ?\n-Yes : Go for it, you'll enjoy it.\n-No : Don't. You'll hate it.";
+    }
+
+    public void SetOffTextDifficulty()
+    {
+        GetComponent<GameManager>().textDifficulty.SetActive(false);
+    }
+
+    public void SetDifficultyToEasy()
+    {
+        if (GetComponent<GameManager>().currSave == 1)
+        {
+            PlayerPrefs.SetInt("Load1DifficultySet", 1);
+            PlayerPrefs.SetInt("Load1Difficulty", 0);
+            GetComponent<GameManager>().difficulty = 0;
+        }
+        else if (GetComponent<GameManager>().currSave == 2)
+        {
+            PlayerPrefs.SetInt("Load2DifficultySet", 1);
+            PlayerPrefs.SetInt("Load2Difficulty", 0);
+            GetComponent<GameManager>().difficulty = 0;
+        }
+        else if (GetComponent<GameManager>().currSave == 3)
+        {
+            PlayerPrefs.SetInt("Load3DifficultySet", 1);
+            PlayerPrefs.SetInt("Load3Difficulty", 0);
+            GetComponent<GameManager>().difficulty = 0;
+        }
+        GetComponent<GameManager>().panelDifficulty.SetActive(false);
+        GetComponent<GameManager>().panelMenu.SetActive(true);
+    }
+
+    public void SetDifficultyToNormal()
+    {
+        if (GetComponent<GameManager>().currSave == 1)
+        {
+            PlayerPrefs.SetInt("Load1DifficultySet", 1);
+            PlayerPrefs.SetInt("Load1Difficulty", 1);
+            GetComponent<GameManager>().difficulty = 1;
+        }
+        else if (GetComponent<GameManager>().currSave == 2)
+        {
+            PlayerPrefs.SetInt("Load2DifficultySet", 1);
+            PlayerPrefs.SetInt("Load2Difficulty", 1);
+            GetComponent<GameManager>().difficulty = 1;
+        }
+        else if (GetComponent<GameManager>().currSave == 3)
+        {
+            PlayerPrefs.SetInt("Load3DifficultySet", 1);
+            PlayerPrefs.SetInt("Load3Difficulty", 1);
+            GetComponent<GameManager>().difficulty = 1;
+        }
+        GetComponent<GameManager>().panelDifficulty.SetActive(false);
+        GetComponent<GameManager>().panelMenu.SetActive(true);
+    }
+
+    public void SetDifficultyToDifficult()
+    {
+        if (GetComponent<GameManager>().currSave == 1)
+        {
+            PlayerPrefs.SetInt("Load1DifficultySet", 1);
+            PlayerPrefs.SetInt("Load1Difficulty", 2);
+            GetComponent<GameManager>().difficulty = 2;
+        }
+        else if (GetComponent<GameManager>().currSave == 2)
+        {
+            PlayerPrefs.SetInt("Load2DifficultySet", 1);
+            PlayerPrefs.SetInt("Load2Difficulty", 2);
+            GetComponent<GameManager>().difficulty = 2;
+        }
+        else if (GetComponent<GameManager>().currSave == 3)
+        {
+            PlayerPrefs.SetInt("Load3DifficultySet", 1);
+            PlayerPrefs.SetInt("Load3Difficulty", 2);
+            GetComponent<GameManager>().difficulty = 2;
+        }
+        GetComponent<GameManager>().panelDifficulty.SetActive(false);
+        GetComponent<GameManager>().panelMenu.SetActive(true);
+    }
+
     public void LoadFile1()
     {
         if (GetComponent<GameManager>().load1Created == false)
@@ -286,7 +369,13 @@ public class Buttons : MonoBehaviour
         {
             GetComponent<GameManager>().currSave = 1;
             GetComponent<GameManager>().panelSave.SetActive(false);
-            GetComponent<GameManager>().panelMenu.SetActive(true);
+            if (PlayerPrefs.GetInt("Load1DifficultySet") == 1)
+            {
+                GetComponent<GameManager>().difficulty = PlayerPrefs.GetInt("Load1Difficulty");
+                GetComponent<GameManager>().panelMenu.SetActive(true);
+            }
+            else
+                GetComponent<GameManager>().panelDifficulty.SetActive(true);
         }
     }
 
@@ -310,10 +399,11 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().inputFieldLoad1Name.SetActive(false);
             GetComponent<GameManager>().load1Name.SetActive(true);
             GetComponent<GameManager>().currSave = 1;
+            PlayerPrefs.SetInt("Load1DifficultySet", 0);
             PlayerPrefs.SetInt("Load1PlayerStockHealthPotion", 1);
             PlayerPrefs.SetInt("Load1PlayerStockManaPotion", 1);
             GetComponent<GameManager>().panelSave.SetActive(false);
-            GetComponent<GameManager>().panelMenu.SetActive(true);
+            GetComponent<GameManager>().panelDifficulty.SetActive(true);
         }
     }
 
@@ -343,6 +433,7 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load1Agent4StockHealthPotion", 0);
         PlayerPrefs.SetInt("Load1Agent4StockManaPotion", 0);
 
+        PlayerPrefs.SetInt("Load1DifficultySet", 0);
         GetComponent<GameManager>().load1Created = false;
         GetComponent<GameManager>().load1Name.GetComponent<Text>().text = "Empty save";
     }
@@ -357,7 +448,13 @@ public class Buttons : MonoBehaviour
         {
             GetComponent<GameManager>().currSave = 2;
             GetComponent<GameManager>().panelSave.SetActive(false);
-            GetComponent<GameManager>().panelMenu.SetActive(true);
+            if (PlayerPrefs.GetInt("Load2DifficultySet") == 1)
+            {
+                GetComponent<GameManager>().difficulty = PlayerPrefs.GetInt("Load2Difficulty");
+                GetComponent<GameManager>().panelMenu.SetActive(true);
+            }
+            else
+                GetComponent<GameManager>().panelDifficulty.SetActive(true);
         }
     }
 
@@ -381,10 +478,11 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().inputFieldLoad2Name.SetActive(false);
             GetComponent<GameManager>().load2Name.SetActive(true);
             GetComponent<GameManager>().currSave = 2;
+            PlayerPrefs.SetInt("Load2DifficultySet", 0);
             PlayerPrefs.SetInt("Load2PlayerStockHealthPotion", 1);
             PlayerPrefs.SetInt("Load2PlayerStockManaPotion", 1);
             GetComponent<GameManager>().panelSave.SetActive(false);
-            GetComponent<GameManager>().panelMenu.SetActive(true);
+            GetComponent<GameManager>().panelDifficulty.SetActive(true);
         }
     }
 
@@ -413,6 +511,8 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load2Agent3StockManaPotion", 0);
         PlayerPrefs.SetInt("Load2Agent4StockHealthPotion", 0);
         PlayerPrefs.SetInt("Load2Agent4StockManaPotion", 0);
+
+        PlayerPrefs.SetInt("Load2DifficultySet", 0);
         GetComponent<GameManager>().load2Created = false;
         GetComponent<GameManager>().load2Name.GetComponent<Text>().text = "Empty save";
     }
@@ -427,7 +527,13 @@ public class Buttons : MonoBehaviour
         {
             GetComponent<GameManager>().currSave = 3;
             GetComponent<GameManager>().panelSave.SetActive(false);
-            GetComponent<GameManager>().panelMenu.SetActive(true);
+            if (PlayerPrefs.GetInt("Load3DifficultySet") == 1)
+            {
+                GetComponent<GameManager>().difficulty = PlayerPrefs.GetInt("Load3Difficulty");
+                GetComponent<GameManager>().panelMenu.SetActive(true);
+            }
+            else
+                GetComponent<GameManager>().panelDifficulty.SetActive(true);
         }
     }
 
@@ -451,10 +557,11 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().inputFieldLoad3Name.SetActive(false);
             GetComponent<GameManager>().load3Name.SetActive(true);
             GetComponent<GameManager>().currSave = 3;
+            PlayerPrefs.SetInt("Load3DifficultySet", 0);
             PlayerPrefs.SetInt("Load3PlayerStockHealthPotion", 1);
             PlayerPrefs.SetInt("Load3PlayerStockManaPotion", 1);
             GetComponent<GameManager>().panelSave.SetActive(false);
-            GetComponent<GameManager>().panelMenu.SetActive(true);
+            GetComponent<GameManager>().panelDifficulty.SetActive(true);
         }
     }
 
@@ -484,6 +591,7 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load3Agent4StockHealthPotion", 0);
         PlayerPrefs.SetInt("Load3Agent4StockManaPotion", 0);
 
+        PlayerPrefs.SetInt("Load3DifficultySet", 0);
         GetComponent<GameManager>().load3Created = false;
         GetComponent<GameManager>().load3Name.GetComponent<Text>().text = "Empty save";
     }

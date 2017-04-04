@@ -80,6 +80,8 @@ public class GameManager : MonoBehaviour
     public  GameObject      hudButtonTryAgain;
     public  GameObject      hudButtonReturnToMenu;
     public  GameObject      panelSave;
+    public  GameObject      panelDifficulty;
+    public  GameObject      textDifficulty;
     public  GameObject      panelMenu;
     public  GameObject      hudPanelMenu;
     public  GameObject      hudPanelOptions;
