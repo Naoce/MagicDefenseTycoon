@@ -6,6 +6,7 @@ public class Deplacements : MonoBehaviour
     public  GameObject  cam;
     private GameObject  gm;
     private GameObject  mapManager;
+    public  float       speed;
 
     public Sprite leftIdle;
     public Sprite left1;
@@ -77,14 +78,25 @@ public class Deplacements : MonoBehaviour
             if (Input.GetKey(KeyCode.D))
             {
                 isMovingHorizontally = true;
-                newPosition = transform.position;
-                if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.S))
-                    newPosition.x += 0.015f;
+
+                if (Input.GetKey(KeyCode.Z))
+                    newPosition = new Vector2(transform.position.x + 1, transform.position.y + 1);
+                else if (Input.GetKey(KeyCode.S))
+                    newPosition = new Vector2(transform.position.x + 1, transform.position.y - 1);
                 else
-                    newPosition.x += 0.02f;
+                    newPosition = new Vector2(transform.position.x + 1, transform.position.y);
+
                 if (newPosition.x > mapManager.GetComponent<MapManager>().LimitD)
                     newPosition.x = mapManager.GetComponent<MapManager>().LimitD;
-                transform.position = newPosition;
+
+                if (newPosition.y > mapManager.GetComponent<MapManager>().LimitH)
+                    newPosition.y = mapManager.GetComponent<MapManager>().LimitH;
+
+                if (newPosition.y < mapManager.GetComponent<MapManager>().LimitB)
+                    newPosition.y = mapManager.GetComponent<MapManager>().LimitB;
+
+                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed);
+
                 timer += Time.deltaTime;
                 if (timer > animTime)
                 {
@@ -122,14 +134,25 @@ public class Deplacements : MonoBehaviour
             else if (Input.GetKey(KeyCode.Q))
             {
                 isMovingHorizontally = true;
-                newPosition = transform.position;
-                if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.S))
-                    newPosition.x -= 0.015f;
+
+                if (Input.GetKey(KeyCode.Z))
+                    newPosition = new Vector2(transform.position.x - 1, transform.position.y + 1);
+                else if (Input.GetKey(KeyCode.S))
+                    newPosition = new Vector2(transform.position.x - 1, transform.position.y - 1);
                 else
-                    newPosition.x -= 0.02f;
+                    newPosition = new Vector2(transform.position.x - 1, transform.position.y);
+
                 if (newPosition.x < mapManager.GetComponent<MapManager>().LimitG)
                     newPosition.x = mapManager.GetComponent<MapManager>().LimitG;
-                transform.position = newPosition;
+
+                if (newPosition.y > mapManager.GetComponent<MapManager>().LimitH)
+                    newPosition.y = mapManager.GetComponent<MapManager>().LimitH;
+
+                if (newPosition.y < mapManager.GetComponent<MapManager>().LimitB)
+                    newPosition.y = mapManager.GetComponent<MapManager>().LimitB;
+
+                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed);
+
                 timer += Time.deltaTime;
                 if (timer > animTime)
                 {
@@ -166,106 +189,92 @@ public class Deplacements : MonoBehaviour
             }
             else
                 isMovingHorizontally = false;
-            if (Input.GetKey(KeyCode.Z))
+            if (Input.GetKey(KeyCode.Z) &&
+                !(Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.D)))
             {
-                newPosition = transform.position;
-                if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.D))
+                newPosition = new Vector2(transform.position.x, transform.position.y + 1);
+
+                if (newPosition.y > mapManager.GetComponent<MapManager>().LimitH)
+                    newPosition.y = mapManager.GetComponent<MapManager>().LimitH;
+
+                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed);
+
+                timer += Time.deltaTime;
+                if (timer > animTime)
                 {
-                    newPosition.y += 0.015f;
-                    if (newPosition.y > mapManager.GetComponent<MapManager>().LimitH)
-                        newPosition.y = mapManager.GetComponent<MapManager>().LimitH;
-                    transform.position = newPosition;
-                }
-                else
-                {
-                    newPosition.y += 0.02f;
-                    if (newPosition.y > mapManager.GetComponent<MapManager>().LimitH)
-                        newPosition.y = mapManager.GetComponent<MapManager>().LimitH;
-                    transform.position = newPosition;
-                    timer += Time.deltaTime;
-                    if (timer > animTime)
+                    if (isAttacking == true)
+                        AttackAnimation();
+                    else
                     {
-                        if (isAttacking == true)
-                            AttackAnimation();
-                        else
+                        movementDirection = Shoots.Direction.TOP;
+                        if (currentNumeroAnim == 1)
                         {
-                            movementDirection = Shoots.Direction.TOP;
-                            if (currentNumeroAnim == 1)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top1;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 2)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top2;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 3)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top3;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 4)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = top4;
-                                currentNumeroAnim++;
-                            }
-                            if (currentNumeroAnim == 5)
-                                currentNumeroAnim = 1;
+                            GetComponent<SpriteRenderer>().sprite = top1;
+                            currentNumeroAnim++;
                         }
-                        timer = 0f;
+                        else if (currentNumeroAnim == 2)
+                        {
+                            GetComponent<SpriteRenderer>().sprite = top2;
+                            currentNumeroAnim++;
+                        }
+                        else if (currentNumeroAnim == 3)
+                        {
+                            GetComponent<SpriteRenderer>().sprite = top3;
+                            currentNumeroAnim++;
+                        }
+                        else if (currentNumeroAnim == 4)
+                        {
+                            GetComponent<SpriteRenderer>().sprite = top4;
+                            currentNumeroAnim++;
+                        }
+                        if (currentNumeroAnim == 5)
+                            currentNumeroAnim = 1;
                     }
+                    timer = 0f;
                 }
             }
-            else if (Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(KeyCode.S) &&
+                !(Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.D)))
             {
-                newPosition = transform.position;
-                if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.D))
+                newPosition = new Vector2(transform.position.x, transform.position.y - 1);
+
+                if (newPosition.y < mapManager.GetComponent<MapManager>().LimitB)
+                    newPosition.y = mapManager.GetComponent<MapManager>().LimitB;
+
+                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed);
+
+                timer += Time.deltaTime;
+                if (timer > animTime)
                 {
-                   newPosition.y -= 0.015f;
-                    if (newPosition.y < mapManager.GetComponent<MapManager>().LimitB)
-                        newPosition.y = mapManager.GetComponent<MapManager>().LimitB;
-                   transform.position = newPosition;
-                }
-                else
-                {
-                    newPosition.y -= 0.02f;
-                    if (newPosition.y < mapManager.GetComponent<MapManager>().LimitB)
-                        newPosition.y = mapManager.GetComponent<MapManager>().LimitB;
-                    transform.position = newPosition;
-                    timer += Time.deltaTime;
-                    if (timer > animTime)
+                    if (isAttacking == true)
+                        AttackAnimation();
+                    else
                     {
-                        if (isAttacking == true)
-                            AttackAnimation();
-                        else
+                        movementDirection = Shoots.Direction.BOTTOM;
+                        if (currentNumeroAnim == 1)
                         {
-                            movementDirection = Shoots.Direction.BOTTOM;
-                            if (currentNumeroAnim == 1)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot1;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 2)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot2;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 3)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot3;
-                                currentNumeroAnim++;
-                            }
-                            else if (currentNumeroAnim == 4)
-                            {
-                                GetComponent<SpriteRenderer>().sprite = bot4;
-                                currentNumeroAnim++;
-                            }
-                            if (currentNumeroAnim == 5)
-                                currentNumeroAnim = 1;
+                            GetComponent<SpriteRenderer>().sprite = bot1;
+                            currentNumeroAnim++;
                         }
-                        timer = 0f;
+                        else if (currentNumeroAnim == 2)
+                        {
+                            GetComponent<SpriteRenderer>().sprite = bot2;
+                            currentNumeroAnim++;
+                        }
+                        else if (currentNumeroAnim == 3)
+                        {
+                            GetComponent<SpriteRenderer>().sprite = bot3;
+                            currentNumeroAnim++;
+                        }
+                        else if (currentNumeroAnim == 4)
+                        {
+                            GetComponent<SpriteRenderer>().sprite = bot4;
+                            currentNumeroAnim++;
+                        }
+                        if (currentNumeroAnim == 5)
+                            currentNumeroAnim = 1;
                     }
+                    timer = 0f;
                 }
             }
             else if (isAttacking == true &&
@@ -276,7 +285,7 @@ public class Deplacements : MonoBehaviour
                 {
                     AttackAnimation();
                     timer = 0f;
-                }       
+                }
             }
             else if (isAttacking == false &&
                 (isMovingHorizontally == false))
@@ -295,35 +304,20 @@ public class Deplacements : MonoBehaviour
                     timer = 0f;
                 }
             }
+
             newPosCam.x = transform.position.x;
-            if (newPosCam.x < -3.2f)
-                newPosCam.x = -3.2f;
-            else if (newPosCam.x > 3.13f)
-                newPosCam.x = 3.13f;
+            if (newPosCam.x < mapManager.GetComponent<MapManager>().LimitG + 5f)
+                newPosCam.x = mapManager.GetComponent<MapManager>().LimitG + 5f;
+            else if (newPosCam.x > mapManager.GetComponent<MapManager>().LimitD - 5f)
+                newPosCam.x = mapManager.GetComponent<MapManager>().LimitD - 5f;
+
             newPosCam.y = transform.position.y;
-            if (newPosCam.y < -1.75f)
-                newPosCam.y = -1.75f;
-            else if (newPosCam.y > 1.8f)
-                newPosCam.y = 1.8f;
+            if (newPosCam.y < mapManager.GetComponent<MapManager>().LimitB + 2.6f)
+                newPosCam.y = mapManager.GetComponent<MapManager>().LimitB + 2.6f;
+            else if (newPosCam.y > mapManager.GetComponent<MapManager>().LimitH - 2.7f)
+                newPosCam.y = mapManager.GetComponent<MapManager>().LimitH - 2.7f;
+
             cam.transform.position = newPosCam;
-        }
-        if (transform.position.x > 8.1f)
-        {
-            Vector2 tmpPos = new Vector2(8.1f, transform.position.y);
-            if (transform.position.y > 2f)
-                tmpPos.y = 2f;
-            else if (transform.position.y < -4.4f)
-                tmpPos.y = -4.4f;
-            transform.position = tmpPos;
-        }
-        else if (transform.position.x < -8.2f)
-        {
-            Vector2 tmpPos = new Vector2(-8.2f, transform.position.y);
-            if (transform.position.y > 2f)
-                tmpPos.y = 2f;
-            else if (transform.position.y < -4.4f)
-                tmpPos.y = -4.4f;
-            transform.position = tmpPos;
         }
     }
 

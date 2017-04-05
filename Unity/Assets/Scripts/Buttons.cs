@@ -275,11 +275,11 @@ public class Buttons : MonoBehaviour
     {
         GetComponent<GameManager>().textDifficulty.SetActive(true);
         if (difficulty == 0)
-            GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "For beginners, or players with poor\ncoordination and reflexes." ;
+            GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "For players searching for a more\nrelaxed experience.";
         else if (difficulty == 1)
             GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "For players that search for a\nnormal experience.";
         else if (difficulty == 2)
-            GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "Are you insane ?\n-Yes : Go for it, you'll enjoy it.\n-No : Don't. You'll hate it.";
+            GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "Only play this if you enjoy dying.\nA lot.";
     }
 
     public void SetOffTextDifficulty()

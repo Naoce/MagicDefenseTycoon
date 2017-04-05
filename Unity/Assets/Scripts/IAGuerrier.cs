@@ -441,7 +441,8 @@ public class IAGuerrier : MonoBehaviour
         FindShootDirection(targetPos);
 
         int animAttack = 0;
-        while (animAttack < rightAttackSprites.Length)
+        while (animAttack < rightAttackSprites.Length &&
+                GetComponent<Enemy>().isDead == false)
         {
             if (directionAttack == Shoots.Direction.RIGHT ||
                 directionAttack == Shoots.Direction.TOPRIGHT ||
@@ -459,7 +460,6 @@ public class IAGuerrier : MonoBehaviour
             yield return new WaitForSeconds(0.08f);
             animAttack++;
         }
-
 
         GameObject obj = null;
 
