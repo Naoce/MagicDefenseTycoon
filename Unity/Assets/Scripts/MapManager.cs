@@ -144,6 +144,8 @@ public class MapManager : MonoBehaviour
             StartMap1();
         else if (mapID == 2)
             StartMap2();
+
+        gm.GetComponent<GameManager>().PlayIntroCombat();
     }
 
     void StartMap1()
@@ -482,6 +484,7 @@ public class MapManager : MonoBehaviour
         gm.GetComponent<GameManager>().isInMenu = true;
         gm.GetComponent<GameManager>().hudInGame.SetActive(false);
         gm.GetComponent<GameManager>().isInOptions = false;
+        gm.GetComponent<GameManager>().PauseMusic();
         Time.timeScale = 0f;
         gm.GetComponent<GameManager>().gamePaused = true;
         gm.GetComponent<GameManager>().hudPanelMenu.SetActive(true);
@@ -493,6 +496,7 @@ public class MapManager : MonoBehaviour
     {
         gm.GetComponent<GameManager>().hudInGame.SetActive(true);
         gm.GetComponent<GameManager>().isInMenu = false;
+        gm.GetComponent<GameManager>().ResumeMusic();
         Time.timeScale = 1f;
         gm.GetComponent<GameManager>().gamePaused = false;
         gm.GetComponent<GameManager>().hudPanelMenu.SetActive(false);

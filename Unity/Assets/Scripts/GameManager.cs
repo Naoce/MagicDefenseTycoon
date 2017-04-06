@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     public  GameObject      cam;
     public  GameObject      jingleDefaite;
     public  GameObject      jingleVictoire;
+    public  GameObject      jingleIntroCombat;
+    public  GameObject      musicCombatObj;
+    public  GameObject      musicCombat;
     public  GameObject      mapManager;
     public  GameObject      textNbEnemy;
     public  int[]           playerMaxHP = new int[15];
@@ -317,6 +320,7 @@ public class GameManager : MonoBehaviour
 
     public void StartVictory()
     {
+        musicCombatObj.GetComponent<AudioSource>().Stop();
         gamePaused = true;
         gameOver = true;
         GameObject obj = (GameObject)Instantiate(jingleVictoire, transform.position, transform.rotation);
@@ -328,6 +332,7 @@ public class GameManager : MonoBehaviour
 
     public void StartDefeat()
     {
+        musicCombatObj.GetComponent<AudioSource>().Stop();
         gamePaused = true;
         gameOver = true;
         GameObject obj = (GameObject)Instantiate(jingleDefaite, transform.position, transform.rotation);
@@ -335,6 +340,31 @@ public class GameManager : MonoBehaviour
         SetNormalMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
         hudInGame.SetActive(false);
         StartCoroutine(DefeatAnimation());
+    }
+
+    public void PauseMusic()
+    {
+        musicCombatObj.GetComponent<AudioSource>().Pause();
+    }
+
+    public void ResumeMusic()
+    {
+        musicCombatObj.GetComponent<AudioSource>().UnPause();
+    }
+
+    public void PlayIntroCombat()
+    {
+        musicCombatObj = (GameObject)Instantiate(jingleIntroCombat, transform.position, transform.rotation);
+        musicCombatObj.GetComponent<AudioSource>().volume = volumeMusic / 100;
+        StartCoroutine(PlayMusicCombat(jingleIntroCombat.GetComponent<AudioSource>().clip.length));
+    }
+
+    IEnumerator PlayMusicCombat(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        musicCombatObj = (GameObject)Instantiate(musicCombat, transform.position, transform.rotation);
+        musicCombatObj.GetComponent<AudioSource>().volume = volumeMusic / 100;
     }
 
     public void SelectSpell1()
