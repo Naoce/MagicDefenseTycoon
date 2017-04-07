@@ -233,6 +233,7 @@ public class Buttons : MonoBehaviour
         if (GetComponent<GameManager>().volumeMusic < 0)
             GetComponent<GameManager>().volumeMusic = 0;
         obj.GetComponent<Text>().text = "Volume music : " + GetComponent<GameManager>().volumeMusic;
+        GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
     }
 
     public void MusicPlus(GameObject obj)
@@ -241,6 +242,7 @@ public class Buttons : MonoBehaviour
         if (GetComponent<GameManager>().volumeMusic > 100)
             GetComponent<GameManager>().volumeMusic = 100;
         obj.GetComponent<Text>().text = "Volume music : " + GetComponent<GameManager>().volumeMusic;
+        GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
     }
 
     public void BloodTrigger(GameObject obj)

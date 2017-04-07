@@ -17,14 +17,21 @@ public class Shoots : MonoBehaviour
     };
 
 	private GameObject	cam;
-	public  GameObject	projectile;
+	public  GameObject	fireball;
+    public  GameObject  fireballSFX;
     public  GameObject  thunderbolt;
     public  GameObject  thunderboltBase;
+    public  GameObject  thunderboltSFX;
     public  GameObject  tornado;
     public  GameObject  tornadoBase;
+    public  GameObject  tornadoSFX;
     public  GameObject  iceShard;
+    public  GameObject  iceShardSFX;
     public  GameObject  meteor;
+    public  GameObject  meteorSFX;
     public  GameObject  icePrison;
+    public  GameObject  icePrisonSFX;
+    public  GameObject  fireblastSFX;
     public  GameObject  dragonHG;
     public  GameObject  dragonHD;
     public  GameObject  dragonH;
@@ -33,6 +40,7 @@ public class Shoots : MonoBehaviour
     public  GameObject  dragonBG;
     public  GameObject  dragonBD;
     public  GameObject  dragonB;
+    public  GameObject  dragonSFX;
     private GameObject  gm;
     private GameObject  mapManager;
     public  GameObject  usingSpell1Icon;
@@ -590,6 +598,7 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             FindShootDirection();
             spell1Ready = false;
+            Instantiate(fireballSFX, transform.position, transform.rotation);
             StartCoroutine(InstantiateProjectile(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)));
         }
     }
@@ -613,6 +622,7 @@ public class Shoots : MonoBehaviour
                     GetComponent<Deplacements>().currentNumeroAnim = 1;
                     FindShootDirection();
                     spell2Ready = false;
+                    Instantiate(thunderboltSFX, transform.position, transform.rotation);
                     StartCoroutine(GoBackToAA());
                 }
             }
@@ -650,6 +660,7 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             FindShootDirection();
             spell4Ready = false;
+            Instantiate(meteorSFX, transform.position, transform.rotation);
             StartCoroutine(SpellMeteore());
             StartCoroutine(GoBackToAA());
         }
@@ -668,6 +679,7 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             FindShootDirection();
             spell5Ready = false;
+            Instantiate(tornadoSFX, transform.position, transform.rotation);
             StartCoroutine(SpellTornade());
             StartCoroutine(GoBackToAA());
         }
@@ -692,6 +704,7 @@ public class Shoots : MonoBehaviour
                     GetComponent<Deplacements>().currentNumeroAnim = 1;
                     FindShootDirection();
                     spell6Ready = false;
+                    Instantiate(icePrisonSFX, transform.position, transform.rotation);
                     StartCoroutine(GoBackToAA());
                 }
             }
@@ -707,7 +720,8 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().isAttacking = true;
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             spell7Ready = false;
-            StartCoroutine(SpellSeisme());
+            Instantiate(fireblastSFX, transform.position, transform.rotation);
+            StartCoroutine(SpellFireBlast());
         }
     }
 
@@ -724,6 +738,7 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             FindShootDirection();
             spell8Ready = false;
+            Instantiate(dragonSFX, transform.position, transform.rotation);
             StartCoroutine(SpellDragonFeu(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)));
             StartCoroutine(GoBackToAA());
         }
@@ -784,7 +799,7 @@ public class Shoots : MonoBehaviour
         else if (GetComponent<Deplacements>().attackDirection == Direction.TOP)
             newPos.y = transform.position.y + 0.1f;
 
-        obj = (GameObject)Instantiate (projectile, newPos, rot);
+        obj = (GameObject)Instantiate (fireball, newPos, rot);
 		obj.GetComponent<Projectile>().GetPos(directionPos, 5, GetComponent<Deplacements>().attackDirection, gameObject);
 	}
 
@@ -806,21 +821,25 @@ public class Shoots : MonoBehaviour
             newPos.y = transform.position.y + 0.1f;
 
         GameObject obj1 = null;
+        Instantiate(iceShardSFX, transform.position, transform.rotation);
         obj1 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj1.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj2 = null;
+        Instantiate(iceShardSFX, transform.position, transform.rotation);
         obj2 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj2.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj3 = null;
+        Instantiate(iceShardSFX, transform.position, transform.rotation);
         obj3 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj3.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj4 = null;
+        Instantiate(iceShardSFX, transform.position, transform.rotation);
         obj4 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj4.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
     }
@@ -910,7 +929,7 @@ public class Shoots : MonoBehaviour
         }
     }
 
-    IEnumerator SpellSeisme()
+    IEnumerator SpellFireBlast()
     {
         yield return new WaitForSeconds(0.2f);
         foreach (GameObject go in mapManager.GetComponent<MapManager>().enemiesList)

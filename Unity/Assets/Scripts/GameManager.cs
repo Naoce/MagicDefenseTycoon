@@ -352,17 +352,8 @@ public class GameManager : MonoBehaviour
         musicCombatObj.GetComponent<AudioSource>().UnPause();
     }
 
-    public void PlayIntroCombat()
+    public void PlayMusicCombat()
     {
-        musicCombatObj = (GameObject)Instantiate(jingleIntroCombat, transform.position, transform.rotation);
-        musicCombatObj.GetComponent<AudioSource>().volume = volumeMusic / 100;
-        StartCoroutine(PlayMusicCombat(jingleIntroCombat.GetComponent<AudioSource>().clip.length));
-    }
-
-    IEnumerator PlayMusicCombat(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-
         musicCombatObj = (GameObject)Instantiate(musicCombat, transform.position, transform.rotation);
         musicCombatObj.GetComponent<AudioSource>().volume = volumeMusic / 100;
     }

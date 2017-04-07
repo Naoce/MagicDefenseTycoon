@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\Projectile.cs" />
      <Compile Include="Assets\Scripts\ProjectileBreak.cs" />
      <Compile Include="Assets\Scripts\ProjectileEnemy.cs" />
+     <Compile Include="Assets\Scripts\SFX.cs" />
      <Compile Include="Assets\Scripts\Shoots.cs" />
      <Compile Include="Assets\Scripts\SpriteAnimTimer.cs" />
      <Compile Include="Assets\Scripts\SpriteOnStart.cs" />
