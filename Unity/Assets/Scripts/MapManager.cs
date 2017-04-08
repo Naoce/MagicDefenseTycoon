@@ -55,7 +55,6 @@ public class MapManager : MonoBehaviour
     public  bool                agent1Died;
     public  bool                agent2Died;
     public  bool                agent3Died;
-    public  bool                agent4Died;
 
 
     void Start()
@@ -121,20 +120,6 @@ public class MapManager : MonoBehaviour
         else
         {
             gm.GetComponent<GameManager>().agent3Panel.SetActive(false);
-        }
-            
-
-        if (gm.GetComponent<GameManager>().tabAgents[3] != null)
-        {
-            agentTmp = (GameObject)Instantiate(gm.GetComponent<GameManager>().tabAgents[3], agentStartPos[3], transform.rotation);
-            agentTmp.GetComponent<Agent>().id = idGenAgent++;
-            agentTmp.GetComponent<Agent>().idAgent = 3;
-            agentTmp.GetComponent<IAGuerrierAgent>().newPos = agentStartPos[3];
-            alliesList.Add(agentTmp);
-        }
-        else
-        {
-            gm.GetComponent<GameManager>().agent4Panel.SetActive(false);
         }
             
         timerSpawn = timerMax;
@@ -354,28 +339,18 @@ public class MapManager : MonoBehaviour
                         PlayerPrefs.SetInt("Load1Agent1Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load1Agent1XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                         PlayerPrefs.SetInt("Load1Agent1StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load1Agent1StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
                     }
                     else if (alliesList[i].GetComponent<Agent>().idAgent == 1)
                     {
                         PlayerPrefs.SetInt("Load1Agent2Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load1Agent2XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                         PlayerPrefs.SetInt("Load1Agent2StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load1Agent2StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
                     }
                     else if (alliesList[i].GetComponent<Agent>().idAgent == 2)
                     {
                         PlayerPrefs.SetInt("Load1Agent3Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load1Agent3XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                         PlayerPrefs.SetInt("Load1Agent3StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load1Agent3StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
-                    }
-                    else if (alliesList[i].GetComponent<Agent>().idAgent == 3)
-                    {
-                        PlayerPrefs.SetInt("Load1Agent4Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
-                        PlayerPrefs.SetInt("Load1Agent4XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
-                        PlayerPrefs.SetInt("Load1Agent4StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load1Agent4StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
                     }
                 }
             }
@@ -396,28 +371,18 @@ public class MapManager : MonoBehaviour
                         PlayerPrefs.SetInt("Load2Agent1Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load2Agent1XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                         PlayerPrefs.SetInt("Load2Agent1StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load2Agent1StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
                     }
                     else if (alliesList[i].GetComponent<Agent>().idAgent == 1)
                     {
                         PlayerPrefs.SetInt("Load2Agent2Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load2Agent2XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                         PlayerPrefs.SetInt("Load2Agent2StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load2Agent2StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
                     }
                     else if (alliesList[i].GetComponent<Agent>().idAgent == 2)
                     {
                         PlayerPrefs.SetInt("Load2Agent3Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load2Agent3XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                         PlayerPrefs.SetInt("Load2Agent3StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load2Agent3StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
-                    }
-                    else if (alliesList[i].GetComponent<Agent>().idAgent == 3)
-                    {
-                        PlayerPrefs.SetInt("Load2Agent4Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
-                        PlayerPrefs.SetInt("Load2Agent4XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
-                        PlayerPrefs.SetInt("Load2Agent4StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load2Agent4StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
                     }
                 }
             }
@@ -438,28 +403,18 @@ public class MapManager : MonoBehaviour
                         PlayerPrefs.SetInt("Load3Agent1Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load3Agent1XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                         PlayerPrefs.SetInt("Load3Agent1StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load3Agent1StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
                     }
                     else if (alliesList[i].GetComponent<Agent>().idAgent == 1)
                     {
                         PlayerPrefs.SetInt("Load3Agent2Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load3Agent2XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                         PlayerPrefs.SetInt("Load3Agent2StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load3Agent2StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
                     }
                     else if (alliesList[i].GetComponent<Agent>().idAgent == 2)
                     {
                         PlayerPrefs.SetInt("Load3Agent3Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load3Agent3XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                         PlayerPrefs.SetInt("Load3Agent3StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load3Agent3StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
-                    }
-                    else if (alliesList[i].GetComponent<Agent>().idAgent == 3)
-                    {
-                        PlayerPrefs.SetInt("Load3Agent4Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
-                        PlayerPrefs.SetInt("Load3Agent4XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
-                        PlayerPrefs.SetInt("Load3Agent4StockHealthPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockHealthPotion);
-                        PlayerPrefs.SetInt("Load3Agent4StockManaPotion", alliesList[i].GetComponent<IAGuerrierAgent>().stockManaPotion);
                     }
                 }
             }
@@ -552,10 +507,6 @@ public class MapManager : MonoBehaviour
                 else if (alliesList[i].GetComponent<Agent>().idAgent == 2)
                 {
                     agent3Died = true;
-                }
-                else if (alliesList[i].GetComponent<Agent>().idAgent == 3)
-                {
-                    agent4Died = true;
                 }
                 alliesList.RemoveAt(i);
             }

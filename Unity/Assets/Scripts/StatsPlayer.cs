@@ -101,64 +101,67 @@ public class StatsPlayer : MonoBehaviour
 
     public void     TakeDamage(int damageTaken, Vector2 directionPos)
     {
-        currHP -= damageTaken;
-        if (currHP < 0)
-            currHP = 0;
-        healthBarGreen.value = (float)currHP / (float)gm.GetComponent<GameManager>().playerMaxHP[level - 1];
-        textHP.GetComponent<Text>().text = currHP + " / " + gm.GetComponent<GameManager>().playerMaxHP[level - 1];
-        if (healthBarGreen.value > 0.75 &&
-            fioleState != Fiole.GREEN)
+        if (GetComponent<Deplacements>().isDead == false)
         {
-            fioleRed.SetActive(false);
-            fioleOrange.SetActive(false);
-            fioleYellow.SetActive(false);
-            fioleGreen.SetActive(true);
-            fioleGreen.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
-            fioleGreen.GetComponent<AnimOnStart>().StartAnimationByScript();
-            fioleState = Fiole.GREEN;
-        }
-        else if (healthBarGreen.value > 0.5 &&
-            healthBarGreen.value <= 0.75 &&
-            fioleState != Fiole.YELLOW)
-        {
-            fioleRed.SetActive(false);
-            fioleOrange.SetActive(false);
-            fioleYellow.SetActive(true);
-            fioleYellow.GetComponent<AnimOnStart>().player = this.gameObject;
-            fioleYellow.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
-            fioleYellow.GetComponent<AnimOnStart>().StartAnimationByScript();
-            fioleGreen.SetActive(false);
-            fioleState = Fiole.YELLOW;
-        }
-        else if (healthBarGreen.value > 0.25 &&
-            healthBarGreen.value <= 0.5 &&
-            fioleState != Fiole.ORANGE)
-        {
-            fioleRed.SetActive(false);
-            fioleOrange.SetActive(true);
-            fioleOrange.GetComponent<AnimOnStart>().player = this.gameObject;
-            fioleOrange.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
-            fioleOrange.GetComponent<AnimOnStart>().StartAnimationByScript();
-            fioleYellow.SetActive(false);
-            fioleGreen.SetActive(false);
-            fioleState = Fiole.ORANGE;
-        }
-        else if (healthBarGreen.value <= 0.25 &&
-            fioleState != Fiole.RED)
-        {
-            fioleRed.SetActive(true);
-            fioleRed.GetComponent<AnimOnStart>().player = this.gameObject;
-            fioleRed.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
-            fioleRed.GetComponent<AnimOnStart>().StartAnimationByScript();
-            fioleOrange.SetActive(false);
-            fioleYellow.SetActive(false);
-            fioleGreen.SetActive(false);
-            fioleState = Fiole.RED;
-        }
-        if (currHP <= 0)
-        {
-            GetComponent<Deplacements>().isDead = true;
-            StartCoroutine(DeathAnimation(directionPos));
+            currHP -= damageTaken;
+            if (currHP < 0)
+                currHP = 0;
+            if (currHP <= 0)
+            {
+                GetComponent<Deplacements>().isDead = true;
+                StartCoroutine(DeathAnimation(directionPos));
+            }
+            healthBarGreen.value = (float)currHP / (float)gm.GetComponent<GameManager>().playerMaxHP[level - 1];
+            textHP.GetComponent<Text>().text = currHP + " / " + gm.GetComponent<GameManager>().playerMaxHP[level - 1];
+            if (healthBarGreen.value > 0.75 &&
+                fioleState != Fiole.GREEN)
+            {
+                fioleRed.SetActive(false);
+                fioleOrange.SetActive(false);
+                fioleYellow.SetActive(false);
+                fioleGreen.SetActive(true);
+                fioleGreen.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+                fioleGreen.GetComponent<AnimOnStart>().StartAnimationByScript();
+                fioleState = Fiole.GREEN;
+            }
+            else if (healthBarGreen.value > 0.5 &&
+                healthBarGreen.value <= 0.75 &&
+                fioleState != Fiole.YELLOW)
+            {
+                fioleRed.SetActive(false);
+                fioleOrange.SetActive(false);
+                fioleYellow.SetActive(true);
+                fioleYellow.GetComponent<AnimOnStart>().player = this.gameObject;
+                fioleYellow.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+                fioleYellow.GetComponent<AnimOnStart>().StartAnimationByScript();
+                fioleGreen.SetActive(false);
+                fioleState = Fiole.YELLOW;
+            }
+            else if (healthBarGreen.value > 0.25 &&
+                healthBarGreen.value <= 0.5 &&
+                fioleState != Fiole.ORANGE)
+            {
+                fioleRed.SetActive(false);
+                fioleOrange.SetActive(true);
+                fioleOrange.GetComponent<AnimOnStart>().player = this.gameObject;
+                fioleOrange.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+                fioleOrange.GetComponent<AnimOnStart>().StartAnimationByScript();
+                fioleYellow.SetActive(false);
+                fioleGreen.SetActive(false);
+                fioleState = Fiole.ORANGE;
+            }
+            else if (healthBarGreen.value <= 0.25 &&
+                fioleState != Fiole.RED)
+            {
+                fioleRed.SetActive(true);
+                fioleRed.GetComponent<AnimOnStart>().player = this.gameObject;
+                fioleRed.GetComponent<AnimOnStart>().SetAnimNb(animFiole);
+                fioleRed.GetComponent<AnimOnStart>().StartAnimationByScript();
+                fioleOrange.SetActive(false);
+                fioleYellow.SetActive(false);
+                fioleGreen.SetActive(false);
+                fioleState = Fiole.RED;
+            }
         }
     }
 

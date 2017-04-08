@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      jingleIntroCombat;
     public  GameObject      musicCombatObj;
     public  GameObject      musicCombat;
+    public  GameObject      musicMenu;
     public  GameObject      mapManager;
     public  GameObject      textNbEnemy;
     public  int[]           playerMaxHP = new int[15];
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
     public  bool            gameOver;
     public  bool            smartcast;
     public  float           volumeMusic;
+    public  float           volumeSFX;
     public  bool            audioOn;
     public  bool            isInMenu;
     public  bool            isInOptions;
@@ -88,6 +90,11 @@ public class GameManager : MonoBehaviour
     public  GameObject      panelMenu;
     public  GameObject      hudPanelMenu;
     public  GameObject      hudPanelOptions;
+    public  GameObject      smartCastIcon;
+    public  GameObject      bloodlessIcon;
+    public  GameObject      showSpellsInfoIcon;
+    public  GameObject      volumeMusicText;
+    public  GameObject      volumeSFXText;
     public  GameObject      textStockHealthPotion;
     public  GameObject      textStockManaPotion;
 
@@ -108,12 +115,6 @@ public class GameManager : MonoBehaviour
     public GameObject       levelUpAgent3;
     public Slider           agent3healthBarGreenHUD;
     public Slider           agent3xpBarHUD;
-
-    public GameObject       agent4Panel;
-    public GameObject[]     agent4Levels = new GameObject[10];
-    public GameObject       levelUpAgent4;
-    public Slider           agent4healthBarGreenHUD;
-    public Slider           agent4xpBarHUD;
 
     public  GameObject      bulleInfoSpell1;
     public  GameObject      bulleInfoSpell2;
@@ -140,20 +141,70 @@ public class GameManager : MonoBehaviour
     {
         cam = GameObject.Find("Main Camera");
         SetNormalMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+
         if (PlayerPrefs.GetInt("Load1Created") == 1)
         {
             load1Created = true;
             load1Name.GetComponent<Text>().text = PlayerPrefs.GetString("Load1Name");
         }
+
         if (PlayerPrefs.GetInt("Load2Created") == 1)
         {
             load2Created = true;
             load2Name.GetComponent<Text>().text = PlayerPrefs.GetString("Load2Name");
         }
+
         if (PlayerPrefs.GetInt("Load3Created") == 1)
         {
             load3Created = true;
             load3Name.GetComponent<Text>().text = PlayerPrefs.GetString("Load3Name");
+        }
+
+        if (PlayerPrefs.GetInt("SFXVolumeSet") == 1)
+            volumeSFX = PlayerPrefs.GetInt("SFXVolume");
+        else
+            volumeSFX = 50f;
+        volumeSFXText.GetComponent<Text>().text = "SFX music : " + GetComponent<GameManager>().volumeSFX + "%";
+
+        if (PlayerPrefs.GetInt("MusicVolumeSet") == 1)
+            volumeMusic = PlayerPrefs.GetInt("MusicVolume");
+        else
+            volumeMusic = 50f;
+        volumeMusicText.GetComponent<Text>().text = "Volume music : " + volumeMusic + "%";
+        GetComponent<AudioSource>().volume = volumeMusic / 100;
+
+        if (PlayerPrefs.GetInt("Bloodless") == 0)
+        {
+            bloodless = false;
+            bloodlessIcon.GetComponent<Image>().sprite = GetComponent<Buttons>().boxNotChecked;
+        }
+        else
+        {
+            bloodless = true;
+            bloodlessIcon.GetComponent<Image>().sprite = GetComponent<Buttons>().boxChecked;
+        }
+
+        if (PlayerPrefs.GetInt("Smartcast") == 0)
+        {
+            smartcast = false;
+            smartCastIcon.GetComponent<Image>().sprite = GetComponent<Buttons>().boxNotChecked;
+        }
+        else
+        {
+            smartcast = true;
+            smartCastIcon.GetComponent<Image>().sprite = GetComponent<Buttons>().boxChecked;
+        }
+
+        if (PlayerPrefs.GetInt("SpellsInfoSet") == 1 &&
+            PlayerPrefs.GetInt("SpellsInfo") == 0)
+        {
+            showSpellsInfo = false;
+            showSpellsInfoIcon.GetComponent<Image>().sprite = GetComponent<Buttons>().boxNotChecked;
+        }
+        else
+        {
+            showSpellsInfo = true;
+            showSpellsInfoIcon.GetComponent<Image>().sprite = GetComponent<Buttons>().boxChecked;
         }
     }
 
@@ -352,40 +403,51 @@ public class GameManager : MonoBehaviour
         musicCombatObj.GetComponent<AudioSource>().UnPause();
     }
 
+    public void PlayMusicMenu()
+    {
+        GetComponent<AudioSource>().Play();
+    }
+
+    public void StopMusicMenu()
+    {
+        GetComponent<AudioSource>().Stop();
+    }
+
     public void PlayMusicCombat()
     {
+        StopMusicMenu();
         musicCombatObj = (GameObject)Instantiate(musicCombat, transform.position, transform.rotation);
         musicCombatObj.GetComponent<AudioSource>().volume = volumeMusic / 100;
     }
 
     public void SelectSpell1()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell1();
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell1(true);
     }
 
     public void SelectSpell2()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell2();
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell2(true);
     }
 
     public void SelectSpell3()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell3();
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell3(true);
     }
 
     public void SelectSpell4()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell4();
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell4(true);
     }
 
     public void SelectSpell5()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell5();
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell5(true);
     }
 
     public void SelectSpell6()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell6();
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell6(true);
     }
 
     public void SelectSpell7()
@@ -395,7 +457,7 @@ public class GameManager : MonoBehaviour
 
     public void SelectSpell8()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell8();
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell8(true);
     }
 
     IEnumerator VictoryAnimation()

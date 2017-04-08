@@ -31,7 +31,7 @@ public class Shoots : MonoBehaviour
     public  GameObject  meteorSFX;
     public  GameObject  icePrison;
     public  GameObject  icePrisonSFX;
-    public  GameObject  fireblastSFX;
+    public  GameObject  earthquakeSFX;
     public  GameObject  dragonHG;
     public  GameObject  dragonHD;
     public  GameObject  dragonH;
@@ -41,6 +41,8 @@ public class Shoots : MonoBehaviour
     public  GameObject  dragonBD;
     public  GameObject  dragonB;
     public  GameObject  dragonSFX;
+    public  GameObject  potionHealthSFX;
+    public  GameObject  potionManaSFX;
     private GameObject  gm;
     private GameObject  mapManager;
     public  GameObject  usingSpell1Icon;
@@ -103,7 +105,7 @@ public class Shoots : MonoBehaviour
     private GameObject  cdObject1;
     private GameObject  cdObject2;
     private int         idSpell8 = 0;
-    private int         idSpell4 = 0;
+    private int         idSpell5 = 0;
 
     void Start()
     {
@@ -271,27 +273,27 @@ public class Shoots : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                SelectSpell1();
+                SelectSpell1(false);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                SelectSpell2();
+                SelectSpell2(false);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                SelectSpell3();
+                SelectSpell3(false);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4))
             {
-                SelectSpell4();
+                SelectSpell4(false);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha5))
             {
-                SelectSpell5();
+                SelectSpell5(false);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha6))
             {
-                SelectSpell6();
+                SelectSpell6(false);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha7))
             {
@@ -299,7 +301,7 @@ public class Shoots : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Alpha8))
             {
-                SelectSpell8();
+                SelectSpell8(false);
             }
             else if (Input.GetKeyDown(KeyCode.A))
             {
@@ -347,9 +349,10 @@ public class Shoots : MonoBehaviour
         }
     }
 
-    public void SelectSpell1()
+    public void SelectSpell1(bool fromClick)
     {
-        if (gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true &&
+            fromClick == false)
         {
             UseSpell1();
         }
@@ -367,9 +370,10 @@ public class Shoots : MonoBehaviour
         }
     }
 
-    public void SelectSpell2()
+    public void SelectSpell2(bool fromClick)
     {
-        if (gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true &&
+            fromClick == false)
         {
             UseSpell2();
         }
@@ -388,9 +392,10 @@ public class Shoots : MonoBehaviour
         }
     }
 
-    public void SelectSpell3()
+    public void SelectSpell3(bool fromClick)
     {
-        if (gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true &&
+            fromClick == false)
         {
             UseSpell3();
         }
@@ -409,9 +414,10 @@ public class Shoots : MonoBehaviour
         }
     }
 
-    public void SelectSpell4()
+    public void SelectSpell4(bool fromClick)
     {
-        if (gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true &&
+            fromClick == false)
         {
             UseSpell4();
         }
@@ -430,9 +436,10 @@ public class Shoots : MonoBehaviour
         }
     }
 
-    public void SelectSpell5()
+    public void SelectSpell5(bool fromClick)
     {
-        if (gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true &&
+            fromClick == false)
         {
             UseSpell5();
         }
@@ -451,9 +458,10 @@ public class Shoots : MonoBehaviour
         }
     }
 
-    public void SelectSpell6()
+    public void SelectSpell6(bool fromClick)
     {
-        if (gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true &&
+            fromClick == false)
         {
             UseSpell6();
         }
@@ -477,9 +485,10 @@ public class Shoots : MonoBehaviour
         UseSpell7();
     }
 
-    public void SelectSpell8()
+    public void SelectSpell8(bool fromClick)
     {
-        if (gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true &&
+            fromClick == false)
         {
             UseSpell8();
         }
@@ -598,7 +607,8 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             FindShootDirection();
             spell1Ready = false;
-            Instantiate(fireballSFX, transform.position, transform.rotation);
+            GameObject sfx = (GameObject)Instantiate(fireballSFX, transform.position, transform.rotation);
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             StartCoroutine(InstantiateProjectile(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)));
         }
     }
@@ -622,7 +632,8 @@ public class Shoots : MonoBehaviour
                     GetComponent<Deplacements>().currentNumeroAnim = 1;
                     FindShootDirection();
                     spell2Ready = false;
-                    Instantiate(thunderboltSFX, transform.position, transform.rotation);
+                    GameObject sfx = (GameObject)Instantiate(thunderboltSFX, transform.position, transform.rotation);
+                    sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
                     StartCoroutine(GoBackToAA());
                 }
             }
@@ -660,7 +671,8 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             FindShootDirection();
             spell4Ready = false;
-            Instantiate(meteorSFX, transform.position, transform.rotation);
+            GameObject sfx = (GameObject)Instantiate(meteorSFX, transform.position, transform.rotation);
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             StartCoroutine(SpellMeteore());
             StartCoroutine(GoBackToAA());
         }
@@ -679,7 +691,8 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             FindShootDirection();
             spell5Ready = false;
-            Instantiate(tornadoSFX, transform.position, transform.rotation);
+            GameObject sfx = (GameObject)Instantiate(tornadoSFX, transform.position, transform.rotation);
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             StartCoroutine(SpellTornade());
             StartCoroutine(GoBackToAA());
         }
@@ -704,7 +717,8 @@ public class Shoots : MonoBehaviour
                     GetComponent<Deplacements>().currentNumeroAnim = 1;
                     FindShootDirection();
                     spell6Ready = false;
-                    Instantiate(icePrisonSFX, transform.position, transform.rotation);
+                    GameObject sfx = (GameObject)Instantiate(icePrisonSFX, transform.position, transform.rotation);
+                    sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
                     StartCoroutine(GoBackToAA());
                 }
             }
@@ -720,7 +734,8 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().isAttacking = true;
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             spell7Ready = false;
-            Instantiate(fireblastSFX, transform.position, transform.rotation);
+            GameObject sfx = (GameObject)Instantiate(earthquakeSFX, transform.position, transform.rotation);
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             StartCoroutine(SpellFireBlast());
         }
     }
@@ -738,7 +753,8 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             FindShootDirection();
             spell8Ready = false;
-            Instantiate(dragonSFX, transform.position, transform.rotation);
+            GameObject sfx = (GameObject)Instantiate(dragonSFX, transform.position, transform.rotation);
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             StartCoroutine(SpellDragonFeu(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)));
             StartCoroutine(GoBackToAA());
         }
@@ -757,6 +773,8 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().isAttacking = true;
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             object1Ready = false;
+            GameObject sfx = (GameObject)Instantiate(potionHealthSFX, transform.position, transform.rotation);
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             GetComponent<StatsPlayer>().Heal(10);
         }
     }
@@ -775,6 +793,8 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             object2Ready = false;
             isUnderMana = true;
+            GameObject sfx = (GameObject)Instantiate(potionManaSFX, transform.position, transform.rotation);
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             speedCD = 2f;
         }
     }
@@ -820,26 +840,31 @@ public class Shoots : MonoBehaviour
         else if (GetComponent<Deplacements>().attackDirection == Direction.TOP)
             newPos.y = transform.position.y + 0.1f;
 
+        GameObject sfx = null;
         GameObject obj1 = null;
-        Instantiate(iceShardSFX, transform.position, transform.rotation);
+        sfx = (GameObject)Instantiate(iceShardSFX, transform.position, transform.rotation);
+        sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
         obj1 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj1.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj2 = null;
-        Instantiate(iceShardSFX, transform.position, transform.rotation);
+        sfx = (GameObject)Instantiate(iceShardSFX, transform.position, transform.rotation);
+        sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
         obj2 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj2.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj3 = null;
-        Instantiate(iceShardSFX, transform.position, transform.rotation);
+        sfx = (GameObject)Instantiate(iceShardSFX, transform.position, transform.rotation);
+        sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
         obj3 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj3.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj4 = null;
-        Instantiate(iceShardSFX, transform.position, transform.rotation);
+        sfx = (GameObject)Instantiate(iceShardSFX, transform.position, transform.rotation);
+        sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
         obj4 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj4.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
     }
@@ -906,7 +931,7 @@ public class Shoots : MonoBehaviour
         yield return new WaitForSeconds(0.16f);
         GameObject obj1 = (GameObject)Instantiate(tornado, mousePos, transform.rotation);
         obj1.GetComponent<SpriteAnimTimer>().StartAnim(2);
-        obj1.GetComponent<Tornado>().id = idSpell4++;
+        obj1.GetComponent<Tornado>().id = idSpell5++;
         obj1.GetComponent<Tornado>().CCDuration = 2;
     }
 

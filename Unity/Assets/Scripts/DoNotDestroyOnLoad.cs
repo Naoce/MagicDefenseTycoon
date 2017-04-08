@@ -7,6 +7,8 @@ public class DoNotDestroyOnLoad : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         if (tag == "GameManager")
+        {
             Application.LoadLevel("SceneMenu");
+        }
 	}
 }

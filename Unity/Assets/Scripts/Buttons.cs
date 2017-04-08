@@ -87,16 +87,6 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().agent3Levels[8].SetActive(false);
         GetComponent<GameManager>().agent3Levels[9].SetActive(false);
 
-        GetComponent<GameManager>().agent4Levels[1].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[2].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[3].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[4].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[5].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[6].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[7].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[8].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[9].SetActive(false);
-
         GetComponent<GameManager>().usingSpell1Icon.SetActive(false);
         GetComponent<GameManager>().usingSpell2Icon.SetActive(false);
         GetComponent<GameManager>().usingSpell3Icon.SetActive(false);
@@ -184,16 +174,6 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().agent3Levels[8].SetActive(false);
         GetComponent<GameManager>().agent3Levels[9].SetActive(false);
 
-        GetComponent<GameManager>().agent4Levels[1].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[2].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[3].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[4].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[5].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[6].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[7].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[8].SetActive(false);
-        GetComponent<GameManager>().agent4Levels[9].SetActive(false);
-
         GetComponent<GameManager>().usingSpell1Icon.SetActive(false);
         GetComponent<GameManager>().usingSpell2Icon.SetActive(false);
         GetComponent<GameManager>().usingSpell3Icon.SetActive(false);
@@ -206,6 +186,7 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().gameOver = true;
         GetComponent<GameManager>().isInGame = false;
         Application.LoadLevel("SceneMenu");
+        GetComponent<GameManager>().PlayMusicMenu();
     }
 
     public void QuitApp()
@@ -217,11 +198,13 @@ public class Buttons : MonoBehaviour
     {
         if (GetComponent<GameManager>().smartcast == false)
         {
+            PlayerPrefs.SetInt("Smartcast", 1);
             GetComponent<GameManager>().smartcast = true;
             obj.GetComponent<Image>().sprite = boxChecked;
         }
         else
         {
+            PlayerPrefs.SetInt("Smartcast", 0);
             GetComponent<GameManager>().smartcast = false;
             obj.GetComponent<Image>().sprite = boxNotChecked;
         }
@@ -232,8 +215,11 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().volumeMusic -= 10;
         if (GetComponent<GameManager>().volumeMusic < 0)
             GetComponent<GameManager>().volumeMusic = 0;
-        obj.GetComponent<Text>().text = "Volume music : " + GetComponent<GameManager>().volumeMusic;
+        PlayerPrefs.SetInt("MusicVolumeSet", 1);
+        PlayerPrefs.SetInt("MusicVolume", (int)GetComponent<GameManager>().volumeMusic);
+        obj.GetComponent<Text>().text = "Volume music : " + GetComponent<GameManager>().volumeMusic + "%";
         GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
+        GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
     }
 
     public void MusicPlus(GameObject obj)
@@ -241,19 +227,44 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().volumeMusic += 10;
         if (GetComponent<GameManager>().volumeMusic > 100)
             GetComponent<GameManager>().volumeMusic = 100;
-        obj.GetComponent<Text>().text = "Volume music : " + GetComponent<GameManager>().volumeMusic;
+        PlayerPrefs.SetInt("MusicVolumeSet", 1);
+        PlayerPrefs.SetInt("MusicVolume", (int)GetComponent<GameManager>().volumeMusic);
+        obj.GetComponent<Text>().text = "Volume music : " + GetComponent<GameManager>().volumeMusic + "%";
         GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
+        GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
+    }
+
+    public void SFXMinus(GameObject obj)
+    {
+        GetComponent<GameManager>().volumeSFX -= 10;
+        if (GetComponent<GameManager>().volumeSFX < 0)
+            GetComponent<GameManager>().volumeSFX = 0;
+        PlayerPrefs.SetInt("SFXVolumeSet", 1);
+        PlayerPrefs.SetInt("SFXVolume", (int)GetComponent<GameManager>().volumeSFX);
+        obj.GetComponent<Text>().text = "SFX music : " + GetComponent<GameManager>().volumeSFX + "%";
+    }
+
+    public void SFXPlus(GameObject obj)
+    {
+        GetComponent<GameManager>().volumeSFX += 10;
+        if (GetComponent<GameManager>().volumeSFX > 100)
+            GetComponent<GameManager>().volumeSFX = 100;
+        PlayerPrefs.SetInt("SFXVolumeSet", 1);
+        PlayerPrefs.SetInt("SFXVolume", (int)GetComponent<GameManager>().volumeSFX);
+        obj.GetComponent<Text>().text = "SFX music : " + GetComponent<GameManager>().volumeSFX + "%";
     }
 
     public void BloodTrigger(GameObject obj)
     {
         if (GetComponent<GameManager>().bloodless == true)
         {
+            PlayerPrefs.SetInt("Bloodless", 0);
             GetComponent<GameManager>().ActivateBlood();
             obj.GetComponent<Image>().sprite = boxNotChecked;
         }
         else
         {
+            PlayerPrefs.SetInt("Bloodless", 1);
             GetComponent<GameManager>().DesactivateBlood();
             obj.GetComponent<Image>().sprite = boxChecked;
         }
@@ -263,11 +274,15 @@ public class Buttons : MonoBehaviour
     {
         if (GetComponent<GameManager>().showSpellsInfo == true)
         {
+            PlayerPrefs.SetInt("SpellsInfoSet", 1);
+            PlayerPrefs.SetInt("SpellsInfo", 0);
             GetComponent<GameManager>().showSpellsInfo = false;
             obj.GetComponent<Image>().sprite = boxNotChecked;
         }
         else
         {
+            PlayerPrefs.SetInt("SpellsInfoSet", 1);
+            PlayerPrefs.SetInt("SpellsInfo", 1);
             GetComponent<GameManager>().showSpellsInfo = true;
             obj.GetComponent<Image>().sprite = boxChecked;
         }
@@ -361,6 +376,12 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().panelMenu.SetActive(true);
     }
 
+    public void ReturnToMainMenu()
+    {
+        GetComponent<GameManager>().panelMenu.SetActive(false);
+        GetComponent<GameManager>().panelSave.SetActive(true);
+    }
+
     public void LoadFile1()
     {
         if (GetComponent<GameManager>().load1Created == false)
@@ -404,6 +425,9 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("Load1DifficultySet", 0);
             PlayerPrefs.SetInt("Load1PlayerStockHealthPotion", 1);
             PlayerPrefs.SetInt("Load1PlayerStockManaPotion", 1);
+            PlayerPrefs.SetInt("Load1Agent1StockHealthPotion", 2);
+            PlayerPrefs.SetInt("Load1Agent2StockHealthPotion", 2);
+            PlayerPrefs.SetInt("Load1Agent3StockHealthPotion", 2);
             GetComponent<GameManager>().panelSave.SetActive(false);
             GetComponent<GameManager>().panelDifficulty.SetActive(true);
         }
@@ -424,16 +448,9 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load1Agent2XP", 0);
         PlayerPrefs.SetInt("Load1Agent3Level", 0);
         PlayerPrefs.SetInt("Load1Agent3XP", 0);
-        PlayerPrefs.SetInt("Load1Agent4Level", 0);
-        PlayerPrefs.SetInt("Load1Agent4XP", 0);
-        PlayerPrefs.SetInt("Load1Agent1StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load1Agent1StockManaPotion", 0);
-        PlayerPrefs.SetInt("Load1Agent2StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load1Agent2StockManaPotion", 0);
-        PlayerPrefs.SetInt("Load1Agent3StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load1Agent3StockManaPotion", 0);
-        PlayerPrefs.SetInt("Load1Agent4StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load1Agent4StockManaPotion", 0);
+        PlayerPrefs.SetInt("Load1Agent1StockHealthPotion", 2);
+        PlayerPrefs.SetInt("Load1Agent2StockHealthPotion", 2);
+        PlayerPrefs.SetInt("Load1Agent3StockHealthPotion", 2);
 
         PlayerPrefs.SetInt("Load1DifficultySet", 0);
         GetComponent<GameManager>().load1Created = false;
@@ -483,6 +500,9 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("Load2DifficultySet", 0);
             PlayerPrefs.SetInt("Load2PlayerStockHealthPotion", 1);
             PlayerPrefs.SetInt("Load2PlayerStockManaPotion", 1);
+            PlayerPrefs.SetInt("Load2Agent1StockHealthPotion", 2);
+            PlayerPrefs.SetInt("Load2Agent2StockHealthPotion", 2);
+            PlayerPrefs.SetInt("Load2Agent3StockHealthPotion", 2);
             GetComponent<GameManager>().panelSave.SetActive(false);
             GetComponent<GameManager>().panelDifficulty.SetActive(true);
         }
@@ -503,16 +523,9 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load2Agent2XP", 0);
         PlayerPrefs.SetInt("Load2Agent3Level", 0);
         PlayerPrefs.SetInt("Load2Agent3XP", 0);
-        PlayerPrefs.SetInt("Load1Agent4Level", 0);
-        PlayerPrefs.SetInt("Load2Agent4XP", 0);
-        PlayerPrefs.SetInt("Load2Agent1StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load2Agent1StockManaPotion", 0);
-        PlayerPrefs.SetInt("Load2Agent2StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load2Agent2StockManaPotion", 0);
-        PlayerPrefs.SetInt("Load2Agent3StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load2Agent3StockManaPotion", 0);
-        PlayerPrefs.SetInt("Load2Agent4StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load2Agent4StockManaPotion", 0);
+        PlayerPrefs.SetInt("Load2Agent1StockHealthPotion", 2);
+        PlayerPrefs.SetInt("Load2Agent2StockHealthPotion", 2);
+        PlayerPrefs.SetInt("Load2Agent3StockHealthPotion", 2);
 
         PlayerPrefs.SetInt("Load2DifficultySet", 0);
         GetComponent<GameManager>().load2Created = false;
@@ -562,6 +575,9 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("Load3DifficultySet", 0);
             PlayerPrefs.SetInt("Load3PlayerStockHealthPotion", 1);
             PlayerPrefs.SetInt("Load3PlayerStockManaPotion", 1);
+            PlayerPrefs.SetInt("Load3Agent1StockHealthPotion", 2);
+            PlayerPrefs.SetInt("Load3Agent2StockHealthPotion", 2);
+            PlayerPrefs.SetInt("Load3Agent3StockHealthPotion", 2);
             GetComponent<GameManager>().panelSave.SetActive(false);
             GetComponent<GameManager>().panelDifficulty.SetActive(true);
         }
@@ -582,16 +598,9 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load3Agent2XP", 0);
         PlayerPrefs.SetInt("Load3Agent3Level", 0);
         PlayerPrefs.SetInt("Load3Agent3XP", 0);
-        PlayerPrefs.SetInt("Load3Agent4Level", 0);
-        PlayerPrefs.SetInt("Load3Agent4XP", 0);
-        PlayerPrefs.SetInt("Load3Agent1StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load3Agent1StockManaPotion", 0);
-        PlayerPrefs.SetInt("Load3Agent2StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load3Agent2StockManaPotion", 0);
-        PlayerPrefs.SetInt("Load3Agent3StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load3Agent3StockManaPotion", 0);
-        PlayerPrefs.SetInt("Load3Agent4StockHealthPotion", 0);
-        PlayerPrefs.SetInt("Load3Agent4StockManaPotion", 0);
+        PlayerPrefs.SetInt("Load3Agent1StockHealthPotion", 2);
+        PlayerPrefs.SetInt("Load3Agent2StockHealthPotion", 2);
+        PlayerPrefs.SetInt("Load3Agent3StockHealthPotion", 2);
 
         PlayerPrefs.SetInt("Load3DifficultySet", 0);
         GetComponent<GameManager>().load3Created = false;
