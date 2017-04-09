@@ -41,43 +41,43 @@ public class IAGuerrier : MonoBehaviour
     public  GameObject  projectileMagic;
     public  GameObject  projectileCheck;
     public  float       range;
-    private int         currentNumeroAnim = 0;
-	private	float		timer = 0f;
-	private float		animTime = 0.12f;
-    private float       attackTimer = 0f;
-    private float       attackCooldown = 1f;
-    private float       timerCC = 0f;
-    private float       cooldownCC = 0f;
-    private float       timerFlying = 0f;
-    private float       cooldownFlying = 0f;
-    private float       timerSlow = 0f;
-    private float       cooldownSlow = 0f;
-    private bool        changedTarget = false;
-    private GameObject  targetAttacking = null;
+    public  int         currentNumeroAnim;
+	public	float		timer;
+    public  float		animTime;
+    public  float       attackTimer;
+    public  float       attackCooldown;
+    public  float       timerCC;
+    public  float       cooldownCC;
+    public  float       timerFlying;
+    public  float       cooldownFlying;
+    public  float       timerSlow;
+    public  float       cooldownSlow;
+    public  bool        changedTarget;
+    public  GameObject  targetAttacking;
 
     private int         difficulty;
     private int         currHP;
     public  int[]       maxHP;
     public  int[]       damage;
     public  int         valueXP;
-    private float       speed = 1f;
-    private float       slow = 0f;
+    public  float       speed;
+    public  float       slow;
     private Vector2     baseScale;
     private Vector2     newScale;
-    private Vector2     initialScale;
-    private bool        canMove = true;
-    private bool        isFlying = false;
-    private bool        isSlowed = false;
-    private bool        isAttacking = false;
-    private bool        canAttack = true;
-    private bool        rightSide = false;
-    private bool        needToMove = true;
-    public  GameObject  target = null;
+    public  Vector2     initialScale;
+    public  bool        canMove;
+    public  bool        isFlying;
+    public  bool        isSlowed;
+    public  bool        isAttacking;
+    public  bool        canAttack;
+    public  bool        rightSide;
+    public  bool        needToMove;
+    public  GameObject  target;
     private int         lastDragonTaken = -1;
     private int         lastTornadoTaken = -1;
     public  bool        isBoss;
-    private bool        hasLaunched = false;
-    private bool        canShootProjectile = false;
+    public  bool        hasLaunched;
+    public  bool        canShootProjectile;
     private Shoots.Direction directionAttack;
 
 	void Start () 
@@ -89,154 +89,6 @@ public class IAGuerrier : MonoBehaviour
         currHP = maxHP[difficulty];
         if (isBoss == false)
             baseScale = healthBarGreen.transform.localScale;
-    }
-
-	void Update ()
-	{
-        if (gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().gamePaused == false)
-        {
-            if (type == EnemyType.Magician &&
-                hasLaunched == false &&
-                target != null)
-            {
-                hasLaunched = true;
-                InstantiateCheck(target.transform.position);
-            }
-            if (isSlowed == true)
-            {
-                timerSlow += Time.deltaTime;
-                if (timerSlow > cooldownSlow)
-                {
-                    timerSlow = 0f;
-                    slow = 0f;
-                    isSlowed = false;
-                }
-            }
-            if (canMove == false)
-            {
-                timerCC += Time.deltaTime;
-                if (timerCC > cooldownCC)
-                {
-                    canAttack = true;
-                    canMove = true;
-                    timerCC = 0f;
-                }
-                if (isFlying == true)
-                {
-                    Vector2 newScaleGo = new Vector2(transform.localScale.x + 0.002f, transform.localScale.y + 0.002f);
-                    transform.localScale = newScaleGo;
-                    timerFlying += Time.deltaTime;
-                    if (timerFlying > cooldownFlying)
-                    {
-                        canAttack = true;
-                        timerFlying = 0f;
-                        isFlying = false;
-                        transform.localScale = initialScale;
-                    }
-                }
-            }
-            if (GetComponent<Enemy>().isDead == false && player.GetComponent<Deplacements>().isDead == false &&
-                canMove == true)
-            {
-                target = FindClosestTarget();
-                if (isAttacking == false &&
-                    canAttack == false)
-                {
-                    attackTimer += Time.deltaTime;
-                    if (attackTimer > attackCooldown)
-                    {
-                        attackTimer = 0f;
-                        canAttack = true;
-                    }
-                }
-                if (Vector2.Distance(target.transform.position, transform.position) <= range &&
-                    ((target.tag == "Player" &&
-                    target.GetComponent<Deplacements>().isDead == false) ||
-                    (target.tag == "AgentGuerrier" &&
-                    target.GetComponent<IAGuerrierAgent>().isDead == false) ||
-                    (target.tag == "Defense" &&
-                    target.GetComponent<Defense>().isDead == false)))
-                {
-                    if (type == EnemyType.Magician &&
-                        canShootProjectile == false)
-                        needToMove = true;
-                    else
-                    {
-                        needToMove = false;
-                        if (canAttack == true)
-                        {
-                            isAttacking = true;
-                            targetAttacking = target;
-                            canAttack = false;
-                            if (type != EnemyType.Magician)
-                                StartCoroutine(AttackAnimation(target.transform.position));
-                            else if (type == EnemyType.Magician &&
-                                    canShootProjectile == true)
-                                StartCoroutine(AttackDistanceAnimation(target.transform.position));
-                        }
-                        else if (isAttacking == false)
-                        {
-                            if (rightSide == true)
-                                GetComponent<SpriteRenderer>().sprite = leftIdle;
-                            else
-                                GetComponent<SpriteRenderer>().sprite = rightIdle;
-                        }
-                    }
-                }
-                else
-                    needToMove = true;
-                if (isAttacking == false && needToMove == true)
-                {
-                    timer += Time.deltaTime;
-
-                    GameObject targetTmp = FindClosestTarget();
-                    if (targetTmp != target)
-                    {
-                        target = targetTmp;
-                        changedTarget = true;
-                    }
-
-                    if (changedTarget == true ||
-                        Vector2.Distance(newPos, transform.position) <= 0.05f ||
-                        Vector2.Distance(newPos, transform.position) >= 1f ||
-                        Vector2.Distance(transform.position, target.transform.position) <= 1f)
-                    {
-                        changedTarget = false;
-
-                        if (target != null)
-                            newPos = GetComponent<AStar>().StartPathFinding(target.transform.position);
-                    }
-
-                    transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
-
-                    if (timer > animTime &&
-                    (transform.position.y != newPos.y ||
-                    transform.position.x != newPos.x))
-                    {
-                        if ((!(newPos.x - 0.5f < transform.position.x &&
-                            transform.position.x < newPos.x + 0.5f) &&
-                             transform.position.x > newPos.x) ||
-                             (transform.position.x > newPos.x &&
-                             Vector2.Distance(transform.position, newPos) < 0.55f))
-                            GetComponent<SpriteRenderer>().sprite = leftSprites[currentNumeroAnim++];
-                        else if ((!(newPos.x - 0.5f < transform.position.x &&
-                            transform.position.x < newPos.x + 0.5f) &&
-                             transform.position.x < newPos.x) ||
-                                (transform.position.x < newPos.x &&
-                                Vector2.Distance(transform.position, newPos) < 0.55f))
-                            GetComponent<SpriteRenderer>().sprite = rightSprites[currentNumeroAnim++];
-                        else if (newPos.y > transform.position.y)
-                            GetComponent<SpriteRenderer>().sprite = topSprites[currentNumeroAnim++];
-                        else if (newPos.y < transform.position.y)
-                            GetComponent<SpriteRenderer>().sprite = botSprites[currentNumeroAnim++];
-
-                        if (currentNumeroAnim == leftSprites.Length)
-                            currentNumeroAnim = 0;
-                        timer = 0f;
-                    }
-                }
-            }
-        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -366,7 +218,7 @@ public class IAGuerrier : MonoBehaviour
         timerCC = 0f;
     }
 
-    IEnumerator DeathAnimation(Vector2 directionPos)
+    public IEnumerator DeathAnimation(Vector2 directionPos)
     {
         bool animRight;
         if (transform.position.x < directionPos.x)
@@ -391,7 +243,7 @@ public class IAGuerrier : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator AttackAnimation(Vector2 directionPos)
+    public IEnumerator AttackAnimation(Vector2 directionPos)
     {
         bool animRight;
         if (transform.position.x > directionPos.x)
@@ -436,7 +288,7 @@ public class IAGuerrier : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = leftIdle;
     }
 
-    IEnumerator AttackDistanceAnimation(Vector2 targetPos)
+    public IEnumerator AttackDistanceAnimation(Vector2 targetPos)
     {
         FindShootDirection(targetPos);
 
@@ -494,7 +346,7 @@ public class IAGuerrier : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = leftIdle;
     }
 
-    void FindShootDirection(Vector2 targetPos)
+    public void FindShootDirection(Vector2 targetPos)
     {
         Vector2 newPosTop = new Vector2(transform.position.x, transform.position.y + 1);
         Vector2 newPosTopRight = new Vector2(transform.position.x + 0.8f, transform.position.y + 0.8f);
@@ -580,7 +432,7 @@ public class IAGuerrier : MonoBehaviour
             directionAttack = Shoots.Direction.BOTTOMLEFT;
     }
 
-    GameObject FindClosestTarget()
+    public GameObject FindClosestTarget()
     {
         GameObject obj = null;
         float distanceTarget = 10000;
@@ -628,7 +480,7 @@ public class IAGuerrier : MonoBehaviour
         canShootProjectile = canShoot;
     }
 
-    private void InstantiateCheck(Vector2 targetCheck)
+    public void InstantiateCheck(Vector2 targetCheck)
     {
         GameObject obj = (GameObject)Instantiate(projectileCheck, transform.position, transform.rotation);
         obj.GetComponent<CheckPath>().target = targetCheck;

@@ -7,6 +7,7 @@ public class AStar : MonoBehaviour
     private GameObject[][]      tabNodes = null;
     public  List<GameObject>    openList = new List<GameObject>();
     public  List<GameObject>    closedList = new List<GameObject>();
+    public  bool                isNextToTarget;
     private bool                cantFind;
     private GameObject          returnNode;
     private int                 targetX;
@@ -29,6 +30,7 @@ public class AStar : MonoBehaviour
     {
         mapManager = GameObject.Find("MapManager");
         StartCoroutine(FillTab());
+        isNextToTarget = false;
     }
 
     IEnumerator FillTab()
@@ -69,10 +71,11 @@ public class AStar : MonoBehaviour
             FillOpenList(xTmp, yTmp);
             FillClosedList();
             if (cantFind == true)
-                return (transform.position);
+                return (targetPos);
         }
 
         returnNode = closedList[targetI];
+
 
         if (returnNode.GetComponent<Node>().parent.GetComponent<Node>().id == initialID)
         {
