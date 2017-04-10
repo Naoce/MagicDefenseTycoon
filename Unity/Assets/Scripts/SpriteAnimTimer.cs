@@ -9,11 +9,20 @@ public class SpriteAnimTimer : MonoBehaviour
     private float       timer = 0f;
     public  float       timerMax;
     public  bool        loop;
+    public  bool        doNotDestroy;
+    public  bool        onStart;
+
+    private void Start()
+    {
+        if (onStart == true)
+            StartCoroutine(StartAnimation());
+    }
 
     private void Update()
     {
         timer += Time.deltaTime;
-        if (timer > timerMax)
+        if (timer > timerMax &&
+            doNotDestroy == false)
             Destroy(gameObject);
     }
 

@@ -4,26 +4,18 @@ using UnityEngine.UI;
 
 public class IAGuerrierAgent : MonoBehaviour
 {
-    public Sprite   leftIdle;
-    public Sprite[] leftSprites;
-    public Sprite[] leftDeathSprites;
-    public Sprite[] leftAttackSprites;
+    public Sprite       rightIdle;
+    public Sprite[]     rightSprites;
+    public Sprite[]     rightDeathSprites;
+    public Sprite[]     rightAttackSprites;
+    public float        animMoveCD;
+    public float        animAttackCD;
+    public float        animDeathCD;
 
-    public Sprite   rightIdle;
-    public Sprite[] rightSprites;
-    public Sprite[] rightDeathSprites;
-    public Sprite[] rightAttackSprites;
-
-    public Sprite   topIdle;
-    public Sprite[] topSprites;
-
-    public Sprite   botIdle;
-    public Sprite[] botSprites;
-
-    public GameObject potionHealthSFX;
-    public GameObject healthBarGreen;
-    public Slider healthBarGreenHUD;
-    private Slider xpBarHUD;
+    public GameObject   potionHealthSFX;
+    public GameObject   healthBarGreen;
+    public Slider       healthBarGreenHUD;
+    private Slider      xpBarHUD;
 
     private GameObject  player;
     private GameObject  gm;
@@ -33,7 +25,6 @@ public class IAGuerrierAgent : MonoBehaviour
     public  Vector2     newPos = new Vector2(0, 0);
     private int         currentNumeroAnim = 0;
     private float       timer = 0f;
-    private float       animTime = 0.12f;
     private float       attackTimer = 0f;
     private float       attackCooldown = 1f;
     private float       timerPotion = 0f;
@@ -294,9 +285,15 @@ public class IAGuerrierAgent : MonoBehaviour
                         else if (isAttacking == false)
                         {
                             if (rightSide == true)
-                                GetComponent<SpriteRenderer>().sprite = leftIdle;
-                            else
+                            {
+                                GetComponent<SpriteRenderer>().flipX = false;
                                 GetComponent<SpriteRenderer>().sprite = rightIdle;
+                            }
+                            else
+                            {
+                                GetComponent<SpriteRenderer>().flipX = true;
+                                GetComponent<SpriteRenderer>().sprite = rightIdle;
+                            }
                         }
                     }
                     else
@@ -312,27 +309,23 @@ public class IAGuerrierAgent : MonoBehaviour
 
                         transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
 
-                        if (timer > animTime &&
+                        if (timer > animMoveCD &&
                         (transform.position.y != newPos.y ||
                         transform.position.x != newPos.x))
                         {
-                            if (((rightSide == true &&
-                                newPos.x > transform.position.x) ||
-                                (rightSide == false &&
-                                newPos.x < transform.position.x)) &&
-                                newPos.y < transform.position.y)
-                                GetComponent<SpriteRenderer>().sprite = botSprites[currentNumeroAnim++];
-                            else if (((rightSide == true &&
-                                newPos.x > transform.position.x) ||
-                                (rightSide == false &&
-                                newPos.x < transform.position.x)) &&
-                                newPos.y > transform.position.y)
-                                GetComponent<SpriteRenderer>().sprite = topSprites[currentNumeroAnim++];
-                            else if (newPos.x < transform.position.x)
-                                GetComponent<SpriteRenderer>().sprite = leftSprites[currentNumeroAnim++];
-                            else
+                            if (target != null &&
+                                target.transform.position.x < transform.position.x)
+                            {
+                                GetComponent<SpriteRenderer>().flipX = true;
                                 GetComponent<SpriteRenderer>().sprite = rightSprites[currentNumeroAnim++];
-                            if (currentNumeroAnim == leftSprites.Length)
+                            }
+                            else
+                            {
+                                GetComponent<SpriteRenderer>().flipX = false;
+                                GetComponent<SpriteRenderer>().sprite = rightSprites[currentNumeroAnim++];
+                            }
+
+                            if (currentNumeroAnim == rightSprites.Length)
                                 currentNumeroAnim = 0;
                             timer = 0f;
                         }
@@ -437,10 +430,17 @@ public class IAGuerrierAgent : MonoBehaviour
         while (animDeath < rightDeathSprites.Length)
         {
             if (animRight == true)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
                 GetComponent<SpriteRenderer>().sprite = rightDeathSprites[animDeath];
+            }
             else
-                GetComponent<SpriteRenderer>().sprite = leftDeathSprites[animDeath];
-            yield return new WaitForSeconds(0.08f);
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+                GetComponent<SpriteRenderer>().sprite = rightDeathSprites[animDeath];
+            }
+
+            yield return new WaitForSeconds(animDeathCD);
             animDeath++;
         }
 
@@ -453,12 +453,12 @@ public class IAGuerrierAgent : MonoBehaviour
         bool animRight;
         if (transform.position.x > directionPos.x)
         {
-            rightSide = true;
+            rightSide = false;
             animRight = false;
         }
         else
         {
-            rightSide = false;
+            rightSide = true;
             animRight = true;
         }
 
@@ -466,10 +466,17 @@ public class IAGuerrierAgent : MonoBehaviour
         while (animAttack < rightAttackSprites.Length)
         {
             if (animRight == true)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
                 GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
+            }
             else
-                GetComponent<SpriteRenderer>().sprite = leftAttackSprites[animAttack];
-            yield return new WaitForSeconds(0.08f);
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+                GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
+            }
+
+            yield return new WaitForSeconds(animAttackCD);
             animAttack++;
         }
 
@@ -489,12 +496,18 @@ public class IAGuerrierAgent : MonoBehaviour
 
         isAttacking = false;
         canAttack = false;
-        timer = 0.09f;
+        timer = animMoveCD;
 
         if (rightSide == true)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
             GetComponent<SpriteRenderer>().sprite = rightIdle;
+        }
         else
-            GetComponent<SpriteRenderer>().sprite = leftIdle;
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+            GetComponent<SpriteRenderer>().sprite = rightIdle;
+        }
     }
 
     public void EarnXP(int newXP)

@@ -653,6 +653,8 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             FindShootDirection();
             spell3Ready = false;
+            GameObject sfx = (GameObject)Instantiate(iceShardSFX, transform.position, transform.rotation);
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             StartCoroutine(InstantiateEclatsGlace(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)));
             StartCoroutine(GoBackToAA());
         }
@@ -840,31 +842,22 @@ public class Shoots : MonoBehaviour
         else if (GetComponent<Deplacements>().attackDirection == Direction.TOP)
             newPos.y = transform.position.y + 0.1f;
 
-        GameObject sfx = null;
         GameObject obj1 = null;
-        sfx = (GameObject)Instantiate(iceShardSFX, transform.position, transform.rotation);
-        sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
         obj1 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj1.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj2 = null;
-        sfx = (GameObject)Instantiate(iceShardSFX, transform.position, transform.rotation);
-        sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
         obj2 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj2.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj3 = null;
-        sfx = (GameObject)Instantiate(iceShardSFX, transform.position, transform.rotation);
-        sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
         obj3 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj3.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj4 = null;
-        sfx = (GameObject)Instantiate(iceShardSFX, transform.position, transform.rotation);
-        sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
         obj4 = (GameObject)Instantiate(iceShard, newPos, rot);
         obj4.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
     }

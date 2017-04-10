@@ -60,8 +60,10 @@
      <Compile Include="Assets\Scripts\DragonDeFeu.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\IAArcher.cs" />
      <Compile Include="Assets\Scripts\IAGuerrier.cs" />
      <Compile Include="Assets\Scripts\IAGuerrierAgent.cs" />
+     <Compile Include="Assets\Scripts\IAMeleeBasic.cs" />
      <Compile Include="Assets\Scripts\IARange.cs" />
      <Compile Include="Assets\Scripts\IceShard.cs" />
      <Compile Include="Assets\Scripts\MapManager.cs" />
