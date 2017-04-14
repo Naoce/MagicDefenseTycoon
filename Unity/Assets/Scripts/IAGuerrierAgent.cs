@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class IAGuerrierAgent : MonoBehaviour
 {
+    public GameObject   hitSprite;
+
     public Sprite       rightIdle;
     public Sprite[]     rightSprites;
     public Sprite[]     rightDeathSprites;
@@ -16,6 +18,9 @@ public class IAGuerrierAgent : MonoBehaviour
     public GameObject   healthBarGreen;
     public Slider       healthBarGreenHUD;
     private Slider      xpBarHUD;
+    private GameObject  potion1;
+    private GameObject  potion2;
+    private GameObject  potion3;
 
     private GameObject  player;
     private GameObject  gm;
@@ -60,6 +65,9 @@ public class IAGuerrierAgent : MonoBehaviour
         {
             healthBarGreenHUD = gm.GetComponent<GameManager>().agent1healthBarGreenHUD;
             xpBarHUD = gm.GetComponent<GameManager>().agent1xpBarHUD;
+            potion1 = gm.GetComponent<GameManager>().agent1Potion1;
+            potion2 = gm.GetComponent<GameManager>().agent1Potion2;
+            potion3 = gm.GetComponent<GameManager>().agent1Potion3;
 
             if (gm.GetComponent<GameManager>().currSave == 1)
             {
@@ -103,6 +111,9 @@ public class IAGuerrierAgent : MonoBehaviour
         {
             healthBarGreenHUD = gm.GetComponent<GameManager>().agent2healthBarGreenHUD;
             xpBarHUD = gm.GetComponent<GameManager>().agent2xpBarHUD;
+            potion1 = gm.GetComponent<GameManager>().agent2Potion1;
+            potion2 = gm.GetComponent<GameManager>().agent2Potion2;
+            potion3 = gm.GetComponent<GameManager>().agent2Potion3;
 
             if (gm.GetComponent<GameManager>().currSave == 2)
             {
@@ -146,6 +157,9 @@ public class IAGuerrierAgent : MonoBehaviour
         {
             healthBarGreenHUD = gm.GetComponent<GameManager>().agent3healthBarGreenHUD;
             xpBarHUD = gm.GetComponent<GameManager>().agent3xpBarHUD;
+            potion1 = gm.GetComponent<GameManager>().agent3Potion1;
+            potion2 = gm.GetComponent<GameManager>().agent3Potion2;
+            potion3 = gm.GetComponent<GameManager>().agent3Potion3;
 
             if (gm.GetComponent<GameManager>().currSave == 1)
             {
@@ -197,6 +211,21 @@ public class IAGuerrierAgent : MonoBehaviour
             healthBarGreenHUD.value = (float)currHP / (float)gm.GetComponent<GameManager>().agentType0MaxHP[level - 1];
 
         xpBarHUD.value = (float)currXP / (float)gm.GetComponent<GameManager>().agentMaxXP[level - 1];
+
+        if (stockHealthPotion > 0)
+            potion1.SetActive(true);
+        else
+            potion1.SetActive(false);
+
+        if (stockHealthPotion > 1)
+            potion2.SetActive(true);
+        else
+            potion2.SetActive(false);
+
+        if (stockHealthPotion > 2)
+            potion3.SetActive(true);
+        else
+            potion3.SetActive(false);
     }
 
     void Update()
@@ -217,6 +246,21 @@ public class IAGuerrierAgent : MonoBehaviour
                     GameObject sfx = (GameObject)Instantiate(potionHealthSFX, transform.position, transform.rotation);
                     sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
                     stockHealthPotion--;
+
+                    if (stockHealthPotion > 0)
+                        potion1.SetActive(true);
+                    else
+                        potion1.SetActive(false);
+
+                    if (stockHealthPotion > 1)
+                        potion2.SetActive(true);
+                    else
+                        potion2.SetActive(false);
+
+                    if (stockHealthPotion > 2)
+                        potion3.SetActive(true);
+                    else
+                        potion3.SetActive(false);
                 }
 
                 if (Input.GetMouseButtonDown(1))
@@ -303,9 +347,9 @@ public class IAGuerrierAgent : MonoBehaviour
                         timer += Time.deltaTime;
 
                         if (transform.position.x < target.transform.position.x)
-                            rightSide = false;
-                        else
                             rightSide = true;
+                        else
+                            rightSide = false;
 
                         transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
 
@@ -480,8 +524,12 @@ public class IAGuerrierAgent : MonoBehaviour
             animAttack++;
         }
 
-        if (targetAttacking == target)
+        if (target != null &&
+            targetAttacking == target)
         {
+            GameObject obj = (GameObject)Instantiate(hitSprite, target.transform.position, transform.rotation);
+            obj.transform.SetParent(target.transform);
+
             if (target != null &&
             (target.tag == "EnemyGuerrier" || target.tag == "BossGuerrier"))
             {
@@ -497,15 +545,15 @@ public class IAGuerrierAgent : MonoBehaviour
         isAttacking = false;
         canAttack = false;
         timer = animMoveCD;
-
+        
         if (rightSide == true)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            GetComponent<SpriteRenderer>().flipX = false;
             GetComponent<SpriteRenderer>().sprite = rightIdle;
         }
         else
         {
-            GetComponent<SpriteRenderer>().flipX = false;
+            GetComponent<SpriteRenderer>().flipX = true;
             GetComponent<SpriteRenderer>().sprite = rightIdle;
         }
     }

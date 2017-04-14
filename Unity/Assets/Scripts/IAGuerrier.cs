@@ -11,6 +11,8 @@ public class IAGuerrier : MonoBehaviour
         Magician
     };
 
+    public  GameObject  hitSprite;
+
     public  Sprite[]    leftSprites;
     public  Sprite      leftIdle;
     public  Sprite[]    leftDeathSprites;
@@ -268,16 +270,21 @@ public class IAGuerrier : MonoBehaviour
             animAttack++;
         }
 
-        if (targetAttacking == target)
+        if (target != null)
         {
-            if (target.tag == "Player")
-                player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position);
-            else if (target.tag == "AgentGuerrier")
-                target.GetComponent<IAGuerrierAgent>().TakeDamage(damage[difficulty], transform.position);
-            else if (target.tag == "Defense")
-                target.GetComponent<Defense>().TakeDamage(damage[difficulty]);
+            GameObject obj = (GameObject)Instantiate(hitSprite, target.transform.position, transform.rotation);
+            obj.transform.SetParent(target.transform);
+            if (targetAttacking == target)
+            {
+                if (target.tag == "Player")
+                    player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position);
+                else if (target.tag == "AgentGuerrier")
+                    target.GetComponent<IAGuerrierAgent>().TakeDamage(damage[difficulty], transform.position);
+                else if (target.tag == "Defense")
+                    target.GetComponent<Defense>().TakeDamage(damage[difficulty]);
+            }
         }
-        
+
         isAttacking = false;
         canAttack = false;
         timer = 0.09f;

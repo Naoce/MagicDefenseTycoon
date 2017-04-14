@@ -25,10 +25,13 @@ public class GameManager : MonoBehaviour
     public  GameObject      jingleDefaite;
     public  GameObject      jingleVictoire;
     public  GameObject      jingleIntroCombat;
+
     public  GameObject      musicCombatObj;
     public  GameObject      musicCombat;
     public  GameObject      musicMenu;
+
     public  GameObject      mapManager;
+
     public  GameObject      textNbEnemy;
     public  int[]           playerMaxHP = new int[15];
     public  int[]           playerMaxXP = new int[15];
@@ -56,16 +59,19 @@ public class GameManager : MonoBehaviour
     public  GameObject      capturePanel;
     public  Slider          captureHealth;
     public  GameObject      defensePanel;
+
     public  Slider          defenseHealth;
     public  Slider          healthBarGreen;
     public  Slider          xpBar;
     public  GameObject      textHP;
     public  GameObject      textXP;
     public  GameObject      textLevel;
+
     public  GameObject      fioleRed;
     public  GameObject      fioleOrange;
     public  GameObject      fioleYellow;
     public  GameObject      fioleGreen;
+
     public  GameObject      levelUpPlayer;
     public  GameObject      usingSpell1Icon;
     public  GameObject      usingSpell2Icon;
@@ -75,6 +81,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      usingSpell6Icon;
     public  GameObject      usingSpell7Icon;
     public  GameObject      usingSpell8Icon;
+
     public  GameObject      hudInGame;
     public  GameObject      hudCounterText;
     public  GameObject      hudVictory;
@@ -84,17 +91,70 @@ public class GameManager : MonoBehaviour
     public  GameObject      hudStar3;
     public  GameObject      hudButtonTryAgain;
     public  GameObject      hudButtonReturnToMenu;
+
     public  GameObject      panelSave;
+    public  GameObject      scrollSave1;
+    public  GameObject      buttonSave1;
+    public  GameObject      buttonDeleteSave1;
+    public  GameObject      scrollSave2;
+    public  GameObject      buttonSave2;
+    public  GameObject      buttonDeleteSave2;
+    public  GameObject      scrollSave3;
+    public  GameObject      buttonSave3;
+    public  GameObject      buttonDeleteSave3;
+    public  GameObject      scrollSave4;
+    public  GameObject      buttonSave4;
+
     public  GameObject      panelDifficulty;
     public  GameObject      textDifficulty;
+    public  GameObject      scrollDifficulty1;
+    public  GameObject      buttonDifficulty1;
+    public  GameObject      scrollDifficulty2;
+    public  GameObject      buttonDifficulty2;
+    public  GameObject      scrollDifficulty3;
+    public  GameObject      buttonDifficulty3;
+    public  GameObject      scrollDifficulty4;
+    public  GameObject      buttonDifficulty4;
+
     public  GameObject      panelMenu;
+    public  GameObject      scrollMenu1;
+    public  GameObject      buttonMenu1;
+    public  GameObject      scrollMenu2;
+    public  GameObject      buttonMenu2;
+    public  GameObject      scrollMenu3;
+    public  GameObject      buttonMenu3;
+    public  GameObject      scrollMenu4;
+    public  GameObject      buttonMenu4;
+
     public  GameObject      hudPanelMenu;
+    public  GameObject      scrollHUDMenu1;
+    public  GameObject      buttonHUDMenu1;
+    public  GameObject      scrollHUDMenu2;
+    public  GameObject      buttonHUDMenu2;
+    public  GameObject      scrollHUDMenu3;
+    public  GameObject      buttonHUDMenu3;
+    public  GameObject      scrollHUDMenu4;
+    public  GameObject      buttonHUDMenu4;
+
     public  GameObject      hudPanelOptions;
+    public  GameObject      scrollOptions1;
+    public  GameObject      scrollOptions2;
+    public  GameObject      scrollOptions3;
+    public  GameObject      scrollOptions4;
+    public  GameObject      scrollOptions5;
     public  GameObject      smartCastIcon;
+    public  GameObject      smartCastText;
     public  GameObject      bloodlessIcon;
+    public  GameObject      bloodlessText;
     public  GameObject      showSpellsInfoIcon;
+    public  GameObject      showSpellsInfoText;
+    public  GameObject      volumeMusicMinus;
+    public  GameObject      volumeMusicPlus;
     public  GameObject      volumeMusicText;
+    public  GameObject      volumeSFXMinus;
+    public  GameObject      volumeSFXPlus;
     public  GameObject      volumeSFXText;
+
     public  GameObject      textStockHealthPotion;
     public  GameObject      textStockManaPotion;
 
@@ -103,18 +163,27 @@ public class GameManager : MonoBehaviour
     public  GameObject      levelUpAgent1;
     public  Slider          agent1healthBarGreenHUD;
     public  Slider          agent1xpBarHUD;
+    public  GameObject      agent1Potion1;
+    public  GameObject      agent1Potion2;
+    public  GameObject      agent1Potion3;
 
     public  GameObject      agent2Panel;
     public  GameObject[]    agent2Levels = new GameObject[10];
     public  GameObject      levelUpAgent2;
     public  Slider          agent2healthBarGreenHUD;
     public  Slider          agent2xpBarHUD;
+    public  GameObject      agent2Potion1;
+    public  GameObject      agent2Potion2;
+    public  GameObject      agent2Potion3;
 
-    public GameObject       agent3Panel;
-    public GameObject[]     agent3Levels = new GameObject[10];
-    public GameObject       levelUpAgent3;
-    public Slider           agent3healthBarGreenHUD;
-    public Slider           agent3xpBarHUD;
+    public  GameObject      agent3Panel;
+    public  GameObject[]    agent3Levels = new GameObject[10];
+    public  GameObject      levelUpAgent3;
+    public  Slider          agent3healthBarGreenHUD;
+    public  Slider          agent3xpBarHUD;
+    public  GameObject      agent3Potion1;
+    public  GameObject      agent3Potion2;
+    public  GameObject      agent3Potion3;
 
     public  GameObject      bulleInfoSpell1;
     public  GameObject      bulleInfoSpell2;
@@ -126,6 +195,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      bulleInfoSpell8;
     public  GameObject      bulleInfoObject1;
     public  GameObject      bulleInfoObject2;
+
     public  GameObject      cdSpell1;
     public  GameObject      cdSpell2;
     public  GameObject      cdSpell3;
@@ -452,7 +522,7 @@ public class GameManager : MonoBehaviour
 
     public void SelectSpell7()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell7();
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell7(true);
     }
 
     public void SelectSpell8()

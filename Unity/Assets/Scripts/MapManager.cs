@@ -442,6 +442,7 @@ public class MapManager : MonoBehaviour
         Time.timeScale = 0f;
         gm.GetComponent<GameManager>().gamePaused = true;
         gm.GetComponent<GameManager>().hudPanelMenu.SetActive(true);
+        gm.GetComponent<Buttons>().AnimationPanelHUDMenu();
         gm.GetComponent<GameManager>().hudPanelOptions.SetActive(false);
         gm.GetComponent<GameManager>().SetNormalMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
     }
@@ -461,6 +462,7 @@ public class MapManager : MonoBehaviour
     {
         gm.GetComponent<GameManager>().isInOptions = false;
         gm.GetComponent<GameManager>().hudPanelMenu.SetActive(true);
+        gm.GetComponent<Buttons>().AnimationPanelHUDMenu();
         gm.GetComponent<GameManager>().hudPanelOptions.SetActive(false);
     }
 

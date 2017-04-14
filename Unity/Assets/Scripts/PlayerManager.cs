@@ -60,7 +60,7 @@ public class PlayerManager : MonoBehaviour
         }
         else if (player.GetComponent<Shoots>().spellSelected == 2)
         {
-            if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f)
+            if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 2f)
             {
                 RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
                 if (hit.collider != null)
@@ -132,7 +132,7 @@ public class PlayerManager : MonoBehaviour
         }
         else if (player.GetComponent<Shoots>().spellSelected == 6)
         {
-            if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f)
+            if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 2f)
             {
                 RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
                 if (hit.collider != null)

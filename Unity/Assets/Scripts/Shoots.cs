@@ -17,6 +17,7 @@ public class Shoots : MonoBehaviour
     };
 
 	private GameObject	cam;
+    public  GameObject  rangeIndicator;
 	public  GameObject	fireball;
     public  GameObject  fireballSFX;
     public  GameObject  thunderbolt;
@@ -31,6 +32,7 @@ public class Shoots : MonoBehaviour
     public  GameObject  meteorSFX;
     public  GameObject  icePrison;
     public  GameObject  icePrisonSFX;
+    public  GameObject  earthquake;
     public  GameObject  earthquakeSFX;
     public  GameObject  dragonHG;
     public  GameObject  dragonHD;
@@ -145,6 +147,8 @@ public class Shoots : MonoBehaviour
         cdSpell8.GetComponent<Slider>().value = 0;
         cdObject1.GetComponent<Slider>().value = 0;
         cdObject2.GetComponent<Slider>().value = 0;
+
+        SelectSpell1(true);
     } 
 
     void Update ()
@@ -297,7 +301,7 @@ public class Shoots : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Alpha7))
             {
-                UseSpell7();
+                SelectSpell7(false);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha8))
             {
@@ -341,6 +345,11 @@ public class Shoots : MonoBehaviour
             {
                 UseSpell6();
             }
+            else if (spellSelected == 7 &&
+            Input.GetMouseButtonDown(0))
+            {
+                UseSpell7();
+            }
             else if (spellSelected == 8 &&
                     Input.GetMouseButtonDown(0))
             {
@@ -358,6 +367,9 @@ public class Shoots : MonoBehaviour
         }
         else
         {
+            Vector3 newScale = new Vector3(6, 6, 1);
+            rangeIndicator.transform.localScale = newScale;
+            rangeIndicator.SetActive(true);
             spellSelected = 1;
             usingSpell1Icon.SetActive(true);
             usingSpell1Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
@@ -366,6 +378,7 @@ public class Shoots : MonoBehaviour
             usingSpell4Icon.SetActive(false);
             usingSpell5Icon.SetActive(false);
             usingSpell6Icon.SetActive(false);
+            usingSpell7Icon.SetActive(false);
             usingSpell8Icon.SetActive(false);
         }
     }
@@ -379,6 +392,9 @@ public class Shoots : MonoBehaviour
         }
         else
         {
+            Vector3 newScale = new Vector3(4, 4, 1);
+            rangeIndicator.transform.localScale = newScale;
+            rangeIndicator.SetActive(true);
             spellSelected = 2;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(true);
@@ -388,6 +404,7 @@ public class Shoots : MonoBehaviour
             usingSpell4Icon.SetActive(false);
             usingSpell5Icon.SetActive(false);
             usingSpell6Icon.SetActive(false);
+            usingSpell7Icon.SetActive(false);
             usingSpell8Icon.SetActive(false);
         }
     }
@@ -401,6 +418,9 @@ public class Shoots : MonoBehaviour
         }
         else
         {
+            Vector3 newScale = new Vector3(6, 6, 1);
+            rangeIndicator.transform.localScale = newScale;
+            rangeIndicator.SetActive(true);
             spellSelected = 3;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -410,6 +430,7 @@ public class Shoots : MonoBehaviour
             usingSpell4Icon.SetActive(false);
             usingSpell5Icon.SetActive(false);
             usingSpell6Icon.SetActive(false);
+            usingSpell7Icon.SetActive(false);
             usingSpell8Icon.SetActive(false);
         }
     }
@@ -423,6 +444,9 @@ public class Shoots : MonoBehaviour
         }
         else
         {
+            Vector3 newScale = new Vector3(6, 6, 1);
+            rangeIndicator.transform.localScale = newScale;
+            rangeIndicator.SetActive(true);
             spellSelected = 4;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -432,6 +456,7 @@ public class Shoots : MonoBehaviour
             usingSpell4Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
             usingSpell5Icon.SetActive(false);
             usingSpell6Icon.SetActive(false);
+            usingSpell7Icon.SetActive(false);
             usingSpell8Icon.SetActive(false);
         }
     }
@@ -445,6 +470,9 @@ public class Shoots : MonoBehaviour
         }
         else
         {
+            Vector3 newScale = new Vector3(6, 6, 1);
+            rangeIndicator.transform.localScale = newScale;
+            rangeIndicator.SetActive(true);
             spellSelected = 5;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -454,6 +482,7 @@ public class Shoots : MonoBehaviour
             usingSpell5Icon.GetComponent<UsingSpell>().player = gameObject;
             usingSpell5Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
             usingSpell6Icon.SetActive(false);
+            usingSpell7Icon.SetActive(false);
             usingSpell8Icon.SetActive(false);
         }
     }
@@ -467,6 +496,9 @@ public class Shoots : MonoBehaviour
         }
         else
         {
+            Vector3 newScale = new Vector3(4, 4, 1);
+            rangeIndicator.transform.localScale = newScale;
+            rangeIndicator.SetActive(true);
             spellSelected = 6;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -476,13 +508,35 @@ public class Shoots : MonoBehaviour
             usingSpell6Icon.SetActive(true);
             usingSpell6Icon.GetComponent<UsingSpell>().player = gameObject;
             usingSpell6Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
+            usingSpell7Icon.SetActive(false);
             usingSpell8Icon.SetActive(false);
         }
     }
 
-    public void SelectSpell7()
+    public void SelectSpell7(bool fromClick)
     {
-        UseSpell7();
+        if (gm.GetComponent<GameManager>().smartcast == true &&
+            fromClick == false)
+        {
+            UseSpell7();
+        }
+        else
+        {
+            Vector3 newScale = new Vector3(4, 4, 1);
+            rangeIndicator.transform.localScale = newScale;
+            rangeIndicator.SetActive(true);
+            spellSelected = 7;
+            usingSpell1Icon.SetActive(false);
+            usingSpell2Icon.SetActive(false);
+            usingSpell3Icon.SetActive(false);
+            usingSpell4Icon.SetActive(false);
+            usingSpell5Icon.SetActive(false);
+            usingSpell6Icon.SetActive(false);
+            usingSpell7Icon.SetActive(true);
+            usingSpell7Icon.GetComponent<UsingSpell>().player = gameObject;
+            usingSpell7Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
+            usingSpell8Icon.SetActive(false);
+        }
     }
 
     public void SelectSpell8(bool fromClick)
@@ -494,6 +548,7 @@ public class Shoots : MonoBehaviour
         }
         else
         {
+            rangeIndicator.SetActive(false);
             spellSelected = 8;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -501,6 +556,7 @@ public class Shoots : MonoBehaviour
             usingSpell4Icon.SetActive(false);
             usingSpell5Icon.SetActive(false);
             usingSpell6Icon.SetActive(false);
+            usingSpell7Icon.SetActive(false);
             usingSpell8Icon.SetActive(true);
             usingSpell8Icon.GetComponent<UsingSpell>().player = gameObject;
             usingSpell8Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
@@ -736,9 +792,8 @@ public class Shoots : MonoBehaviour
             GetComponent<Deplacements>().isAttacking = true;
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             spell7Ready = false;
-            GameObject sfx = (GameObject)Instantiate(earthquakeSFX, transform.position, transform.rotation);
-            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
-            StartCoroutine(SpellFireBlast());
+            StartCoroutine(SpellEarthquake());
+            StartCoroutine(GoBackToAA());
         }
     }
 
@@ -947,9 +1002,16 @@ public class Shoots : MonoBehaviour
         }
     }
 
-    IEnumerator SpellFireBlast()
+    IEnumerator SpellEarthquake()
     {
-        yield return new WaitForSeconds(0.2f);
+        Vector2 newVec = new Vector2(transform.position.x, transform.position.y + 0.3f);
+        Instantiate(earthquake, newVec, transform.rotation);
+
+        yield return new WaitForSeconds(0.35f);
+
+        GameObject sfx = (GameObject)Instantiate(earthquakeSFX, transform.position, transform.rotation);
+        sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
+
         foreach (GameObject go in mapManager.GetComponent<MapManager>().enemiesList)
         {
             if (Vector2.Distance(go.transform.position, transform.position) < 2 &&

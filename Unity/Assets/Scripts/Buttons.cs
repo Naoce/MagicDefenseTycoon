@@ -7,6 +7,11 @@ public class Buttons : MonoBehaviour
     public  Sprite  boxChecked;
     public  Sprite  boxNotChecked;
 
+    void Awake()
+    {
+        ReturnToMainMenu();
+    }
+
     public void Resume ()
     {
         GetComponent<GameManager>().mapManager.GetComponent<MapManager>().Resume();
@@ -16,6 +21,7 @@ public class Buttons : MonoBehaviour
     {
         GetComponent<GameManager>().hudPanelMenu.SetActive(false);
         GetComponent<GameManager>().hudPanelOptions.SetActive(true);
+        AnimationPanelOptions();
         GetComponent<GameManager>().isInOptions = true;
     }
 
@@ -108,6 +114,7 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().isInGame = true;
         GetComponent<GameManager>().panelMenu.SetActive(false);
         GetComponent<GameManager>().hudInGame.SetActive(true);
+        AnimationPanelHUDMenu();
     }
 
     public void LeaveOptions()
@@ -120,7 +127,6 @@ public class Buttons : MonoBehaviour
         NewGame();
         Application.LoadLevel(Application.loadedLevel);
         Resume();
-
     }
 
     public void ReturnToMenu()
@@ -187,6 +193,7 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().isInGame = false;
         Application.LoadLevel("SceneMenu");
         GetComponent<GameManager>().PlayMusicMenu();
+        StartCoroutine(AnimationPanelMenu());
     }
 
     public void QuitApp()
@@ -326,6 +333,7 @@ public class Buttons : MonoBehaviour
         }
         GetComponent<GameManager>().panelDifficulty.SetActive(false);
         GetComponent<GameManager>().panelMenu.SetActive(true);
+        StartCoroutine(AnimationPanelMenu());
     }
 
     public void SetDifficultyToNormal()
@@ -350,6 +358,7 @@ public class Buttons : MonoBehaviour
         }
         GetComponent<GameManager>().panelDifficulty.SetActive(false);
         GetComponent<GameManager>().panelMenu.SetActive(true);
+        StartCoroutine(AnimationPanelMenu());
     }
 
     public void SetDifficultyToDifficult()
@@ -374,12 +383,129 @@ public class Buttons : MonoBehaviour
         }
         GetComponent<GameManager>().panelDifficulty.SetActive(false);
         GetComponent<GameManager>().panelMenu.SetActive(true);
+        StartCoroutine(AnimationPanelMenu());
     }
 
     public void ReturnToMainMenu()
     {
         GetComponent<GameManager>().panelMenu.SetActive(false);
+        GetComponent<GameManager>().panelDifficulty.SetActive(false);
         GetComponent<GameManager>().panelSave.SetActive(true);
+        StartCoroutine(AnimationPanelSave());
+    }
+
+    IEnumerator AnimationPanelSave()
+    {
+        GetComponent<GameManager>().scrollSave1.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonSave1.SetActive(false);
+        GetComponent<GameManager>().buttonDeleteSave1.SetActive(false);
+        GetComponent<GameManager>().scrollSave2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonSave2.SetActive(false);
+        GetComponent<GameManager>().buttonDeleteSave2.SetActive(false);
+        GetComponent<GameManager>().scrollSave3.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonSave3.SetActive(false);
+        GetComponent<GameManager>().buttonDeleteSave3.SetActive(false);
+        GetComponent<GameManager>().scrollSave4.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonSave4.SetActive(false);
+        yield return new WaitForSeconds(0.3f);
+        GetComponent<GameManager>().buttonSave1.SetActive(true);
+        GetComponent<GameManager>().buttonDeleteSave1.SetActive(true);
+        GetComponent<GameManager>().buttonSave2.SetActive(true);
+        GetComponent<GameManager>().buttonDeleteSave2.SetActive(true);
+        GetComponent<GameManager>().buttonSave3.SetActive(true);
+        GetComponent<GameManager>().buttonDeleteSave3.SetActive(true);
+        GetComponent<GameManager>().buttonSave4.SetActive(true);
+    }
+
+    IEnumerator AnimationPanelDifficulty()
+    {
+        GetComponent<GameManager>().scrollDifficulty1.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonDifficulty1.SetActive(false);
+        GetComponent<GameManager>().scrollDifficulty2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonDifficulty2.SetActive(false);
+        GetComponent<GameManager>().scrollDifficulty3.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonDifficulty3.SetActive(false);
+        GetComponent<GameManager>().scrollDifficulty4.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonDifficulty4.SetActive(false);
+        yield return new WaitForSeconds(0.3f);
+        GetComponent<GameManager>().buttonDifficulty1.SetActive(true);
+        GetComponent<GameManager>().buttonDifficulty2.SetActive(true);
+        GetComponent<GameManager>().buttonDifficulty3.SetActive(true);
+        GetComponent<GameManager>().buttonDifficulty4.SetActive(true);
+    }
+
+    public IEnumerator AnimationPanelMenu()
+    {
+        GetComponent<GameManager>().scrollMenu1.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonMenu1.SetActive(false);
+        GetComponent<GameManager>().scrollMenu2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonMenu2.SetActive(false);
+        GetComponent<GameManager>().scrollMenu3.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonMenu3.SetActive(false);
+        GetComponent<GameManager>().scrollMenu4.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonMenu4.SetActive(false);
+        yield return new WaitForSeconds(0.3f);
+        GetComponent<GameManager>().buttonMenu1.SetActive(true);
+        GetComponent<GameManager>().buttonMenu2.SetActive(true);
+        GetComponent<GameManager>().buttonMenu3.SetActive(true);
+        GetComponent<GameManager>().buttonMenu4.SetActive(true);
+    }
+
+    public void AnimationPanelHUDMenu()
+    {
+        GetComponent<GameManager>().scrollHUDMenu1.GetComponent<Animator>().SetBool("StartAnim", true);
+        GetComponent<GameManager>().buttonHUDMenu1.SetActive(false);
+        GetComponent<GameManager>().scrollHUDMenu2.GetComponent<Animator>().SetBool("StartAnim", true);
+        GetComponent<GameManager>().buttonHUDMenu2.SetActive(false);
+        GetComponent<GameManager>().scrollHUDMenu3.GetComponent<Animator>().SetBool("StartAnim", true);
+        GetComponent<GameManager>().buttonHUDMenu3.SetActive(false);
+        GetComponent<GameManager>().scrollHUDMenu4.GetComponent<Animator>().SetBool("StartAnim", true);
+        GetComponent<GameManager>().buttonHUDMenu4.SetActive(false);
+    }
+
+    public void EndAnimationPanelHUDMenu()
+    {
+        GetComponent<GameManager>().buttonHUDMenu1.SetActive(true);
+        GetComponent<GameManager>().buttonHUDMenu2.SetActive(true);
+        GetComponent<GameManager>().buttonHUDMenu3.SetActive(true);
+        GetComponent<GameManager>().buttonHUDMenu4.SetActive(true);
+    }
+
+    public void AnimationPanelOptions()
+    {
+        GetComponent<GameManager>().scrollOptions1.GetComponent<Animator>().SetBool("StartAnim", true);
+        GetComponent<GameManager>().smartCastIcon.SetActive(false);
+        GetComponent<GameManager>().smartCastText.SetActive(false);
+        GetComponent<GameManager>().scrollOptions2.GetComponent<Animator>().SetBool("StartAnim", true);
+        GetComponent<GameManager>().bloodlessIcon.SetActive(false);
+        GetComponent<GameManager>().bloodlessText.SetActive(false);
+        GetComponent<GameManager>().scrollOptions3.GetComponent<Animator>().SetBool("StartAnim", true);
+        GetComponent<GameManager>().showSpellsInfoIcon.SetActive(false);
+        GetComponent<GameManager>().showSpellsInfoText.SetActive(false);
+        GetComponent<GameManager>().scrollOptions4.GetComponent<Animator>().SetBool("StartAnim", true);
+        GetComponent<GameManager>().volumeMusicPlus.SetActive(false);
+        GetComponent<GameManager>().volumeMusicMinus.SetActive(false);
+        GetComponent<GameManager>().volumeMusicText.SetActive(false);
+        GetComponent<GameManager>().scrollOptions5.GetComponent<Animator>().SetBool("StartAnim", true);
+        GetComponent<GameManager>().volumeSFXPlus.SetActive(false);
+        GetComponent<GameManager>().volumeSFXMinus.SetActive(false);
+        GetComponent<GameManager>().volumeSFXText.SetActive(false);
+    }
+
+    public void EndAnimationPanelOptions()
+    {
+        GetComponent<GameManager>().smartCastIcon.SetActive(true);
+        GetComponent<GameManager>().smartCastText.SetActive(true);
+        GetComponent<GameManager>().bloodlessIcon.SetActive(true);
+        GetComponent<GameManager>().bloodlessText.SetActive(true);
+        GetComponent<GameManager>().showSpellsInfoIcon.SetActive(true);
+        GetComponent<GameManager>().showSpellsInfoText.SetActive(true);
+        GetComponent<GameManager>().volumeMusicPlus.SetActive(true);
+        GetComponent<GameManager>().volumeMusicMinus.SetActive(true);
+        GetComponent<GameManager>().volumeMusicText.SetActive(true);
+        GetComponent<GameManager>().volumeSFXPlus.SetActive(true);
+        GetComponent<GameManager>().volumeSFXMinus.SetActive(true);
+        GetComponent<GameManager>().volumeSFXText.SetActive(true);
     }
 
     public void LoadFile1()
@@ -396,9 +522,14 @@ public class Buttons : MonoBehaviour
             {
                 GetComponent<GameManager>().difficulty = PlayerPrefs.GetInt("Load1Difficulty");
                 GetComponent<GameManager>().panelMenu.SetActive(true);
+                StartCoroutine(AnimationPanelMenu());
             }
             else
+            {
                 GetComponent<GameManager>().panelDifficulty.SetActive(true);
+                StartCoroutine(AnimationPanelDifficulty());
+            }
+
         }
     }
 
@@ -425,11 +556,12 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("Load1DifficultySet", 0);
             PlayerPrefs.SetInt("Load1PlayerStockHealthPotion", 1);
             PlayerPrefs.SetInt("Load1PlayerStockManaPotion", 1);
-            PlayerPrefs.SetInt("Load1Agent1StockHealthPotion", 2);
-            PlayerPrefs.SetInt("Load1Agent2StockHealthPotion", 2);
-            PlayerPrefs.SetInt("Load1Agent3StockHealthPotion", 2);
+            PlayerPrefs.SetInt("Load1Agent1StockHealthPotion", 3);
+            PlayerPrefs.SetInt("Load1Agent2StockHealthPotion", 3);
+            PlayerPrefs.SetInt("Load1Agent3StockHealthPotion", 3);
             GetComponent<GameManager>().panelSave.SetActive(false);
             GetComponent<GameManager>().panelDifficulty.SetActive(true);
+            StartCoroutine(AnimationPanelDifficulty());
         }
     }
 
@@ -448,9 +580,9 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load1Agent2XP", 0);
         PlayerPrefs.SetInt("Load1Agent3Level", 0);
         PlayerPrefs.SetInt("Load1Agent3XP", 0);
-        PlayerPrefs.SetInt("Load1Agent1StockHealthPotion", 2);
-        PlayerPrefs.SetInt("Load1Agent2StockHealthPotion", 2);
-        PlayerPrefs.SetInt("Load1Agent3StockHealthPotion", 2);
+        PlayerPrefs.SetInt("Load1Agent1StockHealthPotion", 3);
+        PlayerPrefs.SetInt("Load1Agent2StockHealthPotion", 3);
+        PlayerPrefs.SetInt("Load1Agent3StockHealthPotion", 3);
 
         PlayerPrefs.SetInt("Load1DifficultySet", 0);
         GetComponent<GameManager>().load1Created = false;
@@ -471,9 +603,13 @@ public class Buttons : MonoBehaviour
             {
                 GetComponent<GameManager>().difficulty = PlayerPrefs.GetInt("Load2Difficulty");
                 GetComponent<GameManager>().panelMenu.SetActive(true);
+                StartCoroutine(AnimationPanelMenu());
             }
             else
+            {
                 GetComponent<GameManager>().panelDifficulty.SetActive(true);
+                StartCoroutine(AnimationPanelDifficulty());
+            }
         }
     }
 
@@ -500,11 +636,12 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("Load2DifficultySet", 0);
             PlayerPrefs.SetInt("Load2PlayerStockHealthPotion", 1);
             PlayerPrefs.SetInt("Load2PlayerStockManaPotion", 1);
-            PlayerPrefs.SetInt("Load2Agent1StockHealthPotion", 2);
-            PlayerPrefs.SetInt("Load2Agent2StockHealthPotion", 2);
-            PlayerPrefs.SetInt("Load2Agent3StockHealthPotion", 2);
+            PlayerPrefs.SetInt("Load2Agent1StockHealthPotion", 3);
+            PlayerPrefs.SetInt("Load2Agent2StockHealthPotion", 3);
+            PlayerPrefs.SetInt("Load2Agent3StockHealthPotion", 3);
             GetComponent<GameManager>().panelSave.SetActive(false);
             GetComponent<GameManager>().panelDifficulty.SetActive(true);
+            StartCoroutine(AnimationPanelDifficulty());
         }
     }
 
@@ -523,9 +660,9 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load2Agent2XP", 0);
         PlayerPrefs.SetInt("Load2Agent3Level", 0);
         PlayerPrefs.SetInt("Load2Agent3XP", 0);
-        PlayerPrefs.SetInt("Load2Agent1StockHealthPotion", 2);
-        PlayerPrefs.SetInt("Load2Agent2StockHealthPotion", 2);
-        PlayerPrefs.SetInt("Load2Agent3StockHealthPotion", 2);
+        PlayerPrefs.SetInt("Load2Agent1StockHealthPotion", 3);
+        PlayerPrefs.SetInt("Load2Agent2StockHealthPotion", 3);
+        PlayerPrefs.SetInt("Load2Agent3StockHealthPotion", 3);
 
         PlayerPrefs.SetInt("Load2DifficultySet", 0);
         GetComponent<GameManager>().load2Created = false;
@@ -546,9 +683,13 @@ public class Buttons : MonoBehaviour
             {
                 GetComponent<GameManager>().difficulty = PlayerPrefs.GetInt("Load3Difficulty");
                 GetComponent<GameManager>().panelMenu.SetActive(true);
+                StartCoroutine(AnimationPanelMenu());
             }
             else
+            {
                 GetComponent<GameManager>().panelDifficulty.SetActive(true);
+                StartCoroutine(AnimationPanelDifficulty());
+            }
         }
     }
 
@@ -575,11 +716,12 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("Load3DifficultySet", 0);
             PlayerPrefs.SetInt("Load3PlayerStockHealthPotion", 1);
             PlayerPrefs.SetInt("Load3PlayerStockManaPotion", 1);
-            PlayerPrefs.SetInt("Load3Agent1StockHealthPotion", 2);
-            PlayerPrefs.SetInt("Load3Agent2StockHealthPotion", 2);
-            PlayerPrefs.SetInt("Load3Agent3StockHealthPotion", 2);
+            PlayerPrefs.SetInt("Load3Agent1StockHealthPotion", 3);
+            PlayerPrefs.SetInt("Load3Agent2StockHealthPotion", 3);
+            PlayerPrefs.SetInt("Load3Agent3StockHealthPotion", 3);
             GetComponent<GameManager>().panelSave.SetActive(false);
             GetComponent<GameManager>().panelDifficulty.SetActive(true);
+            StartCoroutine(AnimationPanelDifficulty());
         }
     }
 
@@ -598,9 +740,9 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load3Agent2XP", 0);
         PlayerPrefs.SetInt("Load3Agent3Level", 0);
         PlayerPrefs.SetInt("Load3Agent3XP", 0);
-        PlayerPrefs.SetInt("Load3Agent1StockHealthPotion", 2);
-        PlayerPrefs.SetInt("Load3Agent2StockHealthPotion", 2);
-        PlayerPrefs.SetInt("Load3Agent3StockHealthPotion", 2);
+        PlayerPrefs.SetInt("Load3Agent1StockHealthPotion", 3);
+        PlayerPrefs.SetInt("Load3Agent2StockHealthPotion", 3);
+        PlayerPrefs.SetInt("Load3Agent3StockHealthPotion", 3);
 
         PlayerPrefs.SetInt("Load3DifficultySet", 0);
         GetComponent<GameManager>().load3Created = false;
