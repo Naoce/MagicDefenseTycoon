@@ -13,25 +13,16 @@ public class IAGuerrier : MonoBehaviour
 
     public  GameObject  hitSprite;
 
-    public  Sprite[]    leftSprites;
-    public  Sprite      leftIdle;
-    public  Sprite[]    leftDeathSprites;
-    public  Sprite[]    leftAttackSprites;
-
     public  Sprite[]    rightSprites;
     public  Sprite      rightIdle;
     public  Sprite[]    rightDeathSprites;
     public  Sprite[]    rightAttackSprites;
 
-    public  Sprite[]    topSprites;
     public  Sprite      topIdle;
-    public Sprite[]     topDeathSprites;
-    public Sprite[]     topAttackSprites;
+    public  Sprite[]    topAttackSprites;
 
-    public  Sprite[]    botSprites;
     public  Sprite      botIdle;
-    public Sprite[]     botDeathSprites;
-    public Sprite[]     botAttackSprites;
+    public  Sprite[]    botAttackSprites;
 
     public  GameObject  healthBarGreen;
     public  EnemyType   type;
@@ -46,6 +37,8 @@ public class IAGuerrier : MonoBehaviour
     public  int         currentNumeroAnim;
 	public	float		timer;
     public  float		animTime;
+    public  float       animAttackCD;
+    public  float       animDeathCD;
     public  float       attackTimer;
     public  float       attackCooldown;
     public  float       timerCC;
@@ -232,10 +225,17 @@ public class IAGuerrier : MonoBehaviour
         while (animDeath < rightDeathSprites.Length)
         {
             if (animRight == true)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
                 GetComponent<SpriteRenderer>().sprite = rightDeathSprites[animDeath];
+            }
             else
-                GetComponent<SpriteRenderer>().sprite = leftDeathSprites[animDeath];
-            yield return new WaitForSeconds(0.08f);
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+                GetComponent<SpriteRenderer>().sprite = rightDeathSprites[animDeath];
+            }
+
+            yield return new WaitForSeconds(animDeathCD);
             animDeath++;
         }
 
@@ -250,12 +250,12 @@ public class IAGuerrier : MonoBehaviour
         bool animRight;
         if (transform.position.x > directionPos.x)
         {
-            rightSide = true;
+            rightSide = false;
             animRight = false;
         }
         else
         {
-            rightSide = false;
+            rightSide = true;
             animRight = true;
         }
 
@@ -263,10 +263,17 @@ public class IAGuerrier : MonoBehaviour
         while (animAttack < rightAttackSprites.Length)
         {
             if (animRight == true)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
                 GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
+            }
             else
-                GetComponent<SpriteRenderer>().sprite = leftAttackSprites[animAttack];
-            yield return new WaitForSeconds(0.08f);
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+                GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
+            }
+
+            yield return new WaitForSeconds(animAttackCD);
             animAttack++;
         }
 
@@ -287,12 +294,18 @@ public class IAGuerrier : MonoBehaviour
 
         isAttacking = false;
         canAttack = false;
-        timer = 0.09f;
+        timer = animTime;
 
         if (rightSide == true)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
             GetComponent<SpriteRenderer>().sprite = rightIdle;
+        }
         else
-            GetComponent<SpriteRenderer>().sprite = leftIdle;
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            GetComponent<SpriteRenderer>().sprite = rightIdle;
+        }
     }
 
     public IEnumerator AttackDistanceAnimation(Vector2 targetPos)
@@ -306,17 +319,29 @@ public class IAGuerrier : MonoBehaviour
             if (directionAttack == Shoots.Direction.RIGHT ||
                 directionAttack == Shoots.Direction.TOPRIGHT ||
                 directionAttack == Shoots.Direction.BOTTOMRIGHT)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
                 GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
+            }
             else if (directionAttack == Shoots.Direction.LEFT ||
                 directionAttack == Shoots.Direction.TOPLEFT ||
                 directionAttack == Shoots.Direction.BOTTOMLEFT)
-                GetComponent<SpriteRenderer>().sprite = leftAttackSprites[animAttack];
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+                GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
+            }
             else if (directionAttack == Shoots.Direction.BOTTOM)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
                 GetComponent<SpriteRenderer>().sprite = botAttackSprites[animAttack];
+            }
             else if (directionAttack == Shoots.Direction.TOP)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
                 GetComponent<SpriteRenderer>().sprite = topAttackSprites[animAttack];
+            }
 
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(attackCooldown);
             animAttack++;
         }
 
@@ -345,12 +370,18 @@ public class IAGuerrier : MonoBehaviour
 
         isAttacking = false;
         canAttack = false;
-        timer = 0.09f;
+        timer = animTime;
 
         if (rightSide == true)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
             GetComponent<SpriteRenderer>().sprite = rightIdle;
+        }
         else
-            GetComponent<SpriteRenderer>().sprite = leftIdle;
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            GetComponent<SpriteRenderer>().sprite = rightIdle;
+        }
     }
 
     public void FindShootDirection(Vector2 targetPos)

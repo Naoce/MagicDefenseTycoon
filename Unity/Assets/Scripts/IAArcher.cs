@@ -99,9 +99,15 @@ public class IAArcher : MonoBehaviour
                         else if (GetComponent<IAGuerrier>().isAttacking == false)
                         {
                             if (GetComponent<IAGuerrier>().rightSide == true)
-                                GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().leftIdle;
-                            else
+                            {
+                                GetComponent<SpriteRenderer>().flipX = false;
                                 GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
+                            }
+                            else
+                            {
+                                GetComponent<SpriteRenderer>().flipX = true;
+                                GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
+                            }
                         }
                     }
                 }
@@ -135,24 +141,18 @@ public class IAArcher : MonoBehaviour
                     (transform.position.y != GetComponent<IAGuerrier>().newPos.y ||
                     transform.position.x != GetComponent<IAGuerrier>().newPos.x))
                     {
-                        if ((!(GetComponent<IAGuerrier>().newPos.x - 0.5f < transform.position.x &&
-                            transform.position.x < GetComponent<IAGuerrier>().newPos.x + 0.5f) &&
-                             transform.position.x > GetComponent<IAGuerrier>().newPos.x) ||
-                             (transform.position.x > GetComponent<IAGuerrier>().newPos.x &&
-                             Vector2.Distance(transform.position, GetComponent<IAGuerrier>().newPos) < 0.55f))
-                            GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().leftSprites[GetComponent<IAGuerrier>().currentNumeroAnim++];
-                        else if ((!(GetComponent<IAGuerrier>().newPos.x - 0.5f < transform.position.x &&
-                            transform.position.x < GetComponent<IAGuerrier>().newPos.x + 0.5f) &&
-                             transform.position.x < GetComponent<IAGuerrier>().newPos.x) ||
-                                (transform.position.x < GetComponent<IAGuerrier>().newPos.x &&
-                                Vector2.Distance(transform.position, GetComponent<IAGuerrier>().newPos) < 0.55f))
+                        if (transform.position.x > GetComponent<IAGuerrier>().newPos.x)
+                        {
+                            GetComponent<SpriteRenderer>().flipX = true;
                             GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightSprites[GetComponent<IAGuerrier>().currentNumeroAnim++];
-                        else if (GetComponent<IAGuerrier>().newPos.y > transform.position.y)
-                            GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().topSprites[GetComponent<IAGuerrier>().currentNumeroAnim++];
-                        else if (GetComponent<IAGuerrier>().newPos.y < transform.position.y)
-                            GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().botSprites[GetComponent<IAGuerrier>().currentNumeroAnim++];
+                        }
+                        else
+                        {
+                            GetComponent<SpriteRenderer>().flipX = false;
+                            GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightSprites[GetComponent<IAGuerrier>().currentNumeroAnim++];
+                        }
 
-                        if (GetComponent<IAGuerrier>().currentNumeroAnim == GetComponent<IAGuerrier>().leftSprites.Length)
+                        if (GetComponent<IAGuerrier>().currentNumeroAnim == GetComponent<IAGuerrier>().rightSprites.Length)
                             GetComponent<IAGuerrier>().currentNumeroAnim = 0;
                         GetComponent<IAGuerrier>().timer = 0f;
                     }

@@ -186,12 +186,12 @@ public class MapManager : MonoBehaviour
                 if (spawnLeft == true)
                 {
                     spawnLeft = false;
-                    InstantiateMagicianEnemy(posLeft, new Vector2(posLeft.x, posLeft.y - 0.5f));
+                    InstantiateGuerrierNormal(posLeft, new Vector2(posLeft.x, posLeft.y - 0.5f));
                 }
                 else
                 {
                     spawnLeft = true;
-                    InstantiateGuerrierPlayer(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
+                    InstantiateGuerrierNormal(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
                 }
             }
         }
