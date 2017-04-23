@@ -319,7 +319,6 @@ public class MapManager : MonoBehaviour
 
     public void WinGame()
     {
-
         gm.GetComponent<GameManager>().defensePanel.SetActive(false);
         gm.GetComponent<GameManager>().capturePanel.SetActive(false);
         gm.GetComponent<GameManager>().bossPanel.SetActive(false);

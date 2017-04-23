@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\Buttons.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Capture.cs" />
+    <Compile Include="Assets\Scripts\CharacterMenu.cs" />
     <Compile Include="Assets\Scripts\CheckPath.cs" />
     <Compile Include="Assets\Scripts\Defense.cs" />
     <Compile Include="Assets\Scripts\Deplacements.cs" />

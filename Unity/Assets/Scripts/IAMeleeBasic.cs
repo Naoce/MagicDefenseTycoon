@@ -135,7 +135,8 @@ public class IAMeleeBasic : MonoBehaviour
                             GetComponent<IAGuerrier>().newPos = GetComponent<AStar>().StartPathFinding(GetComponent<IAGuerrier>().target.transform.position);
                     }
 
-                    transform.position = Vector3.MoveTowards(transform.position, GetComponent<IAGuerrier>().newPos, Time.deltaTime * (GetComponent<IAGuerrier>().speed - GetComponent<IAGuerrier>().slow));
+                    Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().newPos.x, GetComponent<IAGuerrier>().newPos.y, GetComponent<IAGuerrier>().newPos.y / 100);
+                    transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * (GetComponent<IAGuerrier>().speed - GetComponent<IAGuerrier>().slow));
 
                     if (GetComponent<IAGuerrier>().timer > GetComponent<IAGuerrier>().animTime &&
                     (transform.position.y != GetComponent<IAGuerrier>().newPos.y ||

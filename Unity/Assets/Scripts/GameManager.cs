@@ -51,8 +51,10 @@ public class GameManager : MonoBehaviour
     public  bool            audioOn;
     public  bool            isInMenu;
     public  bool            isInOptions;
+    public  bool            isInOptionsFromIntro;
     public  bool            bloodless;
     public  bool            showSpellsInfo;
+    public  bool            wasdMode;
 
     public  GameObject      bossPanel;
     public  Slider          bossHealth;
@@ -91,6 +93,17 @@ public class GameManager : MonoBehaviour
     public  GameObject      hudStar3;
     public  GameObject      hudButtonTryAgain;
     public  GameObject      hudButtonReturnToMenu;
+
+    public  GameObject      panelIntro;
+    public  GameObject      textCredits;
+    public  GameObject      scrollIntro1;
+    public  GameObject      buttonIntro1;
+    public  GameObject      scrollIntro2;
+    public  GameObject      buttonIntro2;
+    public  GameObject      scrollIntro3;
+    public  GameObject      buttonIntro3;
+    public  GameObject      scrollIntro4;
+    public  GameObject      buttonIntro4;
 
     public  GameObject      panelSave;
     public  GameObject      scrollSave1;
@@ -154,6 +167,8 @@ public class GameManager : MonoBehaviour
     public  GameObject      volumeSFXMinus;
     public  GameObject      volumeSFXPlus;
     public  GameObject      volumeSFXText;
+    public  GameObject      wasdModeButton;
+    public  GameObject      wasdModeText;
 
     public  GameObject      textStockHealthPotion;
     public  GameObject      textStockManaPotion;

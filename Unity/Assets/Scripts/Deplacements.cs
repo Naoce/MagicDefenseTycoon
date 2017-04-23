@@ -79,7 +79,10 @@ public class Deplacements : MonoBehaviour
             {
                 isMovingHorizontally = true;
 
-                if (Input.GetKey(KeyCode.Z))
+                if ((Input.GetKey(KeyCode.Z) &&
+                    gm.GetComponent<GameManager>().wasdMode == false) ||
+                    (Input.GetKey(KeyCode.W) &&
+                    gm.GetComponent<GameManager>().wasdMode == true))
                     newPosition = new Vector2(transform.position.x + 1, transform.position.y + 1);
                 else if (Input.GetKey(KeyCode.S))
                     newPosition = new Vector2(transform.position.x + 1, transform.position.y - 1);
@@ -131,11 +134,17 @@ public class Deplacements : MonoBehaviour
                     timer = 0f;
                 }
             }
-            else if (Input.GetKey(KeyCode.Q))
+            else if ((Input.GetKey(KeyCode.Q) &&
+                    gm.GetComponent<GameManager>().wasdMode == false) ||
+                    (Input.GetKey(KeyCode.A) &&
+                    gm.GetComponent<GameManager>().wasdMode == true))
             {
                 isMovingHorizontally = true;
 
-                if (Input.GetKey(KeyCode.Z))
+                if ((Input.GetKey(KeyCode.Z) &&
+                    gm.GetComponent<GameManager>().wasdMode == false) ||
+                    (Input.GetKey(KeyCode.W) &&
+                    gm.GetComponent<GameManager>().wasdMode == true))
                     newPosition = new Vector2(transform.position.x - 1, transform.position.y + 1);
                 else if (Input.GetKey(KeyCode.S))
                     newPosition = new Vector2(transform.position.x - 1, transform.position.y - 1);
@@ -189,8 +198,11 @@ public class Deplacements : MonoBehaviour
             }
             else
                 isMovingHorizontally = false;
-            if (Input.GetKey(KeyCode.Z) &&
-                !(Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.D)))
+            if (((Input.GetKey(KeyCode.Z) &&
+                    gm.GetComponent<GameManager>().wasdMode == false) ||
+                    (Input.GetKey(KeyCode.W) &&
+                    gm.GetComponent<GameManager>().wasdMode == true)) &&
+                    isMovingHorizontally == false)
             {
                 newPosition = new Vector2(transform.position.x, transform.position.y + 1);
 
@@ -234,7 +246,7 @@ public class Deplacements : MonoBehaviour
                 }
             }
             else if (Input.GetKey(KeyCode.S) &&
-                !(Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.D)))
+                    isMovingHorizontally == false)
             {
                 newPosition = new Vector2(transform.position.x, transform.position.y - 1);
 

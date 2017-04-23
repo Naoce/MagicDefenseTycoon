@@ -675,7 +675,7 @@ public class Shoots : MonoBehaviour
             spell2Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
             GetComponent<Deplacements>().isAttacking == false &&
-            Vector2.Distance(transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f)
+            Vector2.Distance(transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 2f)
         {
             RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
             if (hit.collider != null)
@@ -762,7 +762,7 @@ public class Shoots : MonoBehaviour
             spell6Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
             GetComponent<Deplacements>().isAttacking == false &&
-            Vector2.Distance(transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f)
+            Vector2.Distance(transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 2f)
         {
             RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
             if (hit.collider != null)

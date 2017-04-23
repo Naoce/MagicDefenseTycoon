@@ -351,7 +351,8 @@ public class IAGuerrierAgent : MonoBehaviour
                         else
                             rightSide = false;
 
-                        transform.position = Vector3.MoveTowards(transform.position, newPos, Time.deltaTime * (speed - slow));
+                        Vector3 destPos = new Vector3(newPos.x, newPos.y, newPos.y / 100);
+                        transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * (speed - slow));
 
                         if (timer > animMoveCD &&
                         (transform.position.y != newPos.y ||

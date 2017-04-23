@@ -9,12 +9,32 @@ public class Buttons : MonoBehaviour
 
     void Awake()
     {
-        ReturnToMainMenu();
+        ReturnToIntro();
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) &&
+            GetComponent<GameManager>().isInOptionsFromIntro == true)
+        {
+            GetComponent<GameManager>().hudPanelOptions.SetActive(false);
+            GetComponent<GameManager>().panelIntro.SetActive(true);
+            StartCoroutine(AnimationPanelIntro());
+            GetComponent<GameManager>().isInOptionsFromIntro = false;
+        }
+    } 
 
     public void Resume ()
     {
         GetComponent<GameManager>().mapManager.GetComponent<MapManager>().Resume();
+    }
+
+    public void OptionsFromIntro()
+    {
+        GetComponent<GameManager>().panelIntro.SetActive(false);
+        GetComponent<GameManager>().hudPanelOptions.SetActive(true);
+        AnimationPanelOptions();
+        GetComponent<GameManager>().isInOptionsFromIntro = true;
     }
 
     public void Options()
@@ -23,6 +43,16 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().hudPanelOptions.SetActive(true);
         AnimationPanelOptions();
         GetComponent<GameManager>().isInOptions = true;
+    }
+
+    public void ShowCredits()
+    {
+        GetComponent<GameManager>().textCredits.SetActive(true);
+    }
+
+    public void HideCredits()
+    {
+        GetComponent<GameManager>().textCredits.SetActive(false);
     }
 
     public void StartBoss()
@@ -137,7 +167,8 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().isInOptions = false;
         Time.timeScale = 1.0f;
         GetComponent<GameManager>().isInMenu = false;
-        GetComponent<GameManager>().panelMenu.SetActive(true);
+        //        GetComponent<GameManager>().panelMenu.SetActive(true);
+        GetComponent<GameManager>().panelSave.SetActive(true);
         GetComponent<GameManager>().hudStar1.SetActive(false);
         GetComponent<GameManager>().hudStar2.SetActive(false);
         GetComponent<GameManager>().hudStar3.SetActive(false);
@@ -193,7 +224,7 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().isInGame = false;
         Application.LoadLevel("SceneMenu");
         GetComponent<GameManager>().PlayMusicMenu();
-        StartCoroutine(AnimationPanelMenu());
+        StartCoroutine(AnimationPanelSave());
     }
 
     public void QuitApp()
@@ -225,7 +256,8 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("MusicVolumeSet", 1);
         PlayerPrefs.SetInt("MusicVolume", (int)GetComponent<GameManager>().volumeMusic);
         obj.GetComponent<Text>().text = "Volume music : " + GetComponent<GameManager>().volumeMusic + "%";
-        GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
+        if (GetComponent<GameManager>().isInGame == true)
+            GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
         GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
     }
 
@@ -237,7 +269,8 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("MusicVolumeSet", 1);
         PlayerPrefs.SetInt("MusicVolume", (int)GetComponent<GameManager>().volumeMusic);
         obj.GetComponent<Text>().text = "Volume music : " + GetComponent<GameManager>().volumeMusic + "%";
-        GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
+        if (GetComponent<GameManager>().isInGame == true)
+            GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
         GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
     }
 
@@ -332,8 +365,9 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().difficulty = 0;
         }
         GetComponent<GameManager>().panelDifficulty.SetActive(false);
-        GetComponent<GameManager>().panelMenu.SetActive(true);
-        StartCoroutine(AnimationPanelMenu());
+        StartBoss();
+        //GetComponent<GameManager>().panelMenu.SetActive(true);
+        //StartCoroutine(AnimationPanelMenu());
     }
 
     public void SetDifficultyToNormal()
@@ -357,8 +391,9 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().difficulty = 1;
         }
         GetComponent<GameManager>().panelDifficulty.SetActive(false);
-        GetComponent<GameManager>().panelMenu.SetActive(true);
-        StartCoroutine(AnimationPanelMenu());
+        StartBoss();
+        //GetComponent<GameManager>().panelMenu.SetActive(true);
+        //StartCoroutine(AnimationPanelMenu());
     }
 
     public void SetDifficultyToDifficult()
@@ -382,16 +417,56 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().difficulty = 2;
         }
         GetComponent<GameManager>().panelDifficulty.SetActive(false);
-        GetComponent<GameManager>().panelMenu.SetActive(true);
-        StartCoroutine(AnimationPanelMenu());
+        StartBoss();
+        //GetComponent<GameManager>().panelMenu.SetActive(true);
+        //StartCoroutine(AnimationPanelMenu());
     }
 
     public void ReturnToMainMenu()
     {
+        GetComponent<GameManager>().panelIntro.SetActive(false  );
         GetComponent<GameManager>().panelMenu.SetActive(false);
         GetComponent<GameManager>().panelDifficulty.SetActive(false);
         GetComponent<GameManager>().panelSave.SetActive(true);
         StartCoroutine(AnimationPanelSave());
+    }
+
+    public void ReturnToIntro()
+    {
+        GetComponent<GameManager>().panelSave.SetActive(false);
+        GetComponent<GameManager>().panelIntro.SetActive(true);
+        StartCoroutine(AnimationPanelIntro());
+    }
+
+    public void SwitchWASD()
+    {
+        if (GetComponent<GameManager>().wasdMode == false)
+        {
+            GetComponent<GameManager>().wasdMode = true;
+            GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxChecked;
+        }
+        else
+        {
+            GetComponent<GameManager>().wasdMode = false;
+            GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxNotChecked;
+        }
+    }
+
+    IEnumerator AnimationPanelIntro()
+    {
+        GetComponent<GameManager>().scrollIntro1.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonIntro1.SetActive(false);
+        GetComponent<GameManager>().scrollIntro2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonIntro2.SetActive(false);
+        GetComponent<GameManager>().scrollIntro3.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonIntro3.SetActive(false);
+        GetComponent<GameManager>().scrollIntro4.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().buttonIntro4.SetActive(false);
+        yield return new WaitForSeconds(0.3f);
+        GetComponent<GameManager>().buttonIntro1.SetActive(true);
+        GetComponent<GameManager>().buttonIntro2.SetActive(true);
+        GetComponent<GameManager>().buttonIntro3.SetActive(true);
+        GetComponent<GameManager>().buttonIntro4.SetActive(true);
     }
 
     IEnumerator AnimationPanelSave()
@@ -521,8 +596,9 @@ public class Buttons : MonoBehaviour
             if (PlayerPrefs.GetInt("Load1DifficultySet") == 1)
             {
                 GetComponent<GameManager>().difficulty = PlayerPrefs.GetInt("Load1Difficulty");
-                GetComponent<GameManager>().panelMenu.SetActive(true);
-                StartCoroutine(AnimationPanelMenu());
+                StartBoss();
+                //GetComponent<GameManager>().panelMenu.SetActive(true);
+                //StartCoroutine(AnimationPanelMenu());
             }
             else
             {
@@ -602,8 +678,9 @@ public class Buttons : MonoBehaviour
             if (PlayerPrefs.GetInt("Load2DifficultySet") == 1)
             {
                 GetComponent<GameManager>().difficulty = PlayerPrefs.GetInt("Load2Difficulty");
-                GetComponent<GameManager>().panelMenu.SetActive(true);
-                StartCoroutine(AnimationPanelMenu());
+                StartBoss();
+                //GetComponent<GameManager>().panelMenu.SetActive(true);
+                //StartCoroutine(AnimationPanelMenu());
             }
             else
             {
@@ -682,8 +759,9 @@ public class Buttons : MonoBehaviour
             if (PlayerPrefs.GetInt("Load3DifficultySet") == 1)
             {
                 GetComponent<GameManager>().difficulty = PlayerPrefs.GetInt("Load3Difficulty");
-                GetComponent<GameManager>().panelMenu.SetActive(true);
-                StartCoroutine(AnimationPanelMenu());
+                StartBoss();
+                //GetComponent<GameManager>().panelMenu.SetActive(true);
+                //StartCoroutine(AnimationPanelMenu());
             }
             else
             {
