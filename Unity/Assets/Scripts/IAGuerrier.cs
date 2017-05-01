@@ -41,6 +41,7 @@ public class IAGuerrier : MonoBehaviour
     public  float       animDeathCD;
     public  float       attackTimer;
     public  float       attackCooldown;
+    public  float       attackEffectCD; //timer of effect of the attack because it can be before the end of the anim
     public  float       timerCC;
     public  float       cooldownCC;
     public  float       timerFlying;
@@ -259,6 +260,8 @@ public class IAGuerrier : MonoBehaviour
             animRight = true;
         }
 
+        float timerEffect = 0f;
+        bool attackLanded = false;
         int animAttack = 0;
         while (animAttack < rightAttackSprites.Length)
         {
@@ -273,22 +276,49 @@ public class IAGuerrier : MonoBehaviour
                 GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
             }
 
+            timerEffect += animAttackCD;
+            if (timerEffect >= attackEffectCD &&
+                attackLanded == false)
+            {
+                attackLanded = true;
+                if (target != null)
+                {
+                    GameObject obj = (GameObject)Instantiate(hitSprite, target.transform.position, transform.rotation);
+                    obj.transform.SetParent(target.transform);
+
+                    if (targetAttacking == target)
+                    {
+                        if (target.tag == "Player")
+                            player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position);
+                        else if (target.tag == "AgentGuerrier")
+                            target.GetComponent<IAGuerrierAgent>().TakeDamage(damage[difficulty], transform.position);
+                        else if (target.tag == "Defense")
+                            target.GetComponent<Defense>().TakeDamage(damage[difficulty]);
+                    }
+                }
+            }
+
             yield return new WaitForSeconds(animAttackCD);
             animAttack++;
         }
 
-        if (target != null)
+        if (timerEffect >= attackEffectCD &&
+            attackLanded == false)
         {
-            GameObject obj = (GameObject)Instantiate(hitSprite, target.transform.position, transform.rotation);
-            obj.transform.SetParent(target.transform);
-            if (targetAttacking == target)
+            attackLanded = true;
+            if (target != null)
             {
-                if (target.tag == "Player")
-                    player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position);
-                else if (target.tag == "AgentGuerrier")
-                    target.GetComponent<IAGuerrierAgent>().TakeDamage(damage[difficulty], transform.position);
-                else if (target.tag == "Defense")
-                    target.GetComponent<Defense>().TakeDamage(damage[difficulty]);
+                GameObject obj = (GameObject)Instantiate(hitSprite, target.transform.position, transform.rotation);
+                obj.transform.SetParent(target.transform);
+                if (targetAttacking == target)
+                {
+                    if (target.tag == "Player")
+                        player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position);
+                    else if (target.tag == "AgentGuerrier")
+                        target.GetComponent<IAGuerrierAgent>().TakeDamage(damage[difficulty], transform.position);
+                    else if (target.tag == "Defense")
+                        target.GetComponent<Defense>().TakeDamage(damage[difficulty]);
+                }
             }
         }
 

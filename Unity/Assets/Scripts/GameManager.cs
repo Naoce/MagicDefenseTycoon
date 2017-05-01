@@ -8,14 +8,23 @@ public class GameManager : MonoBehaviour
     public  bool            load1Created;
     public  GameObject      inputFieldLoad1Name;
     public  GameObject      load1Name;
+    public  GameObject      load1DeleteIcon;
+    public  GameObject      load1Confirm;
+    public  GameObject      load1Cancel;
 
     public  bool            load2Created;
     public  GameObject      inputFieldLoad2Name;
     public  GameObject      load2Name;
+    public  GameObject      load2DeleteIcon;
+    public  GameObject      load2Confirm;
+    public  GameObject      load2Cancel;
 
     public  bool            load3Created;
     public  GameObject      inputFieldLoad3Name;
     public  GameObject      load3Name;
+    public  GameObject      load3DeleteIcon;
+    public  GameObject      load3Confirm;
+    public  GameObject      load3Cancel;
 
     public  GameObject      bulleInfoCreateSave;
     public  int             currSave;
@@ -97,47 +106,34 @@ public class GameManager : MonoBehaviour
     public  GameObject      panelIntro;
     public  GameObject      textCredits;
     public  GameObject      scrollIntro1;
-    public  GameObject      buttonIntro1;
     public  GameObject      scrollIntro2;
-    public  GameObject      buttonIntro2;
     public  GameObject      scrollIntro3;
-    public  GameObject      buttonIntro3;
     public  GameObject      scrollIntro4;
-    public  GameObject      buttonIntro4;
 
     public  GameObject      panelSave;
     public  GameObject      scrollSave1;
-    public  GameObject      buttonSave1;
     public  GameObject      buttonDeleteSave1;
     public  GameObject      scrollSave2;
-    public  GameObject      buttonSave2;
     public  GameObject      buttonDeleteSave2;
     public  GameObject      scrollSave3;
-    public  GameObject      buttonSave3;
     public  GameObject      buttonDeleteSave3;
     public  GameObject      scrollSave4;
-    public  GameObject      buttonSave4;
 
     public  GameObject      panelDifficulty;
     public  GameObject      textDifficulty;
     public  GameObject      scrollDifficulty1;
-    public  GameObject      buttonDifficulty1;
     public  GameObject      scrollDifficulty2;
-    public  GameObject      buttonDifficulty2;
     public  GameObject      scrollDifficulty3;
-    public  GameObject      buttonDifficulty3;
     public  GameObject      scrollDifficulty4;
-    public  GameObject      buttonDifficulty4;
 
     public  GameObject      panelMenu;
     public  GameObject      scrollMenu1;
-    public  GameObject      buttonMenu1;
     public  GameObject      scrollMenu2;
-    public  GameObject      buttonMenu2;
     public  GameObject      scrollMenu3;
-    public  GameObject      buttonMenu3;
-    public  GameObject      scrollMenu4;
-    public  GameObject      buttonMenu4;
+
+    public  GameObject      panelTutorial;
+    public  int             currentSlideTutorial;
+    public  GameObject[]    tutorialSlides;
 
     public  GameObject      hudPanelMenu;
     public  GameObject      scrollHUDMenu1;
@@ -155,6 +151,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      scrollOptions3;
     public  GameObject      scrollOptions4;
     public  GameObject      scrollOptions5;
+    public  GameObject      scrollOptions6;
     public  GameObject      smartCastIcon;
     public  GameObject      smartCastText;
     public  GameObject      bloodlessIcon;
@@ -169,6 +166,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      volumeSFXText;
     public  GameObject      wasdModeButton;
     public  GameObject      wasdModeText;
+    public  GameObject      healthPotionHotkeyText;
 
     public  GameObject      textStockHealthPotion;
     public  GameObject      textStockManaPotion;
@@ -291,6 +289,21 @@ public class GameManager : MonoBehaviour
             showSpellsInfo = true;
             showSpellsInfoIcon.GetComponent<Image>().sprite = GetComponent<Buttons>().boxChecked;
         }
+
+        if (PlayerPrefs.GetInt("Load1Created") == 1)
+            load1Created = true;
+        else
+            load1Created = false;
+
+        if (PlayerPrefs.GetInt("Load2Created") == 1)
+            load2Created = true;
+        else
+            load2Created = false;
+
+        if (PlayerPrefs.GetInt("Load3Created") == 1)
+            load3Created = true;
+        else
+            load3Created = false;
     }
 
     public void SetNormalMouse(Vector2 pos)
@@ -405,23 +418,27 @@ public class GameManager : MonoBehaviour
 
     public void SetActiveBulleInfoObject1()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
             bulleInfoObject1.SetActive(true);
     }
 
     public void SetInactiveBulleInfoObject1()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
         bulleInfoObject1.SetActive(false);
     }
 
     public void SetActiveBulleInfoObject2()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
             bulleInfoObject2.SetActive(true);
     }
 
     public void SetInactiveBulleInfoObject2()
     {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
         bulleInfoObject2.SetActive(false);
     }
 
@@ -543,6 +560,16 @@ public class GameManager : MonoBehaviour
     public void SelectSpell8()
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell8(true);
+    }
+
+    public void SelectObject1()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().UseObject1();
+    }
+
+    public void SelectObject2()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().UseObject2();
     }
 
     IEnumerator VictoryAnimation()

@@ -275,6 +275,44 @@ public class Shoots : MonoBehaviour
                     object2Ready = true;
                 }
             }
+            if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
+            {
+                if (spellSelected == 1)
+                    SelectSpell2(true);
+                else if (spellSelected == 2)
+                    SelectSpell3(true);
+                else if (spellSelected == 3)
+                    SelectSpell4(true);
+                else if (spellSelected == 4)
+                    SelectSpell5(true);
+                else if (spellSelected == 5)
+                    SelectSpell6(true);
+                else if (spellSelected == 6)
+                    SelectSpell7(true);
+                else if (spellSelected == 7)
+                    SelectSpell8(true);
+                else if (spellSelected == 8)
+                    SelectSpell1(true);
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") < 0) // back
+            {
+                if (spellSelected == 1)
+                    SelectSpell8(true);
+                else if (spellSelected == 2)
+                    SelectSpell1(true);
+                else if (spellSelected == 3)
+                    SelectSpell2(true);
+                else if (spellSelected == 4)
+                    SelectSpell3(true);
+                else if (spellSelected == 5)
+                    SelectSpell4(true);
+                else if (spellSelected == 6)
+                    SelectSpell5(true);
+                else if (spellSelected == 7)
+                    SelectSpell6(true);
+                else if (spellSelected == 8)
+                    SelectSpell7(true);
+            }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 SelectSpell1(false);
@@ -307,7 +345,10 @@ public class Shoots : MonoBehaviour
             {
                 SelectSpell8(false);
             }
-            else if (Input.GetKeyDown(KeyCode.A))
+            else if ((Input.GetKeyDown(KeyCode.A) &&
+                    gm.GetComponent<GameManager>().wasdMode == false) ||
+                    (Input.GetKeyDown(KeyCode.Q) &&
+                    gm.GetComponent<GameManager>().wasdMode == true))
             {
                 UseObject1();
             }
@@ -370,6 +411,7 @@ public class Shoots : MonoBehaviour
             Vector3 newScale = new Vector3(6, 6, 1);
             rangeIndicator.transform.localScale = newScale;
             rangeIndicator.SetActive(true);
+            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
             spellSelected = 1;
             usingSpell1Icon.SetActive(true);
             usingSpell1Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
@@ -395,6 +437,7 @@ public class Shoots : MonoBehaviour
             Vector3 newScale = new Vector3(4, 4, 1);
             rangeIndicator.transform.localScale = newScale;
             rangeIndicator.SetActive(true);
+            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
             spellSelected = 2;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(true);
@@ -421,6 +464,7 @@ public class Shoots : MonoBehaviour
             Vector3 newScale = new Vector3(6, 6, 1);
             rangeIndicator.transform.localScale = newScale;
             rangeIndicator.SetActive(true);
+            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
             spellSelected = 3;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -447,6 +491,7 @@ public class Shoots : MonoBehaviour
             Vector3 newScale = new Vector3(6, 6, 1);
             rangeIndicator.transform.localScale = newScale;
             rangeIndicator.SetActive(true);
+            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
             spellSelected = 4;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -473,6 +518,7 @@ public class Shoots : MonoBehaviour
             Vector3 newScale = new Vector3(6, 6, 1);
             rangeIndicator.transform.localScale = newScale;
             rangeIndicator.SetActive(true);
+            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
             spellSelected = 5;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -499,6 +545,7 @@ public class Shoots : MonoBehaviour
             Vector3 newScale = new Vector3(4, 4, 1);
             rangeIndicator.transform.localScale = newScale;
             rangeIndicator.SetActive(true);
+            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
             spellSelected = 6;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -525,6 +572,7 @@ public class Shoots : MonoBehaviour
             Vector3 newScale = new Vector3(4, 4, 1);
             rangeIndicator.transform.localScale = newScale;
             rangeIndicator.SetActive(true);
+            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
             spellSelected = 7;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -548,6 +596,7 @@ public class Shoots : MonoBehaviour
         }
         else
         {
+            rangeIndicator.GetComponent<SpriteAnimTimer>().isPlaying = false;
             rangeIndicator.SetActive(false);
             spellSelected = 8;
             usingSpell1Icon.SetActive(false);
@@ -817,7 +866,7 @@ public class Shoots : MonoBehaviour
         }
     }
 
-    void UseObject1()
+    public void UseObject1()
     {
         if (object1Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
@@ -836,7 +885,7 @@ public class Shoots : MonoBehaviour
         }
     }
 
-    void UseObject2()
+    public void UseObject2()
     {
         if (object2Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
@@ -941,6 +990,7 @@ public class Shoots : MonoBehaviour
     IEnumerator GoBackToAA()
     {
         yield return new WaitForSeconds(0.1f);
+        SelectSpell1(true);
         spellSelected = 1;
         usingSpell1Icon.SetActive(true);
         usingSpell1Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);

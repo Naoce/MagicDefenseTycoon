@@ -11,6 +11,7 @@ public class SpriteAnimTimer : MonoBehaviour
     public  bool        loop;
     public  bool        doNotDestroy;
     public  bool        onStart;
+    public  bool        isPlaying;
 
     private void Start()
     {
@@ -24,6 +25,10 @@ public class SpriteAnimTimer : MonoBehaviour
         if (timer > timerMax &&
             doNotDestroy == false)
             Destroy(gameObject);
+        else if (timer > timerMax &&
+            doNotDestroy == true &&
+            loop == false)
+            isPlaying = false;
     }
 
     IEnumerator StartAnimation()
@@ -31,10 +36,12 @@ public class SpriteAnimTimer : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = spriteTab[iTab++];
         yield return new WaitForSeconds(timeAnim);
 
-        if (iTab < spriteTab.Length)
+        if (iTab < spriteTab.Length &&
+                isPlaying == true)
             StartCoroutine(StartAnimation());
         else if (iTab >= spriteTab.Length &&
-                loop == true)
+                loop == true &&
+                isPlaying == true)
         {
             iTab = 0;
             StartCoroutine(StartAnimation());
@@ -44,7 +51,11 @@ public class SpriteAnimTimer : MonoBehaviour
 
     public void StartAnim(float duration)
     {
-        timerMax = duration;
-        StartCoroutine(StartAnimation());
+        if (isPlaying == false)
+        {
+            isPlaying = true;
+            timerMax = duration;
+            StartCoroutine(StartAnimation());
+        }
     }
 }
