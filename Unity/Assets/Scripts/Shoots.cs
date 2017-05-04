@@ -34,14 +34,8 @@ public class Shoots : MonoBehaviour
     public  GameObject  icePrisonSFX;
     public  GameObject  earthquake;
     public  GameObject  earthquakeSFX;
-    public  GameObject  dragonHG;
-    public  GameObject  dragonHD;
-    public  GameObject  dragonH;
     public  GameObject  dragonG;
     public  GameObject  dragonD;
-    public  GameObject  dragonBG;
-    public  GameObject  dragonBD;
-    public  GameObject  dragonB;
     public  GameObject  dragonSFX;
     public  GameObject  potionHealthSFX;
     public  GameObject  potionManaSFX;
@@ -59,6 +53,7 @@ public class Shoots : MonoBehaviour
 
     private Vector2 	newPos = new Vector2(0, 0);
 	private Quaternion 	rot = new Quaternion (0, 0, 0, 0);
+    private float       projectileRotation = 0f;
 
     private float       speedCD = 1f;
     public  bool        canShoot = true;
@@ -278,40 +273,40 @@ public class Shoots : MonoBehaviour
             if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
             {
                 if (spellSelected == 1)
-                    SelectSpell2(true);
-                else if (spellSelected == 2)
-                    SelectSpell3(true);
-                else if (spellSelected == 3)
-                    SelectSpell4(true);
-                else if (spellSelected == 4)
-                    SelectSpell5(true);
-                else if (spellSelected == 5)
-                    SelectSpell6(true);
-                else if (spellSelected == 6)
-                    SelectSpell7(true);
-                else if (spellSelected == 7)
                     SelectSpell8(true);
-                else if (spellSelected == 8)
+                else if (spellSelected == 2)
                     SelectSpell1(true);
+                else if (spellSelected == 3)
+                    SelectSpell2(true);
+                else if (spellSelected == 4)
+                    SelectSpell3(true);
+                else if (spellSelected == 5)
+                    SelectSpell4(true);
+                else if (spellSelected == 6)
+                    SelectSpell5(true);
+                else if (spellSelected == 7)
+                    SelectSpell6(true);
+                else if (spellSelected == 8)
+                    SelectSpell7(true);
             }
             if (Input.GetAxis("Mouse ScrollWheel") < 0) // back
             {
                 if (spellSelected == 1)
-                    SelectSpell8(true);
-                else if (spellSelected == 2)
-                    SelectSpell1(true);
-                else if (spellSelected == 3)
                     SelectSpell2(true);
-                else if (spellSelected == 4)
+                else if (spellSelected == 2)
                     SelectSpell3(true);
-                else if (spellSelected == 5)
+                else if (spellSelected == 3)
                     SelectSpell4(true);
-                else if (spellSelected == 6)
+                else if (spellSelected == 4)
                     SelectSpell5(true);
-                else if (spellSelected == 7)
+                else if (spellSelected == 5)
                     SelectSpell6(true);
-                else if (spellSelected == 8)
+                else if (spellSelected == 6)
                     SelectSpell7(true);
+                else if (spellSelected == 7)
+                    SelectSpell8(true);
+                else if (spellSelected == 8)
+                    SelectSpell1(true);
             }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -408,10 +403,16 @@ public class Shoots : MonoBehaviour
         }
         else
         {
-            Vector3 newScale = new Vector3(6, 6, 1);
-            rangeIndicator.transform.localScale = newScale;
-            rangeIndicator.SetActive(true);
-            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            if (gm.GetComponent<GameManager>().smartcast == false)
+            {
+                Vector3 newScale = new Vector3(6, 6, 1);
+                rangeIndicator.transform.localScale = newScale;
+                rangeIndicator.SetActive(true);
+                rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            }
+            else
+                rangeIndicator.SetActive(false);
+
             spellSelected = 1;
             usingSpell1Icon.SetActive(true);
             usingSpell1Icon.GetComponent<UsingSpell>().SetAnimNb(usingSpellInt);
@@ -434,10 +435,16 @@ public class Shoots : MonoBehaviour
         }
         else
         {
-            Vector3 newScale = new Vector3(4, 4, 1);
-            rangeIndicator.transform.localScale = newScale;
-            rangeIndicator.SetActive(true);
-            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            if (gm.GetComponent<GameManager>().smartcast == false)
+            {
+                Vector3 newScale = new Vector3(4, 4, 1);
+                rangeIndicator.transform.localScale = newScale;
+                rangeIndicator.SetActive(true);
+                rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            }
+            else
+                rangeIndicator.SetActive(false);
+
             spellSelected = 2;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(true);
@@ -461,10 +468,16 @@ public class Shoots : MonoBehaviour
         }
         else
         {
-            Vector3 newScale = new Vector3(6, 6, 1);
-            rangeIndicator.transform.localScale = newScale;
-            rangeIndicator.SetActive(true);
-            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            if (gm.GetComponent<GameManager>().smartcast == false)
+            {
+                Vector3 newScale = new Vector3(6, 6, 1);
+                rangeIndicator.transform.localScale = newScale;
+                rangeIndicator.SetActive(true);
+                rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            }
+            else
+                rangeIndicator.SetActive(false);
+
             spellSelected = 3;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -488,10 +501,16 @@ public class Shoots : MonoBehaviour
         }
         else
         {
-            Vector3 newScale = new Vector3(6, 6, 1);
-            rangeIndicator.transform.localScale = newScale;
-            rangeIndicator.SetActive(true);
-            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            if (gm.GetComponent<GameManager>().smartcast == false)
+            {
+                Vector3 newScale = new Vector3(6, 6, 1);
+                rangeIndicator.transform.localScale = newScale;
+                rangeIndicator.SetActive(true);
+                rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            }
+            else
+                rangeIndicator.SetActive(false);
+
             spellSelected = 4;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -515,10 +534,16 @@ public class Shoots : MonoBehaviour
         }
         else
         {
-            Vector3 newScale = new Vector3(6, 6, 1);
-            rangeIndicator.transform.localScale = newScale;
-            rangeIndicator.SetActive(true);
-            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            if (gm.GetComponent<GameManager>().smartcast == false)
+            {
+                Vector3 newScale = new Vector3(6, 6, 1);
+                rangeIndicator.transform.localScale = newScale;
+                rangeIndicator.SetActive(true);
+                rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            }
+            else
+                rangeIndicator.SetActive(false);
+
             spellSelected = 5;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -542,10 +567,16 @@ public class Shoots : MonoBehaviour
         }
         else
         {
-            Vector3 newScale = new Vector3(4, 4, 1);
-            rangeIndicator.transform.localScale = newScale;
-            rangeIndicator.SetActive(true);
-            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            if (gm.GetComponent<GameManager>().smartcast == false)
+            {
+                Vector3 newScale = new Vector3(4, 4, 1);
+                rangeIndicator.transform.localScale = newScale;
+                rangeIndicator.SetActive(true);
+                rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            }
+            else
+                rangeIndicator.SetActive(false);
+
             spellSelected = 6;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -569,10 +600,16 @@ public class Shoots : MonoBehaviour
         }
         else
         {
-            Vector3 newScale = new Vector3(4, 4, 1);
-            rangeIndicator.transform.localScale = newScale;
-            rangeIndicator.SetActive(true);
-            rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            if (gm.GetComponent<GameManager>().smartcast == false)
+            {
+                Vector3 newScale = new Vector3(4, 4, 1);
+                rangeIndicator.transform.localScale = newScale;
+                rangeIndicator.SetActive(true);
+                rangeIndicator.GetComponent<SpriteAnimTimer>().StartAnim(0);
+            }
+            else
+                rangeIndicator.SetActive(false);
+
             spellSelected = 7;
             usingSpell1Icon.SetActive(false);
             usingSpell2Icon.SetActive(false);
@@ -612,9 +649,17 @@ public class Shoots : MonoBehaviour
         }
     }
 
-    void        FindShootDirection()
+    void FindShootDirection()
     {
+
         Vector2 newPosClick = cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+
+        Vector2 myPos = new Vector3(transform.position.x, transform.position.y);
+        Vector3 dir = myPos - newPosClick;
+        dir = transform.InverseTransformDirection(dir);
+
+        projectileRotation = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
         Vector2 newPosTop = new Vector2(transform.position.x, transform.position.y + 1);
         Vector2 newPosTopRight = new Vector2(transform.position.x + 0.8f, transform.position.y + 0.8f);
         Vector2 newPosTopLeft = new Vector2(transform.position.x - 0.8f, transform.position.y + 0.8f);
@@ -701,6 +746,9 @@ public class Shoots : MonoBehaviour
 
     void UseSpell1()
     {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+            rangeIndicator.SetActive(false);
+
         if (canShoot == true &&
             spell1Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
@@ -720,6 +768,9 @@ public class Shoots : MonoBehaviour
 
     void UseSpell2()
     {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+            rangeIndicator.SetActive(false);
+
         if (canShoot == true && 
             spell2Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
@@ -747,6 +798,9 @@ public class Shoots : MonoBehaviour
 
     void UseSpell3()
     {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+            rangeIndicator.SetActive(false);
+
         if (canShoot == true && 
             spell3Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
@@ -767,6 +821,9 @@ public class Shoots : MonoBehaviour
 
     void UseSpell4()
     {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+            rangeIndicator.SetActive(false);
+
         if (canShoot == true && 
             spell4Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
@@ -787,6 +844,9 @@ public class Shoots : MonoBehaviour
 
     void UseSpell5()
     {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+            rangeIndicator.SetActive(false);
+
         if (canShoot == true &&
             spell5Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
@@ -807,6 +867,9 @@ public class Shoots : MonoBehaviour
 
     void UseSpell6()
     {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+
+            rangeIndicator.SetActive(false);
         if (canShoot == true && 
             spell6Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
@@ -833,6 +896,9 @@ public class Shoots : MonoBehaviour
     }
     void UseSpell7()
     {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+
+            rangeIndicator.SetActive(false);
         if (spell7Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
             GetComponent<Deplacements>().isAttacking == false)
@@ -848,6 +914,9 @@ public class Shoots : MonoBehaviour
 
     void UseSpell8()
     {
+        if (gm.GetComponent<GameManager>().smartcast == true)
+            rangeIndicator.SetActive(false);
+
         if (canShoot == true && 
             spell8Ready == true &&
             GetComponent<Deplacements>().isDead == false &&
@@ -926,7 +995,7 @@ public class Shoots : MonoBehaviour
             newPos.y = transform.position.y + 0.1f;
 
         obj = (GameObject)Instantiate (fireball, newPos, rot);
-		obj.GetComponent<Projectile>().GetPos(directionPos, 5, GetComponent<Deplacements>().attackDirection, gameObject);
+		obj.GetComponent<Projectile>().GetPos(directionPos, 5, projectileRotation, gameObject);
 	}
 
     IEnumerator InstantiateEclatsGlace(Vector2 directionPos)
@@ -948,22 +1017,22 @@ public class Shoots : MonoBehaviour
 
         GameObject obj1 = null;
         obj1 = (GameObject)Instantiate(iceShard, newPos, rot);
-        obj1.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
+        obj1.GetComponent<IceShard>().GetPos(directionPos, 2, projectileRotation, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj2 = null;
         obj2 = (GameObject)Instantiate(iceShard, newPos, rot);
-        obj2.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
+        obj2.GetComponent<IceShard>().GetPos(directionPos, 2, projectileRotation, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj3 = null;
         obj3 = (GameObject)Instantiate(iceShard, newPos, rot);
-        obj3.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
+        obj3.GetComponent<IceShard>().GetPos(directionPos, 2, projectileRotation, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj4 = null;
         obj4 = (GameObject)Instantiate(iceShard, newPos, rot);
-        obj4.GetComponent<IceShard>().GetPos(directionPos, 2, GetComponent<Deplacements>().attackDirection, gameObject);
+        obj4.GetComponent<IceShard>().GetPos(directionPos, 2, projectileRotation, gameObject);
     }
 
     IEnumerator SpellFoudre(GameObject go)
@@ -1089,58 +1158,57 @@ public class Shoots : MonoBehaviour
         {
             newPos.x = transform.position.x + 0.1f;
             obj = (GameObject)Instantiate(dragonD, newPos, rot);
-            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, GetComponent<Deplacements>().attackDirection);
+            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, projectileRotation + 180f);
             obj.GetComponent<DragonDeFeu>().id = idSpell8++;
         }
         else if (GetComponent<Deplacements>().attackDirection == Direction.TOPRIGHT)
         {
             newPos.x = transform.position.x + 0.1f;
-            obj = (GameObject)Instantiate(dragonHD, newPos, rot);
-            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, GetComponent<Deplacements>().attackDirection);
+            obj = (GameObject)Instantiate(dragonD, newPos, rot);
+            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, projectileRotation + 180f);
             obj.GetComponent<DragonDeFeu>().id = idSpell8++;
         }
         else if (GetComponent<Deplacements>().attackDirection == Direction.BOTTOMRIGHT)
         {
             newPos.x = transform.position.x + 0.1f;
-            obj = (GameObject)Instantiate(dragonBD, newPos, rot);
-            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, GetComponent<Deplacements>().attackDirection);
+            obj = (GameObject)Instantiate(dragonD, newPos, rot);
+            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, projectileRotation + 180f);
             obj.GetComponent<DragonDeFeu>().id = idSpell8++;
         }
         else if (GetComponent<Deplacements>().attackDirection == Direction.LEFT)
         {
             newPos.x = transform.position.x - 0.1f;
             obj = (GameObject)Instantiate(dragonG, newPos, rot);
-            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, GetComponent<Deplacements>().attackDirection);
+            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, projectileRotation);
             obj.GetComponent<DragonDeFeu>().id = idSpell8++;
         }
         else if (GetComponent<Deplacements>().attackDirection == Direction.TOPLEFT)
         {
             newPos.x = transform.position.x - 0.1f;
-            obj = (GameObject)Instantiate(dragonHG, newPos, rot);
-            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, GetComponent<Deplacements>().attackDirection);
+            obj = (GameObject)Instantiate(dragonG, newPos, rot);
+            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, projectileRotation);
             obj.GetComponent<DragonDeFeu>().id = idSpell8++;
         }
         else if (GetComponent<Deplacements>().attackDirection == Direction.BOTTOMLEFT)
         {
             newPos.x = transform.position.x - 0.1f;
-            obj = (GameObject)Instantiate(dragonBG, newPos, rot);
-            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, GetComponent<Deplacements>().attackDirection);
+            obj = (GameObject)Instantiate(dragonG, newPos, rot);
+            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, projectileRotation);
             obj.GetComponent<DragonDeFeu>().id = idSpell8++;
         }
         else if (GetComponent<Deplacements>().attackDirection == Direction.BOTTOM)
         {
             newPos.y = transform.position.y - 0.1f;
-            obj = (GameObject)Instantiate(dragonB, newPos, rot);
-            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, GetComponent<Deplacements>().attackDirection);
+            obj = (GameObject)Instantiate(dragonD, newPos, rot);
+            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, projectileRotation + 180f);
             obj.GetComponent<DragonDeFeu>().id = idSpell8++;
         }
         else if (GetComponent<Deplacements>().attackDirection == Direction.TOP)
         {
             newPos.y = transform.position.y + 0.1f;
-            obj = (GameObject)Instantiate(dragonH, newPos, rot);
-            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, GetComponent<Deplacements>().attackDirection);
+            obj = (GameObject)Instantiate(dragonG, newPos, rot);
+            obj.GetComponent<DragonDeFeu>().GetPos(directionPos, 8, projectileRotation);
             obj.GetComponent<DragonDeFeu>().id = idSpell8++;
         }
-        Physics2D.IgnoreCollision(obj.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
     }
 }

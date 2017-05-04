@@ -179,23 +179,12 @@ public class MapManager : MonoBehaviour
             timerSpawn += Time.deltaTime;
             if (timerSpawn > timerMax)
             {
-                timerMax -= 0.2f;
                 timerSpawn = 0f;
-                if (timerMax < 2f)
-                    timerMax = 2f;
-                if (spawnLeft == true)
-                {
-                    spawnLeft = false;
-                    InstantiateGuerrierNormal(posLeft, new Vector2(posLeft.x, posLeft.y - 0.5f));
-                }
-                else
-                {
-                    spawnLeft = true;
-                    InstantiateGuerrierNormal(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
-                }
+                InstantiateGuerrierNormal(posLeft, new Vector2(posLeft.x, posLeft.y - 0.5f));
+                InstantiateGuerrierPlayer(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
             }
         }
-        if (idGen > maxIdGen && canSpawn == true)
+        if (idGen == maxIdGen && canSpawn == true)
         {
             GameObject obj = null;
             gm.GetComponent<GameManager>().bossHealth.GetComponent<Slider>().value = 1;
@@ -239,20 +228,9 @@ public class MapManager : MonoBehaviour
             timerSpawn += Time.deltaTime;
             if (timerSpawn > timerMax)
             {
-                timerMax -= 0.2f;
                 timerSpawn = 0f;
-                if (timerMax < 2f)
-                    timerMax = 2f;
-                if (spawnLeft == true)
-                {
-                    spawnLeft = false;
-                    InstantiateGuerrierNormal(posLeft, new Vector2(posLeft.x, posLeft.y - 0.5f));
-                }
-                else
-                {
-                    spawnLeft = true;
-                    InstantiateGuerrierPlayer(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
-                }
+                InstantiateGuerrierNormal(posLeft, new Vector2(posLeft.x, posLeft.y - 0.5f));
+                InstantiateGuerrierPlayer(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
             }
         }
         if (canSpawn == true)
@@ -278,20 +256,9 @@ public class MapManager : MonoBehaviour
             timerSpawn += Time.deltaTime;
             if (timerSpawn > timerMax)
             {
-                timerMax -= 0.2f;
                 timerSpawn = 0f;
-                if (timerMax < 1f)
-                    timerMax = 1f;
-                if (spawnLeft == true)
-                {
-                    spawnLeft = false;
-                    InstantiateGuerrierNormal(posLeft, new Vector2(posLeft.x, posLeft.y + 0.5f));
-                }
-                else
-                {
-                    spawnLeft = true;
-                    InstantiateGuerrierObjectif(posRight, new Vector2(posRight.x, posRight.y + 0.5f));
-                }
+                InstantiateGuerrierNormal(posLeft, new Vector2(posLeft.x, posLeft.y + 0.5f));
+                InstantiateGuerrierPlayer(posRight, new Vector2(posRight.x, posRight.y + 0.5f));
             }
         }
         else if (canSpawn == false &&
@@ -605,19 +572,6 @@ public class MapManager : MonoBehaviour
     IEnumerator Map2()
     {
         yield return new WaitForSeconds(0.25f);
-        GameObject obj1;
-        obj1 = (GameObject)Instantiate(EnemyGuerrierCapture, posLeft, transform.rotation);
-        obj1.GetComponent<Enemy>().id = idGen++;
-        obj1.GetComponent<IAGuerrier>().player = player;
-        obj1.GetComponent<IAGuerrier>().newPos = posLeft;
-        enemiesList.Add(obj1);
-        GameObject obj2;
-        obj2 = (GameObject)Instantiate(EnemyGuerrierCapture, posRight, transform.rotation);
-        obj2.GetComponent<Enemy>().id = idGen++;
-        obj2.GetComponent<IAGuerrier>().player = player;
-        obj2.GetComponent<IAGuerrier>().newPos = posRight;
-        enemiesList.Add(obj2);
-        gm.GetComponent<GameManager>().textNbEnemy.GetComponent<Text>().text = enemiesList.Count.ToString();
     }
 
     public GameObject[][] GetTabNodes()

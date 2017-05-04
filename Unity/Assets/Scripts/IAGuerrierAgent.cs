@@ -43,7 +43,7 @@ public class IAGuerrierAgent : MonoBehaviour
     public int damage;
     public int level;
     public int stockHealthPotion;
-    private float speed = 1f;
+    public float speed;
     private float slow = 0f;
     private Vector2 baseScale;
     private Vector2 newScale;
@@ -510,23 +510,29 @@ public class IAGuerrierAgent : MonoBehaviour
         int animAttack = 0;
         while (animAttack < rightAttackSprites.Length)
         {
-            if (animRight == true)
-            {
-                GetComponent<SpriteRenderer>().flipX = false;
-                GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
-            }
+            if (isDead == true)
+                yield break;
             else
             {
-                GetComponent<SpriteRenderer>().flipX = true;
-                GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
-            }
+                if (animRight == true)
+                {
+                    GetComponent<SpriteRenderer>().flipX = false;
+                    GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
+                }
+                else
+                {
+                    GetComponent<SpriteRenderer>().flipX = true;
+                    GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
+                }
 
-            yield return new WaitForSeconds(animAttackCD);
-            animAttack++;
+                yield return new WaitForSeconds(animAttackCD);
+                animAttack++;
+            }
         }
 
         if (target != null &&
-            targetAttacking == target)
+            targetAttacking == target &&
+            isDead == false)
         {
             GameObject obj = (GameObject)Instantiate(hitSprite, target.transform.position, transform.rotation);
             obj.transform.SetParent(target.transform);
@@ -543,19 +549,22 @@ public class IAGuerrierAgent : MonoBehaviour
             }
         }
 
-        isAttacking = false;
-        canAttack = false;
-        timer = animMoveCD;
-        
-        if (rightSide == true)
+        if (isDead == false)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
-            GetComponent<SpriteRenderer>().sprite = rightIdle;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().flipX = true;
-            GetComponent<SpriteRenderer>().sprite = rightIdle;
+            isAttacking = false;
+            canAttack = false;
+            timer = animMoveCD;
+
+            if (rightSide == true)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+                GetComponent<SpriteRenderer>().sprite = rightIdle;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+                GetComponent<SpriteRenderer>().sprite = rightIdle;
+            }
         }
     }
 

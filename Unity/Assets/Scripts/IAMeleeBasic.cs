@@ -45,15 +45,29 @@ public class IAMeleeBasic : MonoBehaviour
                 }
                 if (GetComponent<IAGuerrier>().isFlying == true)
                 {
-                    Vector2 newScaleGo = new Vector2(transform.localScale.x + 0.002f, transform.localScale.y + 0.002f);
-                    transform.localScale = newScaleGo;
                     GetComponent<IAGuerrier>().timerFlying += Time.deltaTime;
+                    if (GetComponent<IAGuerrier>().flyingLeft == true)
+                    {
+                        Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x - 1f, transform.position.y, transform.position.y / 100);
+                        transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
+                        transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
+                        if (transform.position.x < GetComponent<IAGuerrier>().tornado.transform.position.x - 0.25f)
+                            GetComponent<IAGuerrier>().flyingLeft = false;
+                    }
+                    else
+                    {
+                        Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x + 1f, transform.position.y, transform.position.y / 100);
+                        transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
+                        transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
+                        if (transform.position.x > GetComponent<IAGuerrier>().tornado.transform.position.x + 0.25f)
+                            GetComponent<IAGuerrier>().flyingLeft = true;
+                    }
+
                     if (GetComponent<IAGuerrier>().timerFlying > GetComponent<IAGuerrier>().cooldownFlying)
                     {
                         GetComponent<IAGuerrier>().canAttack = true;
                         GetComponent<IAGuerrier>().timerFlying = 0f;
                         GetComponent<IAGuerrier>().isFlying = false;
-                        transform.localScale = GetComponent<IAGuerrier>().initialScale;
                     }
                 }
             }
@@ -142,7 +156,7 @@ public class IAMeleeBasic : MonoBehaviour
                     (transform.position.y != GetComponent<IAGuerrier>().newPos.y ||
                     transform.position.x != GetComponent<IAGuerrier>().newPos.x))
                     {
-                        if (transform.position.x > GetComponent<IAGuerrier>().newPos.x)
+                        if (transform.position.x > GetComponent<IAGuerrier>().target.transform.position.x)
                         {
                             GetComponent<SpriteRenderer>().flipX = true;
                             GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightSprites[GetComponent<IAGuerrier>().currentNumeroAnim++];

@@ -4,5 +4,11 @@ using System.Collections;
 public class Tornado : MonoBehaviour
 {
     public int id;
-    public int CCDuration;
+    public float CCDuration;
+    public float timer;
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+    }
 }

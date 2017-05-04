@@ -12,41 +12,6 @@ public class Projectile : MonoBehaviour
     public Sprite               left3;
     public Sprite               left4;
 
-    public Sprite               right1;
-    public Sprite               right2;
-    public Sprite               right3;
-    public Sprite               right4;
-
-    public Sprite               top1;
-    public Sprite               top2;
-    public Sprite               top3;
-    public Sprite               top4;
-
-    public Sprite               topleft1;
-    public Sprite               topleft2;
-    public Sprite               topleft3;
-    public Sprite               topleft4;
-
-    public Sprite               topright1;
-    public Sprite               topright2;
-    public Sprite               topright3;
-    public Sprite               topright4;
-
-    public Sprite               bot1;
-    public Sprite               bot2;
-    public Sprite               bot3;
-    public Sprite               bot4;
-
-    public Sprite               botleft1;
-    public Sprite               botleft2;
-    public Sprite               botleft3;
-    public Sprite               botleft4;
-
-    public Sprite               botright1;
-    public Sprite               botright2;
-    public Sprite               botright3;
-    public Sprite               botright4;
-
     public int                  damage;
 
     private Vector2 	        newPos = new Vector2(0, 0);
@@ -55,7 +20,6 @@ public class Projectile : MonoBehaviour
     private int                 currentNumeroAnim = 1;
     private float               timer = 0f;
     private float               animTime = 0.08f;
-    public  Shoots.Direction    direction;
     private bool                isExploding = false;
 
     void Start()
@@ -63,22 +27,24 @@ public class Projectile : MonoBehaviour
 		originalPos = transform.position;
 	}
 
-	public void GetPos(Vector2 newVec, int newDamage, Shoots.Direction newDirection, GameObject go)
-	{
+    public void GetPos(Vector2 newVec, int newDamage, float newRotation, GameObject go)
+    {
         newPos = newVec;
-		float distance = Vector2.Distance (transform.position, newPos);
+        transform.eulerAngles = new Vector3(0f, 0f, newRotation);
+
+        float distance = Vector2.Distance (transform.position, newPos);
 		if (distance < 3) 
 		{
 			newPos = new Vector2((newPos.x - transform.position.x) * 1000, (newPos.y - transform.position.y) * 1000);
 		}
         damage = newDamage;
-        direction = newDirection;
 	}
 
 	void Update () 
 	{
         if (isExploding == false)
         {
+            GetComponent<PolygonCollider2D>().isTrigger = true;
             if (Vector2.Distance(originalPos, transform.position) >= 3)
             {
                 isExploding = true;
@@ -89,215 +55,30 @@ public class Projectile : MonoBehaviour
             timer += Time.deltaTime;
             if (timer > animTime)
             {
+                Destroy(GetComponent<PolygonCollider2D>());
+                gameObject.AddComponent<PolygonCollider2D>();
                 GetComponent<PolygonCollider2D>().isTrigger = true;
-                if (direction == Shoots.Direction.RIGHT)
+                if (currentNumeroAnim == 1)
                 {
-                    if (currentNumeroAnim == 1)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = right1;
-                        Destroy(GetComponent<PolygonCollider2D>());
-                        gameObject.AddComponent<PolygonCollider2D>();
-                        GetComponent<PolygonCollider2D>().isTrigger = true;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 2)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = right2;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 3)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = right3;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 4)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = right4;
-                        currentNumeroAnim++;
-                    }
+                    GetComponent<SpriteRenderer>().sprite = left1;
+                    currentNumeroAnim++;
                 }
-                else if (direction == Shoots.Direction.LEFT)
+                else if (currentNumeroAnim == 2)
                 {
-                    if (currentNumeroAnim == 1)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = left1;
-                        Destroy(GetComponent<PolygonCollider2D>());
-                        gameObject.AddComponent<PolygonCollider2D>();
-                        GetComponent<PolygonCollider2D>().isTrigger = true;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 2)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = left2;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 3)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = left3;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 4)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = left4;
-                        currentNumeroAnim++;
-                    }
+                    GetComponent<SpriteRenderer>().sprite = left2;
+                    currentNumeroAnim++;
                 }
-                else if (direction == Shoots.Direction.TOP)
+                else if (currentNumeroAnim == 3)
                 {
-                    if (currentNumeroAnim == 1)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = top1;
-                        Destroy(GetComponent<PolygonCollider2D>());
-                        gameObject.AddComponent<PolygonCollider2D>();
-                        GetComponent<PolygonCollider2D>().isTrigger = true;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 2)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = top2;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 3)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = top3;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 4)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = top4;
-                        currentNumeroAnim++;
-                    }
+                    GetComponent<SpriteRenderer>().sprite = left3;
+                    currentNumeroAnim++;
                 }
-                else if (direction == Shoots.Direction.BOTTOM)
+                else if (currentNumeroAnim == 4)
                 {
-                    if (currentNumeroAnim == 1)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = bot1;
-                        Destroy(GetComponent<PolygonCollider2D>());
-                        gameObject.AddComponent<PolygonCollider2D>();
-                        GetComponent<PolygonCollider2D>().isTrigger = true;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 2)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = bot2;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 3)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = bot3;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 4)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = bot4;
-                        currentNumeroAnim++;
-                    }
+                    GetComponent<SpriteRenderer>().sprite = left4;
+                    currentNumeroAnim++;
                 }
-                else if (direction == Shoots.Direction.BOTTOMRIGHT)
-                {
-                    if (currentNumeroAnim == 1)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = botright1;
-                        Destroy(GetComponent<PolygonCollider2D>());
-                        gameObject.AddComponent<PolygonCollider2D>();
-                        GetComponent<PolygonCollider2D>().isTrigger = true;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 2)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = botright2;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 3)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = botright3;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 4)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = botright4;
-                        currentNumeroAnim++;
-                    }
-                }
-                else if (direction == Shoots.Direction.BOTTOMLEFT)
-                {
-                    if (currentNumeroAnim == 1)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = botleft1;
-                        Destroy(GetComponent<PolygonCollider2D>());
-                        gameObject.AddComponent<PolygonCollider2D>();
-                        GetComponent<PolygonCollider2D>().isTrigger = true;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 2)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = botleft2;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 3)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = botleft3;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 4)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = botleft4;
-                        currentNumeroAnim++;
-                    }
-                }
-                else if (direction == Shoots.Direction.TOPRIGHT)
-                {
-                    if (currentNumeroAnim == 1)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = topright1;
-                        Destroy(GetComponent<PolygonCollider2D>());
-                        gameObject.AddComponent<PolygonCollider2D>();
-                        GetComponent<PolygonCollider2D>().isTrigger = true;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 2)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = topright2;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 3)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = topright3;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 4)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = topright4;
-                        currentNumeroAnim++;
-                    }
-                }
-                else if (direction == Shoots.Direction.TOPLEFT)
-                {
-                    if (currentNumeroAnim == 1)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = topleft1;
-                        Destroy(GetComponent<PolygonCollider2D>());
-                        gameObject.AddComponent<PolygonCollider2D>();
-                        GetComponent<PolygonCollider2D>().isTrigger = true;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 2)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = topleft2;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 3)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = topleft3;
-                        currentNumeroAnim++;
-                    }
-                    else if (currentNumeroAnim == 4)
-                    {
-                        GetComponent<SpriteRenderer>().sprite = topleft4;
-                        currentNumeroAnim++;
-                    }
-                }
+
                 if (currentNumeroAnim == 5)
                     currentNumeroAnim = 1;
                 timer = 0f;

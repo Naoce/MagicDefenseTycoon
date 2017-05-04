@@ -18,9 +18,11 @@ public class DragonDeFeu : MonoBehaviour
     private float timer = 0f;
     private float animTime = 0.08f;
 
-    public void GetPos(Vector2 newVec, int newDamage, Shoots.Direction newDirection)
+    public void GetPos(Vector2 newVec, int newDamage, float newRotation)
     {
         newPos = newVec;
+        transform.eulerAngles = new Vector3(0f, 0f, newRotation);
+
         float distance = Vector2.Distance(transform.position, newPos);
         if (distance < 50)
         {
@@ -39,8 +41,12 @@ public class DragonDeFeu : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > animTime)
         {
+            GetComponent<PolygonCollider2D>().isTrigger = true;
             if (currentNumeroAnim == 1)
             {
+                Destroy(GetComponent<PolygonCollider2D>());
+                gameObject.AddComponent<PolygonCollider2D>();
+                GetComponent<PolygonCollider2D>().isTrigger = true;
                 GetComponent<SpriteRenderer>().sprite = sprite1;
                 currentNumeroAnim++;
             }

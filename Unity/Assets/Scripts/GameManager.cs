@@ -130,6 +130,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      scrollMenu1;
     public  GameObject      scrollMenu2;
     public  GameObject      scrollMenu3;
+    public  GameObject      scrollMenu4;
 
     public  GameObject      panelTutorial;
     public  int             currentSlideTutorial;
@@ -247,13 +248,13 @@ public class GameManager : MonoBehaviour
             volumeSFX = PlayerPrefs.GetInt("SFXVolume");
         else
             volumeSFX = 50f;
-        volumeSFXText.GetComponent<Text>().text = "SFX music : " + GetComponent<GameManager>().volumeSFX + "%";
+        volumeSFXText.GetComponent<Text>().text = "SFX volume : " + GetComponent<GameManager>().volumeSFX + "%";
 
         if (PlayerPrefs.GetInt("MusicVolumeSet") == 1)
             volumeMusic = PlayerPrefs.GetInt("MusicVolume");
         else
             volumeMusic = 50f;
-        volumeMusicText.GetComponent<Text>().text = "Volume music : " + volumeMusic + "%";
+        volumeMusicText.GetComponent<Text>().text = "Music volume : " + volumeMusic + "%";
         GetComponent<AudioSource>().volume = volumeMusic / 100;
 
         if (PlayerPrefs.GetInt("Bloodless") == 0)

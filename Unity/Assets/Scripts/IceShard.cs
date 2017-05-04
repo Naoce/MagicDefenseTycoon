@@ -8,13 +8,6 @@ public class IceShard : MonoBehaviour
     public GameObject fade;
 
     public Sprite left;
-    public Sprite right;
-    public Sprite top;
-    public Sprite topleft;
-    public Sprite topright;
-    public Sprite bot;
-    public Sprite botleft;
-    public Sprite botright;
 
     public int damage;
 
@@ -28,7 +21,7 @@ public class IceShard : MonoBehaviour
         originalPos = transform.position;
     }
 
-    public void GetPos(Vector2 newVec, int newDamage, Shoots.Direction newDirection, GameObject go)
+    public void GetPos(Vector2 newVec, int newDamage, float newRotation, GameObject go)
     {
         newPos = newVec;
         float distance = Vector2.Distance(transform.position, newPos);
@@ -37,22 +30,7 @@ public class IceShard : MonoBehaviour
             newPos = new Vector2((newPos.x - transform.position.x) * 1000, (newPos.y - transform.position.y) * 1000);
         }
         damage = newDamage;
-        if (newDirection == Shoots.Direction.TOP)
-            GetComponent<SpriteRenderer>().sprite = top;
-        else if (newDirection == Shoots.Direction.TOPRIGHT)
-            GetComponent<SpriteRenderer>().sprite = topright;
-        else if (newDirection == Shoots.Direction.RIGHT)
-            GetComponent<SpriteRenderer>().sprite = right;
-        else if (newDirection == Shoots.Direction.BOTTOMRIGHT)
-            GetComponent<SpriteRenderer>().sprite = botright;
-        else if (newDirection == Shoots.Direction.BOTTOM)
-            GetComponent<SpriteRenderer>().sprite = bot;
-        else if (newDirection == Shoots.Direction.BOTTOMLEFT)
-            GetComponent<SpriteRenderer>().sprite = botleft;
-        else if (newDirection == Shoots.Direction.LEFT)
-            GetComponent<SpriteRenderer>().sprite = left;
-        else if (newDirection == Shoots.Direction.TOPLEFT)
-            GetComponent<SpriteRenderer>().sprite = topleft;
+        transform.eulerAngles = new Vector3(0f, 0f, newRotation);
         gameObject.AddComponent<PolygonCollider2D>();
         GetComponent<PolygonCollider2D>().isTrigger = true;
     }

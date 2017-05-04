@@ -280,7 +280,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().volumeMusic = 0;
         PlayerPrefs.SetInt("MusicVolumeSet", 1);
         PlayerPrefs.SetInt("MusicVolume", (int)GetComponent<GameManager>().volumeMusic);
-        obj.GetComponent<Text>().text = "Volume music : " + GetComponent<GameManager>().volumeMusic + "%";
+        obj.GetComponent<Text>().text = "Music volume : " + GetComponent<GameManager>().volumeMusic + "%";
         if (GetComponent<GameManager>().isInGame == true)
             GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
         GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
@@ -293,7 +293,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().volumeMusic = 100;
         PlayerPrefs.SetInt("MusicVolumeSet", 1);
         PlayerPrefs.SetInt("MusicVolume", (int)GetComponent<GameManager>().volumeMusic);
-        obj.GetComponent<Text>().text = "Volume music : " + GetComponent<GameManager>().volumeMusic + "%";
+        obj.GetComponent<Text>().text = "Music volume : " + GetComponent<GameManager>().volumeMusic + "%";
         if (GetComponent<GameManager>().isInGame == true)
             GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
         GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
@@ -306,7 +306,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().volumeSFX = 0;
         PlayerPrefs.SetInt("SFXVolumeSet", 1);
         PlayerPrefs.SetInt("SFXVolume", (int)GetComponent<GameManager>().volumeSFX);
-        obj.GetComponent<Text>().text = "SFX music : " + GetComponent<GameManager>().volumeSFX + "%";
+        obj.GetComponent<Text>().text = "SFX volume : " + GetComponent<GameManager>().volumeSFX + "%";
     }
 
     public void SFXPlus(GameObject obj)
@@ -316,7 +316,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().volumeSFX = 100;
         PlayerPrefs.SetInt("SFXVolumeSet", 1);
         PlayerPrefs.SetInt("SFXVolume", (int)GetComponent<GameManager>().volumeSFX);
-        obj.GetComponent<Text>().text = "SFX music : " + GetComponent<GameManager>().volumeSFX + "%";
+        obj.GetComponent<Text>().text = "SFX volume : " + GetComponent<GameManager>().volumeSFX + "%";
     }
 
     public void BloodTrigger(GameObject obj)
@@ -593,6 +593,7 @@ public class Buttons : MonoBehaviour
         GameObject text1 = GetComponent<GameManager>().scrollMenu1.GetComponentInChildren<Text>().gameObject;
         GameObject text2 = GetComponent<GameManager>().scrollMenu2.GetComponentInChildren<Text>().gameObject;
         GameObject text3 = GetComponent<GameManager>().scrollMenu3.GetComponentInChildren<Text>().gameObject;
+        GameObject text4 = GetComponent<GameManager>().scrollMenu4.GetComponentInChildren<Text>().gameObject;
 
         GetComponent<GameManager>().scrollMenu1.GetComponent<AnimOnStart>().StartAnimationByScript();
         text1.SetActive(false);
@@ -600,10 +601,13 @@ public class Buttons : MonoBehaviour
         text2.SetActive(false);
         GetComponent<GameManager>().scrollMenu3.GetComponent<AnimOnStart>().StartAnimationByScript();
         text3.SetActive(false);
+        GetComponent<GameManager>().scrollMenu4.GetComponent<AnimOnStart>().StartAnimationByScript();
+        text4.SetActive(false);
         yield return new WaitForSeconds(0.1f);
         text1.SetActive(true);
         text2.SetActive(true);
         text3.SetActive(true);
+        text4.SetActive(true);
     }
 
     public void AnimationPanelHUDMenu()
