@@ -15,14 +15,18 @@ public class Defense : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currHP -= damage;
-        if (currHP < 0)
-            currHP = 0;
-        mapManager.GetComponent<MapManager>().gm.GetComponent<GameManager>().DefenseTakeDamage(currHP, maxHP);
-        if (currHP == 0)
+        if (isDead == false &&
+            currHP > 0)
         {
-            isDead = true;
-            StartCoroutine(DeathAnimation());
+            currHP -= damage;
+            if (currHP < 0)
+                currHP = 0;
+            mapManager.GetComponent<MapManager>().gm.GetComponent<GameManager>().DefenseTakeDamage(currHP, maxHP);
+            if (currHP == 0)
+            {
+                isDead = true;
+                StartCoroutine(DeathAnimation());
+            }
         }
     }
 

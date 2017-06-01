@@ -15,17 +15,21 @@ public class Capture : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currHP -= damage;
-        if (currHP < 0)
-            currHP = 0;
-        mapManager.GetComponent<MapManager>().gm.GetComponent<GameManager>().CaptureTakeDamage(currHP, maxHP);
-        if (currHP == 0)
+        if (GetComponent<Enemy>().isDead == false &&
+            currHP > 0)
         {
-            if (mapManager.GetComponent<MapManager>().IsEnemyAlreadyDead(GetComponent<Enemy>().id) == false)
+            currHP -= damage;
+            if (currHP < 0)
+                currHP = 0;
+            mapManager.GetComponent<MapManager>().gm.GetComponent<GameManager>().CaptureTakeDamage(currHP, maxHP);
+            if (currHP == 0)
             {
-                mapManager.GetComponent<MapManager>().FillDeadList(GetComponent<Enemy>().id);
-                GetComponent<Enemy>().isDead = true;
-                StartCoroutine(DeathAnimation());
+                if (mapManager.GetComponent<MapManager>().IsEnemyAlreadyDead(GetComponent<Enemy>().id) == false)
+                {
+                    mapManager.GetComponent<MapManager>().FillDeadList(GetComponent<Enemy>().id);
+                    GetComponent<Enemy>().isDead = true;
+                    StartCoroutine(DeathAnimation());
+                }
             }
         }
     }

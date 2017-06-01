@@ -376,6 +376,10 @@ public class IAGuerrierAgent : MonoBehaviour
                         }
                     }
                 }
+                if (mapManager.GetComponent<MapManager>().enemiesList.Count == 0)
+                {
+                    GetComponent<SpriteRenderer>().sprite = rightIdle;
+                }
             }
         }
     }

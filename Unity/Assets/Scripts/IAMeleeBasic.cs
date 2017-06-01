@@ -48,19 +48,25 @@ public class IAMeleeBasic : MonoBehaviour
                     GetComponent<IAGuerrier>().timerFlying += Time.deltaTime;
                     if (GetComponent<IAGuerrier>().flyingLeft == true)
                     {
-                        Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x - 1f, transform.position.y, transform.position.y / 100);
-                        transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
-                        transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
-                        if (transform.position.x < GetComponent<IAGuerrier>().tornado.transform.position.x - 0.25f)
-                            GetComponent<IAGuerrier>().flyingLeft = false;
+                        if (GetComponent<IAGuerrier>().tornado != null)
+                        {
+                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x - 1f, transform.position.y, transform.position.y / 100);
+                            transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
+                            transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
+                            if (transform.position.x < GetComponent<IAGuerrier>().tornado.transform.position.x - 0.25f)
+                                GetComponent<IAGuerrier>().flyingLeft = false;
+                        }
                     }
                     else
                     {
-                        Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x + 1f, transform.position.y, transform.position.y / 100);
-                        transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
-                        transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
-                        if (transform.position.x > GetComponent<IAGuerrier>().tornado.transform.position.x + 0.25f)
-                            GetComponent<IAGuerrier>().flyingLeft = true;
+                        if (GetComponent<IAGuerrier>().tornado != null)
+                        {
+                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x + 1f, transform.position.y, transform.position.y / 100);
+                            transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
+                            transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
+                            if (transform.position.x > GetComponent<IAGuerrier>().tornado.transform.position.x + 0.25f)
+                                GetComponent<IAGuerrier>().flyingLeft = true;
+                        }
                     }
 
                     if (GetComponent<IAGuerrier>().timerFlying > GetComponent<IAGuerrier>().cooldownFlying)

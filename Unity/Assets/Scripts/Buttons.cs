@@ -353,6 +353,11 @@ public class Buttons : MonoBehaviour
         }
     }
 
+    public void OpenGreenlightURL()
+    {
+        Application.OpenURL("http://steamcommunity.com/sharedfiles/filedetails/?id=917993010");
+    }
+
     public void SetOnTextDifficulty(int difficulty)
     {
         GetComponent<GameManager>().textDifficulty.SetActive(true);
