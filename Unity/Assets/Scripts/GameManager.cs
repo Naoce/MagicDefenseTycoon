@@ -51,6 +51,37 @@ public class GameManager : MonoBehaviour
     public  Texture2D       cursorNormal;
     public  CursorMode      cursorMode;
 
+    public  List<GameObject> listMissions;
+    public  int             currMissionSelected;
+    public  Sprite          bossSprite;
+    public  Sprite          captureSprite;
+    public  Sprite          defenseSprite;
+    public  Sprite          littlebossSprite;
+    public  Sprite          littlecaptureSprite;
+    public  Sprite          littledefenseSprite;
+
+    public  Text            MissionsPanelDescriptionText;
+    public  Text            MissionsPanelDescriptionBisText;
+    public  Image           MissionsPanelType;
+    public  GameObject      MissionsPanelMainSheetDifficulty2;
+    public  GameObject      MissionsPanelMainSheetDifficulty3;
+    public  GameObject      MissionsPanelMainSheetDifficulty4;
+
+    public  Image           MissionsPanelSheet1Type;
+    public  GameObject      MissionsPanelSheet1Difficulty2;
+    public  GameObject      MissionsPanelSheet1Difficulty3;
+    public  GameObject      MissionsPanelSheet1Difficulty4;
+    public  GameObject      MissionsPanelSheet2;
+    public  Image           MissionsPanelSheet2Type;
+    public  GameObject      MissionsPanelSheet2Difficulty2;
+    public  GameObject      MissionsPanelSheet2Difficulty3;
+    public  GameObject      MissionsPanelSheet2Difficulty4;
+    public  GameObject      MissionsPanelSheet3;
+    public  Image           MissionsPanelSheet3Type;
+    public  GameObject      MissionsPanelSheet3Difficulty2;
+    public  GameObject      MissionsPanelSheet3Difficulty3;
+    public  GameObject      MissionsPanelSheet3Difficulty4;
+
     public  bool            isInGame;
     public  bool            gamePaused;
     public  bool            gameOver;
@@ -119,6 +150,13 @@ public class GameManager : MonoBehaviour
     public  GameObject      buttonDeleteSave3;
     public  GameObject      scrollSave4;
 
+    public  GameObject      panelCharacterSelection;
+    public  GameObject      scrollCharacterPanel1;
+    public  GameObject      scrollCharacterPanel2;
+    public  GameObject      scrollCharacterPanel3;
+    public  GameObject      scrollCharacterValidate;
+    public  GameObject      scrollCharacterReturn;
+
     public  GameObject      panelDifficulty;
     public  GameObject      textDifficulty;
     public  GameObject      scrollDifficulty1;
@@ -131,6 +169,10 @@ public class GameManager : MonoBehaviour
     public  GameObject      scrollMenu2;
     public  GameObject      scrollMenu3;
     public  GameObject      scrollMenu4;
+
+    public  GameObject      panelMissions;
+    public  GameObject      panelTavern;
+    public  GameObject      panelTower;
 
     public  GameObject      panelTutorial;
     public  int             currentSlideTutorial;

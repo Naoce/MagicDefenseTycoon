@@ -81,29 +81,9 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().textCredits.SetActive(false);
     }
 
-    public void StartBoss()
-    {
-        NewGame();
-        Application.LoadLevel("TestGameplay");
-        GetComponent<GameManager>().cam = GameObject.Find("Main Camera");
-    }
-
-    public void StartCapture()
-    {
-        NewGame();
-        Application.LoadLevel("GameplayCapture");
-        GetComponent<GameManager>().cam = GameObject.Find("Main Camera");
-    }
-
-    public void StartDefense()
-    {
-        NewGame();
-        Application.LoadLevel("GameplayDefense");
-        GetComponent<GameManager>().cam = GameObject.Find("Main Camera");
-    }
-
     void NewGame()
     {
+        GetComponent<GameManager>().panelMissions.SetActive(false);
         GetComponent<GameManager>().capturePanel.SetActive(false);
         GetComponent<GameManager>().defensePanel.SetActive(false);
         GetComponent<GameManager>().bossPanel.SetActive(false);
@@ -449,13 +429,218 @@ public class Buttons : MonoBehaviour
         StartCoroutine(AnimationPanelMenu());
     }
 
-    public void ReturnToMainMenu()
+    public void ReturnToPanelSave()
     {
-        GetComponent<GameManager>().panelIntro.SetActive(false  );
+        GetComponent<GameManager>().panelIntro.SetActive(false);
+        GetComponent<GameManager>().panelCharacterSelection.SetActive(false);
         GetComponent<GameManager>().panelMenu.SetActive(false);
-        GetComponent<GameManager>().panelDifficulty.SetActive(false);
         GetComponent<GameManager>().panelSave.SetActive(true);
         StartCoroutine(AnimationPanelSave());
+    }
+
+    public void ValidateElementalMage()
+    {
+        if (GetComponent<GameManager>().currSave == 1)
+        {
+            PlayerPrefs.SetInt("Load1MageSet", 1);
+            PlayerPrefs.SetString("Load1Mage", "Elemental");
+        }
+        else if (GetComponent<GameManager>().currSave == 2)
+        {
+            PlayerPrefs.SetInt("Load2MageSet", 1);
+            PlayerPrefs.SetString("Load2Mage", "Elemental");
+        }
+        else if (GetComponent<GameManager>().currSave == 3)
+        {
+            PlayerPrefs.SetInt("Load3MageSet", 1);
+            PlayerPrefs.SetString("Load3Mage", "Elemental");
+        }
+
+        GetComponent<GameManager>().panelCharacterSelection.SetActive(false);
+        GetComponent<GameManager>().panelDifficulty.SetActive(true);
+        StartCoroutine(AnimationPanelDifficulty());
+    }
+
+    public void ReturnToPanelCharacterSelection()
+    {
+        GetComponent<GameManager>().panelSave.SetActive(false);
+        GetComponent<GameManager>().panelDifficulty.SetActive(false);
+        GetComponent<GameManager>().scrollCharacterPanel2.SetActive(false);
+        GetComponent<GameManager>().scrollCharacterPanel3.SetActive(false);
+        GetComponent<GameManager>().scrollCharacterPanel1.SetActive(true);
+        GetComponent<GameManager>().panelCharacterSelection.SetActive(true);
+        StartCoroutine(AnimationPanelCharacterSelection());
+    }
+
+    public void DisplayCharacterElemental()
+    {
+        GetComponent<GameManager>().scrollCharacterPanel2.SetActive(false);
+        GetComponent<GameManager>().scrollCharacterPanel3.SetActive(false);
+        GetComponent<GameManager>().scrollCharacterPanel1.SetActive(true);
+    }
+
+    public void DisplayCharacterDemonic()
+    {
+        GetComponent<GameManager>().scrollCharacterPanel3.SetActive(false);
+        GetComponent<GameManager>().scrollCharacterPanel1.SetActive(false);
+        GetComponent<GameManager>().scrollCharacterPanel2.SetActive(true);
+    }
+
+    public void DisplayCharacterRadiant()
+    {
+        GetComponent<GameManager>().scrollCharacterPanel2.SetActive(false);
+        GetComponent<GameManager>().scrollCharacterPanel1.SetActive(false);
+        GetComponent<GameManager>().scrollCharacterPanel3.SetActive(true);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        GetComponent<GameManager>().panelDifficulty.SetActive(false);
+        GetComponent<GameManager>().panelMissions.SetActive(false);
+        GetComponent<GameManager>().panelTavern.SetActive(false);
+        GetComponent<GameManager>().panelTower.SetActive(false);
+        GetComponent<GameManager>().panelMenu.SetActive(true);
+        StartCoroutine(AnimationPanelMenu());
+    }
+
+    public void DisplayMissionsPanel()
+    {
+        GetComponent<GameManager>().panelMenu.SetActive(false);
+        GetComponent<GameManager>().panelMissions.SetActive(true);
+        FillMissionsMainSheet(0);
+
+        //Sheet1
+        if (GetComponent<GameManager>().listMissions[0].GetComponent<MissionSheet>().type == MapManager.MapType.Boss)
+            GetComponent<GameManager>().MissionsPanelSheet1Type.sprite = GetComponent<GameManager>().littlebossSprite;
+        else if (GetComponent<GameManager>().listMissions[0].GetComponent<MissionSheet>().type == MapManager.MapType.Capture)
+            GetComponent<GameManager>().MissionsPanelSheet1Type.sprite = GetComponent<GameManager>().littlecaptureSprite;
+        else
+            GetComponent<GameManager>().MissionsPanelSheet1Type.sprite = GetComponent<GameManager>().littledefenseSprite;
+
+        if (GetComponent<GameManager>().listMissions[0].GetComponent<MissionSheet>().difficulty > 1)
+            GetComponent<GameManager>().MissionsPanelSheet1Difficulty2.SetActive(true);
+        else
+            GetComponent<GameManager>().MissionsPanelSheet1Difficulty2.SetActive(false);
+
+        if (GetComponent<GameManager>().listMissions[0].GetComponent<MissionSheet>().difficulty > 2)
+            GetComponent<GameManager>().MissionsPanelSheet1Difficulty3.SetActive(true);
+        else
+            GetComponent<GameManager>().MissionsPanelSheet1Difficulty3.SetActive(false);
+
+        if (GetComponent<GameManager>().listMissions[0].GetComponent<MissionSheet>().difficulty > 3)
+            GetComponent<GameManager>().MissionsPanelSheet1Difficulty3.SetActive(true);
+        else
+            GetComponent<GameManager>().MissionsPanelSheet1Difficulty4.SetActive(false);
+
+        //Sheet2
+        if (GetComponent<GameManager>().listMissions.Count > 1)
+        {
+            GetComponent<GameManager>().MissionsPanelSheet2.SetActive(true);
+
+            if (GetComponent<GameManager>().listMissions[1].GetComponent<MissionSheet>().type == MapManager.MapType.Boss)
+                GetComponent<GameManager>().MissionsPanelSheet2Type.sprite = GetComponent<GameManager>().littlebossSprite;
+            else if (GetComponent<GameManager>().listMissions[1].GetComponent<MissionSheet>().type == MapManager.MapType.Capture)
+                GetComponent<GameManager>().MissionsPanelSheet2Type.sprite = GetComponent<GameManager>().littlecaptureSprite;
+            else
+                GetComponent<GameManager>().MissionsPanelSheet2Type.sprite = GetComponent<GameManager>().littledefenseSprite;
+
+            if (GetComponent<GameManager>().listMissions[1].GetComponent<MissionSheet>().difficulty > 1)
+                GetComponent<GameManager>().MissionsPanelSheet2Difficulty2.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet2Difficulty2.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[1].GetComponent<MissionSheet>().difficulty > 2)
+                GetComponent<GameManager>().MissionsPanelSheet2Difficulty3.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet2Difficulty3.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[1].GetComponent<MissionSheet>().difficulty > 3)
+                GetComponent<GameManager>().MissionsPanelSheet2Difficulty4.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet2Difficulty4.SetActive(false);
+        }
+        else
+            GetComponent<GameManager>().MissionsPanelSheet2.SetActive(false);
+
+        //Sheet3
+        if (GetComponent<GameManager>().listMissions.Count > 2)
+        {
+            GetComponent<GameManager>().MissionsPanelSheet3.SetActive(true);
+
+            if (GetComponent<GameManager>().listMissions[2].GetComponent<MissionSheet>().type == MapManager.MapType.Boss)
+                GetComponent<GameManager>().MissionsPanelSheet3Type.sprite = GetComponent<GameManager>().littlebossSprite;
+            else if (GetComponent<GameManager>().listMissions[2].GetComponent<MissionSheet>().type == MapManager.MapType.Capture)
+                GetComponent<GameManager>().MissionsPanelSheet3Type.sprite = GetComponent<GameManager>().littlecaptureSprite;
+            else
+                GetComponent<GameManager>().MissionsPanelSheet3Type.sprite = GetComponent<GameManager>().littledefenseSprite;
+
+            if (GetComponent<GameManager>().listMissions[2].GetComponent<MissionSheet>().difficulty > 1)
+                GetComponent<GameManager>().MissionsPanelSheet3Difficulty2.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet3Difficulty2.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[2].GetComponent<MissionSheet>().difficulty > 2)
+                GetComponent<GameManager>().MissionsPanelSheet3Difficulty3.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet3Difficulty3.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[2].GetComponent<MissionSheet>().difficulty > 3)
+                GetComponent<GameManager>().MissionsPanelSheet3Difficulty4.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet3Difficulty4.SetActive(false);
+        }
+        else
+            GetComponent<GameManager>().MissionsPanelSheet3.SetActive(false);
+    }
+
+    public void FillMissionsMainSheet(int id)
+    {
+        GetComponent<GameManager>().currMissionSelected = id;
+        if (GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().type == MapManager.MapType.Boss)
+            GetComponent<GameManager>().MissionsPanelType.sprite = GetComponent<GameManager>().bossSprite;
+        else if (GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().type == MapManager.MapType.Capture)
+            GetComponent<GameManager>().MissionsPanelType.sprite = GetComponent<GameManager>().captureSprite;
+        else
+            GetComponent<GameManager>().MissionsPanelType.sprite = GetComponent<GameManager>().defenseSprite;
+
+        if (GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().difficulty > 1)
+            GetComponent<GameManager>().MissionsPanelMainSheetDifficulty2.SetActive(true);
+        else
+            GetComponent<GameManager>().MissionsPanelMainSheetDifficulty2.SetActive(false);
+
+        if (GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().difficulty > 2)
+            GetComponent<GameManager>().MissionsPanelMainSheetDifficulty3.SetActive(true);
+        else
+            GetComponent<GameManager>().MissionsPanelMainSheetDifficulty3.SetActive(false);
+
+        if (GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().difficulty > 3)
+            GetComponent<GameManager>().MissionsPanelMainSheetDifficulty3.SetActive(true);
+        else
+            GetComponent<GameManager>().MissionsPanelMainSheetDifficulty4.SetActive(false);
+
+        GetComponent<GameManager>().MissionsPanelDescriptionText.text = GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().description.Replace("<br>", "\n");
+        GetComponent<GameManager>().MissionsPanelDescriptionBisText.text = "Experience : " + GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().experience +
+                                                                           "\nReward : " + GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().reward + " gold coins" +
+                                                                           "\nPrestige : " + GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().prestige;
+    }
+
+    public void EnterInMission()
+    {
+        NewGame();
+        Application.LoadLevel(GetComponent<GameManager>().listMissions[GetComponent<GameManager>().currMissionSelected].GetComponent<MissionSheet>().idMission);
+        GetComponent<GameManager>().cam = GameObject.Find("Main Camera");
+    }
+
+    public void DisplayTavernPanel()
+    {
+        GetComponent<GameManager>().panelMenu.SetActive(false);
+        GetComponent<GameManager>().panelTavern.SetActive(true);
+    }
+
+    public void DisplayTowerPanel()
+    {
+        GetComponent<GameManager>().panelMenu.SetActive(false);
+        GetComponent<GameManager>().panelTower.SetActive(true);
     }
 
     public void ReturnToIntro()
@@ -569,6 +754,20 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().buttonDeleteSave3.SetActive(true);
 
         text4.SetActive(true);
+    }
+
+    IEnumerator AnimationPanelCharacterSelection()
+    {
+        GameObject text1 = GetComponent<GameManager>().scrollCharacterValidate.GetComponentInChildren<Text>().gameObject;
+        GameObject text2 = GetComponent<GameManager>().scrollCharacterReturn.GetComponentInChildren<Text>().gameObject;
+
+        GetComponent<GameManager>().scrollCharacterValidate.GetComponent<AnimOnStart>().StartAnimationByScript();
+        GetComponent<GameManager>().scrollCharacterReturn.GetComponent<AnimOnStart>().StartAnimationByScript();
+        text1.SetActive(false);
+        text2.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        text1.SetActive(true);
+        text2.SetActive(true);
     }
 
     IEnumerator AnimationPanelDifficulty()
@@ -687,6 +886,7 @@ public class Buttons : MonoBehaviour
         {
             GetComponent<GameManager>().currSave = 1;
             GetComponent<GameManager>().panelSave.SetActive(false);
+
             if (PlayerPrefs.GetInt("Load1DifficultySet") == 1)
             {
                 GetComponent<GameManager>().difficulty = PlayerPrefs.GetInt("Load1Difficulty");
@@ -695,10 +895,11 @@ public class Buttons : MonoBehaviour
             }
             else
             {
-                GetComponent<GameManager>().panelDifficulty.SetActive(true);
-                StartCoroutine(AnimationPanelDifficulty());
+                if (PlayerPrefs.GetInt("Load1MageSet") == 0)
+                    ReturnToPanelCharacterSelection();
+                else
+                    ValidateElementalMage();
             }
-
         }
     }
 
@@ -729,9 +930,7 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("Load1Agent2StockHealthPotion", 3);
             PlayerPrefs.SetInt("Load1Agent3StockHealthPotion", 3);
             GetComponent<GameManager>().load1DeleteIcon.SetActive(true);
-            GetComponent<GameManager>().panelSave.SetActive(false);
-            GetComponent<GameManager>().panelDifficulty.SetActive(true);
-            StartCoroutine(AnimationPanelDifficulty());
+            ReturnToPanelCharacterSelection();
         }
     }
 
@@ -769,6 +968,7 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load1Agent3StockHealthPotion", 3);
 
         PlayerPrefs.SetInt("Load1DifficultySet", 0);
+        PlayerPrefs.SetInt("Load1MageSet", 0);
         GetComponent<GameManager>().load1Created = false;
         GetComponent<GameManager>().load1Name.GetComponent<Text>().text = "Empty save";
     }
@@ -791,8 +991,10 @@ public class Buttons : MonoBehaviour
             }
             else
             {
-                GetComponent<GameManager>().panelDifficulty.SetActive(true);
-                StartCoroutine(AnimationPanelDifficulty());
+                if (PlayerPrefs.GetInt("Load2MageSet") == 0)
+                    ReturnToPanelCharacterSelection();
+                else
+                    ValidateElementalMage();
             }
         }
     }
@@ -824,9 +1026,7 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("Load2Agent2StockHealthPotion", 3);
             PlayerPrefs.SetInt("Load2Agent3StockHealthPotion", 3);
             GetComponent<GameManager>().load2DeleteIcon.SetActive(true);
-            GetComponent<GameManager>().panelSave.SetActive(false);
-            GetComponent<GameManager>().panelDifficulty.SetActive(true);
-            StartCoroutine(AnimationPanelDifficulty());
+            ReturnToPanelCharacterSelection();
         }
     }
 
@@ -864,6 +1064,7 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load2Agent3StockHealthPotion", 3);
 
         PlayerPrefs.SetInt("Load2DifficultySet", 0);
+        PlayerPrefs.SetInt("Load2MageSet", 0);
         GetComponent<GameManager>().load2Created = false;
         GetComponent<GameManager>().load2Name.GetComponent<Text>().text = "Empty save";
     }
@@ -886,8 +1087,10 @@ public class Buttons : MonoBehaviour
             }
             else
             {
-                GetComponent<GameManager>().panelDifficulty.SetActive(true);
-                StartCoroutine(AnimationPanelDifficulty());
+                if (PlayerPrefs.GetInt("Load3MageSet") == 0)
+                    ReturnToPanelCharacterSelection();
+                else
+                    ValidateElementalMage();
             }
         }
     }
@@ -919,9 +1122,7 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("Load3Agent2StockHealthPotion", 3);
             PlayerPrefs.SetInt("Load3Agent3StockHealthPotion", 3);
             GetComponent<GameManager>().load3DeleteIcon.SetActive(true);
-            GetComponent<GameManager>().panelSave.SetActive(false);
-            GetComponent<GameManager>().panelDifficulty.SetActive(true);
-            StartCoroutine(AnimationPanelDifficulty());
+            ReturnToPanelCharacterSelection();
         }
     }
 
@@ -959,6 +1160,7 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load3Agent3StockHealthPotion", 3);
 
         PlayerPrefs.SetInt("Load3DifficultySet", 0);
+        PlayerPrefs.SetInt("Load3MageSet", 0);
         GetComponent<GameManager>().load3Created = false;
         GetComponent<GameManager>().load3Name.GetComponent<Text>().text = "Empty save";
     }
