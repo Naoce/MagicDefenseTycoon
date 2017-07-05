@@ -6,6 +6,7 @@ public class Buttons : MonoBehaviour
 {
     public  Sprite  boxChecked;
     public  Sprite  boxNotChecked;
+    private Color   colorBlack = new Color(0.19f, 0.19f, 0.19f, 1f);
 
     void Awake()
     {
@@ -631,16 +632,529 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().cam = GameObject.Find("Main Camera");
     }
 
+    public void HighlightTavernTab(int id)
+    {
+        GetComponent<GameManager>().TavernTabAgent1.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOffSprite;
+        GetComponent<GameManager>().TavernTabAgent2.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOffSprite;
+        GetComponent<GameManager>().TavernTabAgent3.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOffSprite;
+        GetComponent<GameManager>().TavernTabAgent4.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOffSprite;
+
+        if (id == 0)
+            GetComponent<GameManager>().TavernTabAgent1.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOnSprite;
+        else if (id == 1)
+            GetComponent<GameManager>().TavernTabAgent2.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOnSprite;
+        else if (id == 2)
+            GetComponent<GameManager>().TavernTabAgent3.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOnSprite;
+        else
+            GetComponent<GameManager>().TavernTabAgent4.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOnSprite;
+    }
+
     public void DisplayTavernPanel()
     {
+        GetComponent<GameManager>().TavernRosterSizeText.text = "Roster size : " + GetComponent<GameManager>().rosterAgents.Count + " / 6";
+        GetComponent<GameManager>().TavernRosterSizeText.color = colorBlack;
+
+        GetComponent<GameManager>().TavernCoinsText.text = "Gold coins : " + GetComponent<GameManager>().coins;
+        GetComponent<GameManager>().TavernCoinsText.color = colorBlack;
+
+        GetComponent<GameManager>().TavernPrestigeText.text = "Prestige : " + GetComponent<GameManager>().prestige;
+        GetComponent<GameManager>().TavernPrestigeText.color = colorBlack;
+
+        GetComponent<GameManager>().currAgentSelected = 0;
+        GetComponent<GameManager>().TavernAgent1Recruited = false;
+        GetComponent<GameManager>().TavernAgent2Recruited = false;
+        GetComponent<GameManager>().TavernAgent3Recruited = false;
+        GetComponent<GameManager>().TavernAgent4Recruited = false;
+
+        if (GetComponent<GameManager>().tabFreeAgents.Count > 0)
+        {
+            GetComponent<GameManager>().TavernDescription.SetActive(true);
+            GetComponent<GameManager>().TavernRecruitButton.SetActive(true);
+            GetComponent<GameManager>().TavernAgentObj[0] = GetComponent<GameManager>().tabFreeAgents[0];
+            FillTavernMainSheet(0);
+            GetComponent<GameManager>().TavernAgent1.SetActive(true);
+            GetComponent<GameManager>().TavernTabAgent1.SetActive(true);
+
+            HighlightTavernTab(0);
+
+            if (GetComponent<GameManager>().tabFreeAgents[0].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Swordsman)
+                GetComponent<GameManager>().TavernAgent1.GetComponent<Image>().sprite = GetComponent<GameManager>().swordsmanIcon;
+            else if (GetComponent<GameManager>().tabFreeAgents[0].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+                GetComponent<GameManager>().TavernAgent1.GetComponent<Image>().sprite = GetComponent<GameManager>().knightIcon;
+            else
+                GetComponent<GameManager>().TavernAgent1.GetComponent<Image>().sprite = GetComponent<GameManager>().assassinIcon;
+        }
+        else
+        {
+            GetComponent<GameManager>().TavernDescription.SetActive(false);
+            GetComponent<GameManager>().TavernRecruitButton.SetActive(false);
+            GetComponent<GameManager>().TavernAgent1.SetActive(false);
+            GetComponent<GameManager>().TavernTabAgent1.SetActive(false);
+        }
+
+        if (GetComponent<GameManager>().tabFreeAgents.Count > 1)
+        {
+            GetComponent<GameManager>().TavernAgentObj[1] = GetComponent<GameManager>().tabFreeAgents[1];
+            GetComponent<GameManager>().TavernAgent2.SetActive(true);
+            GetComponent<GameManager>().TavernTabAgent2.SetActive(true);
+
+            if (GetComponent<GameManager>().tabFreeAgents[1].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Swordsman)
+                GetComponent<GameManager>().TavernAgent2.GetComponent<Image>().sprite = GetComponent<GameManager>().swordsmanIcon;
+            else if (GetComponent<GameManager>().tabFreeAgents[1].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+                GetComponent<GameManager>().TavernAgent2.GetComponent<Image>().sprite = GetComponent<GameManager>().knightIcon;
+            else
+                GetComponent<GameManager>().TavernAgent2.GetComponent<Image>().sprite = GetComponent<GameManager>().assassinIcon;
+        }
+        else
+        {
+            GetComponent<GameManager>().TavernAgent2.SetActive(false);
+            GetComponent<GameManager>().TavernTabAgent2.SetActive(false);
+        }
+
+        if (GetComponent<GameManager>().tabFreeAgents.Count > 2)
+        {
+            GetComponent<GameManager>().TavernAgentObj[2] = GetComponent<GameManager>().tabFreeAgents[2];
+            GetComponent<GameManager>().TavernAgent3.SetActive(true);
+            GetComponent<GameManager>().TavernTabAgent3.SetActive(true);
+
+            if (GetComponent<GameManager>().tabFreeAgents[2].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Swordsman)
+                GetComponent<GameManager>().TavernAgent3.GetComponent<Image>().sprite = GetComponent<GameManager>().swordsmanIcon;
+            else if (GetComponent<GameManager>().tabFreeAgents[2].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+                GetComponent<GameManager>().TavernAgent3.GetComponent<Image>().sprite = GetComponent<GameManager>().knightIcon;
+            else
+                GetComponent<GameManager>().TavernAgent3.GetComponent<Image>().sprite = GetComponent<GameManager>().assassinIcon;
+        }
+        else
+        {
+            GetComponent<GameManager>().TavernAgent3.SetActive(false);
+            GetComponent<GameManager>().TavernTabAgent3.SetActive(false);
+        }
+
+        if (GetComponent<GameManager>().tabFreeAgents.Count > 3)
+        {
+            GetComponent<GameManager>().TavernAgentObj[3] = GetComponent<GameManager>().tabFreeAgents[3];
+            GetComponent<GameManager>().TavernAgent4.SetActive(true);
+            GetComponent<GameManager>().TavernTabAgent4.SetActive(true);
+
+            if (GetComponent<GameManager>().tabFreeAgents[3].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Swordsman)
+                GetComponent<GameManager>().TavernAgent4.GetComponent<Image>().sprite = GetComponent<GameManager>().swordsmanIcon;
+            else if (GetComponent<GameManager>().tabFreeAgents[3].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+                GetComponent<GameManager>().TavernAgent4.GetComponent<Image>().sprite = GetComponent<GameManager>().knightIcon;
+            else
+                GetComponent<GameManager>().TavernAgent4.GetComponent<Image>().sprite = GetComponent<GameManager>().assassinIcon;
+        }
+        else
+        {
+            GetComponent<GameManager>().TavernAgent4.SetActive(false);
+            GetComponent<GameManager>().TavernTabAgent4.SetActive(false);
+        }
+
         GetComponent<GameManager>().panelMenu.SetActive(false);
         GetComponent<GameManager>().panelTavern.SetActive(true);
+    }
+
+    public void FillTavernMainSheet(int id)
+    {
+        GetComponent<GameManager>().TavernRosterSizeText.color = colorBlack;
+        GetComponent<GameManager>().TavernCoinsText.color = colorBlack;
+        GetComponent<GameManager>().TavernPrestigeText.color = colorBlack;
+
+        HighlightTavernTab(id);
+        GetComponent<GameManager>().currAgentSelected = id;
+
+        GetComponent<GameManager>().TavernCoinsText.text = "Gold coins : " + GetComponent<GameManager>().coins;
+        GetComponent<GameManager>().TavernPrestigeText.text = "Prestige : " + GetComponent<GameManager>().prestige;
+        GetComponent<GameManager>().TavernDescription.GetComponent<Text>().text = GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetName +
+                                                            "\nClass : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetClass +
+                                                            "\nLevel : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level +
+                                                            "\n\nHealth points : " + GetComponent<GameManager>().agentType0MaxHP[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level] +
+                                                            "\nDamage : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().damage +
+                                                            "\nAttack speed : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().attackCooldown +
+                                                            "\nMovement speed : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().speed +
+                                                            "\n\nPrestige needed : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetPrestige +
+                                                            "\nRecruitment fee : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetFee;
+    }
+
+    public void AddAgentToRoster()
+    {
+        if (GetComponent<GameManager>().rosterAgents.Count < 6 &&
+            GetComponent<GameManager>().coins >= GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetFee &&
+            GetComponent<GameManager>().prestige >= GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetPrestige)
+        {
+
+            GetComponent<GameManager>().coins -= GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetFee;
+            GetComponent<GameManager>().TavernCoinsText.text = "Gold coins : " + GetComponent<GameManager>().coins;
+            GetComponent<GameManager>().rosterAgents.Add(GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected]);
+            GetComponent<GameManager>().TavernRosterSizeText.text = "Roster size : " + GetComponent<GameManager>().rosterAgents.Count + " / 6";
+
+            if (CountTabAgentsLength() < 3)
+            {
+                if (GetComponent<GameManager>().tabAgents[0] == null)
+                    GetComponent<GameManager>().tabAgents[0] = GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected];
+                else if (GetComponent<GameManager>().tabAgents[1] == null)
+                    GetComponent<GameManager>().tabAgents[1] = GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected];
+                else
+                    GetComponent<GameManager>().tabAgents[2] = GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected];
+            }
+
+            GetComponent<GameManager>().tabFreeAgents.Remove(GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected]);
+
+            if (GetComponent<GameManager>().currAgentSelected == 0)
+            {
+                GetComponent<GameManager>().TavernAgent1Recruited = true;
+                GetComponent<GameManager>().TavernAgent1.SetActive(false);
+                GetComponent<GameManager>().TavernTabAgent1.SetActive(false);
+            }
+            else if (GetComponent<GameManager>().currAgentSelected == 1)
+            {
+                GetComponent<GameManager>().TavernAgent2Recruited = true;
+                GetComponent<GameManager>().TavernAgent2.SetActive(false);
+                GetComponent<GameManager>().TavernTabAgent2.SetActive(false);
+            }
+            else if (GetComponent<GameManager>().currAgentSelected == 2)
+            {
+                GetComponent<GameManager>().TavernAgent3Recruited = true;
+                GetComponent<GameManager>().TavernAgent3.SetActive(false);
+                GetComponent<GameManager>().TavernTabAgent3.SetActive(false);
+            }
+            else
+            {
+                GetComponent<GameManager>().TavernAgent4Recruited = true;
+                GetComponent<GameManager>().TavernAgent4.SetActive(false);
+                GetComponent<GameManager>().TavernTabAgent4.SetActive(false);
+            }
+
+            if (GetComponent<GameManager>().TavernAgent1Recruited == false)
+                FillTavernMainSheet(0);
+            else if (GetComponent<GameManager>().TavernAgent2Recruited == false)
+                FillTavernMainSheet(1);
+            else if (GetComponent<GameManager>().TavernAgent3Recruited == false)
+                FillTavernMainSheet(2);
+            else if (GetComponent<GameManager>().TavernAgent4Recruited == false)
+                FillTavernMainSheet(3);
+            else
+            {
+                GetComponent<GameManager>().TavernDescription.SetActive(false);
+                GetComponent<GameManager>().TavernRecruitButton.SetActive(false);
+            }
+        }
+        else
+        {
+            if (!(GetComponent<GameManager>().rosterAgents.Count < 6))
+                GetComponent<GameManager>().TavernRosterSizeText.color = Color.red;
+            if (!(GetComponent<GameManager>().coins >= GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetFee))
+                GetComponent<GameManager>().TavernCoinsText.color = Color.red;
+            if (!(GetComponent<GameManager>().prestige >= GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetPrestige))
+                GetComponent<GameManager>().TavernPrestigeText.color = Color.red;
+        }
+    }
+
+    public void HighlightTowerTab(int id)
+    {
+        GetComponent<GameManager>().RosterTabAgent1.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOffSprite;
+        GetComponent<GameManager>().RosterTabAgent2.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOffSprite;
+        GetComponent<GameManager>().RosterTabAgent3.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOffSprite;
+        GetComponent<GameManager>().RosterTabAgent4.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOffSprite;
+        GetComponent<GameManager>().RosterTabAgent5.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOffSprite;
+        GetComponent<GameManager>().RosterTabAgent6.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOffSprite;
+
+        if (id == 0)
+            GetComponent<GameManager>().RosterTabAgent1.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOnSprite;
+        else if (id == 1)
+            GetComponent<GameManager>().RosterTabAgent2.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOnSprite;
+        else if (id == 2)
+            GetComponent<GameManager>().RosterTabAgent3.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOnSprite;
+        else if (id == 3)
+            GetComponent<GameManager>().RosterTabAgent4.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOnSprite;
+        else if (id == 4)
+            GetComponent<GameManager>().RosterTabAgent5.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOnSprite;
+        else
+            GetComponent<GameManager>().RosterTabAgent6.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOnSprite;
     }
 
     public void DisplayTowerPanel()
     {
         GetComponent<GameManager>().panelMenu.SetActive(false);
+        GetComponent<GameManager>().currAgentSelected = 0;
+        GetComponent<GameManager>().RosterTextNumberCount.color = colorBlack;
+        GetComponent<GameManager>().RosterTextNumberCount.text = "Roster : " + CountTabAgentsLength() + " / 3";
+
+        if (GetComponent<GameManager>().rosterAgents.Count > 0)
+        {
+            GetComponent<GameManager>().RosterAgent1.SetActive(true);
+            GetComponent<GameManager>().RosterTabAgent1.SetActive(true);
+            GetComponent<GameManager>().RosterButtonRecruit.SetActive(true);
+            GetComponent<GameManager>().RosterButtonDismiss.SetActive(true);
+
+            if (GetComponent<GameManager>().rosterAgents[0].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Swordsman)
+                GetComponent<GameManager>().RosterAgent1.GetComponent<Image>().sprite = GetComponent<GameManager>().swordsmanIcon;
+            else if (GetComponent<GameManager>().rosterAgents[0].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+                GetComponent<GameManager>().RosterAgent1.GetComponent<Image>().sprite = GetComponent<GameManager>().knightIcon;
+            else
+                GetComponent<GameManager>().RosterAgent1.GetComponent<Image>().sprite = GetComponent<GameManager>().assassinIcon;
+
+            HighlightTowerTab(0);
+            UpdateRosterText(0);
+
+            if (IsAgentAlreadyInTeam(GetComponent<GameManager>().rosterAgents[0]) == true)
+                GetComponent<GameManager>().RosterSelected1.SetActive(true);
+        }
+        else
+        {
+            GetComponent<GameManager>().RosterAgent1.SetActive(false);
+            GetComponent<GameManager>().RosterTabAgent1.SetActive(false);
+            GetComponent<GameManager>().RosterTextDescription.SetActive(false);
+            GetComponent<GameManager>().RosterButtonRecruit.SetActive(false);
+            GetComponent<GameManager>().RosterButtonDismiss.SetActive(false);
+            GetComponent<GameManager>().RosterSelected1.SetActive(false);
+        }
+
+        if (GetComponent<GameManager>().rosterAgents.Count > 1)
+        {
+            GetComponent<GameManager>().RosterAgent2.SetActive(true);
+            GetComponent<GameManager>().RosterTabAgent2.SetActive(true);
+
+            if (GetComponent<GameManager>().rosterAgents[1].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Swordsman)
+                GetComponent<GameManager>().RosterAgent2.GetComponent<Image>().sprite = GetComponent<GameManager>().swordsmanIcon;
+            else if (GetComponent<GameManager>().rosterAgents[1].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+                GetComponent<GameManager>().RosterAgent2.GetComponent<Image>().sprite = GetComponent<GameManager>().knightIcon;
+            else
+                GetComponent<GameManager>().RosterAgent2.GetComponent<Image>().sprite = GetComponent<GameManager>().assassinIcon;
+
+            if (IsAgentAlreadyInTeam(GetComponent<GameManager>().rosterAgents[1]) == true)
+                GetComponent<GameManager>().RosterSelected2.SetActive(true);
+        }
+        else
+        {
+            GetComponent<GameManager>().RosterAgent2.SetActive(false);
+            GetComponent<GameManager>().RosterTabAgent2.SetActive(false);
+            GetComponent<GameManager>().RosterSelected2.SetActive(false);
+        }
+
+        if (GetComponent<GameManager>().rosterAgents.Count > 2)
+        {
+            GetComponent<GameManager>().RosterAgent3.SetActive(true);
+            GetComponent<GameManager>().RosterTabAgent3.SetActive(true);
+
+            if (GetComponent<GameManager>().rosterAgents[2].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Swordsman)
+                GetComponent<GameManager>().RosterAgent3.GetComponent<Image>().sprite = GetComponent<GameManager>().swordsmanIcon;
+            else if (GetComponent<GameManager>().rosterAgents[2].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+                GetComponent<GameManager>().RosterAgent3.GetComponent<Image>().sprite = GetComponent<GameManager>().knightIcon;
+            else
+                GetComponent<GameManager>().RosterAgent3.GetComponent<Image>().sprite = GetComponent<GameManager>().assassinIcon;
+
+            if (IsAgentAlreadyInTeam(GetComponent<GameManager>().rosterAgents[2]) == true)
+                GetComponent<GameManager>().RosterSelected3.SetActive(true);
+        }
+        else
+        {
+            GetComponent<GameManager>().RosterAgent3.SetActive(false);
+            GetComponent<GameManager>().RosterTabAgent3.SetActive(false);
+            GetComponent<GameManager>().RosterSelected3.SetActive(false);
+        }
+
+        if (GetComponent<GameManager>().rosterAgents.Count > 3)
+        {
+            GetComponent<GameManager>().RosterAgent4.SetActive(true);
+            GetComponent<GameManager>().RosterTabAgent4.SetActive(true);
+
+            if (GetComponent<GameManager>().rosterAgents[3].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Swordsman)
+                GetComponent<GameManager>().RosterAgent4.GetComponent<Image>().sprite = GetComponent<GameManager>().swordsmanIcon;
+            else if (GetComponent<GameManager>().rosterAgents[3].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+                GetComponent<GameManager>().RosterAgent4.GetComponent<Image>().sprite = GetComponent<GameManager>().knightIcon;
+            else
+                GetComponent<GameManager>().RosterAgent4.GetComponent<Image>().sprite = GetComponent<GameManager>().assassinIcon;
+
+            if (IsAgentAlreadyInTeam(GetComponent<GameManager>().rosterAgents[3]) == true)
+                GetComponent<GameManager>().RosterSelected4.SetActive(true);
+        }
+        else
+        {
+            GetComponent<GameManager>().RosterAgent4.SetActive(false);
+            GetComponent<GameManager>().RosterTabAgent4.SetActive(false);
+            GetComponent<GameManager>().RosterSelected4.SetActive(false);
+        }
+
+        if (GetComponent<GameManager>().rosterAgents.Count > 4)
+        {
+            GetComponent<GameManager>().RosterAgent5.SetActive(true);
+            GetComponent<GameManager>().RosterTabAgent5.SetActive(true);
+
+            if (GetComponent<GameManager>().rosterAgents[4].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Swordsman)
+                GetComponent<GameManager>().RosterAgent5.GetComponent<Image>().sprite = GetComponent<GameManager>().swordsmanIcon;
+            else if (GetComponent<GameManager>().rosterAgents[4].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+                GetComponent<GameManager>().RosterAgent5.GetComponent<Image>().sprite = GetComponent<GameManager>().knightIcon;
+            else
+                GetComponent<GameManager>().RosterAgent6.GetComponent<Image>().sprite = GetComponent<GameManager>().assassinIcon;
+
+            if (IsAgentAlreadyInTeam(GetComponent<GameManager>().rosterAgents[4]) == true)
+                GetComponent<GameManager>().RosterSelected5.SetActive(true);
+        }
+        else
+        {
+            GetComponent<GameManager>().RosterAgent5.SetActive(false);
+            GetComponent<GameManager>().RosterTabAgent5.SetActive(false);
+            GetComponent<GameManager>().RosterSelected5.SetActive(false);
+        }
+
+        if (GetComponent<GameManager>().rosterAgents.Count > 5)
+        {
+            GetComponent<GameManager>().RosterAgent6.SetActive(true);
+            GetComponent<GameManager>().RosterTabAgent6.SetActive(true);
+
+            if (GetComponent<GameManager>().rosterAgents[5].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Swordsman)
+                GetComponent<GameManager>().RosterAgent6.GetComponent<Image>().sprite = GetComponent<GameManager>().swordsmanIcon;
+            else if (GetComponent<GameManager>().rosterAgents[5].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+                GetComponent<GameManager>().RosterAgent6.GetComponent<Image>().sprite = GetComponent<GameManager>().knightIcon;
+            else
+                GetComponent<GameManager>().RosterAgent6.GetComponent<Image>().sprite = GetComponent<GameManager>().assassinIcon;
+
+            if (IsAgentAlreadyInTeam(GetComponent<GameManager>().rosterAgents[5]) == true)
+                GetComponent<GameManager>().RosterSelected6.SetActive(true);
+        }
+        else
+        {
+            GetComponent<GameManager>().RosterAgent6.SetActive(false);
+            GetComponent<GameManager>().RosterTabAgent6.SetActive(false);
+            GetComponent<GameManager>().RosterSelected6.SetActive(false);
+        }
+
+        GetComponent<GameManager>().RosterTextNumberCount.text = "Roster : " + CountTabAgentsLength() + " / 3";
+
         GetComponent<GameManager>().panelTower.SetActive(true);
+
+    }
+
+    public void UpdateRosterText(int id)
+    {
+        HighlightTowerTab(id);
+        GetComponent<GameManager>().RosterTextNumberCount.color = colorBlack;
+        GetComponent<GameManager>().RosterButtonDismiss.SetActive(true);
+        GetComponent<GameManager>().RosterButtonRecruit.SetActive(true);
+        GetComponent<GameManager>().currAgentSelected = id;
+        GetComponent<GameManager>().RosterTextDescription.SetActive(true);
+        GetComponent<GameManager>().RosterTextDescription.GetComponent<Text>().text = GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetName +
+                                            "\nClass : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetClass +
+                                            "\nLevel : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level +
+                                            "\n\nHealth points : " + GetComponent<GameManager>().agentType0MaxHP[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level] +
+                                            "\nDamage : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().damage +
+                                            "\nAttack speed : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().attackCooldown +
+                                            "\nMovement speed : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().speed;
+
+        if (IsAgentAlreadyInTeam(GetComponent<GameManager>().rosterAgents[id]) == true)
+            GetComponent<GameManager>().RosterButtonRecruit.GetComponent<Text>().text = "Remove from the team";
+        else
+            GetComponent<GameManager>().RosterButtonRecruit.GetComponent<Text>().text = "Add to the team";
+    }
+
+    public void AddAgentToTeam()
+    {
+        if (IsAgentAlreadyInTeam(GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected]) == false)
+        {
+            if (CountTabAgentsLength() < 3)
+            {
+                if (GetComponent<GameManager>().tabAgents[0] == null)
+                    GetComponent<GameManager>().tabAgents[0] = GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected];
+                else if (GetComponent<GameManager>().tabAgents[1] == null)
+                    GetComponent<GameManager>().tabAgents[1] = GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected];
+                else
+                    GetComponent<GameManager>().tabAgents[2] = GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected];
+
+                if (GetComponent<GameManager>().currAgentSelected == 0)
+                    GetComponent<GameManager>().RosterSelected1.SetActive(true);
+                else if (GetComponent<GameManager>().currAgentSelected == 1)
+                    GetComponent<GameManager>().RosterSelected2.SetActive(true);
+                else if (GetComponent<GameManager>().currAgentSelected == 2)
+                    GetComponent<GameManager>().RosterSelected3.SetActive(true);
+                else if (GetComponent<GameManager>().currAgentSelected == 3)
+                    GetComponent<GameManager>().RosterSelected4.SetActive(true);
+                else if (GetComponent<GameManager>().currAgentSelected == 4)
+                    GetComponent<GameManager>().RosterSelected5.SetActive(true);
+                else
+                    GetComponent<GameManager>().RosterSelected6.SetActive(true);
+
+                GetComponent<GameManager>().RosterTextNumberCount.text = "Roster : " + CountTabAgentsLength() + " / 3";
+                UpdateRosterText(GetComponent<GameManager>().currAgentSelected);
+            }
+            else
+                GetComponent<GameManager>().RosterTextNumberCount.color = Color.red;
+        }
+        else
+        {
+            if (GetComponent<GameManager>().tabAgents[0] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
+                GetComponent<GameManager>().tabAgents[0] = null;
+            if (GetComponent<GameManager>().tabAgents[1] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
+                GetComponent<GameManager>().tabAgents[1] = null;
+            if (GetComponent<GameManager>().tabAgents[2] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
+                GetComponent<GameManager>().tabAgents[2] = null;
+
+            if (GetComponent<GameManager>().currAgentSelected == 0)
+                GetComponent<GameManager>().RosterSelected1.SetActive(false);
+            else if (GetComponent<GameManager>().currAgentSelected == 1)
+                GetComponent<GameManager>().RosterSelected2.SetActive(false);
+            else if (GetComponent<GameManager>().currAgentSelected == 2)
+                GetComponent<GameManager>().RosterSelected3.SetActive(false);
+            else if (GetComponent<GameManager>().currAgentSelected == 3)
+                GetComponent<GameManager>().RosterSelected4.SetActive(false);
+            else if (GetComponent<GameManager>().currAgentSelected == 4)
+                GetComponent<GameManager>().RosterSelected5.SetActive(false);
+            else
+                GetComponent<GameManager>().RosterSelected6.SetActive(false);
+
+            GetComponent<GameManager>().RosterTextNumberCount.text = "Roster : " + CountTabAgentsLength() + " / 3";
+
+            UpdateRosterText(GetComponent<GameManager>().currAgentSelected);
+        }
+    }
+
+    public void DismissAgentTower()
+    {
+        if (GetComponent<GameManager>().tabAgents[0] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
+            GetComponent<GameManager>().tabAgents[0] = null;
+        else if (GetComponent<GameManager>().tabAgents[1] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
+            GetComponent<GameManager>().tabAgents[1] = null;
+        else
+            GetComponent<GameManager>().tabAgents[2] = null;
+
+        GetComponent<GameManager>().tabFreeAgents.Add(GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected]);
+        GetComponent<GameManager>().rosterAgents.Remove(GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected]);
+        DisplayTowerPanel();
+    }
+
+    public void RemoveAgentFromTeam()
+    {
+        if (GetComponent<GameManager>().tabAgents[0] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
+            GetComponent<GameManager>().tabAgents[0] = null;
+        else if (GetComponent<GameManager>().tabAgents[1] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
+            GetComponent<GameManager>().tabAgents[1] = null;
+        else if (GetComponent<GameManager>().tabAgents[2] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
+            GetComponent<GameManager>().tabAgents[2] = null;
+    }
+
+    public bool IsAgentAlreadyInTeam(GameObject agent)
+    {
+        if (GetComponent<GameManager>().tabAgents[0] == agent)
+            return (true);
+        if (GetComponent<GameManager>().tabAgents[1] == agent)
+            return (true);
+        if (GetComponent<GameManager>().tabAgents[2] == agent)
+            return (true);
+
+        return (false);
+    }
+
+    public int CountTabAgentsLength()
+    {
+        int i = 0;
+
+        if (GetComponent<GameManager>().tabAgents[0] != null)
+            i++;
+        if (GetComponent<GameManager>().tabAgents[1] != null)
+            i++;
+        if (GetComponent<GameManager>().tabAgents[2] != null)
+            i++;
+
+        return (i);
     }
 
     public void ReturnToIntro()

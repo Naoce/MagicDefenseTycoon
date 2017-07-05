@@ -4,6 +4,18 @@ using UnityEngine.UI;
 
 public class IAGuerrierAgent : MonoBehaviour
 {
+    public enum AgentClass
+    {
+        Swordsman,
+        Rogue,
+        Knight
+    };
+    public  int         SheetID;
+    public  string      SheetName;
+    public  AgentClass  SheetClass;
+    public  int         SheetPrestige;
+    public  int         SheetFee;
+
     public GameObject   hitSprite;
 
     public Sprite       rightIdle;
@@ -31,7 +43,7 @@ public class IAGuerrierAgent : MonoBehaviour
     private int         currentNumeroAnim = 0;
     private float       timer = 0f;
     private float       attackTimer = 0f;
-    private float       attackCooldown = 1f;
+    public  float       attackCooldown = 1f;
     private float       timerPotion = 0f;
     public  float       cooldownPotion;
     private bool        canAttack = true;

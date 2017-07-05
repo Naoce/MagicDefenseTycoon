@@ -46,7 +46,12 @@ public class GameManager : MonoBehaviour
     public  int[]           playerMaxXP = new int[15];
     public  int[]           agentType0MaxHP = new int[10];
     public  int[]           agentMaxXP = new int[10];
-    public  GameObject[]    tabAgents = new GameObject[4];
+    public  GameObject[]    tabAgents;
+
+    public  List<GameObject> rosterAgents;
+    public  List<GameObject> tabFreeAgents;
+    public  int             currAgentSelected;
+
     public  int             playerDamage;
     public  Texture2D       cursorNormal;
     public  CursorMode      cursorMode;
@@ -82,6 +87,55 @@ public class GameManager : MonoBehaviour
     public  GameObject      MissionsPanelSheet3Difficulty3;
     public  GameObject      MissionsPanelSheet3Difficulty4;
 
+    public  Sprite          tabOffSprite;
+    public  Sprite          tabOnSprite;
+
+    public  Sprite          swordsmanIcon;
+    public  Sprite          knightIcon;
+    public  Sprite          assassinIcon;
+
+    public  GameObject[]    TavernAgentObj = new GameObject[4];
+    public  GameObject      TavernAgent1;
+    public  GameObject      TavernAgent2;
+    public  GameObject      TavernAgent3;
+    public  GameObject      TavernAgent4;
+    public  GameObject      TavernTabAgent1;
+    public  GameObject      TavernTabAgent2;
+    public  GameObject      TavernTabAgent3;
+    public  GameObject      TavernTabAgent4;
+    public  bool            TavernAgent1Recruited;
+    public  bool            TavernAgent2Recruited;
+    public  bool            TavernAgent3Recruited;
+    public  bool            TavernAgent4Recruited;
+    public  Text            TavernRosterSizeText;
+    public  Text            TavernCoinsText;
+    public  Text            TavernPrestigeText;
+    public  GameObject      TavernDescription;
+    public  GameObject      TavernRecruitButton;
+
+    public  GameObject      RosterTextDescription;
+    public  Text            RosterTextNumberCount;
+    public  GameObject      RosterButtonRecruit;
+    public  GameObject      RosterButtonDismiss;
+    public  GameObject      RosterAgent1;
+    public  GameObject      RosterAgent2;
+    public  GameObject      RosterAgent3;
+    public  GameObject      RosterAgent4;
+    public  GameObject      RosterAgent5;
+    public  GameObject      RosterAgent6;
+    public  GameObject      RosterTabAgent1;
+    public  GameObject      RosterTabAgent2;
+    public  GameObject      RosterTabAgent3;
+    public  GameObject      RosterTabAgent4;
+    public  GameObject      RosterTabAgent5;
+    public  GameObject      RosterTabAgent6;
+    public  GameObject      RosterSelected1;
+    public  GameObject      RosterSelected2;
+    public  GameObject      RosterSelected3;
+    public  GameObject      RosterSelected4;
+    public  GameObject      RosterSelected5;
+    public  GameObject      RosterSelected6;
+
     public  bool            isInGame;
     public  bool            gamePaused;
     public  bool            gameOver;
@@ -95,6 +149,8 @@ public class GameManager : MonoBehaviour
     public  bool            bloodless;
     public  bool            showSpellsInfo;
     public  bool            wasdMode;
+    public  int             coins;
+    public  int             prestige;
 
     public  GameObject      bossPanel;
     public  Slider          bossHealth;
