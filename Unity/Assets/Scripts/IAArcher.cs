@@ -5,12 +5,10 @@ using UnityEngine;
 public class IAArcher : MonoBehaviour
 {
     private GameObject gm;
-    private GameObject gameManager;
 
     void Start()
     {
         gm = GameObject.Find("MapManager");
-        gameManager = gm.GetComponent<MapManager>().gm;
     }
 
     void Update()
@@ -135,7 +133,7 @@ public class IAArcher : MonoBehaviour
                             GetComponent<IAGuerrier>().newPos = GetComponent<AStar>().StartPathFinding(GetComponent<IAGuerrier>().target.transform.position);
                     }
 
-                    Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().newPos.x, GetComponent<IAGuerrier>().newPos.y, GetComponent<IAGuerrier>().newPos.y / 100);
+                    Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().newPos.x, GetComponent<IAGuerrier>().newPos.y, 0f);
                     transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * (GetComponent<IAGuerrier>().speed - GetComponent<IAGuerrier>().slow));
 
                     if (GetComponent<IAGuerrier>().timer > GetComponent<IAGuerrier>().animTime &&

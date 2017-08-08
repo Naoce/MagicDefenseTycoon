@@ -42,9 +42,9 @@ public class IAGuerrierAgent : MonoBehaviour
     public  Vector2     newPos = new Vector2(0, 0);
     private int         currentNumeroAnim = 0;
     private float       timer = 0f;
-    private float       attackTimer = 0f;
-    public  float       attackCooldown = 1f;
-    private float       timerPotion = 0f;
+    private float       attackTimer;
+    public  float       attackCooldown;
+    private float       timerPotion;
     public  float       cooldownPotion;
     private bool        canAttack = true;
     private bool        changedTarget = false;
@@ -53,6 +53,8 @@ public class IAGuerrierAgent : MonoBehaviour
     private int currHP;
     public int maxHP;
     public int damage;
+    public float attackEffectCD;
+    public float range;
     public int level;
     public int stockHealthPotion;
     public float speed;
@@ -85,19 +87,16 @@ public class IAGuerrierAgent : MonoBehaviour
             {
                 level = PlayerPrefs.GetInt("Load1Agent1Level");
                 currXP = PlayerPrefs.GetInt("Load1Agent1XP");
-                stockHealthPotion = PlayerPrefs.GetInt("Load1Agent1StockHealthPotion");
             }
             else if (gm.GetComponent<GameManager>().currSave == 2)
             {
                 level = PlayerPrefs.GetInt("Load2Agent1Level");
                 currXP = PlayerPrefs.GetInt("Load2Agent1XP");
-                stockHealthPotion = PlayerPrefs.GetInt("Load2Agent1StockHealthPotion");
             }
             else if (gm.GetComponent<GameManager>().currSave == 3)
             {
                 level = PlayerPrefs.GetInt("Load3Agent1Level");
                 currXP = PlayerPrefs.GetInt("Load3Agent1XP");
-                stockHealthPotion = PlayerPrefs.GetInt("Load3Agent1StockHealthPotion");
             }
 
             if (level > 1)
@@ -131,19 +130,16 @@ public class IAGuerrierAgent : MonoBehaviour
             {
                 level = PlayerPrefs.GetInt("Load1Agent2Level");
                 currXP = PlayerPrefs.GetInt("Load1Agent2XP");
-                stockHealthPotion = PlayerPrefs.GetInt("Load1Agent2StockHealthPotion");
             }
             else if (gm.GetComponent<GameManager>().currSave == 2)
             {
                 level = PlayerPrefs.GetInt("Load2Agent2Level");
                 currXP = PlayerPrefs.GetInt("Load2Agent2XP");
-                stockHealthPotion = PlayerPrefs.GetInt("Load2Agent2StockHealthPotion");
             }
             else if (gm.GetComponent<GameManager>().currSave == 3)
             {
                 level = PlayerPrefs.GetInt("Load3Agent2Level");
                 currXP = PlayerPrefs.GetInt("Load3Agent2XP");
-                stockHealthPotion = PlayerPrefs.GetInt("Load3Agent2StockHealthPotion");
             }
 
             if (level > 1)
@@ -177,19 +173,16 @@ public class IAGuerrierAgent : MonoBehaviour
             {
                 level = PlayerPrefs.GetInt("Load1Agent3Level");
                 currXP = PlayerPrefs.GetInt("Load1Agent3XP");
-                stockHealthPotion = PlayerPrefs.GetInt("Load1Agent3StockHealthPotion");
             }
             else if (gm.GetComponent<GameManager>().currSave == 2)
             {
                 level = PlayerPrefs.GetInt("Load2Agent3Level");
                 currXP = PlayerPrefs.GetInt("Load2Agent3XP");
-                stockHealthPotion = PlayerPrefs.GetInt("Load2Agent3StockHealthPotion");
             }
             else if (gm.GetComponent<GameManager>().currSave == 3)
             {
                 level = PlayerPrefs.GetInt("Load3Agent3Level");
                 currXP = PlayerPrefs.GetInt("Load3Agent3XP");
-                stockHealthPotion = PlayerPrefs.GetInt("Load3Agent3StockHealthPotion");
             }
 
             if (level > 1)
@@ -212,15 +205,35 @@ public class IAGuerrierAgent : MonoBehaviour
                 gm.GetComponent<GameManager>().agent3Levels[9].SetActive(true);
         }
 
+        stockHealthPotion = 3;
+
         if (level == 0)
             level = 1;
 
-        if (GetComponent<Agent>().type == 0)
-            maxHP = gm.GetComponent<GameManager>().agentType0MaxHP[level - 1];
+
+        if (SheetClass == AgentClass.Knight)
+        {
+            maxHP = gm.GetComponent<GameManager>().agentTypeKnightMaxHP[level - 1];
+            damage = gm.GetComponent<GameManager>().agentTypeKnightDamage[level - 1];
+            attackCooldown = gm.GetComponent<GameManager>().agentTypeKnightAS[level - 1];
+        }
+
+        else if (SheetClass == AgentClass.Rogue)
+        {
+            maxHP = gm.GetComponent<GameManager>().agentTypeRogueMaxHP[level - 1];
+            damage = gm.GetComponent<GameManager>().agentTypeRogueDamage[level - 1];
+            attackCooldown = gm.GetComponent<GameManager>().agentTypeRogueAS[level - 1];
+        }
+        else
+        {
+            maxHP = gm.GetComponent<GameManager>().agentTypeSwordsmanMaxHP[level - 1];
+            damage = gm.GetComponent<GameManager>().agentTypeSwordsmanDamage[level - 1];
+            attackCooldown = gm.GetComponent<GameManager>().agentTypeSwordsmanAS[level - 1];
+        }
+
         currHP = maxHP;
 
-        if (GetComponent<Agent>().type == 0)
-            healthBarGreenHUD.value = (float)currHP / (float)gm.GetComponent<GameManager>().agentType0MaxHP[level - 1];
+        healthBarGreenHUD.value = (float)currHP / (float)maxHP;
 
         xpBarHUD.value = (float)currXP / (float)gm.GetComponent<GameManager>().agentMaxXP[level - 1];
 
@@ -327,7 +340,7 @@ public class IAGuerrierAgent : MonoBehaviour
                             canAttack = true;
                         }
                     }
-                    if (Vector2.Distance(target.transform.position, transform.position) <= 0.51f &&
+                    if (Vector2.Distance(target.transform.position, transform.position) <= range &&
                         target.GetComponent<Enemy>().isDead == false)
                     {
                         needToMove = false;
@@ -363,7 +376,7 @@ public class IAGuerrierAgent : MonoBehaviour
                         else
                             rightSide = false;
 
-                        Vector3 destPos = new Vector3(newPos.x, newPos.y, newPos.y / 100);
+                        Vector3 destPos = new Vector3(newPos.x, newPos.y, 0f);
                         transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * (speed - slow));
 
                         if (timer > animMoveCD &&
@@ -430,12 +443,17 @@ public class IAGuerrierAgent : MonoBehaviour
 
     public void TakeDamage(int damageTaken, Vector2 damagePos)
     {
-        currHP -= damageTaken;
+        damageTaken -= player.GetComponent<Shoots>().decorationBonusTanking;
+
+        if (damageTaken > 0)
+            currHP -= damageTaken;
         if (currHP < 0)
             currHP = 0;
         float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
-        if (GetComponent<Agent>().type == 0)
-            healthBarGreenHUD.value = (float)currHP / (float)gm.GetComponent<GameManager>().agentType0MaxHP[level - 1];
+
+
+        healthBarGreenHUD.value = (float)currHP / (float)maxHP;
+
         float diff;
         diff = baseScale.x * currHP / maxHP;
         newScale = new Vector2(diff, baseScale.y);
@@ -458,14 +476,15 @@ public class IAGuerrierAgent : MonoBehaviour
 
     public void Heal(int healAmount)
     {
+        healAmount += player.GetComponent<Shoots>().decorationBonusHealing;
+
         currHP += healAmount;
         if (currHP > maxHP)
             currHP = maxHP;
 
         float originalValue = healthBarGreen.GetComponent<SpriteRenderer>().bounds.min.x;
 
-        if (GetComponent<Agent>().type == 0)
-            healthBarGreenHUD.value = (float)currHP / (float)gm.GetComponent<GameManager>().agentType0MaxHP[level - 1];
+        healthBarGreenHUD.value = (float)currHP / (float)maxHP;
 
         float diff;
         diff = baseScale.x * currHP / maxHP;
@@ -523,6 +542,9 @@ public class IAGuerrierAgent : MonoBehaviour
             animRight = true;
         }
 
+        float timerEffect = 0;
+        bool attackLanded = false;
+
         int animAttack = 0;
         while (animAttack < rightAttackSprites.Length)
         {
@@ -541,27 +563,32 @@ public class IAGuerrierAgent : MonoBehaviour
                     GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
                 }
 
+                timerEffect += animAttackCD;
+                if (attackLanded == false &&
+                    timerEffect >= attackEffectCD)
+                {
+                    attackLanded = true;
+                    if (targetAttacking != null &&
+                        isDead == false)
+                    {
+                        GameObject obj = (GameObject)Instantiate(hitSprite, targetAttacking.transform.position, transform.rotation);
+                        obj.transform.SetParent(targetAttacking.transform);
+
+                        if (targetAttacking != null &&
+                        (targetAttacking.tag == "EnemyGuerrier" || targetAttacking.tag == "BossGuerrier"))
+                        {
+                            targetAttacking.GetComponent<IAGuerrier>().TakeDamageFromAgent(damage, transform.position, gameObject);
+                        }
+                        else if (targetAttacking != null &&
+                            targetAttacking.tag == "Capture")
+                        {
+                            targetAttacking.GetComponent<Capture>().TakeDamage(damage);
+                        }
+                    }
+                }
+
                 yield return new WaitForSeconds(animAttackCD);
                 animAttack++;
-            }
-        }
-
-        if (target != null &&
-            targetAttacking == target &&
-            isDead == false)
-        {
-            GameObject obj = (GameObject)Instantiate(hitSprite, target.transform.position, transform.rotation);
-            obj.transform.SetParent(target.transform);
-
-            if (target != null &&
-            (target.tag == "EnemyGuerrier" || target.tag == "BossGuerrier"))
-            {
-                target.GetComponent<IAGuerrier>().TakeDamageFromAgent(damage, transform.position, gameObject);
-            }
-            else if (target != null &&
-                target.tag == "Capture")
-            {
-                target.GetComponent<Capture>().TakeDamage(damage);
             }
         }
 
@@ -569,7 +596,7 @@ public class IAGuerrierAgent : MonoBehaviour
         {
             isAttacking = false;
             canAttack = false;
-            timer = animMoveCD;
+            attackTimer = animAttackCD * rightAttackSprites.Length;
 
             if (rightSide == true)
             {
@@ -588,13 +615,34 @@ public class IAGuerrierAgent : MonoBehaviour
     {
         currXP += newXP;
         player.GetComponent<StatsPlayer>().EarnXP(newXP);
-        if (currXP >= gm.GetComponent<GameManager>().agentMaxXP[level - 1])
+        if (level < 10 &&
+            currXP >= gm.GetComponent<GameManager>().agentMaxXP[level - 1])
         {
             currXP -= gm.GetComponent<GameManager>().agentMaxXP[level - 1];
             level++;
             gm.GetComponent<GameManager>().levelUpAgent1.SetActive(true);
-            maxHP = gm.GetComponent<GameManager>().agentType0MaxHP[level - 1];
-            TakeDamage(-10, Vector2.zero);
+
+            if (SheetClass == AgentClass.Knight)
+            {
+                maxHP = gm.GetComponent<GameManager>().agentTypeKnightMaxHP[level - 1];
+                damage = gm.GetComponent<GameManager>().agentTypeKnightDamage[level - 1];
+                attackCooldown = gm.GetComponent<GameManager>().agentTypeKnightAS[level - 1];
+            }
+
+            else if (SheetClass == AgentClass.Rogue)
+            {
+                maxHP = gm.GetComponent<GameManager>().agentTypeRogueMaxHP[level - 1];
+                damage = gm.GetComponent<GameManager>().agentTypeRogueDamage[level - 1];
+                attackCooldown = gm.GetComponent<GameManager>().agentTypeRogueAS[level - 1];
+            }
+            else
+            {
+                maxHP = gm.GetComponent<GameManager>().agentTypeSwordsmanMaxHP[level - 1];
+                damage = gm.GetComponent<GameManager>().agentTypeSwordsmanDamage[level - 1];
+                attackCooldown = gm.GetComponent<GameManager>().agentTypeSwordsmanAS[level - 1];
+            }
+
+            Heal(10);
 
             if (GetComponent<Agent>().idAgent == 0)
             {
@@ -660,7 +708,11 @@ public class IAGuerrierAgent : MonoBehaviour
                     gm.GetComponent<GameManager>().agent3Levels[9].SetActive(true);
             }
         }
-        xpBarHUD.value = (float)currXP / (float)gm.GetComponent<GameManager>().agentMaxXP[level - 1];
+
+        if (level < 10)
+            xpBarHUD.value = (float)currXP / (float)gm.GetComponent<GameManager>().agentMaxXP[level - 1];
+        else
+            xpBarHUD.value = 1;
     }
 
     void OnTriggerEnter2D(Collider2D other)

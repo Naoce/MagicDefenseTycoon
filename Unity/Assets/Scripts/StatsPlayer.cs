@@ -40,6 +40,7 @@ public class StatsPlayer : MonoBehaviour
     private int         maxHP;
     public  int         currXP;
     public  int         level;
+    public  int         levelsWon;
     private Vector2     baseScale;
     private Vector2     newScale;
     public  int         animFiole;
@@ -54,23 +55,21 @@ public class StatsPlayer : MonoBehaviour
         {
             level = PlayerPrefs.GetInt("Load1PlayerLevel");
             currXP = PlayerPrefs.GetInt("Load1PlayerXP");
-            stockHealthPotion = PlayerPrefs.GetInt("Load1PlayerStockHealthPotion");
-            stockManaPotion = PlayerPrefs.GetInt("Load1PlayerStockManaPotion");
         }
         else if (gm.GetComponent<GameManager>().currSave == 2)
         {
             level = PlayerPrefs.GetInt("Load2PlayerLevel");
             currXP = PlayerPrefs.GetInt("Load2PlayerXP");
-            stockHealthPotion = PlayerPrefs.GetInt("Load2PlayerStockHealthPotion");
-            stockManaPotion = PlayerPrefs.GetInt("Load2PlayerStockManaPotion");
         }
         else if (gm.GetComponent<GameManager>().currSave == 3)
         {
             level = PlayerPrefs.GetInt("Load3PlayerLevel");
             currXP = PlayerPrefs.GetInt("Load3PlayerXP");
-            stockHealthPotion = PlayerPrefs.GetInt("Load3PlayerStockHealthPotion");
-            stockManaPotion = PlayerPrefs.GetInt("Load3PlayerStockManaPotion");
         }
+
+        levelsWon = 0;
+        stockHealthPotion = 3;
+        stockManaPotion = 1;
         textHP = gm.GetComponent<GameManager>().textHP;
         textXP = gm.GetComponent<GameManager>().textXP;
         textLevel = gm.GetComponent<GameManager>().textLevel;
@@ -99,11 +98,19 @@ public class StatsPlayer : MonoBehaviour
         gm.GetComponent<GameManager>().textStockManaPotion.GetComponent<Text>().text = GetComponent<StatsPlayer>().stockManaPotion.ToString();
     }
 
-    public void     TakeDamage(int damageTaken, Vector2 directionPos)
+    public void     TakeDamage(int damageTaken, Vector2 directionPos, GameObject attacker)
     {
         if (GetComponent<Deplacements>().isDead == false)
         {
-            currHP -= damageTaken;
+            if (GetComponent<Shoots>().canRetaliateShield == true && attacker != null)
+                attacker.GetComponent<IAGuerrier>().TakeDamageFromPlayer(GetComponent<Shoots>().retaliateDamage, transform.position);
+            if (GetComponent<Shoots>().canFreezeShield == true && attacker != null)
+                attacker.GetComponent<IAGuerrier>().ApplySlow(2, GetComponent<Shoots>().retaliateFreeze);
+
+            damageTaken -= GetComponent<Shoots>().decorationBonusTanking;
+
+            if (damageTaken > 0)
+                currHP -= damageTaken;
             if (currHP < 0)
                 currHP = 0;
             if (currHP <= 0)
@@ -167,6 +174,8 @@ public class StatsPlayer : MonoBehaviour
 
     public void Heal(int healValue)
     {
+        healValue += GetComponent<Shoots>().decorationBonusHealing;
+
         currHP += healValue;
         if (currHP > gm.GetComponent<GameManager>().playerMaxHP[level - 1])
             currHP = gm.GetComponent<GameManager>().playerMaxHP[level - 1];
@@ -223,19 +232,40 @@ public class StatsPlayer : MonoBehaviour
     public void     EarnXP(int XpGain)
     {
         currXP += XpGain;
-        if (currXP >= gm.GetComponent<GameManager>().playerMaxXP[level - 1])
+        if (level < 15 &&
+            currXP >= gm.GetComponent<GameManager>().playerMaxXP[level - 1])
         {
             levelUp.SetActive(true);
             levelUp.GetComponent<AnimOnStart>().StartAnimationByScript();
             currXP -= gm.GetComponent<GameManager>().playerMaxXP[level - 1];
-            if (level < 15)
-                level++;
+            level++;
+            levelsWon++;
             textLevel.GetComponent<Text>().text = level.ToString();
             maxHP = gm.GetComponent<GameManager>().playerMaxHP[level - 1];
             Heal(5);
         }
-        textXP.GetComponent<Text>().text = currXP + " / " + gm.GetComponent<GameManager>().playerMaxXP[level - 1];
-        xpBar.value = (float)currXP / (float)gm.GetComponent<GameManager>().playerMaxXP[level - 1];
+
+        if (level < 15)
+        {
+            if (GetComponent<Shoots>().decorationBonusHealing != 0)
+                GetComponent<Shoots>().decorationBonusHealing++;
+
+            textXP.GetComponent<Text>().text = currXP + " / " + gm.GetComponent<GameManager>().playerMaxXP[level - 1];
+            xpBar.value = (float)currXP / (float)gm.GetComponent<GameManager>().playerMaxXP[level - 1];
+        }
+        else
+        {
+            textXP.GetComponent<Text>().text = gm.GetComponent<GameManager>().playerMaxXP[14] + " / " + gm.GetComponent<GameManager>().playerMaxXP[14];
+            xpBar.value = 1;
+        }
+    }
+
+    public bool IsFullLife()
+    {
+        if ((float)currHP / (float)maxHP == 1)
+            return (true);
+        else
+            return (false);
     }
 
     IEnumerator DeathAnimation(Vector2 directionPos)
@@ -283,7 +313,7 @@ public class StatsPlayer : MonoBehaviour
     {
         if (other.tag == "ProjectileEnemy")
         {
-            TakeDamage(other.GetComponent<ProjectileEnemy>().damage, other.transform.position);
+            TakeDamage(other.GetComponent<ProjectileEnemy>().damage, other.transform.position, null);
             other.GetComponent<ProjectileEnemy>().ExplosionChar();
         }
     }

@@ -5,12 +5,10 @@ using UnityEngine;
 public class IAMeleeBasic : MonoBehaviour
 {
     private GameObject gm;
-    private GameObject gameManager;
 
     void Start()
     {
         gm = GameObject.Find("MapManager");
-        gameManager = gm.GetComponent<MapManager>().gm;
     }
 
     void Update()
@@ -50,7 +48,7 @@ public class IAMeleeBasic : MonoBehaviour
                     {
                         if (GetComponent<IAGuerrier>().tornado != null)
                         {
-                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x - 1f, transform.position.y, transform.position.y / 100);
+                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x - 1f, transform.position.y, 0f);
                             transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
                             transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
                             if (transform.position.x < GetComponent<IAGuerrier>().tornado.transform.position.x - 0.25f)
@@ -61,7 +59,7 @@ public class IAMeleeBasic : MonoBehaviour
                     {
                         if (GetComponent<IAGuerrier>().tornado != null)
                         {
-                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x + 1f, transform.position.y, transform.position.y / 100);
+                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x + 1f, transform.position.y, 0f);
                             transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
                             transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
                             if (transform.position.x > GetComponent<IAGuerrier>().tornado.transform.position.x + 0.25f)
@@ -155,7 +153,7 @@ public class IAMeleeBasic : MonoBehaviour
                             GetComponent<IAGuerrier>().newPos = GetComponent<AStar>().StartPathFinding(GetComponent<IAGuerrier>().target.transform.position);
                     }
 
-                    Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().newPos.x, GetComponent<IAGuerrier>().newPos.y, GetComponent<IAGuerrier>().newPos.y / 100);
+                    Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().newPos.x, GetComponent<IAGuerrier>().newPos.y, 0f);
                     transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * (GetComponent<IAGuerrier>().speed - GetComponent<IAGuerrier>().slow));
 
                     if (GetComponent<IAGuerrier>().timer > GetComponent<IAGuerrier>().animTime &&

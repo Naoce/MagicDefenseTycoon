@@ -7,6 +7,9 @@ public class Deplacements : MonoBehaviour
     private GameObject  gm;
     private GameObject  mapManager;
     public  float       speed;
+    private float       celerityRuneBonus;
+    public  float       movementBonus;
+    private float       timerMovementBonus = 0f;
 
     public Sprite leftIdle;
     public Sprite left1;
@@ -75,6 +78,16 @@ public class Deplacements : MonoBehaviour
         if (isDead == false &&
             gm.GetComponent<GameManager>().gamePaused == false)
         {
+            if (movementBonus != 0f)
+            {
+                timerMovementBonus += Time.deltaTime;
+                if (timerMovementBonus >= 1f)
+                {
+                    timerMovementBonus = 0f;
+                    movementBonus = 1f;
+                }
+            }
+
             if (Input.GetKey(KeyCode.D))
             {
                 isMovingHorizontally = true;
@@ -98,7 +111,12 @@ public class Deplacements : MonoBehaviour
                 if (newPosition.y < mapManager.GetComponent<MapManager>().LimitB)
                     newPosition.y = mapManager.GetComponent<MapManager>().LimitB;
 
-                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed);
+                if (GetComponent<Shoots>().isRuneCelerity == true)
+                    celerityRuneBonus = 1 + (((float)GetComponent<StatsPlayer>().level / (float)100) * 2);
+                else
+                    celerityRuneBonus = 1;
+
+                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
 
                 timer += Time.deltaTime;
                 if (timer > animTime)
@@ -160,7 +178,12 @@ public class Deplacements : MonoBehaviour
                 if (newPosition.y < mapManager.GetComponent<MapManager>().LimitB)
                     newPosition.y = mapManager.GetComponent<MapManager>().LimitB;
 
-                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed);
+                if (GetComponent<Shoots>().isRuneCelerity == true)
+                    celerityRuneBonus = 1 + (((float)GetComponent<StatsPlayer>().level / (float)100) * 2);
+                else
+                    celerityRuneBonus = 1;
+
+                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
 
                 timer += Time.deltaTime;
                 if (timer > animTime)
@@ -209,7 +232,12 @@ public class Deplacements : MonoBehaviour
                 if (newPosition.y > mapManager.GetComponent<MapManager>().LimitH)
                     newPosition.y = mapManager.GetComponent<MapManager>().LimitH;
 
-                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed);
+                if (GetComponent<Shoots>().isRuneCelerity == true)
+                    celerityRuneBonus = 1 + (((float)GetComponent<StatsPlayer>().level / (float)100) * 2);
+                else
+                    celerityRuneBonus = 1;
+
+                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
 
                 timer += Time.deltaTime;
                 if (timer > animTime)
@@ -253,7 +281,12 @@ public class Deplacements : MonoBehaviour
                 if (newPosition.y < mapManager.GetComponent<MapManager>().LimitB)
                     newPosition.y = mapManager.GetComponent<MapManager>().LimitB;
 
-                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed);
+                if (GetComponent<Shoots>().isRuneCelerity == true)
+                    celerityRuneBonus = 1 + (((float)GetComponent<StatsPlayer>().level / (float)100) * 2);
+                else
+                    celerityRuneBonus = 1;
+
+                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
 
                 timer += Time.deltaTime;
                 if (timer > animTime)
@@ -331,6 +364,12 @@ public class Deplacements : MonoBehaviour
 
             cam.transform.position = newPosCam;
         }
+    }
+
+    public void SetMovementBonus()
+    {
+        movementBonus = 1 + GetComponent<Shoots>().movementBonus;
+        timer = 0f;
     }
 
     void AttackAnimation()

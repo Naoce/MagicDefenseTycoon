@@ -106,7 +106,7 @@ public class CharacterMenu : MonoBehaviour
     {
         Vector2 vectorTmp = destinations[currentDestination];
         vectorTmp.y += 0.5f;
-        GameObject obj = (GameObject)Instantiate(meteor, vectorTmp, transform.rotation);
+        Instantiate(meteor, vectorTmp, transform.rotation);
         yield return new WaitForSeconds(0.5f);
 
         StartCoroutine(DeathAnim());

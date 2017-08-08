@@ -44,7 +44,15 @@ public class GameManager : MonoBehaviour
     public  GameObject      textNbEnemy;
     public  int[]           playerMaxHP = new int[15];
     public  int[]           playerMaxXP = new int[15];
-    public  int[]           agentType0MaxHP = new int[10];
+    public  int[]           agentTypeKnightMaxHP = new int[10];
+    public  int[]           agentTypeRogueMaxHP = new int[10];
+    public  int[]           agentTypeSwordsmanMaxHP = new int[10];
+    public  int[]           agentTypeKnightDamage = new int[10];
+    public  int[]           agentTypeRogueDamage = new int[10];
+    public  int[]           agentTypeSwordsmanDamage = new int[10];
+    public  float[]         agentTypeKnightAS = new float[10];
+    public  float[]         agentTypeRogueAS = new float[10];
+    public  float[]         agentTypeSwordsmanAS = new float[10];
     public  int[]           agentMaxXP = new int[10];
     public  GameObject[]    tabAgents;
 
@@ -108,11 +116,11 @@ public class GameManager : MonoBehaviour
     public  bool            TavernAgent3Recruited;
     public  bool            TavernAgent4Recruited;
     public  Text            TavernRosterSizeText;
-    public  Text            TavernCoinsText;
     public  Text            TavernPrestigeText;
     public  GameObject      TavernDescription;
     public  GameObject      TavernRecruitButton;
 
+    public  GameObject      PanelRoster;
     public  GameObject      RosterTextDescription;
     public  Text            RosterTextNumberCount;
     public  GameObject      RosterButtonRecruit;
@@ -135,6 +143,126 @@ public class GameManager : MonoBehaviour
     public  GameObject      RosterSelected4;
     public  GameObject      RosterSelected5;
     public  GameObject      RosterSelected6;
+
+    public  GameObject      PanelSkillTree;
+    public  int             SkillTreeSpellSelected;
+    public  Text            SkillTreeLevelText;
+    public  Text            SkillTreeActionPoints;
+    public  Text            SkillTreeTitle;
+    public  Text            SkillTreeDescription;
+    public  GameObject      SkillTreeLearn;
+    public  Image           SkillTreeSpellRect1_1;
+    public  Image           SkillTreeSpellRect1_2;
+    public  Image           SkillTreeSpellRect1_3;
+    public  Image           SkillTreeSpellRect2_1;
+    public  Image           SkillTreeSpellRect2_2;
+    public  Image           SkillTreeSpellRect2_3;
+    public  Image           SkillTreeSpellRect3_1;
+    public  Image           SkillTreeSpellRect3_2;
+    public  Image           SkillTreeSpellRect3_3;
+    public  Image           SkillTreeSpellRect4_1;
+    public  Image           SkillTreeSpellRect4_2;
+    public  Image           SkillTreeSpellRect4_3;
+    public  Image           SkillTreeSpellRect5_1;
+    public  Image           SkillTreeSpellRect5_2;
+    public  Image           SkillTreeSpellRect5_3;
+    public  Image           SkillTreeSpellRect6_1;
+    public  Image           SkillTreeSpellRect6_2;
+    public  Image           SkillTreeSpellRect6_3;
+    public  Image           SkillTreeSpellRect7_1;
+    public  Image           SkillTreeSpellRect7_2;
+    public  Image           SkillTreeSpellRect7_3;
+    public  Image           SkillTreeSpellRect8_1;
+    public  Image           SkillTreeSpellRect8_2;
+    public  Image           SkillTreeSpellRect8_3;
+    public  Image           SkillTreePassiveRect1_1;
+    public  Image           SkillTreePassiveRect1_2;
+    public  Image           SkillTreePassiveRect1_3;
+    public  Image           SkillTreePassiveRect2_1;
+    public  Image           SkillTreePassiveRect2_2;
+    public  Image           SkillTreePassiveRect2_3;
+    public  Image           SkillTreePassiveRect3_1;
+    public  Image           SkillTreePassiveRect3_2;
+    public  Image           SkillTreePassiveRect3_3;
+    public  Image           SkillTreePassiveRect4_1;
+    public  Image           SkillTreePassiveRect4_2;
+    public  Image           SkillTreePassiveRect4_3;
+    public  Image           SkillTreePassiveRect5_1;
+    public  Image           SkillTreePassiveRect5_2;
+    public  Image           SkillTreePassiveRect5_3;
+    public  Image           SkillTreePassiveRect6_1;
+    public  Image           SkillTreePassiveRect6_2;
+    public  Image           SkillTreePassiveRect6_3;
+
+    public  GameObject      PanelDecoration;
+    public  Text            DecorationDescriptionText;
+    public  Text            DecorationPrestigeText;
+    public  Text            DecorationCoinsText;
+    public  GameObject      DecorationScrollBuy;
+    public  int             DecorationScrollSelected;
+
+    public  GameObject      DecorationScrollChimney;
+    public  int             DecorationCurrentChimneySelected;
+    public  GameObject      DecorationNextChimney;
+    public  GameObject      DecorationPrevChimney;
+    public  Text            DecorationTextChimney;
+
+    public  GameObject      DecorationScrollGod;
+    public  int             DecorationCurrentGodSelected;
+    public  GameObject      DecorationNextGod;
+    public  GameObject      DecorationPrevGod;
+    public  Text            DecorationTextGod;
+
+    public  GameObject      DecorationScrollBanner;
+    public  int             DecorationCurrentBannerSelected;
+    public  GameObject      DecorationNextBanner;
+    public  GameObject      DecorationPrevBanner;
+    public  Text            DecorationTextBanner;
+
+    public  GameObject      DecorationScrollWeapons;
+    public  int             DecorationCurrentWeaponsSelected;
+    public  GameObject      DecorationNextWeapons;
+    public  GameObject      DecorationPrevWeapons;
+    public  Text            DecorationTextWeapons;
+
+    public  GameObject      DecorationScrollCarpet;
+    public  int             DecorationCurrentCarpetSelected;
+    public  GameObject      DecorationNextCarpet;
+    public  GameObject      DecorationPrevCarpet;
+    public  Text            DecorationTextCarpet;
+
+    public  GameObject      PanelRedQG;
+    public  GameObject      DecorationRedBannerWeapons;
+    public  GameObject      DecorationRedBannerCrowns;
+    public  GameObject      DecorationRedShields;
+    public  GameObject      DecorationRedWeapons;
+    public  GameObject      DecorationRedGodOfWar;
+    public  GameObject      DecorationRedGodOfTime;
+    public  GameObject      DecorationRedGodOfLife;
+    public  GameObject      DecorationRedBear;
+    public  GameObject      DecorationRedCarpet;
+    
+    public  GameObject      PanelBlueQG;
+    public  GameObject      DecorationBlueBannerWeapons;
+    public  GameObject      DecorationBlueBannerCrowns;
+    public  GameObject      DecorationBlueShields;
+    public  GameObject      DecorationBlueWeapons;
+    public  GameObject      DecorationBlueGodOfWar;
+    public  GameObject      DecorationBlueGodOfTime;
+    public  GameObject      DecorationBlueGodOfLife;
+    public  GameObject      DecorationBlueBear;
+    public  GameObject      DecorationBlueCarpet;
+
+    public  GameObject      PanelYellowQG;
+    public  GameObject      DecorationYellowBannerWeapons;
+    public  GameObject      DecorationYellowBannerCrowns;
+    public  GameObject      DecorationYellowShields;
+    public  GameObject      DecorationYellowWeapons;
+    public  GameObject      DecorationYellowGodOfWar;
+    public  GameObject      DecorationYellowGodOfTime;
+    public  GameObject      DecorationYellowGodOfLife;
+    public  GameObject      DecorationYellowBear;
+    public  GameObject      DecorationYellowCarpet;
 
     public  bool            isInGame;
     public  bool            gamePaused;
@@ -210,6 +338,14 @@ public class GameManager : MonoBehaviour
     public  GameObject      scrollCharacterPanel1;
     public  GameObject      scrollCharacterPanel2;
     public  GameObject      scrollCharacterPanel3;
+    public  GameObject      scrollRunePanel1;
+    public  GameObject      scrollRunePanel2;
+    public  GameObject      scrollRunePanel3;
+    public  int             runeSelected;
+    public  Sprite          runeDamageSprite;
+    public  Sprite          runeCeleritySprite;
+    public  Sprite          runeHealSprite;
+    public  Image           HUDRuneImage;
     public  GameObject      scrollCharacterValidate;
     public  GameObject      scrollCharacterReturn;
 
@@ -271,6 +407,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      textStockManaPotion;
 
     public  GameObject      agent1Panel;
+    public  GameObject      agent1Portrait;
     public  GameObject[]    agent1Levels = new GameObject[10];
     public  GameObject      levelUpAgent1;
     public  Slider          agent1healthBarGreenHUD;
@@ -280,6 +417,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      agent1Potion3;
 
     public  GameObject      agent2Panel;
+    public  GameObject      agent2Portrait;
     public  GameObject[]    agent2Levels = new GameObject[10];
     public  GameObject      levelUpAgent2;
     public  Slider          agent2healthBarGreenHUD;
@@ -289,6 +427,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      agent2Potion3;
 
     public  GameObject      agent3Panel;
+    public  GameObject      agent3Portrait;
     public  GameObject[]    agent3Levels = new GameObject[10];
     public  GameObject      levelUpAgent3;
     public  Slider          agent3healthBarGreenHUD;
@@ -307,6 +446,9 @@ public class GameManager : MonoBehaviour
     public  GameObject      bulleInfoSpell8;
     public  GameObject      bulleInfoObject1;
     public  GameObject      bulleInfoObject2;
+    public  GameObject      bulleInfoObject3;
+    public  GameObject      bulleInfoObject3Title;
+    public  GameObject      bulleInfoObject3Text;
 
     public  GameObject      cdSpell1;
     public  GameObject      cdSpell2;
@@ -318,6 +460,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      cdSpell8;
     public  GameObject      cdObject1;
     public  GameObject      cdObject2;
+    public  GameObject      cdObject3;
 
     void Awake ()
     {
@@ -413,8 +556,13 @@ public class GameManager : MonoBehaviour
     public void SetActiveBulleInfoSpell1()
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
+
         if (showSpellsInfo == true)
+        {
+            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell1 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+            GetComponent<TradManager>().HUDTextDescriptionSpell1.text = GetComponent<TradManager>().EnglishElementalSpellInGame1_1 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame1_2;
             bulleInfoSpell1.SetActive(true);
+        }
     }
 
     public void SetInactiveBulleInfoSpell1()
@@ -427,7 +575,11 @@ public class GameManager : MonoBehaviour
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
+        {
+            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell2 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().thunderboltStacksBonus;
+            GetComponent<TradManager>().HUDTextDescriptionSpell2.text = GetComponent<TradManager>().EnglishElementalSpellInGame2_1 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame2_2;
             bulleInfoSpell2.SetActive(true);
+        }
     }
 
     public void SetInactiveBulleInfoSpell2()
@@ -440,7 +592,11 @@ public class GameManager : MonoBehaviour
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
+        {
+            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell3 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+            GetComponent<TradManager>().HUDTextDescriptionSpell3.text = GetComponent<TradManager>().EnglishElementalSpellInGame3_1 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().numberShards + GetComponent<TradManager>().EnglishElementalSpellInGame3_2 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame3_3;
             bulleInfoSpell3.SetActive(true);
+        }
     }
 
     public void SetInactiveBulleInfoSpell3()
@@ -453,7 +609,11 @@ public class GameManager : MonoBehaviour
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
+        {
+            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell4 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+            GetComponent<TradManager>().HUDTextDescriptionSpell4.text = GetComponent<TradManager>().EnglishElementalSpellInGame4_1 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame4_2;
             bulleInfoSpell4.SetActive(true);
+        }
     }
 
     public void SetInactiveBulleInfoSpell4()
@@ -466,7 +626,11 @@ public class GameManager : MonoBehaviour
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
+        {
+            float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
+            GetComponent<TradManager>().HUDTextDescriptionSpell5.text = GetComponent<TradManager>().EnglishElementalSpellInGame5_1 + duration + GetComponent<TradManager>().EnglishElementalSpellInGame5_2;
             bulleInfoSpell5.SetActive(true);
+        }
     }
 
     public void SetInactiveBulleInfoSpell5()
@@ -479,7 +643,12 @@ public class GameManager : MonoBehaviour
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
+        {
+            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell6 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+            float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
+            GetComponent<TradManager>().HUDTextDescriptionSpell6.text = GetComponent<TradManager>().EnglishElementalSpellInGame6_1 + duration + GetComponent<TradManager>().EnglishElementalSpellInGame6_2 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame6_3;
             bulleInfoSpell6.SetActive(true);
+        }
     }
 
     public void SetInactiveBulleInfoSpell6()
@@ -492,7 +661,12 @@ public class GameManager : MonoBehaviour
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
+        {
+            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell7 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+            float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
+            GetComponent<TradManager>().HUDTextDescriptionSpell7.text = GetComponent<TradManager>().EnglishElementalSpellInGame7_1 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame7_2 + duration + GetComponent<TradManager>().EnglishElementalSpellInGame7_3;
             bulleInfoSpell7.SetActive(true);
+        }
     }
 
     public void SetInactiveBulleInfoSpell7()
@@ -505,7 +679,11 @@ public class GameManager : MonoBehaviour
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
+        {
+            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell8 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+            GetComponent<TradManager>().HUDTextDescriptionSpell8.text = GetComponent<TradManager>().EnglishElementalSpellInGame8_1 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame8_2;
             bulleInfoSpell8.SetActive(true);
+        }
     }
 
     public void SetInactiveBulleInfoSpell8()
@@ -519,7 +697,11 @@ public class GameManager : MonoBehaviour
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
+        {
+            int healCount = 20 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusHealing;
+            GetComponent<TradManager>().HUDTextDescriptionPotion1.text = GetComponent<TradManager>().EnglishPotionInGame1_1 + healCount + GetComponent<TradManager>().EnglishPotionInGame1_2;
             bulleInfoObject1.SetActive(true);
+        }
     }
 
     public void SetInactiveBulleInfoObject1()
@@ -532,13 +714,50 @@ public class GameManager : MonoBehaviour
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
+        {
+            GetComponent<TradManager>().HUDTextDescriptionPotion2.text = GetComponent<TradManager>().EnglishPotionInGame2;
             bulleInfoObject2.SetActive(true);
+        }
     }
 
     public void SetInactiveBulleInfoObject2()
     {
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
         bulleInfoObject2.SetActive(false);
+    }
+
+    public void SetActiveBulleInfoObject3()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
+        if (showSpellsInfo == true)
+        {
+            int playerLevel = mapManager.GetComponent<MapManager>().player.GetComponent<StatsPlayer>().level;
+
+            if (runeSelected == 0)
+            {
+                bulleInfoObject3Title.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneDamageTitle;
+                bulleInfoObject3Text.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneDamageInGame1_1 + playerLevel + GetComponent<TradManager>().EnglishRuneDamageInGame1_2;
+            }
+            else if (runeSelected == 1)
+            {
+                bulleInfoObject3Title.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneCelerityTitle;
+                bulleInfoObject3Text.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneCelerityInGame1_1 + (playerLevel * 2) + GetComponent<TradManager>().EnglishRuneCelerityInGame1_2;
+            }
+            else
+            {
+                bulleInfoObject3Title.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneHealTitle;
+                bulleInfoObject3Text.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneHealInGame1_1 + playerLevel + GetComponent<TradManager>().EnglishRuneHealInGame1_2;
+            }
+
+            bulleInfoObject3.SetActive(true);
+        }
+
+    }
+
+    public void SetInactiveBulleInfoObject3()
+    {
+        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = true;
+        bulleInfoObject3.SetActive(false);
     }
 
     public void DesactiveAllBulles()

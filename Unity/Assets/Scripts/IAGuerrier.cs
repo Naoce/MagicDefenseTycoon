@@ -31,14 +31,14 @@ public class IAGuerrier : MonoBehaviour
     private GameObject  gm;
     private GameObject  gameManager;
     public  Vector2     newPos;
-    public  GameObject  projectileMagic;
+    public  GameObject  projectile;
     public  GameObject  projectileCheck;
     public  float       range;
     public  int         currentNumeroAnim;
-	public	float		timer;
     public  float		animTime;
     public  float       animAttackCD;
     public  float       animDeathCD;
+    public  float       timer;
     public  float       attackTimer;
     public  float       attackCooldown;
     public  float       attackEffectCD; //timer of effect of the attack because it can be before the end of the anim
@@ -292,20 +292,17 @@ public class IAGuerrier : MonoBehaviour
                     attackLanded == false)
                 {
                     attackLanded = true;
-                    if (target != null)
+                    if (targetAttacking != null)
                     {
-                        GameObject obj = (GameObject)Instantiate(hitSprite, target.transform.position, transform.rotation);
-                        obj.transform.SetParent(target.transform);
+                        GameObject obj = (GameObject)Instantiate(hitSprite, targetAttacking.transform.position, transform.rotation);
+                        obj.transform.SetParent(targetAttacking.transform);
 
-                        if (targetAttacking == target)
-                        {
-                            if (target.tag == "Player")
-                                player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position);
-                            else if (target.tag == "AgentGuerrier")
-                                target.GetComponent<IAGuerrierAgent>().TakeDamage(damage[difficulty], transform.position);
-                            else if (target.tag == "Defense")
-                                target.GetComponent<Defense>().TakeDamage(damage[difficulty]);
-                        }
+                        if (targetAttacking.tag == "Player")
+                            player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position, gameObject);
+                        else if (targetAttacking.tag == "AgentGuerrier")
+                            targetAttacking.GetComponent<IAGuerrierAgent>().TakeDamage(damage[difficulty], transform.position);
+                        else if (targetAttacking.tag == "Defense")
+                            targetAttacking.GetComponent<Defense>().TakeDamage(damage[difficulty]);
                     }
                 }
 
@@ -326,7 +323,7 @@ public class IAGuerrier : MonoBehaviour
                 if (targetAttacking == target)
                 {
                     if (target.tag == "Player")
-                        player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position);
+                        player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position, gameObject);
                     else if (target.tag == "AgentGuerrier")
                         target.GetComponent<IAGuerrierAgent>().TakeDamage(damage[difficulty], transform.position);
                     else if (target.tag == "Defense")
@@ -339,7 +336,7 @@ public class IAGuerrier : MonoBehaviour
         {
             isAttacking = false;
             canAttack = false;
-            timer = animTime;
+            attackTimer = animAttackCD * rightAttackSprites.Length;
 
             if (rightSide == true)
             {
@@ -410,13 +407,13 @@ public class IAGuerrier : MonoBehaviour
 
         if (GetComponent<Enemy>().isDead == false)
         {
-            obj = (GameObject)Instantiate(projectileMagic, newPos, transform.rotation);
+            obj = (GameObject)Instantiate(projectile, newPos, transform.rotation);
             obj.GetComponent<ProjectileEnemy>().GetPos(targetPos, damage[difficulty], directionAttack, gameObject);
         }
 
         isAttacking = false;
         canAttack = false;
-        timer = animTime;
+        attackTimer = animAttackCD * rightAttackSprites.Length;
 
         if (rightSide == true)
         {

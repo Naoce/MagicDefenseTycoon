@@ -4,6 +4,11 @@ using System.Collections;
 public class Capture : MonoBehaviour
 {
     public  GameObject  mapManager;
+    public  GameObject  CaptureObj;
+    public  Sprite      Sprite2;
+    public  Sprite      Sprite3;
+    public  Sprite      Sprite4;
+    public  Sprite      Sprite5;
     private int         currHP;
     public  int         maxHP;
     private int         lastDragonTaken = -1;
@@ -21,9 +26,21 @@ public class Capture : MonoBehaviour
             currHP -= damage;
             if (currHP < 0)
                 currHP = 0;
+
+            if ((float)currHP / maxHP <= 0.75f &&
+                (float)currHP / maxHP > 0.5f)
+                CaptureObj.GetComponent<SpriteRenderer>().sprite = Sprite2;
+            else if ((float)currHP / maxHP <= 0.5f &&
+                     (float)currHP / maxHP > 0.25f)
+                CaptureObj.GetComponent<SpriteRenderer>().sprite = Sprite3;
+            else if ((float)currHP / maxHP <= 0.25f &&
+                    (float)currHP / maxHP > 0f)
+                CaptureObj.GetComponent<SpriteRenderer>().sprite = Sprite4;
+
             mapManager.GetComponent<MapManager>().gm.GetComponent<GameManager>().CaptureTakeDamage(currHP, maxHP);
             if (currHP == 0)
             {
+                CaptureObj.GetComponent<SpriteRenderer>().sprite = Sprite5;
                 if (mapManager.GetComponent<MapManager>().IsEnemyAlreadyDead(GetComponent<Enemy>().id) == false)
                 {
                     mapManager.GetComponent<MapManager>().FillDeadList(GetComponent<Enemy>().id);

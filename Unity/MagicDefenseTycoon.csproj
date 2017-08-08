@@ -114,6 +114,7 @@
     <Compile Include="Assets\Scripts\StatsPlayer.cs" />
     <Compile Include="Assets\Scripts\Thunderbolt.cs" />
     <Compile Include="Assets\Scripts\Tornado.cs" />
+    <Compile Include="Assets\Scripts\TradManager.cs" />
     <Compile Include="Assets\Scripts\UsingSpell.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
