@@ -276,7 +276,8 @@ public class GameManager : MonoBehaviour
     public  bool            isInOptionsFromIntro;
     public  bool            bloodless;
     public  bool            showSpellsInfo;
-    public  bool            wasdMode;
+    public  bool            englishLanguage;
+    public  bool            windowed;
     public  int             coins;
     public  int             prestige;
 
@@ -387,6 +388,8 @@ public class GameManager : MonoBehaviour
     public  GameObject      scrollOptions4;
     public  GameObject      scrollOptions5;
     public  GameObject      scrollOptions6;
+    public  GameObject      scrollOptions7;
+    public  GameObject      scrollOptions8;
     public  GameObject      smartCastIcon;
     public  GameObject      smartCastText;
     public  GameObject      bloodlessIcon;
@@ -402,6 +405,9 @@ public class GameManager : MonoBehaviour
     public  GameObject      wasdModeButton;
     public  GameObject      wasdModeText;
     public  GameObject      healthPotionHotkeyText;
+    public  GameObject      windowedButton;
+    public  GameObject      windowedText;
+    public  GameObject      returnText;
 
     public  GameObject      textStockHealthPotion;
     public  GameObject      textStockManaPotion;
@@ -530,6 +536,19 @@ public class GameManager : MonoBehaviour
         {
             showSpellsInfo = true;
             showSpellsInfoIcon.GetComponent<Image>().sprite = GetComponent<Buttons>().boxChecked;
+        }
+
+        if (PlayerPrefs.GetInt("Windowed") == 0)
+        {
+            GetComponent<GameManager>().windowed = false;
+            windowedButton.GetComponent<Image>().sprite = GetComponent<Buttons>().boxNotChecked;
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            GetComponent<GameManager>().windowed = true;
+            windowedButton.GetComponent<Image>().sprite = GetComponent<Buttons>().boxChecked;
+            Screen.fullScreen = false;
         }
 
         if (PlayerPrefs.GetInt("Load1Created") == 1)

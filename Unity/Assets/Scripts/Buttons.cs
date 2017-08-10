@@ -21,38 +21,43 @@ public class Buttons : MonoBehaviour
         if (PlayerPrefs.GetInt("WASDModeSet") == 0)
         {
             PlayerPrefs.SetInt("WASDMode", 1);
-            GetComponent<GameManager>().wasdMode = true;
+            GetComponent<GameManager>().englishLanguage = true;
             GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxChecked;
         }
         else
         {
             if (PlayerPrefs.GetInt("WASDMode") == 1)
             {
-                GetComponent<GameManager>().wasdMode = true;
+                GetComponent<GameManager>().englishLanguage = true;
                 GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxChecked;
                 GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "Q";
             }
             else
             {
-                GetComponent<GameManager>().wasdMode = false;
+                GetComponent<GameManager>().englishLanguage = false;
                 GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxNotChecked;
                 GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "A";
             }
         }
-
     }
 
-    private void Update()
+    public void CloseOptions()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) &&
-            GetComponent<GameManager>().isInOptionsFromIntro == true)
+        if (Time.timeScale == 1)
         {
             GetComponent<GameManager>().hudPanelOptions.SetActive(false);
             GetComponent<GameManager>().panelIntro.SetActive(true);
             StartCoroutine(AnimationPanelIntro());
             GetComponent<GameManager>().isInOptionsFromIntro = false;
         }
-    } 
+        else
+        {
+            GetComponent<GameManager>().isInOptions = false;
+            GetComponent<GameManager>().hudPanelMenu.SetActive(true);
+            GetComponent<Buttons>().AnimationPanelHUDMenu();
+            GetComponent<GameManager>().hudPanelOptions.SetActive(false);
+        }
+    }
 
     public void Resume ()
     {
@@ -155,11 +160,6 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().panelMenu.SetActive(false);
         GetComponent<GameManager>().hudInGame.SetActive(true);
         AnimationPanelHUDMenu();
-    }
-
-    public void LeaveOptions()
-    {
-        GetComponent<GameManager>().mapManager.GetComponent<MapManager>().CloseOptions();
     }
 
     public void PlayAgain()
@@ -334,6 +334,24 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("SpellsInfo", 1);
             GetComponent<GameManager>().showSpellsInfo = true;
             obj.GetComponent<Image>().sprite = boxChecked;
+        }
+    }
+
+    public void WindowedModeTrigger(GameObject obj)
+    {
+        if (GetComponent<GameManager>().windowed == true)
+        {
+            PlayerPrefs.SetInt("Windowed", 0);
+            GetComponent<GameManager>().windowed = false;
+            obj.GetComponent<Image>().sprite = boxNotChecked;
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Windowed", 1);
+            GetComponent<GameManager>().windowed = true;
+            obj.GetComponent<Image>().sprite = boxChecked;
+            Screen.fullScreen = false;
         }
     }
 
@@ -3708,11 +3726,11 @@ public class Buttons : MonoBehaviour
 
     public void SwitchWASD()
     {
-        if (GetComponent<GameManager>().wasdMode == false)
+        if (GetComponent<GameManager>().englishLanguage == false)
         {
             PlayerPrefs.SetInt("WASDMode", 1);
             PlayerPrefs.SetInt("WASDModeSet", 1);
-            GetComponent<GameManager>().wasdMode = true;
+            GetComponent<GameManager>().englishLanguage = true;
             GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxChecked;
             GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "Q";
         }
@@ -3720,7 +3738,7 @@ public class Buttons : MonoBehaviour
         {
             PlayerPrefs.SetInt("WASDMode", 0);
             PlayerPrefs.SetInt("WASDModeSet", 1);
-            GetComponent<GameManager>().wasdMode = false;
+            GetComponent<GameManager>().englishLanguage = false;
             GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxNotChecked;
             GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "A";
         }
@@ -3912,6 +3930,11 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().scrollOptions6.GetComponent<Animator>().SetBool("StartAnim", true);
         GetComponent<GameManager>().wasdModeButton.SetActive(false);
         GetComponent<GameManager>().wasdModeText.SetActive(false);
+        GetComponent<GameManager>().scrollOptions7.GetComponent<Animator>().SetBool("StartAnim", true);
+        GetComponent<GameManager>().windowedButton.SetActive(false);
+        GetComponent<GameManager>().windowedText.SetActive(false);
+        GetComponent<GameManager>().scrollOptions8.GetComponent<Animator>().SetBool("StartAnim", true);
+        GetComponent<GameManager>().returnText.SetActive(false);
     }
 
     public void EndAnimationPanelOptions()
@@ -3930,6 +3953,9 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().volumeSFXText.SetActive(true);
         GetComponent<GameManager>().wasdModeButton.SetActive(true);
         GetComponent<GameManager>().wasdModeText.SetActive(true);
+        GetComponent<GameManager>().windowedButton.SetActive(true);
+        GetComponent<GameManager>().windowedText.SetActive(true);
+        GetComponent<GameManager>().returnText.SetActive(true);
     }
 
     public void LoadFile1()

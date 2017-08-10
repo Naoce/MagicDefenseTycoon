@@ -185,22 +185,6 @@ public class MapManager : MonoBehaviour
             else if (mapID == 5)
                 UpdateMap5();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) &&
-                gm.GetComponent<GameManager>().gamePaused == true &&
-                gm.GetComponent<GameManager>().gameOver == false &&
-                gm.GetComponent<GameManager>().isInMenu == true &&
-                gm.GetComponent<GameManager>().isInOptions == false)
-        {
-            Resume();
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) &&
-                gm.GetComponent<GameManager>().gamePaused == true &&
-                gm.GetComponent<GameManager>().gameOver == false &&
-                gm.GetComponent<GameManager>().isInMenu == true &&
-                gm.GetComponent<GameManager>().isInOptions == true)
-        {
-            CloseOptions();
-        }
     }
 
     void UpdateMap0()
@@ -576,14 +560,6 @@ public class MapManager : MonoBehaviour
         gm.GetComponent<GameManager>().hudPanelMenu.SetActive(false);
         gm.GetComponent<GameManager>().hudPanelOptions.SetActive(false);
         playerManager.GetComponent<PlayerManager>().CheckMouse();
-    }
-
-    public void CloseOptions()
-    {
-        gm.GetComponent<GameManager>().isInOptions = false;
-        gm.GetComponent<GameManager>().hudPanelMenu.SetActive(true);
-        gm.GetComponent<Buttons>().AnimationPanelHUDMenu();
-        gm.GetComponent<GameManager>().hudPanelOptions.SetActive(false);
     }
 
     public void PopEnemy(int idToCheck)

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TradManager : MonoBehaviour
 {
+    private bool isInEnglish = false;
+
     public Text HUDTextDescriptionSpell1;
     public Text HUDTextDescriptionSpell2;
     public Text HUDTextDescriptionSpell3;
@@ -17,13 +19,69 @@ public class TradManager : MonoBehaviour
     public Text HUDTextDescriptionPotion2;
     public Text HUDTextDescriptionRune;
 
-    public string EnglishRuneDamageTitle;
-    public string EnglishRuneCelerityTitle;
-    public string EnglishRuneHealTitle;
-    public string EnglishRuneDamageInfo;
-    public string EnglishRuneCelerityInfo;
-    public string EnglishRuneHealInfo;
+    // A Modifier lors d'un changement de langue - Debut
+    public Text MenuTextIntroPlay;
+    public Text MenuTextQuit;
 
+    public Text MenuTextSave1;
+    public Text MenuTextSave2;
+    public Text MenuTextSave3;
+    public Text MenuTextSaveDelete1;
+    public Text MenuTextSaveDelete2;
+    public Text MenuTextSaveDelete3;
+    public Text MenuTextSaveCancel1;
+    public Text MenuTextSaveCancel2;
+    public Text MenuTextSaveCancel3;
+    public Text MenuTextSaveReturn;
+
+    public Text MenuTextCharacterElemental;
+    public Text MenuTextCharacterDemonic;
+    public Text MenuTextCharacterRadiant;
+    public Text MenuTextCharacterRuneDamage;
+    public Text MenuTextCharacterRuneCelerity;
+    public Text MenuTextCharacterRuneHeal;
+    public Text MenuTextCharacterConfirm;
+    public Text MenuTextCharacterReturn;
+
+    public Text MenuTextDifficultyEasy;
+    public Text MenuTextDifficultyHard;
+    public Text MenuTextDifficultyReturn;
+
+    public Text MenuTextMainMenuTavern;
+    public Text MenuTextMainMenuTower;
+    public Text MenuTextMainMenuReturn;
+
+    public Text MenuTextMissionsFight;
+    public Text MenuTextMissionsReturn;
+
+    public Text MenuTextTavernRecruit;
+    public Text MenuTextTavernReturn;
+
+    public Text MenuTextQGRoster;
+    public Text MenuTextQGSkills;
+    public Text MenuTextQGDeco;
+    public Text MenuTextQGReturn;
+
+    public Text MenuTextRosterDismiss;
+
+    public Text MenuTextSkillsLevel;
+    public Text MenuTextSkillsLearn;
+
+    public Text MenuTextDecoBuy;
+
+    public Text MenuTextInGameResume;
+    public Text MenuTextInGameRestart;
+    public Text MenuTextInGameForfeit;
+
+    public Text MenuTextOptionsSmartcast;
+    public Text MenuTextOptionsBloodless;
+    public Text MenuTextOptionsPopUp;
+    public Text MenuTextOptionsLanguage;
+    public Text MenuTextOptionsWindowed;
+    public Text MenuTextOptionsReturn;
+
+    public Text HUDTextTryAgain;
+    // A Modifier lors d'un changement de langue - Fin
 
     public string EnglishElementalSpellInGame1_1;
     public string EnglishElementalSpellInGame1_2;
@@ -139,50 +197,11 @@ public class TradManager : MonoBehaviour
     public string EnglishElementalPassive6_2;
     public string EnglishElementalPassive6_3;
 
-
-    public string EnglishDecorationTitleChimney1;
-    public string EnglishDecorationTitleChimney2;
-    public string EnglishDecorationTitleChimney3;
-
-    public string EnglishDecorationTitleGod1;
-    public string EnglishDecorationTitleGod2;
-    public string EnglishDecorationTitleGod3;
-
-    public string EnglishDecorationTitleBanner1;
-    public string EnglishDecorationTitleBanner2;
-
-    public string EnglishDecorationTitleEquipment1;
-    public string EnglishDecorationTitleEquipment2;
-
-    public string EnglishDecorationTitleCarpet1;
-    public string EnglishDecorationTitleCarpet2;
-
-    public string EnglishDecorationDescriptionChimney1;
-    public string EnglishDecorationDescriptionChimney2;
-    public string EnglishDecorationDescriptionChimney3;
-
-    public string EnglishDecorationDescriptionGod1;
-    public string EnglishDecorationDescriptionGod2;
-    public string EnglishDecorationDescriptionGod3;
-
-    public string EnglishDecorationDescriptionBanner1;
-    public string EnglishDecorationDescriptionBanner2;
-
-    public string EnglishDecorationDescriptionEquipment1;
-    public string EnglishDecorationDescriptionEquipment2;
-
-    public string EnglishDecorationDescriptionCarpet1;
-    public string EnglishDecorationDescriptionCarpet2;
-
     void Start()
     {
         EnglishRuneDamageTitle = "War rune";
         EnglishRuneCelerityTitle = "Celerity rune";
         EnglishRuneHealTitle = "Healing rune";
-        EnglishRuneDamageInfo = "Every 10 seconds, the next spell cast will deal bonus damage, depending on the level of the mage.";
-        EnglishRuneCelerityInfo = "The mage runs faster, depending on his level.";
-        EnglishRuneHealInfo = "Every 15 seconds, the mage recovers some health points depending, on his level.";
-
 
         EnglishElementalSpellInGame1_1 = "Shoots a fireball that deals ";
         EnglishElementalSpellInGame1_2 = " damage to the first enemy hit.";
@@ -297,160 +316,543 @@ public class TradManager : MonoBehaviour
         EnglishElementalPassive6_1 = "Level 1\nIce spells deal 1 additional point of damage.\nYou can only learn one mastery skill.";
         EnglishElementalPassive6_2 = "Level 2\nIce spells deal 2 additional points of damage.\nYou can only learn one mastery skill.";
         EnglishElementalPassive6_3 = "Level 3\nIce spells deal 3 additional points of damage.\nYou can only learn one mastery skill.";
+    }
 
+    public void ResetTexts()
+    {
+        isInEnglish = GetComponent<GameManager>().englishLanguage;
+        MenuTextIntroPlay.text = GetTextPlay();
+        MenuTextQuit.text = GetTextQuit();
 
-        EnglishDecorationTitleChimney1 = "Chimney, red flame";
-        EnglishDecorationTitleChimney2 = "Chimney, blue flame";
-        EnglishDecorationTitleChimney3 = "Chimney, yellow flame";
+        MenuTextSave1.text = GetTextEmptySave();
+        MenuTextSave2.text = GetTextEmptySave();
+        MenuTextSave3.text = GetTextEmptySave();
+        MenuTextSaveDelete1.text = GetTextDelete();
+        MenuTextSaveDelete2.text = GetTextDelete();
+        MenuTextSaveDelete3.text = GetTextDelete();
+        MenuTextSaveCancel1.text = GetTextCancel();
+        MenuTextSaveCancel2.text = GetTextCancel();
+        MenuTextSaveCancel3.text = GetTextCancel();
+        MenuTextSaveReturn.text = GetTextReturn();
 
-        EnglishDecorationTitleGod1 = "God of War";
-        EnglishDecorationTitleGod2 = "God of Time";
-        EnglishDecorationTitleGod3 = "God of Life";
+        MenuTextCharacterElemental.text = GetTextElemental();
+        MenuTextCharacterDemonic.text = GetTextDemonic();
+        MenuTextCharacterRadiant.text = GetTextRadiant();
+        MenuTextCharacterRuneDamage.text = GetTextRuneDamage();
+        MenuTextCharacterRuneCelerity.text = GetTextRuneCelerity();
+        MenuTextCharacterRuneHeal.text = GetTextRuneHeal();
+        MenuTextCharacterConfirm.text = GetTextConfirm();
+        MenuTextCharacterReturn.text = GetTextReturn();
 
-        EnglishDecorationTitleBanner1 = "Weapons banners";
-        EnglishDecorationTitleBanner2 = "Crowns banners";
+        MenuTextDifficultyEasy.text = GetTextEasy();
+        MenuTextDifficultyHard.text = GetTextHard();
+        MenuTextDifficultyReturn.text = GetTextReturn();
 
-        EnglishDecorationTitleEquipment1 = "Weapon racks";
-        EnglishDecorationTitleEquipment2 = "Shield racks";
+        MenuTextMainMenuTavern.text = GetTextTavern();
+        MenuTextMainMenuTower.text = GetTextTower();
+        MenuTextMainMenuReturn.text = GetTextReturn();
 
-        EnglishDecorationTitleCarpet1 = "Bear carpet";
-        EnglishDecorationTitleCarpet2 = "Crowns carpet";
+        MenuTextMissionsFight.text = GetTextFight();
+        MenuTextMissionsReturn.text = GetTextReturn();
 
-        EnglishDecorationDescriptionChimney1 = EnglishDecorationTitleChimney1 + "\n\nEvery spell cast by the player and attack from allies will do 1 additional point of damage.\n\nPrice : 20 gold coins";
-        EnglishDecorationDescriptionChimney2 = EnglishDecorationTitleChimney2 + "\n\nEvery attack against the player or his allies will do 1 less point of damage.\n\nPrice : 20 gold coins";
-        EnglishDecorationDescriptionChimney3 = EnglishDecorationTitleChimney3 + "\n\nPrestige +10.\n\nPrice : 20 gold coins";
+        MenuTextTavernRecruit.text = GetTextRecruit();
+        MenuTextTavernReturn.text = GetTextReturn();
 
-        EnglishDecorationDescriptionGod1 = EnglishDecorationTitleGod1 + "\n\nEvery spell cast by the player and attack from allies will do 1 additional point of damage.\n\nPrice : 30 gold coins";
-        EnglishDecorationDescriptionGod2 = EnglishDecorationTitleGod2 + "\n\nIncrease the duration of the effects caused by the player by 25%.\n\nPrice : 50 gold coins";
-        EnglishDecorationDescriptionGod3 = EnglishDecorationTitleGod3 + "\n\nIncrease the treatments received by the player and his allies by an amount dependant on the level of the player.\n\nPrice : 40 gold coins";
+        MenuTextQGRoster.text = GetTextRoster();
+        MenuTextQGSkills.text = GetTextSkills();
+        MenuTextQGDeco.text = GetTextDeco();
+        MenuTextQGReturn.text = GetTextReturn();
 
-        EnglishDecorationDescriptionBanner1 = EnglishDecorationTitleBanner1 + "\n\nEvery spell cast by the player and attack from allies will do 1 additional point of damage.\n\nPrice : 30 gold coins";
-        EnglishDecorationDescriptionBanner2 = EnglishDecorationTitleBanner2 + "\n\nPrestige + 10.\n\nPrice: 30 gold coins";
+        MenuTextRosterDismiss.text = GetTextDismiss();
 
-        EnglishDecorationDescriptionEquipment1 = EnglishDecorationTitleEquipment1 + "\n\nEvery spell cast by the player and attack from allies will do 1 additional point of damage.\n\nPrice : 30 gold coins";
-        EnglishDecorationDescriptionEquipment2 = EnglishDecorationTitleEquipment2 + "\n\nEvery attack against the player or his allies will do 1 less point of damage.\n\nPrice : 30 gold coins";
+        MenuTextSkillsLevel.text = GetTextLevel();
+        MenuTextSkillsLearn.text = GetTextLearn();
 
-        EnglishDecorationDescriptionCarpet1 = EnglishDecorationTitleCarpet1 + "\n\nEvery spell cast by the player and attack from allies will do 1 additional point of damage.\n\nPrice : 20 gold coins";
-        EnglishDecorationDescriptionCarpet2 = EnglishDecorationTitleCarpet2 + "\n\nPrestige + 10.\n\nPrice: 30 gold coins";
+        MenuTextDecoBuy.text = GetTextDecoBuy();
+
+        MenuTextInGameResume.text = GetTextResume();
+        MenuTextInGameRestart.text = GetTextRestart();
+        MenuTextInGameForfeit.text = GetTextForfeit();
+
+        MenuTextOptionsSmartcast.text = GetTextSmartcast();
+        MenuTextOptionsBloodless.text = GetTextBloodless();
+        MenuTextOptionsPopUp.text = GetTextPopUp();
+        MenuTextOptionsLanguage.text = GetTextLanguage();
+        MenuTextOptionsWindowed.text = GetTextWindowed();
+        MenuTextOptionsReturn.text = GetTextReturn();
+
+        HUDTextTryAgain.text = GetTextTryAgain();
+    }
+
+    public string GetTextPlay()
+    {
+        if (isInEnglish)
+            return ("Play");
+        else
+            return ("Jouer");
+    }
+
+    public string GetTextQuit()
+    {
+        if (isInEnglish)
+            return ("Quit");
+        else
+            return ("Quitter");
+    }
+
+    public string GetTextEmptySave()
+    {
+        if (isInEnglish)
+            return ("Empty save");
+        else
+            return ("Sauvegarde vide");
+    }
+
+    public string GetTextDelete()
+    {
+        if (isInEnglish)
+            return ("Delete save");
+        else
+            return ("Détruire");
+    }
+
+    public string GetTextCancel()
+    {
+        if (isInEnglish)
+            return ("Cancel");
+        else
+            return ("Annuler");
+    }
+
+    public string GetTextReturn()
+    {
+        if (isInEnglish)
+            return ("Return");
+        else
+            return ("Retour");
+    }
+
+    public string GetTextElemental()
+    {
+        if (isInEnglish)
+            return ("The elemental mage makes use of elements as fire, electricity, ice and wind to fight his enemies.");
+        else
+            return ("Le mage élémentaire utilise le feu, la foudre, la glace et le vent pour combattre ses ennemis.");
+    }
+
+    public string GetTextDemonic()
+    {
+        if (isInEnglish)
+            return ("The demonic mage makes use of fear - based spells in order to kill his enemies by heart failure.");
+        else
+            return ("Le mage démoniaque utilise des sorts liés à la peur pour tuer ses ennemis d'une crise cardiaque.");
+    }
+
+    public string GetTextRadiant()
+    {
+        if (isInEnglish)
+            return ("The radiant mage makes use of light magic in order to heal and buff his allies.");
+        else
+            return ("Le mage lumineux utilise la magie de la lumière pour soigner et améliorer les statistiques de ses alliés.");
+    }
+
+    public string GetTextRuneDamage()
+    {
+        if (isInEnglish)
+            return ("Every 10 seconds, the next spell cast will deal bonus damage, depending on the level of the mage.");
+        else
+            return ("Toutes les 10 secondes, le prochain sort lancé infligera des dégâts bonus en fonction du niveau du mage.");
+    }
+
+    public string GetTextRuneCelerity()
+    {
+        if (isInEnglish)
+            return ("The mage runs faster, depending on his level.");
+        else
+            return ("Le mage court plus vite en fonction de son niveau.");
+    }
+
+    public string GetTextRuneHeal()
+    {
+        if (isInEnglish)
+            return ("Every 15 seconds, the mage recovers some health points depending, on his level.");
+        else
+            return ("Toutes les 15 secondes, le mage se soigne en fonction de son niveau.");
+    }
+
+    public string GetTextConfirm()
+    {
+        if (isInEnglish)
+            return ("Confirm");
+        else
+            return ("Confirmer");
+    }
+
+    public string GetTextEasy()
+    {
+        if (isInEnglish)
+            return ("Easy");
+        else
+            return ("Facile");
+    }
+
+    public string GetTextHard()
+    {
+        if (isInEnglish)
+            return ("Hard");
+        else
+            return ("Difficile");
+    }
+
+    public string GetTextTavern()
+    {
+        if (isInEnglish)
+            return ("Tavern");
+        else
+            return ("Taverne");
+    }
+
+    public string GetTextTower()
+    {
+        if (isInEnglish)
+            return ("Tower");
+        else
+            return ("Tour");
+    }
+
+    public string GetTextFight()
+    {
+        if (isInEnglish)
+            return ("Fight");
+        else
+            return ("Combattre");
+    }
+
+    public string GetTextRecruit()
+    {
+        if (isInEnglish)
+            return ("Recruit");
+        else
+            return ("Recruter");
+    }
+
+    public string GetTextRoster()
+    {
+        if (isInEnglish)
+            return ("Roster");
+        else
+            return ("Équipe");
+    }
+
+    public string GetTextSkills()
+    {
+        if (isInEnglish)
+            return ("Skills");
+        else
+            return ("Compétences");
+    }
+
+    public string GetTextDeco()
+    {
+        if (isInEnglish)
+            return ("Decoration");
+        else
+            return ("Décoration");
+    }
+
+    public string GetTextDismiss()
+    {
+        if (isInEnglish)
+            return ("Dismiss");
+        else
+            return ("Renvoyer");
+    }
+
+    public string GetTextLevel()
+    {
+        if (isInEnglish)
+            return ("Level");
+        else
+            return ("Niveau");
+    }
+
+    public string GetTextLearn()
+    {
+        if (isInEnglish)
+            return ("Learn");
+        else
+            return ("Apprendre");
+    }
+
+    public string GetTextDecoBuy()
+    {
+        if (isInEnglish)
+            return ("Buy");
+        else
+            return ("Acheter");
+    }
+
+    public string GetTextResume()
+    {
+        if (isInEnglish)
+            return ("Resume");
+        else
+            return ("Reprendre");
+    }
+
+    public string GetTextRestart()
+    {
+        if (isInEnglish)
+            return ("Restart");
+        else
+            return ("Recommencer");
+    }
+
+    public string GetTextForfeit()
+    {
+        if (isInEnglish)
+            return ("Forfeit");
+        else
+            return ("Abandonner");
+    }
+
+    public string GetTextSmartcast()
+    {
+        if (isInEnglish)
+            return ("Smartcast");
+        else
+            return ("Sort facilité");
+    }
+
+    public string GetTextBloodless()
+    {
+        if (isInEnglish)
+            return ("Bloodless");
+        else
+            return ("Sans sang");
+    }
+
+    public string GetTextPopUp()
+    {
+        if (isInEnglish)
+            return ("Spells pop-up");
+        else
+            return ("Bulles infos");
+    }
+
+    public string GetTextLanguage()
+    {
+        if (isInEnglish)
+            return ("English");
+        else
+            return ("Français");
+    }
+
+    public string GetTextWindowed()
+    {
+        if (isInEnglish)
+            return ("Windowed");
+        else
+            return ("Fenêtré");
+    }
+
+    public string GetTextTryAgain()
+    {
+        if (isInEnglish)
+            return ("Try again");
+        else
+            return ("Recommencer");
     }
 
     public string GetDecorationTitleChimney1()
     {
-        return (EnglishDecorationTitleChimney1);
+        if (isInEnglish)
+            return ("Chimney, red flame");
+        else
+            return ("Cheminée à flamme rouge");
     }
 
     public string GetDecorationTitleChimney2()
     {
-        return (EnglishDecorationTitleChimney2);
+        if (isInEnglish)
+            return ("Chimney, blue flame");
+        else
+            return ("Cheminée à flamme bleue");
     }
 
     public string GetDecorationTitleChimney3()
     {
-        return (EnglishDecorationTitleChimney3);
+        if (isInEnglish)
+            return ("Chimney, yellow flame");
+        else
+            return ("Cheminée à flamme jaune");
     }
 
     public string GetDecorationTitleGod1()
     {
-        return (EnglishDecorationTitleGod1);
+        if (isInEnglish)
+            return ("God of War");
+        else
+            return ("Dieu de la Guerre");
     }
 
     public string GetDecorationTitleGod2()
     {
-        return (EnglishDecorationTitleGod2);
+        if (isInEnglish)
+            return ("God of Time");
+        else
+            return ("Dieu du Temps");
     }
 
     public string GetDecorationTitleGod3()
     {
-        return (EnglishDecorationTitleGod3);
+        if (isInEnglish)
+            return ("God of Life");
+        else
+            return ("Dieu de la Vie");
     }
 
     public string GetDecorationTitleBanner1()
     {
-        return (EnglishDecorationTitleBanner1);
+        if (isInEnglish)
+            return ("Weapon banners");
+        else
+            return ("Bannières de guerre");
     }
 
     public string GetDecorationTitleBanner2()
     {
-        return (EnglishDecorationTitleBanner2);
+        if (isInEnglish)
+            return ("Crown banners");
+        else
+            return ("Bannières somptueuses");
     }
 
     public string GetDecorationTitleEquipment1()
     {
-        return (EnglishDecorationTitleEquipment1);
+        if (isInEnglish)
+            return ("Weapon racks");
+        else
+            return ("Râtelier d'armes");
     }
 
     public string GetDecorationTitleEquipment2()
     {
-        return (EnglishDecorationTitleEquipment2);
+        if (isInEnglish)
+            return ("Shield racks");
+        else
+            return ("Râtelier de boucliers");
     }
 
     public string GetDecorationTitleCarpet1()
     {
-        return (EnglishDecorationTitleCarpet1);
+        if (isInEnglish)
+            return ("Bear carpet");
+        else
+            return ("Tapis en peau d'ours");
     }
 
     public string GetDecorationTitleCarpet2()
     {
-        return (EnglishDecorationTitleCarpet2);
+        if (isInEnglish)
+            return ("Crown carpet");
+        else
+            return ("Tapis somptueux");
     }
 
     public string GetDecorationDescriptionChimney1()
     {
-        return (EnglishDecorationDescriptionChimney1);
+        if (isInEnglish)
+            return (GetDecorationTitleChimney1() + "\n\nEvery spell cast by the mage and attack from allies will do 1 additional point of damage.\n\nPrice : 20 gold coins");
+        else
+            return (GetDecorationTitleChimney1() + "\n\nChaque sort lancé par le mage et attaque des alliés fera 1 point de dégât supplémentaire.\n\nPrix : 20 pièces d'or.");
     }
 
     public string GetDecorationDescriptionChimney2()
     {
-        return (EnglishDecorationDescriptionChimney2);
+        if (isInEnglish)
+            return (GetDecorationTitleChimney2() + "\n\nEvery attack against the mage or his allies will do 1 less point of damage.\n\nPrice : 20 gold coins");
+        else
+            return (GetDecorationTitleChimney2() + "\n\nChaque attaque lancée contre le mage ou ses alliés fera 1 point de dégât en moins.\n\nPrix : 20 pièces d'or");
     }
 
     public string GetDecorationDescriptionChimney3()
     {
-        return (EnglishDecorationDescriptionChimney3);
+        if (isInEnglish)
+            return (GetDecorationTitleChimney3() + "\n\nPrestige +10.\n\nPrice : 20 gold coins");
+        else
+            return (GetDecorationTitleChimney3() + "\n\nPrestige +10.\n\nPrix : 20 pièces d'or");
     }
 
     public string GetDecorationDescriptionGod1()
     {
-        return (EnglishDecorationDescriptionGod1);
+        if (isInEnglish)
+            return (GetDecorationTitleGod1() + "\n\nEvery spell cast by the mage and attack from allies will do 1 additional point of damage.\n\nPrice : 30 gold coins");
+        else
+            return (GetDecorationTitleGod1() + "\n\nChaque sort lancé par le mage et attaque des alliés fera 1 point de dégât supplémentaire.\n\nPrix : 30 pièces d'or");
     }
 
     public string GetDecorationDescriptionGod2()
     {
-        return (EnglishDecorationDescriptionGod2);
+        if (isInEnglish)
+            return (GetDecorationTitleGod2() + "\n\nIncrease the duration of the effects caused by the mage by 25%.\n\nPrice : 50 gold coins");
+        else
+            return (GetDecorationTitleGod2() + "\n\nAugmente la durée des effets provoqués par le mage de 25%.\n\nPrix : 50 pièces d'or");
     }
 
     public string GetDecorationDescriptionGod3()
     {
-        return (EnglishDecorationDescriptionGod3);
+        if (isInEnglish)
+            return (GetDecorationTitleGod3() + "\n\nIncrease the treatments received by the mage and his allies by an amount dependant on the level of the mage.\n\nPrice : 40 gold coins");
+        else
+            return (GetDecorationTitleGod3() + "\n\nAméliore les soins reçus par le mage et ses alliés pour un montant dépendant du niveau du mage.\n\nPrix : 40 pièces d'or");
     }
 
     public string GetDecorationDescriptionBanner1()
     {
-        return (EnglishDecorationDescriptionBanner1);
+        if (isInEnglish)
+            return (GetDecorationTitleBanner1() + "\n\nEvery spell cast by the mage and attack from allies will do 1 additional point of damage.\n\nPrice : 30 gold coins");
+        else
+            return (GetDecorationTitleBanner1() + "\n\nChaque sort lancé par le mage et attaque des alliés fera 1 point de dégât supplémentaire.\n\nPrix : 30 pièces d'or");
     }
 
     public string GetDecorationDescriptionBanner2()
     {
-        return (EnglishDecorationDescriptionBanner2);
+        if (isInEnglish)
+            return (GetDecorationTitleBanner2() + "\n\nPrestige +10.\n\nPrice : 30 gold coins");
+        else
+            return (GetDecorationTitleBanner2() + "\n\nPrestige +10.\n\nPrix : 30 pièces d'or");
     }
 
     public string GetDecorationDescriptionEquipment1()
     {
-        return (EnglishDecorationDescriptionEquipment1);
+        if (isInEnglish)
+            return (GetDecorationTitleEquipment1() + "\n\nEvery spell cast by the mage and attack from allies will do 1 additional point of damage.\n\nPrice : 30 gold coins");
+        else
+            return (GetDecorationTitleEquipment1() + "\n\nChaque sort lancé par le mage et attaque des alliés fera 1 point de dégât supplémentaire.\n\nPrix : 30 pièces d'or");
     }
 
     public string GetDecorationDescriptionEquipment2()
     {
-        return (EnglishDecorationDescriptionEquipment2);
+        if (isInEnglish)
+            return (GetDecorationTitleEquipment2() + "\n\nEvery attack against the mage or his allies will do 1 less point of damage.\n\nPrice : 30 gold coins");
+        else
+            return (GetDecorationTitleEquipment2() + "\n\nChaque attaque lancée contre le mage ou ses alliés fera 1 point de dégât en moins.\n\nPrix : 30 pièces d'or");
     }
 
     public string GetDecorationDescriptionCarpet1()
     {
-        return (EnglishDecorationDescriptionCarpet1);
+        if (isInEnglish)
+            return (GetDecorationTitleCarpet1() + "\n\nEvery spell cast by the mage and attack from allies will do 1 additional point of damage.\n\nPrice : 20 gold coins");
+        else
+            return (GetDecorationTitleCarpet1() + "\n\nChaque sort lancé par le mage et attaque des alliés fera 1 point de dégât supplémentaire.\n\nPrix : 20 pièces d'or");
     }
 
     public string GetDecorationDescriptionCarpet2()
     {
-        return (EnglishDecorationDescriptionCarpet2);
+        if (isInEnglish)
+            return (GetDecorationTitleCarpet2() + "\n\nPrestige +10.\n\nPrice : 30 gold coins");
+        else
+            return (GetDecorationTitleCarpet2() + "\n\nPrestige +10.\n\nPrix : 30 pièces d'or");
     }
 }
