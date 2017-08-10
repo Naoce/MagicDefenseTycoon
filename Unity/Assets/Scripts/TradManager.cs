@@ -83,244 +83,10 @@ public class TradManager : MonoBehaviour
     public Text HUDTextTryAgain;
     // A Modifier lors d'un changement de langue - Fin
 
-    public string EnglishElementalSpellInGame1_1;
-    public string EnglishElementalSpellInGame1_2;
-
-    public string EnglishElementalSpellInGame2_1;
-    public string EnglishElementalSpellInGame2_2;
-
-    public string EnglishElementalSpellInGame3_1;
-    public string EnglishElementalSpellInGame3_2;
-    public string EnglishElementalSpellInGame3_3;
-
-    public string EnglishElementalSpellInGame4_1;
-    public string EnglishElementalSpellInGame4_2;
-
-    public string EnglishElementalSpellInGame5_1;
-    public string EnglishElementalSpellInGame5_2;
-
-    public string EnglishElementalSpellInGame6_1;
-    public string EnglishElementalSpellInGame6_2;
-    public string EnglishElementalSpellInGame6_3;
-
-    public string EnglishElementalSpellInGame7_1;
-    public string EnglishElementalSpellInGame7_2;
-    public string EnglishElementalSpellInGame7_3;
-
-    public string EnglishElementalSpellInGame8_1;
-    public string EnglishElementalSpellInGame8_2;
-
-
-    public string EnglishPotionInGame1_1;
-    public string EnglishPotionInGame1_2;
-
-    public string EnglishPotionInGame2;
-
-    public string EnglishRuneDamageInGame1_1;
-    public string EnglishRuneDamageInGame1_2;
-
-    public string EnglishRuneCelerityInGame1_1;
-    public string EnglishRuneCelerityInGame1_2;
-
-    public string EnglishRuneHealInGame1_1;
-    public string EnglishRuneHealInGame1_2;
-
-
-    public string EnglishElementalSpell1;
-    public string EnglishElementalSpell1_1;
-    public string EnglishElementalSpell1_2;
-    public string EnglishElementalSpell1_3;
-
-    public string EnglishElementalSpell2;
-    public string EnglishElementalSpell2_1;
-    public string EnglishElementalSpell2_2;
-    public string EnglishElementalSpell2_3;
-
-    public string EnglishElementalSpell3;
-    public string EnglishElementalSpell3_1;
-    public string EnglishElementalSpell3_2;
-    public string EnglishElementalSpell3_3;
-
-    public string EnglishElementalSpell4;
-    public string EnglishElementalSpell4_1;
-    public string EnglishElementalSpell4_2;
-    public string EnglishElementalSpell4_3;
-
-    public string EnglishElementalSpell5;
-    public string EnglishElementalSpell5_1;
-    public string EnglishElementalSpell5_2;
-    public string EnglishElementalSpell5_3;
-
-    public string EnglishElementalSpell6;
-    public string EnglishElementalSpell6_1;
-    public string EnglishElementalSpell6_2;
-    public string EnglishElementalSpell6_3;
-
-    public string EnglishElementalSpell7;
-    public string EnglishElementalSpell7_1;
-    public string EnglishElementalSpell7_2;
-    public string EnglishElementalSpell7_3;
-
-    public string EnglishElementalSpell8;
-    public string EnglishElementalSpell8_1;
-    public string EnglishElementalSpell8_2;
-    public string EnglishElementalSpell8_3;
-
-
-    public string EnglishElementalPassive1;
-    public string EnglishElementalPassive1_1;
-    public string EnglishElementalPassive1_2;
-    public string EnglishElementalPassive1_3;
-
-    public string EnglishElementalPassive2;
-    public string EnglishElementalPassive2_1;
-    public string EnglishElementalPassive2_2;
-    public string EnglishElementalPassive2_3;
-
-    public string EnglishElementalPassive3;
-    public string EnglishElementalPassive3_1;
-    public string EnglishElementalPassive3_2;
-    public string EnglishElementalPassive3_3;
-
-    public string EnglishElementalPassive4;
-    public string EnglishElementalPassive4_1;
-    public string EnglishElementalPassive4_2;
-    public string EnglishElementalPassive4_3;
-
-    public string EnglishElementalPassive5;
-    public string EnglishElementalPassive5_1;
-    public string EnglishElementalPassive5_2;
-    public string EnglishElementalPassive5_3;
-
-    public string EnglishElementalPassive6;
-    public string EnglishElementalPassive6_1;
-    public string EnglishElementalPassive6_2;
-    public string EnglishElementalPassive6_3;
-
-    void Start()
-    {
-        EnglishRuneDamageTitle = "War rune";
-        EnglishRuneCelerityTitle = "Celerity rune";
-        EnglishRuneHealTitle = "Healing rune";
-
-        EnglishElementalSpellInGame1_1 = "Shoots a fireball that deals ";
-        EnglishElementalSpellInGame1_2 = " damage to the first enemy hit.";
-
-        EnglishElementalSpellInGame2_1 = "A thunderbolt that deals ";
-        EnglishElementalSpellInGame2_2 = " damage to the targeted enemy.";
-
-        EnglishElementalSpellInGame3_1 = "Shoots ";
-        EnglishElementalSpellInGame3_2 = " ice shards that deal ";
-        EnglishElementalSpellInGame3_3 = " damage each to the first enemy hit.";
-
-        EnglishElementalSpellInGame4_1 = "A meteor that deals ";
-        EnglishElementalSpellInGame4_2 = " damage to all enemies around it.";
-
-        EnglishElementalSpellInGame5_1 = "A tornado that sends all enemies around it flying for ";
-        EnglishElementalSpellInGame5_2 = " seconds.";
-
-        EnglishElementalSpellInGame6_1 = "Encase the selected enemy in ice for ";
-        EnglishElementalSpellInGame6_2 = " seconds, dealing ";
-        EnglishElementalSpellInGame6_3 = " damage.";
-
-        EnglishElementalSpellInGame7_1 = "An earthquake deals ";
-        EnglishElementalSpellInGame7_2 = " damage to the enemies near the player and slows them for 50% during ";
-        EnglishElementalSpellInGame7_3 = " seconds.";
-
-        EnglishElementalSpellInGame8_1 = "Shoots a fire dragon that deals ";
-        EnglishElementalSpellInGame8_2 = " damage to all enemies in its path.";
-
-
-        EnglishPotionInGame1_1 = "Heals the player for ";
-        EnglishPotionInGame1_2 = " health points.";
-
-        EnglishPotionInGame2 = "Accelerates the recuperation of the player skills for 5 seconds.";
-
-        EnglishRuneDamageInGame1_1 = "Every 10 seconds, the next spell cast will deal ";
-        EnglishRuneDamageInGame1_2 = " additional damage.";
-
-        EnglishRuneCelerityInGame1_1 = "The mage runs ";
-        EnglishRuneCelerityInGame1_2 = "% faster.";
-
-        EnglishRuneHealInGame1_1 = "Every 15 seconds, the mage recovers ";
-        EnglishRuneHealInGame1_2 = " health points.";
-
-
-        EnglishElementalSpell1 = "Fireball";
-        EnglishElementalSpell1_1 = "Level 1\nCooldown 1s\nRange 3\nShoots a fireball that deals 5 damage to the first enemy hit.";
-        EnglishElementalSpell1_2 = "Level 2\nCooldown 0.75s\nRange 3\nShoots a fireball that deals 6 damage to the first enemy hit.";
-        EnglishElementalSpell1_3 = "Level 3\nCooldown 0.5s\nRange 3\nShoots a fireball that deals 8 damage to the first enemy hit.";
-
-        EnglishElementalSpell2 = "Thunderbolt";
-        EnglishElementalSpell2_1 = "Level 1\nCooldown 4s\nRange 2\nA thunderbolt that deals 8 damage to the selected enemy.";
-        EnglishElementalSpell2_2 = "Level 2\nCooldown 4s\nRange 3\nA thunderbolt that deals 10 damage to the selected enemy.";
-        EnglishElementalSpell2_3 = "Level 3\nCooldown 3s\nRange 3\nA thunderbolt that deals 12 damage to the selected enemy.";
-
-        EnglishElementalSpell3 = "Ice Shards";
-        EnglishElementalSpell3_1 = "Level 1\nCooldown 5s\nRange 3\nShoots 4 ice shards that deal 2 damage each to the first enemy hit.";
-        EnglishElementalSpell3_2 = "Level 2\nCooldown 4s\nRange 3\nShoots 5 ice shards that deal 2 damage each to the first enemy hit.";
-        EnglishElementalSpell3_3 = "Level 3\nCooldown 4s\nRange 3\nShoots 6 ice shards that deal 3 damage each to the first enemy hit.";
-
-        EnglishElementalSpell4 = "Meteor";
-        EnglishElementalSpell4_1 = "Level 1\nCooldown 8s\nRange 3\nA meteor that deals 6 damage to all enemies around it.";
-        EnglishElementalSpell4_2 = "Level 2\nCooldown 7s\nRange 3\nA meteor that deals 8 damage to all enemies around it.";
-        EnglishElementalSpell4_3 = "Level 3\nCooldown 6s\nRange 3\nA meteor that deals 10 damage to all enemies around it.";
-
-        EnglishElementalSpell5 = "Tornado";
-        EnglishElementalSpell5_1 = "Level 1\nCooldown 10s\nRange 3\nA tornado that sends all enemies around it flying for 2 seconds.";
-        EnglishElementalSpell5_2 = "Level 2\nCooldown 8s\nRange 4\nA tornado that sends all enemies around it flying for 2 seconds.";
-        EnglishElementalSpell5_3 = "Level 3\nCooldown 6s\nRange 5\nA tornado that sends all enemies around it flying for 2 seconds.";
-
-        EnglishElementalSpell6 = "Ice Prison";
-        EnglishElementalSpell6_1 = "Level 1\nCooldown 9s\nRange 2\nEncase the selected enemy in ice for 2 seconds, dealing 5 damage.";
-        EnglishElementalSpell6_2 = "Level 2\nCooldown 8s\nRange 3\nEncase the selected enemy in ice for 2 seconds, dealing 5 damage.";
-        EnglishElementalSpell6_3 = "Level 3\nCooldown 7s\nRange 3\nEncase the selected enemy in ice for 2 seconds, dealing 6 damage.";
-
-        EnglishElementalSpell7 = "Earthquake";
-        EnglishElementalSpell7_1 = "Level 1\nCooldown 25s\nRange 2\nAn earthquake deals 7 damage to the enemies near the player and slows them for 50% during 2 seconds.";
-        EnglishElementalSpell7_2 = "Level 2\nCooldown 22.5s\nRange 2\nAn earthquake deals 11 damage to the enemies near the player and slows them for 50% during 2 seconds.";
-        EnglishElementalSpell7_3 = "Level 3\nCooldown 20s\nRange 2\nAn earthquake deals 15 damage to the enemies near the player and slows them for 50% during 2 seconds.";
-
-        EnglishElementalSpell8 = "Fire Dragon";
-        EnglishElementalSpell8_1 = "Level 1\nCooldown 30s\nRange infinite\nShoots a fire dragon that deals 15 damage to all enemies in its path.";
-        EnglishElementalSpell8_2 = "Level 2\nCooldown 27.5s\nRange infinite\nShoots a fire dragon that deals 20 damage to all enemies in its path.";
-        EnglishElementalSpell8_3 = "Level 3\nCooldown 25s\nRange infinite\nShoots a fire dragon that deals 25 damage to all enemies in its path.";
-
-
-        EnglishElementalPassive1 = "Fire armor [Shield]";
-        EnglishElementalPassive1_1 = "Level 1\nEnemies that attack you in melee take 1 damage.\nYou can only learn one shield skill.";
-        EnglishElementalPassive1_2 = "Level 2\nEnemies that attack you in melee take 3 damage.\nYou can only learn one shield skill.";
-        EnglishElementalPassive1_3 = "Level 3\nEnemies that attack you in melee take 5 damage.\nYou can only learn one shield skill.";
-
-        EnglishElementalPassive2 = "Ice armor [Shield]";
-        EnglishElementalPassive2_1 = "Level 1\nEnemies that attack you in melee are slowed by 20% for 2 sec.\nYou can only learn one shield skill.";
-        EnglishElementalPassive2_2 = "Level 2\nEnemies that attack you in melee are slowed by 40% for 2 sec.\nYou can only learn one shield skill.";
-        EnglishElementalPassive2_3 = "Level 3\nEnemies that attack you in melee are slowed by 60% for 2 sec.\nYou can only learn one shield skill.";
-
-        EnglishElementalPassive3 = "Thunder overload";
-        EnglishElementalPassive3_1 = "Level 1\nWhenever you use a spell (except the Fireball), your next use of the \"Thunder\" skill will do 1 additional point of damage. (Stacks)";
-        EnglishElementalPassive3_2 = "Level 2\nWhenever you use a spell (except the Fireball), your next use of the \"Thunder\" skill will do 2 additional points of damage. (Stacks)";
-        EnglishElementalPassive3_3 = "Level 3\nWhenever you use a spell (except the Fireball), your next use of the \"Thunder\" skill will do 3 additional points of damage. (Stacks)";
-
-        EnglishElementalPassive4 = "Celerity";
-        EnglishElementalPassive4_1 = "Level 1\nAfter using a spell (except the Fireball), your move speed increase by 20% for 1 second.";
-        EnglishElementalPassive4_2 = "Level 2\nAfter using a spell (except the Fireball), your move speed increase by 30% for 1 second.";
-        EnglishElementalPassive4_3 = "Level 3\nAfter using a spell (except the Fireball), your move speed increase by 40% for 1 second.";
-
-        EnglishElementalPassive5 = "Fire mastery [Mastery]";
-        EnglishElementalPassive5_1 = "Level 1\nFire spells deal 1 additional point of damage.\nYou can only learn one mastery skill.";
-        EnglishElementalPassive5_2 = "Level 2\nFire spells deal 2 additional points of damage.\nYou can only learn one mastery skill.";
-        EnglishElementalPassive5_3 = "Level 3\nFire spells deal 3 additional points of damage.\nYou can only learn one mastery skill.";
-
-        EnglishElementalPassive6 = "Ice mastery [Mastery]";
-        EnglishElementalPassive6_1 = "Level 1\nIce spells deal 1 additional point of damage.\nYou can only learn one mastery skill.";
-        EnglishElementalPassive6_2 = "Level 2\nIce spells deal 2 additional points of damage.\nYou can only learn one mastery skill.";
-        EnglishElementalPassive6_3 = "Level 3\nIce spells deal 3 additional points of damage.\nYou can only learn one mastery skill.";
-    }
-
     public void ResetTexts()
     {
         isInEnglish = GetComponent<GameManager>().englishLanguage;
+
         MenuTextIntroPlay.text = GetTextPlay();
         MenuTextQuit.text = GetTextQuit();
 
@@ -854,5 +620,701 @@ public class TradManager : MonoBehaviour
             return (GetDecorationTitleCarpet2() + "\n\nPrestige +10.\n\nPrice : 30 gold coins");
         else
             return (GetDecorationTitleCarpet2() + "\n\nPrestige +10.\n\nPrix : 30 pièces d'or");
+    }
+
+    public string GetTitleRuneDamage()
+    {
+        if (isInEnglish)
+            return ("War rune");
+        else
+            return ("Rune de bataille");
+    }
+
+    public string GetTitleRuneCelerity()
+    {
+        if (isInEnglish)
+            return ("Celerity rune");
+        else
+            return ("Rune de célérité");
+    }
+
+    public string GetTitleRuneHeal()
+    {
+        if (isInEnglish)
+            return ("Healing rune");
+        else
+            return ("Rune de guérison");
+    }
+
+    public string GetDescriptionRuneDamage_1()
+    {
+        if (isInEnglish)
+            return ("Every 10 seconds, the next spell cast will deal ");
+        else
+            return ("Toutes les 10 secondes, le prochain sort infligera ");
+    }
+
+    public string GetDescriptionRuneDamage_2()
+    {
+        if (isInEnglish)
+            return (" additional damage.");
+        else
+            return (" points de dégâts supplémentaires.");
+    }
+
+    public string GetDescriptionRuneCelerity_1()
+    {
+        if (isInEnglish)
+            return ("The mage runs ");
+        else
+            return ("Le mage court ");
+    }
+
+    public string GetDescriptionRuneCelerity_2()
+    {
+        if (isInEnglish)
+            return ("% faster.");
+        else
+            return ("% plus vite.");
+    }
+
+    public string GetDescriptionRuneHeal_1()
+    {
+        if (isInEnglish)
+            return ("Every 15 seconds, the mage recovers ");
+        else
+            return ("Toutes les 15 secondes, le mage récupère ");
+    }
+
+    public string GetDescriptionRuneHeal_2()
+    {
+        if (isInEnglish)
+            return (" health points.");
+        else
+            return (" points de vie.");
+    }
+
+    public string GetDescriptionPotion1_1()
+    {
+        if (isInEnglish)
+            return ("Heals the mage for ");
+        else
+            return ("Soigne le mage de ");
+    }
+
+    public string GetDescriptionPotion1_2()
+    {
+        if (isInEnglish)
+            return (" health points.");
+        else
+            return (" points de vie.");
+    }
+
+    public string GetDescriptionPotion2()
+    {
+        if (isInEnglish)
+            return ("Accelerates the recuperation of the mage skills for 5 seconds.");
+        else
+            return ("Accélère la récupération des sorts du mage pendant 5 secondes.");
+    }
+
+    public string GetElementalSpellInGame1_1()
+    {
+        if (isInEnglish)
+            return ("Shoots a fireball that deals ");
+        else
+            return ("Tire une boule de feu qui inflige ");
+    }
+
+    public string GetElementalSpellInGame1_2()
+    {
+        if (isInEnglish)
+            return (" damage to the first enemy hit.");
+        else
+            return (" points de dégâts au premier ennemi touché.");
+    }
+
+    public string GetElementalSpellInGame2_1()
+    {
+        if (isInEnglish)
+            return ("A thunderbolt that deals ");
+        else
+            return ("Un éclair qui inflige ");
+    }
+
+    public string GetElementalSpellInGame2_2()
+    {
+        if (isInEnglish)
+            return (" damage to the targeted enemy.");
+        else
+            return (" points de dégâts à l'ennemi visé.");
+    }
+
+    public string GetElementalSpellInGame3_1()
+    {
+        if (isInEnglish)
+            return ("Shoots ");
+        else
+            return ("Tire ");
+    }
+
+    public string GetElementalSpellInGame3_2()
+    {
+        if (isInEnglish)
+            return (" ice shards that deal ");
+        else
+            return (" éclats de glace qui infligent ");
+    }
+
+    public string GetElementalSpellInGame3_3()
+    {
+        if (isInEnglish)
+            return (" damage each to the first enemy hit.");
+        else
+            return (" points de dégâts chacun au premier ennemi touché.");
+    }
+
+    public string GetElementalSpellInGame4_1()
+    {
+        if (isInEnglish)
+            return ("A meteor that deals ");
+        else
+            return ("Un météore qui inflige ");
+    }
+
+    public string GetElementalSpellInGame4_2()
+    {
+        if (isInEnglish)
+            return (" damage to all enemies around it.");
+        else
+            return (" points de dégâts à tous les ennemis à proximité.");
+    }
+
+    public string GetElementalSpellInGame5_1()
+    {
+        if (isInEnglish)
+            return ("A tornado that sends all enemies around it flying for ");
+        else
+            return ("Une tornade qui projette dans les airs tous les ennemis à proximité pendant ");
+    }
+
+    public string GetElementalSpellInGame5_2()
+    {
+        if (isInEnglish)
+            return (" seconds.");
+        else
+            return (" secondes.");
+    }
+
+    public string GetElementalSpellInGame6_1()
+    {
+        if (isInEnglish)
+            return ("Encase the selected enemy in ice for ");
+        else
+            return ("Emprisonne l'ennemi sélectionné dans la glace pendant ");
+    }
+
+    public string GetElementalSpellInGame6_2()
+    {
+        if (isInEnglish)
+            return (" seconds, dealing ");
+        else
+            return (" secondes, ce qui lui inflige ");
+    }
+
+    public string GetElementalSpellInGame6_3()
+    {
+        if (isInEnglish)
+            return (" damage.");
+        else
+            return (" points de dégâts.");
+    }
+
+    public string GetElementalSpellInGame7_1()
+    {
+        if (isInEnglish)
+            return ("An earthquake that deals ");
+        else
+            return ("Un tremblement de terre qui inflige ");
+    }
+
+    public string GetElementalSpellInGame7_2()
+    {
+        if (isInEnglish)
+            return (" damage to the enemies near the mage and slows them for 50% during ");
+        else
+            return (" points de dégâts aux ennemis autour du mage et les ralentit de 50% pendant ");
+    }
+
+    public string GetElementalSpellInGame7_3()
+    {
+        if (isInEnglish)
+            return (" seconds.");
+        else
+            return (" secondes.");
+    }
+
+    public string GetElementalSpellInGame8_1()
+    {
+        if (isInEnglish)
+            return ("Shoots a fire dragon that deals ");
+        else
+            return ("Invoque un dragon de feu qui inflige ");
+    }
+
+    public string GetElementalSpellInGame8_2()
+    {
+        if (isInEnglish)
+            return (" damage to all enemies in its path.");
+        else
+            return (" points de dégâts à tous les ennemis sur son passage.");
+    }
+
+    public string GetTitleElementalSpell1()
+    {
+        if (isInEnglish)
+            return ("Fireball");
+        else
+            return ("Boule de feu");
+    }
+
+    public string GetDescriptionElementalSpell1_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nCooldown 1s\nRange 3\nShoots a fireball that deals 5 damage to the first enemy hit.");
+        else
+            return ("Niveau 1\nTemps de récupération 1s\nPortée 3\nTire une boule de feu qui inflige 5 points de dégâts au premier ennemi touché.");
+    }
+
+    public string GetDescriptionElementalSpell1_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nCooldown 0.75s\nRange 3\nShoots a fireball that deals 6 damage to the first enemy hit.");
+        else
+            return ("Niveau 2\nTemps de récupération 0.75s\nPortée 3\nTire une boule de feu qui inflige 6 points de dégâts au premier ennemi touché.");
+    }
+
+    public string GetDescriptionElementalSpell1_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nCooldown 0.5s\nRange 3\nShoots a fireball that deals 8 damage to the first enemy hit.");
+        else
+            return ("Niveau 3\nTemps de récupération 0.5s\nPortée 3\nTire une boule de feu qui inflige 8 points de dégâts au premier ennemi touché.");
+    }
+
+    public string GetTitleElementalSpell2()
+    {
+        if (isInEnglish)
+            return ("Thunderbolt");
+        else
+            return ("Éclair");
+    }
+
+    public string GetDescriptionElementalSpell2_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nCooldown 4s\nRange 2\nA thunderbolt that deals 8 damage to the selected enemy.");
+        else
+            return ("Niveau 1\nTemps de récupération 4s\nPortée 2\nUn éclair qui inflige 8 points de dégâts à l'ennemi visé.");
+    }
+
+    public string GetDescriptionElementalSpell2_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nCooldown 4s\nRange 3\nA thunderbolt that deals 10 damage to the selected enemy.");
+        else
+            return ("Niveau 2\nTemps de récupération 4s\nPortée 3\nUn éclair qui inflige 10 points de dégâts à l'ennemi visé.");
+    }
+
+    public string GetDescriptionElementalSpell2_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nCooldown 3s\nRange 3\nA thunderbolt that deals 12 damage to the selected enemy.");
+        else
+            return ("Niveau 3\nTemps de récupération 3s\nPortée 3\nUn éclair qui inflige 12 points de dégâts à l'ennemi visé.");
+    }
+
+    public string GetTitleElementalSpell3()
+    {
+        if (isInEnglish)
+            return ("Ice Shards");
+        else
+            return ("Éclats de glace");
+    }
+
+    public string GetDescriptionElementalSpell3_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nCooldown 5s\nRange 3\nShoots 4 ice shards that deal 2 damage each to the first enemy hit.");
+        else
+            return ("Niveau 1\nTemps de récupération 5s\nPortée 3\nTire 4 éclats de glace qui infligent 2 points de dégâts chacun au premier ennemi touché.");
+    }
+
+    public string GetDescriptionElementalSpell3_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nCooldown 4s\nRange 3\nShoots 5 ice shards that deal 2 damage each to the first enemy hit.");
+        else
+            return ("Niveau 2\nTemps de récupération 4s\nPortée 3\nTire 5 éclats de glace qui infligent 2 points de dégâts chacun au premier ennemi touché.");
+    }
+
+    public string GetDescriptionElementalSpell3_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nCooldown 4s\nRange 3\nShoots 6 ice shards that deal 3 damage each to the first enemy hit.");
+        else
+            return ("Niveau 3\nTemps de récupération 4s\nPortée 3\nTire 6 éclats de glace qui infligent 3 points de dégâts chacun au premier ennemi touché.");
+    }
+
+    public string GetTitleElementalSpell4()
+    {
+        if (isInEnglish)
+            return ("Meteor");
+        else
+            return ("Météore");
+    }
+
+    public string GetDescriptionElementalSpell4_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nCooldown 8s\nRange 3\nA meteor that deals 6 damage to all enemies around it.");
+        else
+            return ("Niveau 1\nTemps de récupération 8s\nPortée 3\nUn météore qui inflige 6 points de dégâts à tous les ennemis à proximité.");
+    }
+
+    public string GetDescriptionElementalSpell4_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nCooldown 7s\nRange 3\nA meteor that deals 8 damage to all enemies around it.");
+        else
+            return ("Niveau 2\nTemps de récupération 7s\nPortée 3\nUn météore qui inflige 8 points de dégâts à tous les ennemis à proximité.");
+    }
+
+    public string GetDescriptionElementalSpell4_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nCooldown 6s\nRange 3\nA meteor that deals 10 damage to all enemies around it.");
+        else
+            return ("Niveau 3\nTemps de récupération 6s\nPortée 3\nUn météore qui inflige 10 points de dégâts à tous les ennemis à proximité.");
+    }
+
+    public string GetTitleElementalSpell5()
+    {
+        if (isInEnglish)
+            return ("Tornado");
+        else
+            return ("Tornade");
+    }
+
+    public string GetDescriptionElementalSpell5_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nCooldown 10s\nRange 3\nA tornado that sends all enemies around it flying for 2 seconds.");
+        else
+            return ("Niveau 1\nTemps de récupération 10s\nPortée 3\nUne tornade qui projette dans les airs tous les ennemis à proximité pendant 2 secondes.");
+    }
+
+    public string GetDescriptionElementalSpell5_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nCooldown 8s\nRange 4\nA tornado that sends all enemies around it flying for 2 seconds.");
+        else
+            return ("Niveau 2\nTemps de récupération 8s\nPortée 4\nUne tornade qui projette dans les airs tous les ennemis à proximité pendant 2 secondes.");
+    }
+
+    public string GetDescriptionElementalSpell5_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nCooldown 6s\nRange 5\nA tornado that sends all enemies around it flying for 2 seconds.");
+        else
+            return ("Niveau 3\nTemps de récupération 6s\nPortée 5\nUne tornade qui projette dans les airs tous les ennemis à proximité pendant 2 secondes.");
+    }
+
+    public string GetTitleElementalSpell6()
+    {
+        if (isInEnglish)
+            return ("Ice Prison");
+        else
+            return ("Prison de glace");
+    }
+
+    public string GetDescriptionElementalSpell6_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nCooldown 9s\nRange 2\nEncase the selected enemy in ice for 2 seconds, dealing 5 damage.");
+        else
+            return ("Niveau 1\nTemps de récupération 9s\nPortée 2\nEmprisonne l'ennemi sélectionné dans la glace pendant 2 secondes et lui inflige 5 points de dégâts.");
+    }
+
+    public string GetDescriptionElementalSpell6_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nCooldown 8s\nRange 3\nEncase the selected enemy in ice for 2 seconds, dealing 5 damage.");
+        else
+            return ("Niveau 2\nTemps de récupération 8s\nPortée 3\nEmprisonne l'ennemi sélectionné dans la glace pendant 2 secondes et lui inflige 5 points de dégâts.");
+    }
+
+    public string GetDescriptionElementalSpell6_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nCooldown 7s\nRange 3\nEncase the selected enemy in ice for 2 seconds, dealing 6 damage.");
+        else
+            return ("Niveau 3\nTemps de récupération 7s\nPortée 3\nEmprisonne l'ennemi sélectionné dans la glace pendant 2 secondes et lui inflige 6 points de dégâts.");
+    }
+
+    public string GetTitleElementalSpell7()
+    {
+        if (isInEnglish)
+            return ("Earthquake");
+        else
+            return ("Tremblement de terre");
+    }
+
+    public string GetDescriptionElementalSpell7_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nCooldown 25s\nRange 2\nAn earthquake deals 7 damage to the enemies near the mage and slows them for 50% during 2 seconds.");
+        else
+            return ("Niveau 1\nTemps de récupération 25s\nPortée 2\nUn tremblement de terre qui inflige 7 points de dégâts aux ennemis autour du mage et les ralentit de 50% pendant 2 secondes.");
+    }
+
+    public string GetDescriptionElementalSpell7_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nCooldown 22.5s\nRange 2\nAn earthquake deals 11 damage to the enemies near the mage and slows them for 50% during 2 seconds.");
+        else
+            return ("Niveau 2\nTemps de récupération 22.5s\nPortée 2\nUn tremblement de terre qui inflige 11 points de dégâts aux ennemis autour du mage et les ralentit de 50% pendant 2 secondes.");
+    }
+
+    public string GetDescriptionElementalSpell7_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nCooldown 20s\nRange 2\nAn earthquake deals 15 damage to the enemies near the mage and slows them for 50% during 2 seconds.");
+        else
+            return ("Niveau 3\nTemps de récupération 20s\nPortée 2\nUn tremblement de terre qui inflige 15 points de dégâts aux ennemis autour du mage et les ralentit de 50% pendant 2 secondes.");
+    }
+
+    public string GetTitleElementalSpell8()
+    {
+        if (isInEnglish)
+            return ("Fire Dragon");
+        else
+            return ("Dragon de feu");
+    }
+
+    public string GetDescriptionElementalSpell8_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nCooldown 30s\nRange infinite\nShoots a fire dragon that deals 15 damage to all enemies in its path.");
+        else
+            return ("Niveau 1\nTemps de récupération 30s\nPortée infinie\nInvoque un dragon de feu qui inflige 15 points de dégâts à tous les ennemis sur son passage.");
+    }
+
+    public string GetDescriptionElementalSpell8_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nCooldown 27.5s\nRange infinite\nShoots a fire dragon that deals 20 damage to all enemies in its path.");
+        else
+            return ("Niveau 2\nTemps de récupération 27.5s\nPortée infinie\nInvoque un dragon de feu qui inflige 20 points de dégâts à tous les ennemis sur son passage.");
+    }
+
+    public string GetDescriptionElementalSpell8_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nCooldown 25s\nRange infinite\nShoots a fire dragon that deals 25 damage to all enemies in its path.");
+        else
+            return ("Niveau 3\nTemps de récupération 25s\nPortée infinie\nInvoque un dragon de feu qui inflige 25 points de dégâts à tous les ennemis sur son passage.");
+    }
+
+    public string GetTitleElementalPassive1()
+    {
+        if (isInEnglish)
+            return ("Fire armor [Shield]");
+        else
+            return ("Armure de feu [Bouclier]");
+    }
+
+    public string GetDescriptionElementalPassive1_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nEnemies that attack you in melee take 1 damage.\nYou can only learn one shield skill.");
+        else
+            return ("Niveau 1\nLes ennemis qui vous attaquent en mêlée reçoivent 1 point de dégâts.\nVous ne pouvez apprendre qu'une seule compétence de bouclier.");
+    }
+
+    public string GetDescriptionElementalPassive1_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nEnemies that attack you in melee take 3 damage.\nYou can only learn one shield skill.");
+        else
+            return ("Niveau 2\nLes ennemis qui vous attaquent en mêlée reçoivent 3 points de dégâts.\nVous ne pouvez apprendre qu'une seule compétence de bouclier.");
+    }
+
+    public string GetDescriptionElementalPassive1_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nEnemies that attack you in melee take 5 damage.\nYou can only learn one shield skill.");
+        else
+            return ("Niveau 3\nLes ennemis qui vous attaquent en mêlée reçoivent 5 points de dégâts.\nVous ne pouvez apprendre qu'une seule compétence de bouclier.");
+    }
+
+    public string GetTitleElementalPassive2()
+    {
+        if (isInEnglish)
+            return ("Ice armor [Shield]");
+        else
+            return ("Armure de glace [Bouclier]");
+    }
+
+    public string GetDescriptionElementalPassive2_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nEnemies that attack you in melee are slowed by 20% for 2 seconds.\nYou can only learn one shield skill.");
+        else
+            return ("Niveau 1\nLes ennemis qui vous attaquent en mêlée sont ralentis de 20% pendant 2 secondes.\nVous ne pouvez apprendre qu'une seule compétence de bouclier.");
+    }
+
+    public string GetDescriptionElementalPassive2_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nEnemies that attack you in melee are slowed by 40% for 2 sec.\nYou can only learn one shield skill.");
+        else
+            return ("Niveau 2\nLes ennemis qui vous attaquent en mêlée sont ralentis de 40% pendant 2 secondes.\nVous ne pouvez apprendre qu'une seule compétence de bouclier.");
+    }
+
+    public string GetDescriptionElementalPassive2_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nEnemies that attack you in melee are slowed by 60% for 2 sec.\nYou can only learn one shield skill.");
+        else
+            return ("Niveau 3\nLes ennemis qui vous attaquent en mêlée sont ralentis de 60% pendant 2 secondes.\nVous ne pouvez apprendre qu'une seule compétence de bouclier.");
+    }
+
+    public string GetTitleElementalPassive3()
+    {
+        if (isInEnglish)
+            return ("Thunder overload");
+        else
+            return ("Surcharge de foudre");
+    }
+
+    public string GetDescriptionElementalPassive3_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nWhenever you use a spell (except the Fireball), your next use of the \"Thunder\" skill will do 1 additional point of damage. (Stacks)");
+        else
+            return ("Niveau 1\nÀ chaque fois que vous utilisez un sort (sauf pour la boule de feu), votre prochaine utilisation du sort \"Éclair\" fera 1 point de dégâts supplémentaire. (Cumulable)");
+    }
+
+    public string GetDescriptionElementalPassive3_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nWhenever you use a spell (except the Fireball), your next use of the \"Thunder\" skill will do 2 additional points of damage. (Stacks)");
+        else
+            return ("Niveau 2\nÀ chaque fois que vous utilisez un sort (sauf pour la boule de feu), votre prochaine utilisation du sort \"Éclair\" fera 2 points de dégâts supplémentaires. (Cumulable)");
+    }
+
+    public string GetDescriptionElementalPassive3_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nWhenever you use a spell (except the Fireball), your next use of the \"Thunder\" skill will do 3 additional points of damage. (Stacks)");
+        else
+            return ("Niveau 3\nÀ chaque fois que vous utilisez un sort (sauf pour la boule de feu), votre prochaine utilisation du sort \"Éclair\" fera 3 points de dégâts supplémentaires. (Cumulable)");
+    }
+
+    public string GetTitleElementalPassive4()
+    {
+        if (isInEnglish)
+            return ("Celerity");
+        else
+            return ("Célérité");
+    }
+
+    public string GetDescriptionElementalPassive4_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nAfter using a spell (except the Fireball), your move speed increase by 20% for 1 second.");
+        else
+            return ("Niveau 1\nApres avoir utilisé un sort (sauf pour la boule de feu), votre vitesse de déplacement augmente de 20% pendant 1 seconde.");
+    }
+
+    public string GetDescriptionElementalPassive4_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nAfter using a spell (except the Fireball), your move speed increase by 30% for 1 second.");
+        else
+            return ("Niveau 2\nApres avoir utilisé un sort (sauf pour la boule de feu), votre vitesse de déplacement augmente de 30% pendant 1 seconde.");
+    }
+
+    public string GetDescriptionElementalPassive4_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nAfter using a spell (except the Fireball), your move speed increase by 40% for 1 second.");
+        else
+            return ("Niveau 3\nApres avoir utilisé un sort (sauf pour la boule de feu), votre vitesse de déplacement augmente de 40% pendant 1 seconde.");
+    }
+
+    public string GetTitleElementalPassive5()
+    {
+        if (isInEnglish)
+            return ("Fire mastery [Mastery]");
+        else
+            return ("Maîtrise du feu [Maîtrise]");
+    }
+
+    public string GetDescriptionElementalPassive5_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nFire spells deal 1 additional point of damage.\nYou can only learn one mastery skill.");
+        else
+            return ("Niveau 1\nLes sorts de feu infligent 1 point de dégâts supplémentaire.\nVous ne pouvez apprendre qu'une seule compétence de maîtrise.");
+    }
+
+    public string GetDescriptionElementalPassive5_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nFire spells deal 2 additional points of damage.\nYou can only learn one mastery skill.");
+        else
+            return ("Niveau 2\nLes sorts de feu infligent 2 points de dégâts supplémentaires.\nVous ne pouvez apprendre qu'une seule compétence de maîtrise.");
+    }
+
+    public string GetDescriptionElementalPassive5_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nFire spells deal 3 additional points of damage.\nYou can only learn one mastery skill.");
+        else
+            return ("Niveau 3\nLes sorts de feu infligent 3 points de dégâts supplémentaires.\nVous ne pouvez apprendre qu'une seule compétence de maîtrise.");
+    }
+
+    public string GetTitleElementalPassive6()
+    {
+        if (isInEnglish)
+            return ("Ice mastery [Mastery]");
+        else
+            return ("Maîtrise de la glace [Maîtrise]");
+    }
+
+    public string GetDescriptionElementalPassive6_1()
+    {
+        if (isInEnglish)
+            return ("Level 1\nIce spells deal 1 additional point of damage.\nYou can only learn one mastery skill.");
+        else
+            return ("Niveau 1\nLes sorts de glace infligent 1 point de dégâts supplémentaire.\nVous ne pouvez apprendre qu'une seule compétence de maîtrise.");
+    }
+
+    public string GetDescriptionElementalPassive6_2()
+    {
+        if (isInEnglish)
+            return ("Level 2\nIce spells deal 2 additional points of damage.\nYou can only learn one mastery skill.");
+        else
+            return ("Niveau 2\nLes sorts de glace infligent 2 points de dégâts supplémentaires.\nVous ne pouvez apprendre qu'une seule compétence de maîtrise.");
+    }
+
+    public string GetDescriptionElementalPassive6_3()
+    {
+        if (isInEnglish)
+            return ("Level 3\nIce spells deal 3 additional points of damage.\nYou can only learn one mastery skill.");
+        else
+            return ("Niveau 3\nLes sorts de glace infligent 3 points de dégâts supplémentaires.\nVous ne pouvez apprendre qu'une seule compétence de maîtrise.");
     }
 }

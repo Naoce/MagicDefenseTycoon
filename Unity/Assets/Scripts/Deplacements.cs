@@ -93,9 +93,9 @@ public class Deplacements : MonoBehaviour
                 isMovingHorizontally = true;
 
                 if ((Input.GetKey(KeyCode.Z) &&
-                    gm.GetComponent<GameManager>().wasdMode == false) ||
+                    gm.GetComponent<GameManager>().englishLanguage == false) ||
                     (Input.GetKey(KeyCode.W) &&
-                    gm.GetComponent<GameManager>().wasdMode == true))
+                    gm.GetComponent<GameManager>().englishLanguage == true))
                     newPosition = new Vector2(transform.position.x + 1, transform.position.y + 1);
                 else if (Input.GetKey(KeyCode.S))
                     newPosition = new Vector2(transform.position.x + 1, transform.position.y - 1);
@@ -153,16 +153,16 @@ public class Deplacements : MonoBehaviour
                 }
             }
             else if ((Input.GetKey(KeyCode.Q) &&
-                    gm.GetComponent<GameManager>().wasdMode == false) ||
+                    gm.GetComponent<GameManager>().englishLanguage == false) ||
                     (Input.GetKey(KeyCode.A) &&
-                    gm.GetComponent<GameManager>().wasdMode == true))
+                    gm.GetComponent<GameManager>().englishLanguage == true))
             {
                 isMovingHorizontally = true;
 
                 if ((Input.GetKey(KeyCode.Z) &&
-                    gm.GetComponent<GameManager>().wasdMode == false) ||
+                    gm.GetComponent<GameManager>().englishLanguage == false) ||
                     (Input.GetKey(KeyCode.W) &&
-                    gm.GetComponent<GameManager>().wasdMode == true))
+                    gm.GetComponent<GameManager>().englishLanguage == true))
                     newPosition = new Vector2(transform.position.x - 1, transform.position.y + 1);
                 else if (Input.GetKey(KeyCode.S))
                     newPosition = new Vector2(transform.position.x - 1, transform.position.y - 1);
@@ -222,9 +222,9 @@ public class Deplacements : MonoBehaviour
             else
                 isMovingHorizontally = false;
             if (((Input.GetKey(KeyCode.Z) &&
-                    gm.GetComponent<GameManager>().wasdMode == false) ||
+                    gm.GetComponent<GameManager>().englishLanguage == false) ||
                     (Input.GetKey(KeyCode.W) &&
-                    gm.GetComponent<GameManager>().wasdMode == true)) &&
+                    gm.GetComponent<GameManager>().englishLanguage == true)) &&
                     isMovingHorizontally == false)
             {
                 newPosition = new Vector2(transform.position.x, transform.position.y + 1);

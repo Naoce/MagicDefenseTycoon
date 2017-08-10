@@ -39,6 +39,8 @@ public class Buttons : MonoBehaviour
                 GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "A";
             }
         }
+
+        GetComponent<TradManager>().ResetTexts();
     }
 
     public void CloseOptions()
@@ -1352,13 +1354,13 @@ public class Buttons : MonoBehaviour
         switch (id)
         {
             case 0:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell1;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell1_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell1();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell1_1();
                 GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 1:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell1;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell1_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell1();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell1_2();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell1_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell1_2") == 0) ||
@@ -1368,8 +1370,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 2:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell1;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell1_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell1();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell1_3();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell1_2") == 1 && PlayerPrefs.GetInt("Load1Spell1_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell1_2") == 1 && PlayerPrefs.GetInt("Load2Spell1_3") == 0) ||
@@ -1381,13 +1383,13 @@ public class Buttons : MonoBehaviour
 
 
             case 3:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell2;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell2_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell2();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell2_1();
                 GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 4:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell2;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell2_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell2();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell2_2();
                 if (actionPoints > 0 && level > 2 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell2_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell2_2") == 0) ||
@@ -1397,8 +1399,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 5:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell2;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell2_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell2();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell2_3();
                 if (actionPoints > 0 && level > 2 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell2_2") == 1 && PlayerPrefs.GetInt("Load1Spell2_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell2_2") == 1 && PlayerPrefs.GetInt("Load2Spell2_3") == 0) ||
@@ -1410,13 +1412,13 @@ public class Buttons : MonoBehaviour
 
 
             case 6:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell3;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell3_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell3();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell3_1();
                 GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 7:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell3;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell3_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell3();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell3_2();
                 if (actionPoints > 0 && level > 4 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell3_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell3_2") == 0) ||
@@ -1426,8 +1428,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 8:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell3;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell3_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell3();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell3_3();
                 if (actionPoints > 0 && level > 4 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell3_2") == 1 && PlayerPrefs.GetInt("Load1Spell3_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell3_2") == 1 && PlayerPrefs.GetInt("Load2Spell3_3") == 0) ||
@@ -1439,13 +1441,13 @@ public class Buttons : MonoBehaviour
 
 
             case 9:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell4;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell4_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell4();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell4_1();
                 GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 10:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell4;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell4_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell4();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell4_2();
                 if (actionPoints > 0 && level > 6 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell4_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell4_2") == 0) ||
@@ -1455,8 +1457,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 11:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell4;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell4_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell4();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell4_3();
                 if (actionPoints > 0 && level > 6 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell4_2") == 1 && PlayerPrefs.GetInt("Load1Spell4_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell4_2") == 1 && PlayerPrefs.GetInt("Load2Spell4_3") == 0) ||
@@ -1468,13 +1470,13 @@ public class Buttons : MonoBehaviour
 
 
             case 12:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell5;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell5_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell5();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell5_1();
                 GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 13:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell5;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell5_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell5();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell5_2();
                 if (actionPoints > 0 && level > 8 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell5_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell5_2") == 0) ||
@@ -1484,8 +1486,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 14:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell5;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell5_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell5();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell5_3();
                 if (actionPoints > 0 && level > 8 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell5_2") == 1 && PlayerPrefs.GetInt("Load1Spell5_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell5_2") == 1 && PlayerPrefs.GetInt("Load2Spell5_3") == 0) ||
@@ -1497,13 +1499,13 @@ public class Buttons : MonoBehaviour
 
     
             case 15:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell6;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell6_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell6();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell6_1();
                 GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 16:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell6;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell6_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell6();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell6_2();
                 if (actionPoints > 0 && level > 10 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell6_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell6_2") == 0) ||
@@ -1513,8 +1515,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 17:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell6;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell6_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell6();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell6_3();
                 if (actionPoints > 0 && level > 10 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell6_2") == 1 && PlayerPrefs.GetInt("Load1Spell6_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell6_2") == 1 && PlayerPrefs.GetInt("Load2Spell6_3") == 0) ||
@@ -1526,13 +1528,13 @@ public class Buttons : MonoBehaviour
 
 
             case 18:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell7;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell7_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell7();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell7_1();
                 GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 19:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell7;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell7_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell7();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell7_2();
                 if (actionPoints > 0 && level > 12 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell7_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell7_2") == 0) ||
@@ -1542,8 +1544,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 20:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell7;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell7_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell7();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell7_3();
                 if (actionPoints > 0 && level > 12 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell7_2") == 1 && PlayerPrefs.GetInt("Load1Spell7_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell7_2") == 1 && PlayerPrefs.GetInt("Load2Spell7_3") == 0) ||
@@ -1555,13 +1557,13 @@ public class Buttons : MonoBehaviour
 
 
             case 21:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell8;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell8_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell8();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell8_1();
                 GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 22:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell8;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell8_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell8();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell8_2();
                 if (actionPoints > 0 && level > 14 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell8_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell8_2") == 0) ||
@@ -1571,8 +1573,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 23:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalSpell8;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalSpell8_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell8();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell8_3();
                 if (actionPoints > 0 && level > 14 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell8_2") == 1 && PlayerPrefs.GetInt("Load1Spell8_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell8_2") == 1 && PlayerPrefs.GetInt("Load2Spell8_3") == 0) ||
@@ -1584,8 +1586,8 @@ public class Buttons : MonoBehaviour
 
 
             case 24:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive1;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive1_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive1();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive1_1();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_1") == 0 && PlayerPrefs.GetInt("Load1Passive2_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_1") == 0 && PlayerPrefs.GetInt("Load2Passive2_1") == 0) ||
@@ -1595,8 +1597,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 25:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive1;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive1_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive1();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive1_2();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_1") == 1 && PlayerPrefs.GetInt("Load1Passive1_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_1") == 1 && PlayerPrefs.GetInt("Load2Passive1_2") == 0) ||
@@ -1606,8 +1608,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 26:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive1;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive1_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive1();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive1_3();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_2") == 1 && PlayerPrefs.GetInt("Load1Passive1_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_2") == 1 && PlayerPrefs.GetInt("Load2Passive1_3") == 0) ||
@@ -1619,8 +1621,8 @@ public class Buttons : MonoBehaviour
 
 
             case 27:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive2;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive2_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive2();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive2_1();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_1") == 0 && PlayerPrefs.GetInt("Load1Passive2_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_1") == 0 && PlayerPrefs.GetInt("Load2Passive2_1") == 0) ||
@@ -1630,8 +1632,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 28:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive2;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive2_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive2();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive2_2();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive2_1") == 1 && PlayerPrefs.GetInt("Load1Passive2_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive2_1") == 1 && PlayerPrefs.GetInt("Load2Passive2_2") == 0) ||
@@ -1641,8 +1643,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 29:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive2;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive2_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive2();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive2_3();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive2_2") == 1 && PlayerPrefs.GetInt("Load1Passive2_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive2_2") == 1 && PlayerPrefs.GetInt("Load2Passive2_3") == 0) ||
@@ -1654,8 +1656,8 @@ public class Buttons : MonoBehaviour
 
 
             case 30:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive3;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive3_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive3();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive3_1();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive3_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive3_1") == 0) ||
@@ -1665,8 +1667,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 31:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive3;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive3_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive3();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive3_2();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive3_1") == 1 && PlayerPrefs.GetInt("Load1Passive3_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive3_1") == 1 && PlayerPrefs.GetInt("Load2Passive3_2") == 0) ||
@@ -1676,8 +1678,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 32:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive3;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive3_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive3();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive3_3();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive3_2") == 1 && PlayerPrefs.GetInt("Load1Passive3_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive3_2") == 1 && PlayerPrefs.GetInt("Load2Passive3_3") == 0) ||
@@ -1689,8 +1691,8 @@ public class Buttons : MonoBehaviour
 
 
             case 33:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive4;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive4_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive4();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive4_1();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive4_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive4_1") == 0) ||
@@ -1700,8 +1702,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 34:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive4;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive4_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive4();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive4_2();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive4_1") == 1 && PlayerPrefs.GetInt("Load1Passive4_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive4_1") == 1 && PlayerPrefs.GetInt("Load2Passive4_2") == 0) ||
@@ -1711,8 +1713,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 35:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive4;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive4_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive4();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive4_3();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive4_2") == 1 && PlayerPrefs.GetInt("Load1Passive4_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive4_2") == 1 && PlayerPrefs.GetInt("Load2Passive4_3") == 0) ||
@@ -1724,8 +1726,8 @@ public class Buttons : MonoBehaviour
 
 
             case 36:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive5;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive5_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive5();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive5_1();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_1") == 0 && PlayerPrefs.GetInt("Load1Passive6_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_1") == 0 && PlayerPrefs.GetInt("Load2Passive6_1") == 0) ||
@@ -1735,8 +1737,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 37:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive5;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive5_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive5();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive5_2();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_1") == 1 && PlayerPrefs.GetInt("Load1Passive5_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_1") == 1 && PlayerPrefs.GetInt("Load2Passive5_2") == 0) ||
@@ -1746,8 +1748,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 38:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive5;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive5_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive5();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive5_3();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_2") == 1 && PlayerPrefs.GetInt("Load1Passive5_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_2") == 1 && PlayerPrefs.GetInt("Load2Passive5_3") == 0) ||
@@ -1759,8 +1761,8 @@ public class Buttons : MonoBehaviour
 
 
             case 39:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive6;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive6_1;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive6();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive6_1();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_1") == 0 && PlayerPrefs.GetInt("Load1Passive6_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_1") == 0 && PlayerPrefs.GetInt("Load2Passive6_1") == 0) ||
@@ -1770,8 +1772,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 40:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive6;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive6_2;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive6();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive6_2();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive6_1") == 1 && PlayerPrefs.GetInt("Load1Passive6_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive6_1") == 1 && PlayerPrefs.GetInt("Load2Passive6_2") == 0) ||
@@ -1781,8 +1783,8 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
                 break;
             case 41:
-                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().EnglishElementalPassive6;
-                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().EnglishElementalPassive6_3;
+                GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive6();
+                GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalPassive6_3();
                 if (actionPoints > 0 &&
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive6_2") == 1 && PlayerPrefs.GetInt("Load1Passive6_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive6_2") == 1 && PlayerPrefs.GetInt("Load2Passive6_3") == 0) ||
@@ -3733,6 +3735,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().englishLanguage = true;
             GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxChecked;
             GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "Q";
+            GetComponent<TradManager>().ResetTexts();
         }
         else
         {
@@ -3741,6 +3744,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().englishLanguage = false;
             GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxNotChecked;
             GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "A";
+            GetComponent<TradManager>().ResetTexts();
         }
     }
 

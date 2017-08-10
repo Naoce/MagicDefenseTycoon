@@ -1347,9 +1347,9 @@ public class Shoots : MonoBehaviour
                 SelectSpell8(false);
             }
             else if ((Input.GetKeyDown(KeyCode.A) &&
-                    gm.GetComponent<GameManager>().wasdMode == false) ||
+                    gm.GetComponent<GameManager>().englishLanguage == false) ||
                     (Input.GetKeyDown(KeyCode.Q) &&
-                    gm.GetComponent<GameManager>().wasdMode == true))
+                    gm.GetComponent<GameManager>().englishLanguage == true))
             {
                 UseObject1();
             }

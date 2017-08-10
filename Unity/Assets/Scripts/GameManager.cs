@@ -579,7 +579,7 @@ public class GameManager : MonoBehaviour
         if (showSpellsInfo == true)
         {
             int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell1 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
-            GetComponent<TradManager>().HUDTextDescriptionSpell1.text = GetComponent<TradManager>().EnglishElementalSpellInGame1_1 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame1_2;
+            GetComponent<TradManager>().HUDTextDescriptionSpell1.text = GetComponent<TradManager>().GetElementalSpellInGame1_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame1_2();
             bulleInfoSpell1.SetActive(true);
         }
     }
@@ -596,7 +596,7 @@ public class GameManager : MonoBehaviour
         if (showSpellsInfo == true)
         {
             int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell2 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().thunderboltStacksBonus;
-            GetComponent<TradManager>().HUDTextDescriptionSpell2.text = GetComponent<TradManager>().EnglishElementalSpellInGame2_1 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame2_2;
+            GetComponent<TradManager>().HUDTextDescriptionSpell2.text = GetComponent<TradManager>().GetElementalSpellInGame2_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame2_2();
             bulleInfoSpell2.SetActive(true);
         }
     }
@@ -613,7 +613,7 @@ public class GameManager : MonoBehaviour
         if (showSpellsInfo == true)
         {
             int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell3 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
-            GetComponent<TradManager>().HUDTextDescriptionSpell3.text = GetComponent<TradManager>().EnglishElementalSpellInGame3_1 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().numberShards + GetComponent<TradManager>().EnglishElementalSpellInGame3_2 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame3_3;
+            GetComponent<TradManager>().HUDTextDescriptionSpell3.text = GetComponent<TradManager>().GetElementalSpellInGame3_1() + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().numberShards + GetComponent<TradManager>().GetElementalSpellInGame3_2() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame3_3();
             bulleInfoSpell3.SetActive(true);
         }
     }
@@ -630,7 +630,7 @@ public class GameManager : MonoBehaviour
         if (showSpellsInfo == true)
         {
             int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell4 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
-            GetComponent<TradManager>().HUDTextDescriptionSpell4.text = GetComponent<TradManager>().EnglishElementalSpellInGame4_1 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame4_2;
+            GetComponent<TradManager>().HUDTextDescriptionSpell4.text = GetComponent<TradManager>().GetElementalSpellInGame4_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame4_2();
             bulleInfoSpell4.SetActive(true);
         }
     }
@@ -647,7 +647,7 @@ public class GameManager : MonoBehaviour
         if (showSpellsInfo == true)
         {
             float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
-            GetComponent<TradManager>().HUDTextDescriptionSpell5.text = GetComponent<TradManager>().EnglishElementalSpellInGame5_1 + duration + GetComponent<TradManager>().EnglishElementalSpellInGame5_2;
+            GetComponent<TradManager>().HUDTextDescriptionSpell5.text = GetComponent<TradManager>().GetElementalSpellInGame5_1() + duration + GetComponent<TradManager>().GetElementalSpellInGame5_2();
             bulleInfoSpell5.SetActive(true);
         }
     }
@@ -665,7 +665,7 @@ public class GameManager : MonoBehaviour
         {
             int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell6 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
             float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
-            GetComponent<TradManager>().HUDTextDescriptionSpell6.text = GetComponent<TradManager>().EnglishElementalSpellInGame6_1 + duration + GetComponent<TradManager>().EnglishElementalSpellInGame6_2 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame6_3;
+            GetComponent<TradManager>().HUDTextDescriptionSpell6.text = GetComponent<TradManager>().GetElementalSpellInGame6_1() + duration + GetComponent<TradManager>().GetElementalSpellInGame6_2() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame6_3();
             bulleInfoSpell6.SetActive(true);
         }
     }
@@ -683,7 +683,7 @@ public class GameManager : MonoBehaviour
         {
             int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell7 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
             float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
-            GetComponent<TradManager>().HUDTextDescriptionSpell7.text = GetComponent<TradManager>().EnglishElementalSpellInGame7_1 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame7_2 + duration + GetComponent<TradManager>().EnglishElementalSpellInGame7_3;
+            GetComponent<TradManager>().HUDTextDescriptionSpell7.text = GetComponent<TradManager>().GetElementalSpellInGame7_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame7_2() + duration + GetComponent<TradManager>().GetElementalSpellInGame7_3();
             bulleInfoSpell7.SetActive(true);
         }
     }
@@ -700,7 +700,7 @@ public class GameManager : MonoBehaviour
         if (showSpellsInfo == true)
         {
             int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell8 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
-            GetComponent<TradManager>().HUDTextDescriptionSpell8.text = GetComponent<TradManager>().EnglishElementalSpellInGame8_1 + damageCount + GetComponent<TradManager>().EnglishElementalSpellInGame8_2;
+            GetComponent<TradManager>().HUDTextDescriptionSpell8.text = GetComponent<TradManager>().GetElementalSpellInGame8_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame8_2();
             bulleInfoSpell8.SetActive(true);
         }
     }
@@ -718,7 +718,7 @@ public class GameManager : MonoBehaviour
         if (showSpellsInfo == true)
         {
             int healCount = 20 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusHealing;
-            GetComponent<TradManager>().HUDTextDescriptionPotion1.text = GetComponent<TradManager>().EnglishPotionInGame1_1 + healCount + GetComponent<TradManager>().EnglishPotionInGame1_2;
+            GetComponent<TradManager>().HUDTextDescriptionPotion1.text = GetComponent<TradManager>().GetDescriptionPotion1_1() + healCount + GetComponent<TradManager>().GetDescriptionPotion1_2();
             bulleInfoObject1.SetActive(true);
         }
     }
@@ -734,7 +734,7 @@ public class GameManager : MonoBehaviour
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
         {
-            GetComponent<TradManager>().HUDTextDescriptionPotion2.text = GetComponent<TradManager>().EnglishPotionInGame2;
+            GetComponent<TradManager>().HUDTextDescriptionPotion2.text = GetComponent<TradManager>().GetDescriptionPotion2();
             bulleInfoObject2.SetActive(true);
         }
     }
@@ -754,18 +754,18 @@ public class GameManager : MonoBehaviour
 
             if (runeSelected == 0)
             {
-                bulleInfoObject3Title.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneDamageTitle;
-                bulleInfoObject3Text.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneDamageInGame1_1 + playerLevel + GetComponent<TradManager>().EnglishRuneDamageInGame1_2;
+                bulleInfoObject3Title.GetComponent<Text>().text = GetComponent<TradManager>().GetTitleRuneDamage();
+                bulleInfoObject3Text.GetComponent<Text>().text = GetComponent<TradManager>().GetDescriptionRuneDamage_1() + playerLevel + GetComponent<TradManager>().GetDescriptionRuneDamage_2();
             }
             else if (runeSelected == 1)
             {
-                bulleInfoObject3Title.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneCelerityTitle;
-                bulleInfoObject3Text.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneCelerityInGame1_1 + (playerLevel * 2) + GetComponent<TradManager>().EnglishRuneCelerityInGame1_2;
+                bulleInfoObject3Title.GetComponent<Text>().text = GetComponent<TradManager>().GetTitleRuneCelerity();
+                bulleInfoObject3Text.GetComponent<Text>().text = GetComponent<TradManager>().GetDescriptionRuneCelerity_1() + (playerLevel * 2) + GetComponent<TradManager>().GetDescriptionRuneCelerity_2();
             }
             else
             {
-                bulleInfoObject3Title.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneHealTitle;
-                bulleInfoObject3Text.GetComponent<Text>().text = GetComponent<TradManager>().EnglishRuneHealInGame1_1 + playerLevel + GetComponent<TradManager>().EnglishRuneHealInGame1_2;
+                bulleInfoObject3Title.GetComponent<Text>().text = GetComponent<TradManager>().GetTitleRuneHeal();
+                bulleInfoObject3Text.GetComponent<Text>().text = GetComponent<TradManager>().GetDescriptionRuneHeal_1() + playerLevel + GetComponent<TradManager>().GetDescriptionRuneHeal_2();
             }
 
             bulleInfoObject3.SetActive(true);
