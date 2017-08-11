@@ -102,10 +102,13 @@ public class StatsPlayer : MonoBehaviour
     {
         if (GetComponent<Deplacements>().isDead == false)
         {
-            if (GetComponent<Shoots>().canRetaliateShield == true && attacker != null)
-                attacker.GetComponent<IAGuerrier>().TakeDamageFromPlayer(GetComponent<Shoots>().retaliateDamage, transform.position);
-            if (GetComponent<Shoots>().canFreezeShield == true && attacker != null)
-                attacker.GetComponent<IAGuerrier>().ApplySlow(2, GetComponent<Shoots>().retaliateFreeze);
+            if (gm.GetComponent<GameManager>().currMageType == 1)
+            {
+                if (GetComponent<MageElemental>().canRetaliateShield == true && attacker != null)
+                    attacker.GetComponent<IAGuerrier>().TakeDamageFromPlayer(GetComponent<MageElemental>().retaliateDamage, transform.position);
+                if (GetComponent<MageElemental>().canFreezeShield == true && attacker != null)
+                    attacker.GetComponent<IAGuerrier>().ApplySlow(2, GetComponent<MageElemental>().retaliateFreeze);
+            }
 
             damageTaken -= GetComponent<Shoots>().decorationBonusTanking;
 

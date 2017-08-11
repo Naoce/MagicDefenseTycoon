@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class MissionSheet : MonoBehaviour
 {
-    public  string              description;
+    public  string              descriptionEnglish;
+    public  string              descriptionFrench;
     public  int                 difficulty;
     public  int                 experience;
     public  int                 reward;

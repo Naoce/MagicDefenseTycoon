@@ -39,6 +39,12 @@ public class GameManager : MonoBehaviour
     public  GameObject      musicCombat;
     public  GameObject      musicMenu;
 
+    public  int             currMageType;
+
+    public  GameObject      agentID0;
+    public  GameObject      agentID1;
+    public  GameObject      agentID2;
+
     public  GameObject      mapManager;
 
     public  GameObject      textNbEnemy;
@@ -578,9 +584,12 @@ public class GameManager : MonoBehaviour
 
         if (showSpellsInfo == true)
         {
-            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell1 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
-            GetComponent<TradManager>().HUDTextDescriptionSpell1.text = GetComponent<TradManager>().GetElementalSpellInGame1_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame1_2();
-            bulleInfoSpell1.SetActive(true);
+            if (currMageType == 1)
+            {
+                int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell1 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+                GetComponent<TradManager>().HUDTextDescriptionSpell1.text = GetComponent<TradManager>().GetElementalSpellInGame1_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame1_2();
+                bulleInfoSpell1.SetActive(true);
+            }
         }
     }
 
@@ -595,9 +604,12 @@ public class GameManager : MonoBehaviour
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
         {
-            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell2 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().thunderboltStacksBonus;
-            GetComponent<TradManager>().HUDTextDescriptionSpell2.text = GetComponent<TradManager>().GetElementalSpellInGame2_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame2_2();
-            bulleInfoSpell2.SetActive(true);
+            if (currMageType == 1)
+            {
+                int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell2 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage + mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().thunderboltStacksBonus;
+                GetComponent<TradManager>().HUDTextDescriptionSpell2.text = GetComponent<TradManager>().GetElementalSpellInGame2_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame2_2();
+                bulleInfoSpell2.SetActive(true);
+            }
         }
     }
 
@@ -612,9 +624,12 @@ public class GameManager : MonoBehaviour
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
         {
-            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell3 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
-            GetComponent<TradManager>().HUDTextDescriptionSpell3.text = GetComponent<TradManager>().GetElementalSpellInGame3_1() + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().numberShards + GetComponent<TradManager>().GetElementalSpellInGame3_2() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame3_3();
-            bulleInfoSpell3.SetActive(true);
+            if (currMageType == 1)
+            {
+                int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell3 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+                GetComponent<TradManager>().HUDTextDescriptionSpell3.text = GetComponent<TradManager>().GetElementalSpellInGame3_1() + mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().numberShards + GetComponent<TradManager>().GetElementalSpellInGame3_2() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame3_3();
+                bulleInfoSpell3.SetActive(true);
+            }
         }
     }
 
@@ -629,9 +644,12 @@ public class GameManager : MonoBehaviour
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
         {
-            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell4 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
-            GetComponent<TradManager>().HUDTextDescriptionSpell4.text = GetComponent<TradManager>().GetElementalSpellInGame4_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame4_2();
-            bulleInfoSpell4.SetActive(true);
+            if (currMageType == 1)
+            {
+                int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell4 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+                GetComponent<TradManager>().HUDTextDescriptionSpell4.text = GetComponent<TradManager>().GetElementalSpellInGame4_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame4_2();
+                bulleInfoSpell4.SetActive(true);
+            }
         }
     }
 
@@ -646,9 +664,12 @@ public class GameManager : MonoBehaviour
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
         {
-            float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
-            GetComponent<TradManager>().HUDTextDescriptionSpell5.text = GetComponent<TradManager>().GetElementalSpellInGame5_1() + duration + GetComponent<TradManager>().GetElementalSpellInGame5_2();
-            bulleInfoSpell5.SetActive(true);
+            if (currMageType == 1)
+            {
+                float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
+                GetComponent<TradManager>().HUDTextDescriptionSpell5.text = GetComponent<TradManager>().GetElementalSpellInGame5_1() + duration + GetComponent<TradManager>().GetElementalSpellInGame5_2();
+                bulleInfoSpell5.SetActive(true);
+            }
         }
     }
 
@@ -663,10 +684,13 @@ public class GameManager : MonoBehaviour
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
         {
-            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell6 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
-            float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
-            GetComponent<TradManager>().HUDTextDescriptionSpell6.text = GetComponent<TradManager>().GetElementalSpellInGame6_1() + duration + GetComponent<TradManager>().GetElementalSpellInGame6_2() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame6_3();
-            bulleInfoSpell6.SetActive(true);
+            if (currMageType == 1)
+            {
+                int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell6 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+                float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
+                GetComponent<TradManager>().HUDTextDescriptionSpell6.text = GetComponent<TradManager>().GetElementalSpellInGame6_1() + duration + GetComponent<TradManager>().GetElementalSpellInGame6_2() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame6_3();
+                bulleInfoSpell6.SetActive(true);
+            }
         }
     }
 
@@ -681,10 +705,13 @@ public class GameManager : MonoBehaviour
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
         {
-            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell7 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
-            float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
-            GetComponent<TradManager>().HUDTextDescriptionSpell7.text = GetComponent<TradManager>().GetElementalSpellInGame7_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame7_2() + duration + GetComponent<TradManager>().GetElementalSpellInGame7_3();
-            bulleInfoSpell7.SetActive(true);
+            if (currMageType == 1)
+            {
+                int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell7 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+                float duration = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusEffectDuration * 2;
+                GetComponent<TradManager>().HUDTextDescriptionSpell7.text = GetComponent<TradManager>().GetElementalSpellInGame7_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame7_2() + duration + GetComponent<TradManager>().GetElementalSpellInGame7_3();
+                bulleInfoSpell7.SetActive(true);
+            }
         }
     }
 
@@ -699,9 +726,12 @@ public class GameManager : MonoBehaviour
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
         {
-            int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell8 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
-            GetComponent<TradManager>().HUDTextDescriptionSpell8.text = GetComponent<TradManager>().GetElementalSpellInGame8_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame8_2();
-            bulleInfoSpell8.SetActive(true);
+            if (currMageType == 1)
+            {
+                int damageCount = mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().damageSpell8 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusDamage;
+                GetComponent<TradManager>().HUDTextDescriptionSpell8.text = GetComponent<TradManager>().GetElementalSpellInGame8_1() + damageCount + GetComponent<TradManager>().GetElementalSpellInGame8_2();
+                bulleInfoSpell8.SetActive(true);
+            }
         }
     }
 
@@ -861,52 +891,62 @@ public class GameManager : MonoBehaviour
 
     public void SelectSpell1()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell1(true);
+        if (currMageType == 1)
+            mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().SelectSpell1(true);
     }
 
     public void SelectSpell2()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell2(true);
+        if (currMageType == 1)
+            mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().SelectSpell2(true);
     }
 
     public void SelectSpell3()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell3(true);
+        if (currMageType == 1)
+            mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().SelectSpell3(true);
     }
 
     public void SelectSpell4()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell4(true);
+        if (currMageType == 1)
+            mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().SelectSpell4(true);
     }
 
     public void SelectSpell5()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell5(true);
+        if (currMageType == 1)
+            mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().SelectSpell5(true);
     }
 
     public void SelectSpell6()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell6(true);
+        if (currMageType == 1)
+            mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().SelectSpell6(true);
     }
 
     public void SelectSpell7()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell7(true);
+        if (currMageType == 1)
+            mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().SelectSpell7(true);
     }
 
     public void SelectSpell8()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().SelectSpell8(true);
+        if (currMageType == 1)
+            mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().SelectSpell8(true);
     }
 
     public void SelectObject1()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().UseObject1();
+        if (currMageType == 1)
+            mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().UseObject1();
     }
 
     public void SelectObject2()
     {
-        mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().UseObject2();
+        if (currMageType == 1)
+            mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().UseObject2();
     }
 
     IEnumerator VictoryAnimation()

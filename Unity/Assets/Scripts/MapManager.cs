@@ -437,17 +437,17 @@ public class MapManager : MonoBehaviour
                 {
                     alliesList[i].GetComponent<IAGuerrierAgent>().EarnXP(gm.GetComponent<GameManager>().listMissions[gm.GetComponent<GameManager>().currMissionSelected].GetComponent<MissionSheet>().experience);
 
-                    if (alliesList[i].GetComponent<Agent>().idAgent == 0)
+                    if (alliesList[i].GetComponent<IAGuerrierAgent>().SheetID == 0)
                     {
                         PlayerPrefs.SetInt("Load1Agent1Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load1Agent1XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                     }
-                    else if (alliesList[i].GetComponent<Agent>().idAgent == 1)
+                    else if (alliesList[i].GetComponent<IAGuerrierAgent>().SheetID == 1)
                     {
                         PlayerPrefs.SetInt("Load1Agent2Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load1Agent2XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                     }
-                    else if (alliesList[i].GetComponent<Agent>().idAgent == 2)
+                    else if (alliesList[i].GetComponent<IAGuerrierAgent>().SheetID == 2)
                     {
                         PlayerPrefs.SetInt("Load1Agent3Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load1Agent3XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
@@ -471,17 +471,17 @@ public class MapManager : MonoBehaviour
                 {
                     alliesList[i].GetComponent<IAGuerrierAgent>().EarnXP(gm.GetComponent<GameManager>().listMissions[gm.GetComponent<GameManager>().currMissionSelected].GetComponent<MissionSheet>().experience);
 
-                    if (alliesList[i].GetComponent<Agent>().idAgent == 0)
+                    if (alliesList[i].GetComponent<IAGuerrierAgent>().SheetID == 0)
                     {
                         PlayerPrefs.SetInt("Load2Agent1Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load2Agent1XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                     }
-                    else if (alliesList[i].GetComponent<Agent>().idAgent == 1)
+                    else if (alliesList[i].GetComponent<IAGuerrierAgent>().SheetID == 1)
                     {
                         PlayerPrefs.SetInt("Load2Agent2Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load2Agent2XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                     }
-                    else if (alliesList[i].GetComponent<Agent>().idAgent == 2)
+                    else if (alliesList[i].GetComponent<IAGuerrierAgent>().SheetID == 2)
                     {
                         PlayerPrefs.SetInt("Load2Agent3Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load2Agent3XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
@@ -505,17 +505,17 @@ public class MapManager : MonoBehaviour
                 {
                     alliesList[i].GetComponent<IAGuerrierAgent>().EarnXP(gm.GetComponent<GameManager>().listMissions[gm.GetComponent<GameManager>().currMissionSelected].GetComponent<MissionSheet>().experience);
 
-                    if (alliesList[i].GetComponent<Agent>().idAgent == 0)
+                    if (alliesList[i].GetComponent<IAGuerrierAgent>().SheetID == 0)
                     {
                         PlayerPrefs.SetInt("Load3Agent1Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load3Agent1XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                     }
-                    else if (alliesList[i].GetComponent<Agent>().idAgent == 1)
+                    else if (alliesList[i].GetComponent<IAGuerrierAgent>().SheetID == 1)
                     {
                         PlayerPrefs.SetInt("Load3Agent2Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load3Agent2XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);
                     }
-                    else if (alliesList[i].GetComponent<Agent>().idAgent == 2)
+                    else if (alliesList[i].GetComponent<IAGuerrierAgent>().SheetID == 2)
                     {
                         PlayerPrefs.SetInt("Load3Agent3Level", alliesList[i].GetComponent<IAGuerrierAgent>().level);
                         PlayerPrefs.SetInt("Load3Agent3XP", alliesList[i].GetComponent<IAGuerrierAgent>().currXP);

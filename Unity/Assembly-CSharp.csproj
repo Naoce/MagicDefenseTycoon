@@ -68,6 +68,7 @@
      <Compile Include="Assets\Scripts\IAMeleeBasic.cs" />
      <Compile Include="Assets\Scripts\IARange.cs" />
      <Compile Include="Assets\Scripts\IceShard.cs" />
+     <Compile Include="Assets\Scripts\MageElemental.cs" />
      <Compile Include="Assets\Scripts\MapManager.cs" />
      <Compile Include="Assets\Scripts\MissionSheet.cs" />
      <Compile Include="Assets\Scripts\Node.cs" />

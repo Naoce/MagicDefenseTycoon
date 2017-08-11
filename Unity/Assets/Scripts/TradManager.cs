@@ -32,11 +32,15 @@ public class TradManager : MonoBehaviour
     public Text MenuTextSaveCancel1;
     public Text MenuTextSaveCancel2;
     public Text MenuTextSaveCancel3;
+    public Text MenuTextSaveInfo;
     public Text MenuTextSaveReturn;
 
     public Text MenuTextCharacterElemental;
+    public Text MenuTextCharacterTitleElemental;
     public Text MenuTextCharacterDemonic;
+    public Text MenuTextCharacterTitleDemonic;
     public Text MenuTextCharacterRadiant;
+    public Text MenuTextCharacterTitleRadiant;
     public Text MenuTextCharacterRuneDamage;
     public Text MenuTextCharacterRuneCelerity;
     public Text MenuTextCharacterRuneHeal;
@@ -64,7 +68,6 @@ public class TradManager : MonoBehaviour
 
     public Text MenuTextRosterDismiss;
 
-    public Text MenuTextSkillsLevel;
     public Text MenuTextSkillsLearn;
 
     public Text MenuTextDecoBuy;
@@ -80,6 +83,18 @@ public class TradManager : MonoBehaviour
     public Text MenuTextOptionsWindowed;
     public Text MenuTextOptionsReturn;
 
+    public Text HUDTextTitleSpell1;
+    public Text HUDTextTitleSpell2;
+    public Text HUDTextTitleSpell3;
+    public Text HUDTextTitleSpell4;
+    public Text HUDTextTitleSpell5;
+    public Text HUDTextTitleSpell6;
+    public Text HUDTextTitleSpell7;
+    public Text HUDTextTitleSpell8;
+    public Text HUDTextTitlePotion1;
+    public Text HUDTextTitlePotion2;
+    public Text HUDTextTitleRune;
+
     public Text HUDTextTryAgain;
     // A Modifier lors d'un changement de langue - Fin
 
@@ -90,20 +105,27 @@ public class TradManager : MonoBehaviour
         MenuTextIntroPlay.text = GetTextPlay();
         MenuTextQuit.text = GetTextQuit();
 
-        MenuTextSave1.text = GetTextEmptySave();
-        MenuTextSave2.text = GetTextEmptySave();
-        MenuTextSave3.text = GetTextEmptySave();
+        if (PlayerPrefs.GetInt("Load1Created") == 0)
+            MenuTextSave1.text = GetTextEmptySave();
+        if (PlayerPrefs.GetInt("Load2Created") == 0)
+            MenuTextSave2.text = GetTextEmptySave();
+        if (PlayerPrefs.GetInt("Load3Created") == 0)
+            MenuTextSave3.text = GetTextEmptySave();
         MenuTextSaveDelete1.text = GetTextDelete();
         MenuTextSaveDelete2.text = GetTextDelete();
         MenuTextSaveDelete3.text = GetTextDelete();
         MenuTextSaveCancel1.text = GetTextCancel();
         MenuTextSaveCancel2.text = GetTextCancel();
         MenuTextSaveCancel3.text = GetTextCancel();
+        MenuTextSaveInfo.text = GetTextSaveInfo();
         MenuTextSaveReturn.text = GetTextReturn();
 
         MenuTextCharacterElemental.text = GetTextElemental();
+        MenuTextCharacterTitleElemental.text = GetTextTitleElemental();
         MenuTextCharacterDemonic.text = GetTextDemonic();
+        MenuTextCharacterTitleDemonic.text = GetTextTitleDemonic();
         MenuTextCharacterRadiant.text = GetTextRadiant();
+        MenuTextCharacterTitleRadiant.text = GetTextTitleRadiant();
         MenuTextCharacterRuneDamage.text = GetTextRuneDamage();
         MenuTextCharacterRuneCelerity.text = GetTextRuneCelerity();
         MenuTextCharacterRuneHeal.text = GetTextRuneHeal();
@@ -131,7 +153,6 @@ public class TradManager : MonoBehaviour
 
         MenuTextRosterDismiss.text = GetTextDismiss();
 
-        MenuTextSkillsLevel.text = GetTextLevel();
         MenuTextSkillsLearn.text = GetTextLearn();
 
         MenuTextDecoBuy.text = GetTextDecoBuy();
@@ -146,6 +167,24 @@ public class TradManager : MonoBehaviour
         MenuTextOptionsLanguage.text = GetTextLanguage();
         MenuTextOptionsWindowed.text = GetTextWindowed();
         MenuTextOptionsReturn.text = GetTextReturn();
+
+        HUDTextTitleSpell1.text = GetTitleElementalSpell1();
+        HUDTextTitleSpell2.text = GetTitleElementalSpell2();
+        HUDTextTitleSpell3.text = GetTitleElementalSpell3();
+        HUDTextTitleSpell4.text = GetTitleElementalSpell4();
+        HUDTextTitleSpell5.text = GetTitleElementalSpell5();
+        HUDTextTitleSpell6.text = GetTitleElementalSpell6();
+        HUDTextTitleSpell7.text = GetTitleElementalSpell7();
+        HUDTextTitleSpell8.text = GetTitleElementalSpell8();
+        HUDTextTitlePotion1.text = GetTitlePotion1();
+        HUDTextTitlePotion2.text = GetTitlePotion2();
+
+        if (GetComponent<GameManager>().runeSelected == 0)
+            HUDTextTitleRune.text = GetTitleRuneDamage();
+        else if (GetComponent<GameManager>().runeSelected == 1)
+            HUDTextTitleRune.text = GetTitleRuneCelerity();
+        else
+            HUDTextTitleRune.text = GetTitleRuneHeal();
 
         HUDTextTryAgain.text = GetTextTryAgain();
     }
@@ -190,6 +229,14 @@ public class TradManager : MonoBehaviour
             return ("Annuler");
     }
 
+    public string GetTextSaveInfo()
+    {
+        if (isInEnglish)
+            return ("Choose your character name.");
+        else
+            return ("Choisissez le nom de votre personnage.");
+    }
+
     public string GetTextReturn()
     {
         if (isInEnglish)
@@ -206,6 +253,14 @@ public class TradManager : MonoBehaviour
             return ("Le mage élémentaire utilise le feu, la foudre, la glace et le vent pour combattre ses ennemis.");
     }
 
+    public string GetTextTitleElemental()
+    {
+        if (isInEnglish)
+            return ("Elemental mage");
+        else
+            return ("Mage élémentaire");
+    }
+
     public string GetTextDemonic()
     {
         if (isInEnglish)
@@ -214,12 +269,28 @@ public class TradManager : MonoBehaviour
             return ("Le mage démoniaque utilise des sorts liés à la peur pour tuer ses ennemis d'une crise cardiaque.");
     }
 
+    public string GetTextTitleDemonic()
+    {
+        if (isInEnglish)
+            return ("Demonic mage");
+        else
+            return ("Mage démoniaque");
+    }
+
     public string GetTextRadiant()
     {
         if (isInEnglish)
             return ("The radiant mage makes use of light magic in order to heal and buff his allies.");
         else
             return ("Le mage lumineux utilise la magie de la lumière pour soigner et améliorer les statistiques de ses alliés.");
+    }
+
+    public string GetTextTitleRadiant()
+    {
+        if (isInEnglish)
+            return ("Radiant mage");
+        else
+            return ("Mage lumineux");
     }
 
     public string GetTextRuneDamage()
@@ -332,14 +403,6 @@ public class TradManager : MonoBehaviour
             return ("Dismiss");
         else
             return ("Renvoyer");
-    }
-
-    public string GetTextLevel()
-    {
-        if (isInEnglish)
-            return ("Level");
-        else
-            return ("Niveau");
     }
 
     public string GetTextLearn()
@@ -694,6 +757,14 @@ public class TradManager : MonoBehaviour
             return (" points de vie.");
     }
 
+    public string GetTitlePotion1()
+    {
+        if (isInEnglish)
+            return ("Health potion");
+        else
+            return ("Potion de soins");
+    }
+
     public string GetDescriptionPotion1_1()
     {
         if (isInEnglish)
@@ -708,6 +779,14 @@ public class TradManager : MonoBehaviour
             return (" health points.");
         else
             return (" points de vie.");
+    }
+
+    public string GetTitlePotion2()
+    {
+        if (isInEnglish)
+            return ("Mana potion");
+        else
+            return ("Potion de mana");
     }
 
     public string GetDescriptionPotion2()
@@ -1316,5 +1395,20 @@ public class TradManager : MonoBehaviour
             return ("Level 3\nIce spells deal 3 additional points of damage.\nYou can only learn one mastery skill.");
         else
             return ("Niveau 3\nLes sorts de glace infligent 3 points de dégâts supplémentaires.\nVous ne pouvez apprendre qu'une seule compétence de maîtrise.");
+    }
+
+    public string GetTitleClass(string className)
+    {
+        if (GetComponent<GameManager>().englishLanguage == true)
+            return (className);
+        else
+        {
+            if (className == "Swordsman")
+                return ("Épéiste");
+            else if (className == "Knight")
+                return ("Chevalier");
+            else
+                return ("Voleur");
+        }
     }
 }

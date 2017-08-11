@@ -13,11 +13,13 @@ public class PlayerManager : MonoBehaviour
     public  Texture2D   cursorWrong;
     public  CursorMode  cursorMode;
     private bool        cursorIsNormal = true;
+    private int         mageType = 0;
 
     void Start()
     {
         gm = GameObject.Find("GameManager");
         cam = GameObject.Find("Main Camera");
+        mageType = gm.GetComponent<GameManager>().currMageType;
 
         Vector2 playerPos = mapManager.GetComponent<MapManager>().playerStartPos;
         player = (GameObject)Instantiate(playerElem, playerPos, transform.rotation);
@@ -43,133 +45,136 @@ public class PlayerManager : MonoBehaviour
 
     public void CheckMouse()
     {
-        if (player.GetComponent<Shoots>().spellSelected == 1)
+        if (mageType == 1)
         {
-            if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f &&
-                cursorIsNormal == false)
+            if (player.GetComponent<Shoots>().spellSelected == 1)
             {
-                SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = true;
-            }
-            else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 0.2f &&
-                    cursorIsNormal == true)
-            {
-                SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = false;
-            }
-        }
-        else if (player.GetComponent<Shoots>().spellSelected == 2)
-        {
-            if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 2f)
-            {
-                RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
-                if (hit.collider != null)
+                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f &&
+                    cursorIsNormal == false)
                 {
-                    if ((hit.collider.tag == "EnemyGuerrier" || hit.collider.tag == "BossGuerrier") && cursorIsNormal == false)
-                    {
-                        SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                        cursorIsNormal = true;
-                    }
-                    else if (hit.collider.tag != "EnemyGuerrier" && cursorIsNormal == true &&
-                            hit.collider.tag != "BossGuerrier")
-                    {
-                        SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                        cursorIsNormal = false;
-                    }
+                    SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = true;
+                }
+                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 0.2f &&
+                        cursorIsNormal == true)
+                {
+                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = false;
                 }
             }
-            else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 3f &&
-                    cursorIsNormal == true)
+            else if (player.GetComponent<Shoots>().spellSelected == 2)
             {
-                SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = false;
-            }
-        }
-        else if (player.GetComponent<Shoots>().spellSelected == 3)
-        {
-            if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f &&
-                cursorIsNormal == false)
-            {
-                SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = true;
-            }
-            else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 0.2f &&
-                    cursorIsNormal == true)
-            {
-                SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = false;
-            }
-        }
-        else if (player.GetComponent<Shoots>().spellSelected == 4)
-        {
-            if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f &&
-                cursorIsNormal == false)
-            {
-                SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = true;
-            }
-            else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 3f &&
-                    cursorIsNormal == true)
-            {
-                SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = false;
-            }
-        }
-        else if (player.GetComponent<Shoots>().spellSelected == 5)
-        {
-            if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 3f &&
-                cursorIsNormal == false)
-            {
-                SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = true;
-            }
-            else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 3f &&
-                    cursorIsNormal == true)
-            {
-                SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = false;
-            }
-        }
-        else if (player.GetComponent<Shoots>().spellSelected == 6)
-        {
-            if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 2f)
-            {
-                RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
-                if (hit.collider != null)
+                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) <= player.GetComponent<Shoots>().rangeSpell2)
                 {
-                    if ((hit.collider.tag == "EnemyGuerrier" || hit.collider.tag == "BossGuerrier") && cursorIsNormal == false)
+                    RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
+                    if (hit.collider != null)
                     {
-                        SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                        cursorIsNormal = true;
-                    }
-                    else if (hit.collider.tag != "EnemyGuerrier" && cursorIsNormal == true &&
-                            hit.collider.tag != "BossGuerrier")
-                    {
-                        SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                        cursorIsNormal = false;
+                        if ((hit.collider.tag == "EnemyGuerrier" || hit.collider.tag == "BossGuerrier") && cursorIsNormal == false)
+                        {
+                            SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                            cursorIsNormal = true;
+                        }
+                        else if (hit.collider.tag != "EnemyGuerrier" && cursorIsNormal == true &&
+                                hit.collider.tag != "BossGuerrier")
+                        {
+                            SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                            cursorIsNormal = false;
+                        }
                     }
                 }
+                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > player.GetComponent<Shoots>().rangeSpell2 &&
+                        cursorIsNormal == true)
+                {
+                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = false;
+                }
             }
-            else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 3f &&
-                    cursorIsNormal == true)
+            else if (player.GetComponent<Shoots>().spellSelected == 3)
             {
-                SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = false;
+                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f &&
+                    cursorIsNormal == false)
+                {
+                    SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = true;
+                }
+                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 0.2f &&
+                        cursorIsNormal == true)
+                {
+                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = false;
+                }
             }
-        }
-        else if (player.GetComponent<Shoots>().spellSelected == 8)
-        {
-            if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f &&
-                cursorIsNormal == false)
+            else if (player.GetComponent<Shoots>().spellSelected == 4)
             {
-                SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = true;
+                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) <= player.GetComponent<Shoots>().rangeSpell4 &&
+                    cursorIsNormal == false)
+                {
+                    SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = true;
+                }
+                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > player.GetComponent<Shoots>().rangeSpell4 &&
+                        cursorIsNormal == true)
+                {
+                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = false;
+                }
             }
-            else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 0.2f &&
-                    cursorIsNormal == true)
+            else if (player.GetComponent<Shoots>().spellSelected == 5)
             {
-                SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
-                cursorIsNormal = false;
+                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) <= player.GetComponent<Shoots>().rangeSpell5 &&
+                    cursorIsNormal == false)
+                {
+                    SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = true;
+                }
+                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > player.GetComponent<Shoots>().rangeSpell5 &&
+                        cursorIsNormal == true)
+                {
+                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = false;
+                }
+            }
+            else if (player.GetComponent<Shoots>().spellSelected == 6)
+            {
+                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) <= player.GetComponent<Shoots>().rangeSpell6)
+                {
+                    RaycastHit2D hit = Physics2D.Raycast(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition), -Vector2.up);
+                    if (hit.collider != null)
+                    {
+                        if ((hit.collider.tag == "EnemyGuerrier" || hit.collider.tag == "BossGuerrier") && cursorIsNormal == false)
+                        {
+                            SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                            cursorIsNormal = true;
+                        }
+                        else if (hit.collider.tag != "EnemyGuerrier" && cursorIsNormal == true &&
+                                hit.collider.tag != "BossGuerrier")
+                        {
+                            SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                            cursorIsNormal = false;
+                        }
+                    }
+                }
+                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > player.GetComponent<Shoots>().rangeSpell6 &&
+                        cursorIsNormal == true)
+                {
+                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = false;
+                }
+            }
+            else if (player.GetComponent<Shoots>().spellSelected == 8)
+            {
+                if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) > 0.2f &&
+                    cursorIsNormal == false)
+                {
+                    SetRightMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = true;
+                }
+                else if (Vector2.Distance(player.transform.position, cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)) < 0.2f &&
+                        cursorIsNormal == true)
+                {
+                    SetWrongMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
+                    cursorIsNormal = false;
+                }
             }
         }
     }

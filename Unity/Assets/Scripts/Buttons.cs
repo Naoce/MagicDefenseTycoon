@@ -266,7 +266,11 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().volumeMusic = 0;
         PlayerPrefs.SetInt("MusicVolumeSet", 1);
         PlayerPrefs.SetInt("MusicVolume", (int)GetComponent<GameManager>().volumeMusic);
-        obj.GetComponent<Text>().text = "Music volume : " + GetComponent<GameManager>().volumeMusic + "%";
+        if (GetComponent<GameManager>().englishLanguage == true)
+            obj.GetComponent<Text>().text = "Music volume : " + GetComponent<GameManager>().volumeMusic + "%";
+        else
+            obj.GetComponent<Text>().text = "Volume musique : " + GetComponent<GameManager>().volumeMusic + "%";
+
         if (GetComponent<GameManager>().isInGame == true)
             GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
         GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
@@ -279,7 +283,11 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().volumeMusic = 100;
         PlayerPrefs.SetInt("MusicVolumeSet", 1);
         PlayerPrefs.SetInt("MusicVolume", (int)GetComponent<GameManager>().volumeMusic);
-        obj.GetComponent<Text>().text = "Music volume : " + GetComponent<GameManager>().volumeMusic + "%";
+        if (GetComponent<GameManager>().englishLanguage == true)
+            obj.GetComponent<Text>().text = "Music volume : " + GetComponent<GameManager>().volumeMusic + "%";
+        else
+            obj.GetComponent<Text>().text = "Volume musique : " + GetComponent<GameManager>().volumeMusic + "%";
+
         if (GetComponent<GameManager>().isInGame == true)
             GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
         GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
@@ -292,7 +300,10 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().volumeSFX = 0;
         PlayerPrefs.SetInt("SFXVolumeSet", 1);
         PlayerPrefs.SetInt("SFXVolume", (int)GetComponent<GameManager>().volumeSFX);
-        obj.GetComponent<Text>().text = "SFX volume : " + GetComponent<GameManager>().volumeSFX + "%";
+        if (GetComponent<GameManager>().englishLanguage == true)
+            obj.GetComponent<Text>().text = "SFX volume : " + GetComponent<GameManager>().volumeSFX + "%";
+        else
+            obj.GetComponent<Text>().text = "Volume effets : " + GetComponent<GameManager>().volumeSFX + "%";
     }
 
     public void SFXPlus(GameObject obj)
@@ -302,7 +313,10 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().volumeSFX = 100;
         PlayerPrefs.SetInt("SFXVolumeSet", 1);
         PlayerPrefs.SetInt("SFXVolume", (int)GetComponent<GameManager>().volumeSFX);
-        obj.GetComponent<Text>().text = "SFX volume : " + GetComponent<GameManager>().volumeSFX + "%";
+        if (GetComponent<GameManager>().englishLanguage == true)
+            obj.GetComponent<Text>().text = "SFX volume : " + GetComponent<GameManager>().volumeSFX + "%";
+        else
+            obj.GetComponent<Text>().text = "Volume effets : " + GetComponent<GameManager>().volumeSFX + "%";
     }
 
     public void BloodTrigger(GameObject obj)
@@ -366,11 +380,27 @@ public class Buttons : MonoBehaviour
     {
         GetComponent<GameManager>().textDifficulty.SetActive(true);
         if (difficulty == 0)
-            GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "For players searching for a more\nrelaxed experience.";
+        {
+            if (GetComponent<GameManager>().englishLanguage == true)
+                GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "For players searching for a more relaxed experience.";
+            else
+                GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "Pour les joueurs qui recherchent une expérience de jeu plus relaxante.";
+        }
         else if (difficulty == 1)
-            GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "For players that search for a\nnormal experience.";
+        {
+            if (GetComponent<GameManager>().englishLanguage == true)
+                GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "For players that search for a normal experience.";
+            else
+                GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "Pour les joueurs qui recherchent une expérience de jeu normale.";
+        }   
         else if (difficulty == 2)
-            GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "Only play this if you enjoy dying.\nA lot.";
+        {
+            if (GetComponent<GameManager>().englishLanguage == true)
+                GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "Only play this if you enjoy dying.\nA lot.";
+            else
+                GetComponent<GameManager>().textDifficulty.GetComponentInChildren<Text>().text = "Sélectionnez ce mode de jeu uniquement si vous aimez mourir.\nBeaucoup.";
+        }
+           
     }
 
     public void SetOffTextDifficulty()
@@ -700,10 +730,20 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().MissionsPanelMainSheetDifficulty3.SetActive(true);
         else
             GetComponent<GameManager>().MissionsPanelMainSheetDifficulty4.SetActive(false);
+        if (GetComponent<GameManager>().englishLanguage == true)
+        {
+            GetComponent<GameManager>().MissionsPanelDescriptionText.text = GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().descriptionEnglish.Replace("<br>", "\n");
+            GetComponent<GameManager>().MissionsPanelDescriptionBisText.text = "Experience : " + GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().experience +
+                                                                               "\nReward : " + GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().reward + " gold coins";
 
-        GetComponent<GameManager>().MissionsPanelDescriptionText.text = GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().description.Replace("<br>", "\n");
-        GetComponent<GameManager>().MissionsPanelDescriptionBisText.text = "Experience : " + GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().experience +
-                                                                           "\nReward : " + GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().reward + " gold coins";
+        }
+        else
+        {
+            GetComponent<GameManager>().MissionsPanelDescriptionText.text = GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().descriptionFrench.Replace("<br>", "\n");
+            GetComponent<GameManager>().MissionsPanelDescriptionBisText.text = "Expérience : " + GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().experience +
+                                                                               "\nRécompense : " + GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().reward + " pièces d'or";
+
+        }
     }
 
     public void EnterInMission()
@@ -739,10 +779,10 @@ public class Buttons : MonoBehaviour
 
     public void DisplayTavernPanel()
     {
-        GetComponent<GameManager>().TavernRosterSizeText.text = "Roster : " + GetComponent<GameManager>().rosterAgents.Count + " / 6";
+        GetComponent<GameManager>().TavernRosterSizeText.text = GetComponent<GameManager>().rosterAgents.Count.ToString() + " / 6";
         GetComponent<GameManager>().TavernRosterSizeText.color = colorBlack;
 
-        GetComponent<GameManager>().TavernPrestigeText.text = "Prestige : " + GetComponent<GameManager>().prestige;
+        GetComponent<GameManager>().TavernPrestigeText.text = GetComponent<GameManager>().prestige.ToString();
         GetComponent<GameManager>().TavernPrestigeText.color = colorBlack;
 
         GetComponent<GameManager>().currAgentSelected = 0;
@@ -872,12 +912,26 @@ public class Buttons : MonoBehaviour
             attackspeed = GetComponent<GameManager>().agentTypeSwordsmanAS[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level];
         }
 
-        GetComponent<GameManager>().TavernDescription.GetComponent<Text>().text = GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetName +
-                                                            "\nClass : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetClass +
+        if (GetComponent<GameManager>().englishLanguage == true)
+        {
+            GetComponent<GameManager>().TavernDescription.GetComponent<Text>().text = GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetName +
+                                                            "\nClass : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
                                                             "\nLevel : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level +
                                                             "\n\nHealth points : " + hp +
                                                             "\nDamage per second : " + System.Math.Round((damage / attackspeed), 2) +
                                                             "\n\nPrestige needed : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetPrestige;
+
+        }
+        else
+        {
+            GetComponent<GameManager>().TavernDescription.GetComponent<Text>().text = GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetName +
+                                                            "\nClasse : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
+                                                            "\nNiveau : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level +
+                                                            "\n\nPoints de vie : " + hp +
+                                                            "\nDégâts par seconde : " + System.Math.Round((damage / attackspeed), 2) +
+                                                            "\n\nPrestige nécessaire : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetPrestige;
+
+        }
 
         if (GetComponent<GameManager>().prestige >= GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetPrestige &&
             GetComponent<GameManager>().rosterAgents.Count < 6)
@@ -906,7 +960,7 @@ public class Buttons : MonoBehaviour
     public void AddAgentToRoster()
     {
         GetComponent<GameManager>().rosterAgents.Add(GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected]);
-        GetComponent<GameManager>().TavernRosterSizeText.text = "Roster : " + GetComponent<GameManager>().rosterAgents.Count + " / 6";
+        GetComponent<GameManager>().TavernRosterSizeText.text = GetComponent<GameManager>().rosterAgents.Count.ToString() + " / 6";
 
         if (CountTabAgentsLength() < 3)
         {
@@ -916,7 +970,11 @@ public class Buttons : MonoBehaviour
                 GetComponent<GameManager>().tabAgents[1] = GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected];
             else
                 GetComponent<GameManager>().tabAgents[2] = GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected];
+
+            SaveAgentAddedToTeam(GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetID);
         }
+
+        SaveAgentAddedToRoster(GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetID);
 
         GetComponent<GameManager>().tabFreeAgents.Remove(GetComponent<GameManager>().TavernAgentObj[GetComponent<GameManager>().currAgentSelected]);
 
@@ -964,6 +1022,130 @@ public class Buttons : MonoBehaviour
         }
     }
 
+    public void SaveAgentAddedToRoster(int id)
+    {
+        if (id == 0)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent1Roster", 1);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent1Roster", 1);
+            else
+                PlayerPrefs.SetInt("Load3Agent1Roster", 1);
+        }
+        else if (id == 1)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent2Roster", 1);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent2Roster", 1);
+            else
+                PlayerPrefs.SetInt("Load3Agent2Roster", 1);
+        }
+        else if (id == 2)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent3Roster", 1);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent3Roster", 1);
+            else
+                PlayerPrefs.SetInt("Load3Agent3Roster", 1);
+        }
+    }
+
+    public void SaveAgentRemovedFromRoster(int id)
+    {
+        if (id == 0)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent1Roster", 0);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent1Roster", 0);
+            else
+                PlayerPrefs.SetInt("Load3Agent1Roster", 0);
+        }
+        else if (id == 1)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent2Roster", 0);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent2Roster", 0);
+            else
+                PlayerPrefs.SetInt("Load3Agent2Roster", 0);
+        }
+        else if (id == 2)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent3Roster", 0);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent3Roster", 0);
+            else
+                PlayerPrefs.SetInt("Load3Agent3Roster", 0);
+        }
+    }
+
+    public void SaveAgentAddedToTeam(int id)
+    {
+        if (id == 0)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent1Team", 1);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent1Team", 1);
+            else
+                PlayerPrefs.SetInt("Load3Agent1Team", 1);
+        }
+        else if (id == 1)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent2Team", 1);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent2Team", 1);
+            else
+                PlayerPrefs.SetInt("Load3Agent2Team", 1);
+        }
+        else if (id == 2)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent3Team", 1);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent3Team", 1);
+            else
+                PlayerPrefs.SetInt("Load3Agent3Team", 1);
+        }
+    }
+
+    public void SaveAgentRemovedFromTeam(int id)
+    {
+        if (id == 0)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent1Team", 0);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent1Team", 0);
+            else
+                PlayerPrefs.SetInt("Load3Agent1Team", 0);
+        }
+        else if (id == 1)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent2Team", 0);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent2Team", 0);
+            else
+                PlayerPrefs.SetInt("Load3Agent2Team", 0);
+        }
+        else if (id == 2)
+        {
+            if (GetComponent<GameManager>().currSave == 1)
+                PlayerPrefs.SetInt("Load1Agent3Team", 0);
+            else if (GetComponent<GameManager>().currSave == 2)
+                PlayerPrefs.SetInt("Load2Agent3Team", 0);
+            else
+                PlayerPrefs.SetInt("Load3Agent3Team", 0);
+        }
+    }
+
     public void HighlightTowerTab(int id)
     {
         GetComponent<GameManager>().RosterTabAgent1.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOffSprite;
@@ -987,13 +1169,32 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().RosterTabAgent6.GetComponent<Image>().sprite = GetComponent<GameManager>().tabOnSprite;
     }
 
+    public void CheckRosterPotions()
+    {
+       // bool agent1InTeam = false;
+
+      
+            GetComponent<GameManager>().RosterSelected1.SetActive(false);
+
+            GetComponent<GameManager>().RosterSelected2.SetActive(false);
+
+            GetComponent<GameManager>().RosterSelected3.SetActive(false);
+
+            GetComponent<GameManager>().RosterSelected4.SetActive(false);
+
+            GetComponent<GameManager>().RosterSelected5.SetActive(false);
+
+            GetComponent<GameManager>().RosterSelected6.SetActive(false);
+    }
+
     public void DisplayTowerPanel()
     {
         GetComponent<GameManager>().panelMenu.SetActive(false);
         UpdateDecoration(false);
+        CheckRosterPotions();
         GetComponent<GameManager>().currAgentSelected = 0;
         GetComponent<GameManager>().RosterTextNumberCount.color = colorBlack;
-        GetComponent<GameManager>().RosterTextNumberCount.text = "Roster : " + CountTabAgentsLength() + " / 3";
+        GetComponent<GameManager>().RosterTextNumberCount.text = CountTabAgentsLength().ToString() + " / 3";
 
         if (GetComponent<GameManager>().rosterAgents.Count > 0)
         {
@@ -1135,7 +1336,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().RosterSelected6.SetActive(false);
         }
 
-        GetComponent<GameManager>().RosterTextNumberCount.text = "Roster : " + CountTabAgentsLength() + " / 3";
+        GetComponent<GameManager>().RosterTextNumberCount.text = CountTabAgentsLength().ToString() + " / 3";
 
         GetComponent<GameManager>().PanelRoster.SetActive(true);
         GetComponent<GameManager>().PanelSkillTree.SetActive(false);
@@ -1175,16 +1376,33 @@ public class Buttons : MonoBehaviour
             attackspeed = GetComponent<GameManager>().agentTypeSwordsmanAS[GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level];
         }
 
-        GetComponent<GameManager>().RosterTextDescription.GetComponent<Text>().text = GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetName +
-                                            "\nClass : " + GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetClass +
-                                            "\nLevel : " + GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level +
-                                            "\n\nHealth points : " + hp +
-                                            "\nDamage per second : " + System.Math.Round((damage / attackspeed), 2);
+        if (GetComponent<GameManager>().englishLanguage == true)
+        {
+            GetComponent<GameManager>().RosterTextDescription.GetComponent<Text>().text = GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetName +
+                                    "\nClass : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
+                                    "\nLevel : " + GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level +
+                                    "\n\nHealth points : " + hp +
+                                    "\nDamage per second : " + System.Math.Round((damage / attackspeed), 2);
 
-        if (IsAgentAlreadyInTeam(GetComponent<GameManager>().rosterAgents[id]) == true)
-            GetComponent<GameManager>().RosterButtonRecruit.GetComponentInChildren<Text>().text = "Remove from\nthe team";
+            if (IsAgentAlreadyInTeam(GetComponent<GameManager>().rosterAgents[id]) == true)
+                GetComponent<GameManager>().RosterButtonRecruit.GetComponentInChildren<Text>().text = "Remove from\nthe team";
+            else
+                GetComponent<GameManager>().RosterButtonRecruit.GetComponentInChildren<Text>().text = "Add to\nthe team";
+        }
         else
-            GetComponent<GameManager>().RosterButtonRecruit.GetComponentInChildren<Text>().text = "Add to\nthe team";
+        {
+            GetComponent<GameManager>().RosterTextDescription.GetComponent<Text>().text = GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetName +
+                                    "\nClasse : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
+                                    "\nNiveau : " + GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level +
+                                    "\n\nPoints de vie : " + hp +
+                                    "\nDégâts par seconde : " + System.Math.Round((damage / attackspeed), 2);
+
+            if (IsAgentAlreadyInTeam(GetComponent<GameManager>().rosterAgents[id]) == true)
+                GetComponent<GameManager>().RosterButtonRecruit.GetComponentInChildren<Text>().text = "Retirer de\nl'équipe";
+            else
+                GetComponent<GameManager>().RosterButtonRecruit.GetComponentInChildren<Text>().text = "Ajouter à\nl'équipe";
+        }
+
     }
 
     public void AddAgentToTeam()
@@ -1213,8 +1431,10 @@ public class Buttons : MonoBehaviour
                 else
                     GetComponent<GameManager>().RosterSelected6.SetActive(true);
 
-                GetComponent<GameManager>().RosterTextNumberCount.text = "Roster : " + CountTabAgentsLength() + " / 3";
+                GetComponent<GameManager>().RosterTextNumberCount.text = CountTabAgentsLength().ToString() + " / 3";
                 UpdateRosterText(GetComponent<GameManager>().currAgentSelected);
+
+                SaveAgentAddedToTeam(GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetID);
             }
             else
                 GetComponent<GameManager>().RosterTextNumberCount.color = Color.red;
@@ -1241,7 +1461,9 @@ public class Buttons : MonoBehaviour
             else
                 GetComponent<GameManager>().RosterSelected6.SetActive(false);
 
-            GetComponent<GameManager>().RosterTextNumberCount.text = "Roster : " + CountTabAgentsLength() + " / 3";
+            SaveAgentRemovedFromTeam(GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetID);
+
+            GetComponent<GameManager>().RosterTextNumberCount.text = CountTabAgentsLength().ToString() + " / 3";
 
             UpdateRosterText(GetComponent<GameManager>().currAgentSelected);
         }
@@ -1249,14 +1471,11 @@ public class Buttons : MonoBehaviour
 
     public void DismissAgentTower()
     {
-        if (GetComponent<GameManager>().tabAgents[0] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
-            GetComponent<GameManager>().tabAgents[0] = null;
-        else if (GetComponent<GameManager>().tabAgents[1] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
-            GetComponent<GameManager>().tabAgents[1] = null;
-        else
-            GetComponent<GameManager>().tabAgents[2] = null;
+        RemoveAgentFromTeam();
 
         GetComponent<GameManager>().tabFreeAgents.Add(GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected]);
+
+        SaveAgentRemovedFromRoster(GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetID);
         GetComponent<GameManager>().rosterAgents.Remove(GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected]);
         DisplayTowerPanel();
     }
@@ -1264,11 +1483,20 @@ public class Buttons : MonoBehaviour
     public void RemoveAgentFromTeam()
     {
         if (GetComponent<GameManager>().tabAgents[0] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
+        {
+            SaveAgentRemovedFromRoster(GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetID);
             GetComponent<GameManager>().tabAgents[0] = null;
+        }
         else if (GetComponent<GameManager>().tabAgents[1] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
+        {
+            SaveAgentRemovedFromRoster(GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetID);
             GetComponent<GameManager>().tabAgents[1] = null;
-        else if (GetComponent<GameManager>().tabAgents[2] == GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected])
+        }
+        else
+        {
+            SaveAgentRemovedFromRoster(GetComponent<GameManager>().rosterAgents[GetComponent<GameManager>().currAgentSelected].GetComponent<IAGuerrierAgent>().SheetID);
             GetComponent<GameManager>().tabAgents[2] = null;
+        }
     }
 
     public bool IsAgentAlreadyInTeam(GameObject agent)
@@ -1318,7 +1546,11 @@ public class Buttons : MonoBehaviour
             level = PlayerPrefs.GetInt("Load3PlayerLevel");
         }
 
-        GetComponent<GameManager>().SkillTreeLevelText.text = "Level " + level.ToString();
+        if (GetComponent<GameManager>().englishLanguage == true)
+            GetComponent<GameManager>().SkillTreeLevelText.text = "Level " + level.ToString();
+        else
+            GetComponent<GameManager>().SkillTreeLevelText.text = "Niveau " + level.ToString();
+
         GetComponent<GameManager>().SkillTreeActionPoints.text = "Points : " + actionPoints.ToString();
 
         UpdateSkillText(0);
@@ -2106,19 +2338,19 @@ public class Buttons : MonoBehaviour
         {
             int actionPoints = PlayerPrefs.GetInt("Load1PlayerActionPoints") - 1;
             PlayerPrefs.SetInt("Load1PlayerActionPoints", actionPoints);
-            GetComponent<GameManager>().SkillTreeActionPoints.text = actionPoints.ToString();
+            GetComponent<GameManager>().SkillTreeActionPoints.text = "Points : " + actionPoints.ToString();
         }
         else if (GetComponent<GameManager>().currSave == 2)
         {
             int actionPoints = PlayerPrefs.GetInt("Load2PlayerActionPoints") - 1;
             PlayerPrefs.SetInt("Load2PlayerActionPoints", actionPoints);
-            GetComponent<GameManager>().SkillTreeActionPoints.text = actionPoints.ToString();
+            GetComponent<GameManager>().SkillTreeActionPoints.text = "Points : " + actionPoints.ToString();
         }
         else
         {
             int actionPoints = PlayerPrefs.GetInt("Load3PlayerActionPoints") - 1;
             PlayerPrefs.SetInt("Load3PlayerActionPoints", actionPoints);
-            GetComponent<GameManager>().SkillTreeActionPoints.text = actionPoints.ToString();
+            GetComponent<GameManager>().SkillTreeActionPoints.text = "Points : " + actionPoints.ToString();
         }
 
         UpdateSkillTreeSkillRect();
@@ -2969,8 +3201,8 @@ public class Buttons : MonoBehaviour
 
     public void UpdateDecoration(bool isInDecorationPanel)
     {
-        GetComponent<GameManager>().DecorationPrestigeText.text = "Prestige : " + GetComponent<GameManager>().prestige;
-        GetComponent<GameManager>().DecorationCoinsText.text = "Coins : " + GetComponent<GameManager>().coins;
+        GetComponent<GameManager>().DecorationPrestigeText.text = GetComponent<GameManager>().prestige.ToString();
+        GetComponent<GameManager>().DecorationCoinsText.text = GetComponent<GameManager>().coins.ToString();
 
         int decorationColor = 0;
         int decorationGod = 0;
@@ -3872,6 +4104,19 @@ public class Buttons : MonoBehaviour
 
     public IEnumerator AnimationPanelMenu()
     {
+        LoadAgentsInRoster();
+
+        if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetString("Load1Mage") == "Elemental") ||
+            (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetString("Load2Mage") == "Elemental") ||
+            (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetString("Load3Mage") == "Elemental"))
+            GetComponent<GameManager>().currMageType = 1;
+        else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetString("Load1Mage") == "Demonic") ||
+            (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetString("Load2Mage") == "Demonic") ||
+            (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetString("Load3Mage") == "Demonic"))
+            GetComponent<GameManager>().currMageType = 2;
+        else
+            GetComponent<GameManager>().currMageType = 3;
+
         GameObject text1 = GetComponent<GameManager>().scrollMenu1.GetComponentInChildren<Text>().gameObject;
         GameObject text2 = GetComponent<GameManager>().scrollMenu2.GetComponentInChildren<Text>().gameObject;
         GameObject text3 = GetComponent<GameManager>().scrollMenu3.GetComponentInChildren<Text>().gameObject;
@@ -3960,6 +4205,90 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().windowedButton.SetActive(true);
         GetComponent<GameManager>().windowedText.SetActive(true);
         GetComponent<GameManager>().returnText.SetActive(true);
+    }
+
+    public void LoadAgentsInRoster()
+    {
+        GetComponent<GameManager>().tabFreeAgents.Clear();
+        GetComponent<GameManager>().rosterAgents.Clear();
+        GetComponent<GameManager>().tabAgents[0] = null;
+        GetComponent<GameManager>().tabAgents[1] = null;
+        GetComponent<GameManager>().tabAgents[2] = null;
+
+        GetComponent<GameManager>().tabFreeAgents.Add(GetComponent<GameManager>().agentID0);
+        GetComponent<GameManager>().tabFreeAgents.Add(GetComponent<GameManager>().agentID1);
+        GetComponent<GameManager>().tabFreeAgents.Add(GetComponent<GameManager>().agentID2);
+
+        int counter = 0;
+
+        if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Agent1Roster") == 1) ||
+            (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Agent1Roster") == 1) ||
+            (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Agent1Roster") == 1))
+        {
+            GetComponent<GameManager>().rosterAgents.Add(GetComponent<GameManager>().tabFreeAgents[0 - counter]);
+
+            if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Agent1Team") == 1) ||
+                (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Agent1Team") == 1) ||
+                (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Agent1Team") == 1))
+            {
+                if (GetComponent<GameManager>().tabAgents[0] == null)
+                    GetComponent<GameManager>().tabAgents[0] = GetComponent<GameManager>().tabFreeAgents[0 - counter];
+                else if (GetComponent<GameManager>().tabAgents[1] == null)
+                    GetComponent<GameManager>().tabAgents[1] = GetComponent<GameManager>().tabFreeAgents[0 - counter];
+                else
+                    GetComponent<GameManager>().tabAgents[2] = GetComponent<GameManager>().tabFreeAgents[0 - counter];
+            }
+
+            GetComponent<GameManager>().tabFreeAgents.Remove(GetComponent<GameManager>().tabFreeAgents[0 - counter]);
+
+            counter++;
+        }
+
+        if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Agent2Roster") == 1) ||
+            (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Agent2Roster") == 1) ||
+            (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Agent2Roster") == 1))
+        {
+            GetComponent<GameManager>().rosterAgents.Add(GetComponent<GameManager>().tabFreeAgents[1 - counter]);
+
+            if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Agent2Team") == 1) ||
+                (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Agent2Team") == 1) ||
+                (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Agent2Team") == 1))
+            {
+                if (GetComponent<GameManager>().tabAgents[0] == null)
+                    GetComponent<GameManager>().tabAgents[0] = GetComponent<GameManager>().tabFreeAgents[1 - counter];
+                else if (GetComponent<GameManager>().tabAgents[1] == null)
+                    GetComponent<GameManager>().tabAgents[1] = GetComponent<GameManager>().tabFreeAgents[1 - counter];
+                else
+                    GetComponent<GameManager>().tabAgents[2] = GetComponent<GameManager>().tabFreeAgents[1 - counter];
+            }
+
+            GetComponent<GameManager>().tabFreeAgents.Remove(GetComponent<GameManager>().tabFreeAgents[1 - counter]);
+
+            counter++;
+        }
+
+        if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Agent3Roster") == 1) ||
+            (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Agent3Roster") == 1) ||
+            (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Agent3Roster") == 1))
+        {
+            GetComponent<GameManager>().rosterAgents.Add(GetComponent<GameManager>().tabFreeAgents[2 - counter]);
+
+            if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Agent3Team") == 1) ||
+                (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Agent3Team") == 1) ||
+                (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Agent3Team") == 1))
+            {
+                if (GetComponent<GameManager>().tabAgents[0] == null)
+                    GetComponent<GameManager>().tabAgents[0] = GetComponent<GameManager>().tabFreeAgents[2 - counter];
+                else if (GetComponent<GameManager>().tabAgents[1] == null)
+                    GetComponent<GameManager>().tabAgents[1] = GetComponent<GameManager>().tabFreeAgents[2 - counter];
+                else
+                    GetComponent<GameManager>().tabAgents[2] = GetComponent<GameManager>().tabFreeAgents[2 - counter];
+            }
+
+            GetComponent<GameManager>().tabFreeAgents.Remove(GetComponent<GameManager>().tabFreeAgents[2 - counter]);
+
+            counter++;
+        }
     }
 
     public void LoadFile1()
@@ -4058,10 +4387,16 @@ public class Buttons : MonoBehaviour
 
         PlayerPrefs.SetInt("Load1Agent1Level", 0);
         PlayerPrefs.SetInt("Load1Agent1XP", 0);
+        PlayerPrefs.SetInt("Load1Agent1Roster", 0);
+        PlayerPrefs.SetInt("Load1Agent1Team", 0);
         PlayerPrefs.SetInt("Load1Agent2Level", 0);
         PlayerPrefs.SetInt("Load1Agent2XP", 0);
+        PlayerPrefs.SetInt("Load1Agent2Roster", 0);
+        PlayerPrefs.SetInt("Load1Agent2Team", 0);
         PlayerPrefs.SetInt("Load1Agent3Level", 0);
         PlayerPrefs.SetInt("Load1Agent3XP", 0);
+        PlayerPrefs.SetInt("Load1Agent3Roster", 0);
+        PlayerPrefs.SetInt("Load1Agent3Team", 0);
 
         PlayerPrefs.SetInt("Load1DifficultySet", 0);
         PlayerPrefs.SetInt("Load1MageSet", 0);
@@ -4115,7 +4450,7 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load1DecorationCarpet", 0);
 
         GetComponent<GameManager>().load1Created = false;
-        GetComponent<GameManager>().load1Name.GetComponent<Text>().text = "Empty save";
+        GetComponent<GameManager>().load1Name.GetComponent<Text>().text = GetComponent<TradManager>().GetTextEmptySave();
     }
 
     public void LoadFile2()
@@ -4213,10 +4548,16 @@ public class Buttons : MonoBehaviour
 
         PlayerPrefs.SetInt("Load2Agent1Level", 0);
         PlayerPrefs.SetInt("Load2Agent1XP", 0);
+        PlayerPrefs.SetInt("Load2Agent1Roster", 0);
+        PlayerPrefs.SetInt("Load2Agent1Team", 0);
         PlayerPrefs.SetInt("Load2Agent2Level", 0);
         PlayerPrefs.SetInt("Load2Agent2XP", 0);
+        PlayerPrefs.SetInt("Load2Agent2Roster", 0);
+        PlayerPrefs.SetInt("Load2Agent2Team", 0);
         PlayerPrefs.SetInt("Load2Agent3Level", 0);
         PlayerPrefs.SetInt("Load2Agent3XP", 0);
+        PlayerPrefs.SetInt("Load2Agent3Roster", 0);
+        PlayerPrefs.SetInt("Load2Agent3Team", 0);
 
         PlayerPrefs.SetInt("Load2DifficultySet", 0);
         PlayerPrefs.SetInt("Load2MageSet", 0);
@@ -4270,7 +4611,7 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load2DecorationCarpet", 0);
 
         GetComponent<GameManager>().load2Created = false;
-        GetComponent<GameManager>().load2Name.GetComponent<Text>().text = "Empty save";
+        GetComponent<GameManager>().load2Name.GetComponent<Text>().text = GetComponent<TradManager>().GetTextEmptySave();
     }
 
     public void LoadFile3()
@@ -4368,10 +4709,16 @@ public class Buttons : MonoBehaviour
 
         PlayerPrefs.SetInt("Load3Agent1Level", 0);
         PlayerPrefs.SetInt("Load3Agent1XP", 0);
+        PlayerPrefs.SetInt("Load3Agent1Roster", 0);
+        PlayerPrefs.SetInt("Load3Agent1Team", 0);
         PlayerPrefs.SetInt("Load3Agent2Level", 0);
         PlayerPrefs.SetInt("Load3Agent2XP", 0);
+        PlayerPrefs.SetInt("Load3Agent2Roster", 0);
+        PlayerPrefs.SetInt("Load3Agent2Team", 0);
         PlayerPrefs.SetInt("Load3Agent3Level", 0);
         PlayerPrefs.SetInt("Load3Agent3XP", 0);
+        PlayerPrefs.SetInt("Load3Agent3Roster", 0);
+        PlayerPrefs.SetInt("Load3Agent3Team", 0);
 
         PlayerPrefs.SetInt("Load3DifficultySet", 0);
         PlayerPrefs.SetInt("Load3MageSet", 0);
@@ -4425,6 +4772,6 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load3DecorationCarpet", 0);
 
         GetComponent<GameManager>().load3Created = false;
-        GetComponent<GameManager>().load3Name.GetComponent<Text>().text = "Empty save";
+        GetComponent<GameManager>().load3Name.GetComponent<Text>().text = GetComponent<TradManager>().GetTextEmptySave();
     }
 }

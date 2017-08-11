@@ -74,15 +74,9 @@ public class IAGuerrierAgent : MonoBehaviour
         mapManager = GameObject.Find("MapManager");
         baseScale = healthBarGreen.transform.localScale;
         player = GameObject.FindGameObjectWithTag("Player");
-        
-        if (GetComponent<Agent>().idAgent == 0)
-        {
-            healthBarGreenHUD = gm.GetComponent<GameManager>().agent1healthBarGreenHUD;
-            xpBarHUD = gm.GetComponent<GameManager>().agent1xpBarHUD;
-            potion1 = gm.GetComponent<GameManager>().agent1Potion1;
-            potion2 = gm.GetComponent<GameManager>().agent1Potion2;
-            potion3 = gm.GetComponent<GameManager>().agent1Potion3;
 
+        if (GetComponent<IAGuerrierAgent>().SheetID == 0)
+        {
             if (gm.GetComponent<GameManager>().currSave == 1)
             {
                 level = PlayerPrefs.GetInt("Load1Agent1Level");
@@ -98,6 +92,51 @@ public class IAGuerrierAgent : MonoBehaviour
                 level = PlayerPrefs.GetInt("Load3Agent1Level");
                 currXP = PlayerPrefs.GetInt("Load3Agent1XP");
             }
+        }
+        else if (GetComponent<IAGuerrierAgent>().SheetID == 1)
+        {
+            if (gm.GetComponent<GameManager>().currSave == 1)
+            {
+                level = PlayerPrefs.GetInt("Load1Agent2Level");
+                currXP = PlayerPrefs.GetInt("Load1Agent2XP");
+            }
+            else if (gm.GetComponent<GameManager>().currSave == 2)
+            {
+                level = PlayerPrefs.GetInt("Load2Agent2Level");
+                currXP = PlayerPrefs.GetInt("Load2Agent2XP");
+            }
+            else if (gm.GetComponent<GameManager>().currSave == 3)
+            {
+                level = PlayerPrefs.GetInt("Load3Agent2Level");
+                currXP = PlayerPrefs.GetInt("Load3Agent2XP");
+            }
+        }
+        else if (GetComponent<IAGuerrierAgent>().SheetID == 2)
+        {
+            if (gm.GetComponent<GameManager>().currSave == 1)
+            {
+                level = PlayerPrefs.GetInt("Load1Agent3Level");
+                currXP = PlayerPrefs.GetInt("Load1Agent3XP");
+            }
+            else if (gm.GetComponent<GameManager>().currSave == 2)
+            {
+                level = PlayerPrefs.GetInt("Load2Agent3Level");
+                currXP = PlayerPrefs.GetInt("Load2Agent3XP");
+            }
+            else if (gm.GetComponent<GameManager>().currSave == 3)
+            {
+                level = PlayerPrefs.GetInt("Load3Agent3Level");
+                currXP = PlayerPrefs.GetInt("Load3Agent3XP");
+            }
+        }
+
+        if (GetComponent<Agent>().idAgent == 0)
+        {
+            healthBarGreenHUD = gm.GetComponent<GameManager>().agent1healthBarGreenHUD;
+            xpBarHUD = gm.GetComponent<GameManager>().agent1xpBarHUD;
+            potion1 = gm.GetComponent<GameManager>().agent1Potion1;
+            potion2 = gm.GetComponent<GameManager>().agent1Potion2;
+            potion3 = gm.GetComponent<GameManager>().agent1Potion3;
 
             if (level > 1)
                 gm.GetComponent<GameManager>().agent1Levels[1].SetActive(true);
@@ -126,22 +165,6 @@ public class IAGuerrierAgent : MonoBehaviour
             potion2 = gm.GetComponent<GameManager>().agent2Potion2;
             potion3 = gm.GetComponent<GameManager>().agent2Potion3;
 
-            if (gm.GetComponent<GameManager>().currSave == 2)
-            {
-                level = PlayerPrefs.GetInt("Load1Agent2Level");
-                currXP = PlayerPrefs.GetInt("Load1Agent2XP");
-            }
-            else if (gm.GetComponent<GameManager>().currSave == 2)
-            {
-                level = PlayerPrefs.GetInt("Load2Agent2Level");
-                currXP = PlayerPrefs.GetInt("Load2Agent2XP");
-            }
-            else if (gm.GetComponent<GameManager>().currSave == 3)
-            {
-                level = PlayerPrefs.GetInt("Load3Agent2Level");
-                currXP = PlayerPrefs.GetInt("Load3Agent2XP");
-            }
-
             if (level > 1)
                 gm.GetComponent<GameManager>().agent2Levels[1].SetActive(true);
             if (level > 2)
@@ -168,22 +191,6 @@ public class IAGuerrierAgent : MonoBehaviour
             potion1 = gm.GetComponent<GameManager>().agent3Potion1;
             potion2 = gm.GetComponent<GameManager>().agent3Potion2;
             potion3 = gm.GetComponent<GameManager>().agent3Potion3;
-
-            if (gm.GetComponent<GameManager>().currSave == 1)
-            {
-                level = PlayerPrefs.GetInt("Load1Agent3Level");
-                currXP = PlayerPrefs.GetInt("Load1Agent3XP");
-            }
-            else if (gm.GetComponent<GameManager>().currSave == 2)
-            {
-                level = PlayerPrefs.GetInt("Load2Agent3Level");
-                currXP = PlayerPrefs.GetInt("Load2Agent3XP");
-            }
-            else if (gm.GetComponent<GameManager>().currSave == 3)
-            {
-                level = PlayerPrefs.GetInt("Load3Agent3Level");
-                currXP = PlayerPrefs.GetInt("Load3Agent3XP");
-            }
 
             if (level > 1)
                 gm.GetComponent<GameManager>().agent3Levels[1].SetActive(true);
@@ -237,20 +244,10 @@ public class IAGuerrierAgent : MonoBehaviour
 
         xpBarHUD.value = (float)currXP / (float)gm.GetComponent<GameManager>().agentMaxXP[level - 1];
 
-        if (stockHealthPotion > 0)
-            potion1.SetActive(true);
-        else
-            potion1.SetActive(false);
+        potion1.SetActive(true);
+        potion2.SetActive(true);
+        potion3.SetActive(true);
 
-        if (stockHealthPotion > 1)
-            potion2.SetActive(true);
-        else
-            potion2.SetActive(false);
-
-        if (stockHealthPotion > 2)
-            potion3.SetActive(true);
-        else
-            potion3.SetActive(false);
     }
 
     void Update()
