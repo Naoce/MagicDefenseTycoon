@@ -319,5 +319,10 @@ public class StatsPlayer : MonoBehaviour
             TakeDamage(other.GetComponent<ProjectileEnemy>().damage, other.transform.position, null);
             other.GetComponent<ProjectileEnemy>().ExplosionChar();
         }
+        else if (other.tag == "EnemyArrow")
+        {
+            TakeDamage(other.GetComponent<ArrowEnemy>().damage, other.transform.position, null);
+            other.GetComponent<ArrowEnemy>().ExplosionChar(false);
+        }
     }
 }

@@ -5,6 +5,9 @@ using UnityEngine;
 public class IAArcher : MonoBehaviour
 {
     private GameObject gm;
+    public float timerFirstAttack;
+    public float timerSecondAttack;
+    public float timerThirdAttack;
 
     void Start()
     {
@@ -15,7 +18,7 @@ public class IAArcher : MonoBehaviour
     {
         if (gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().gamePaused == false)
         {
-            if (GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Magician &&
+            if (GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Range &&
                 GetComponent<IAGuerrier>().hasLaunched == false &&
                 GetComponent<IAGuerrier>().target != null)
             {
@@ -25,7 +28,7 @@ public class IAArcher : MonoBehaviour
             if (GetComponent<IAGuerrier>().isSlowed == true)
             {
                 GetComponent<IAGuerrier>().timerSlow += Time.deltaTime;
-                if (GetComponent<IAGuerrier>().timerSlow > GetComponent<IAGuerrier>().cooldownSlow)
+                if (GetComponent<IAGuerrier>().timerSlow >= GetComponent<IAGuerrier>().cooldownSlow)
                 {
                     GetComponent<IAGuerrier>().timerSlow = 0f;
                     GetComponent<IAGuerrier>().slow = 0f;
@@ -35,7 +38,7 @@ public class IAArcher : MonoBehaviour
             if (GetComponent<IAGuerrier>().canMove == false)
             {
                 GetComponent<IAGuerrier>().timerCC += Time.deltaTime;
-                if (GetComponent<IAGuerrier>().timerCC > GetComponent<IAGuerrier>().cooldownCC)
+                if (GetComponent<IAGuerrier>().timerCC >= GetComponent<IAGuerrier>().cooldownCC)
                 {
                     GetComponent<IAGuerrier>().canAttack = true;
                     GetComponent<IAGuerrier>().canMove = true;
@@ -43,15 +46,35 @@ public class IAArcher : MonoBehaviour
                 }
                 if (GetComponent<IAGuerrier>().isFlying == true)
                 {
-                    Vector2 newScaleGo = new Vector2(transform.localScale.x + 0.002f, transform.localScale.y + 0.002f);
-                    transform.localScale = newScaleGo;
                     GetComponent<IAGuerrier>().timerFlying += Time.deltaTime;
-                    if (GetComponent<IAGuerrier>().timerFlying > GetComponent<IAGuerrier>().cooldownFlying)
+                    if (GetComponent<IAGuerrier>().flyingLeft == true)
+                    {
+                        if (GetComponent<IAGuerrier>().tornado != null)
+                        {
+                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x - 1f, transform.position.y, transform.position.y / 1000f);
+                            transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
+                            transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
+                            if (transform.position.x < GetComponent<IAGuerrier>().tornado.transform.position.x - 0.25f)
+                                GetComponent<IAGuerrier>().flyingLeft = false;
+                        }
+                    }
+                    else
+                    {
+                        if (GetComponent<IAGuerrier>().tornado != null)
+                        {
+                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x + 1f, transform.position.y, transform.position.y / 1000f);
+                            transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
+                            transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
+                            if (transform.position.x > GetComponent<IAGuerrier>().tornado.transform.position.x + 0.25f)
+                                GetComponent<IAGuerrier>().flyingLeft = true;
+                        }
+                    }
+
+                    if (GetComponent<IAGuerrier>().timerFlying >= GetComponent<IAGuerrier>().cooldownFlying)
                     {
                         GetComponent<IAGuerrier>().canAttack = true;
                         GetComponent<IAGuerrier>().timerFlying = 0f;
                         GetComponent<IAGuerrier>().isFlying = false;
-                        transform.localScale = GetComponent<IAGuerrier>().initialScale;
                     }
                 }
             }
@@ -63,7 +86,7 @@ public class IAArcher : MonoBehaviour
                     GetComponent<IAGuerrier>().canAttack == false)
                 {
                     GetComponent<IAGuerrier>().attackTimer += Time.deltaTime;
-                    if (GetComponent<IAGuerrier>().attackTimer > GetComponent<IAGuerrier>().attackCooldown)
+                    if (GetComponent<IAGuerrier>().attackTimer >= GetComponent<IAGuerrier>().attackCooldown)
                     {
                         GetComponent<IAGuerrier>().attackTimer = 0f;
                         GetComponent<IAGuerrier>().canAttack = true;
@@ -77,7 +100,7 @@ public class IAArcher : MonoBehaviour
                     (GetComponent<IAGuerrier>().target.tag == "Defense" &&
                     GetComponent<IAGuerrier>().target.GetComponent<Defense>().isDead == false)))
                 {
-                    if (GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Magician &&
+                    if (GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Range &&
                         GetComponent<IAGuerrier>().canShootProjectile == false)
                         GetComponent<IAGuerrier>().needToMove = true;
                     else
@@ -88,15 +111,12 @@ public class IAArcher : MonoBehaviour
                             GetComponent<IAGuerrier>().isAttacking = true;
                             GetComponent<IAGuerrier>().targetAttacking = GetComponent<IAGuerrier>().target;
                             GetComponent<IAGuerrier>().canAttack = false;
-                            if (GetComponent<IAGuerrier>().type != IAGuerrier.EnemyType.Magician)
-                                StartCoroutine(GetComponent<IAGuerrier>().AttackAnimation(GetComponent<IAGuerrier>().target.transform.position));
-                            else if (GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Magician &&
-                                    GetComponent<IAGuerrier>().canShootProjectile == true)
-                                StartCoroutine(GetComponent<IAGuerrier>().AttackDistanceAnimation(GetComponent<IAGuerrier>().target.transform.position));
+                            if (GetComponent<IAGuerrier>().canShootProjectile == true)
+                                StartCoroutine(AttackDistanceAnimation(GetComponent<IAGuerrier>().target));
                         }
                         else if (GetComponent<IAGuerrier>().isAttacking == false)
                         {
-                            if (GetComponent<IAGuerrier>().rightSide == true)
+                            if (GetComponent<IAGuerrier>().target.transform.position.x > transform.position.x)
                             {
                                 GetComponent<SpriteRenderer>().flipX = false;
                                 GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
@@ -133,10 +153,10 @@ public class IAArcher : MonoBehaviour
                             GetComponent<IAGuerrier>().newPos = GetComponent<AStar>().StartPathFinding(GetComponent<IAGuerrier>().target.transform.position);
                     }
 
-                    Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().newPos.x, GetComponent<IAGuerrier>().newPos.y, 0f);
+                    Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().newPos.x, GetComponent<IAGuerrier>().newPos.y, transform.position.y / 1000f);
                     transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * (GetComponent<IAGuerrier>().speed - GetComponent<IAGuerrier>().slow));
 
-                    if (GetComponent<IAGuerrier>().timer > GetComponent<IAGuerrier>().animTime &&
+                    if (GetComponent<IAGuerrier>().timer >= GetComponent<IAGuerrier>().animTime &&
                     (transform.position.y != GetComponent<IAGuerrier>().newPos.y ||
                     transform.position.x != GetComponent<IAGuerrier>().newPos.x))
                     {
@@ -157,6 +177,125 @@ public class IAArcher : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    public IEnumerator AttackDistanceAnimation(GameObject targetAttacking)
+    {
+        GetComponent<IAGuerrier>().FindShootDirection(targetAttacking.transform.position);
+
+        float timerEffect = 0f;
+        bool attack1Landed = false;
+        bool attack2Landed = false;
+        bool attack3Landed = false;
+        int animAttack = 0;
+        while (animAttack < GetComponent<IAGuerrier>().rightAttackSprites.Length)
+        {
+            if (GetComponent<Enemy>().isDead == true)
+                yield break;
+            else
+            {
+                if (transform.position.x < targetAttacking.transform.position.x)
+                {
+                    GetComponent<SpriteRenderer>().flipX = false;
+                    GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightAttackSprites[animAttack];
+                }
+                else
+                {
+                    GetComponent<SpriteRenderer>().flipX = true;
+                    GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightAttackSprites[animAttack];
+                }
+
+                timerEffect += GetComponent<IAGuerrier>().animAttackCD;
+
+                if (timerEffect >= timerFirstAttack && attack1Landed == false)
+                {
+                    attack1Landed = true;
+                    InstantiateArrow(targetAttacking);
+                }
+                else if (GetComponent<IAGuerrier>().classID > 0 && timerEffect >= timerSecondAttack && attack2Landed == false)
+                {
+                    attack2Landed = true;
+                    InstantiateArrow(targetAttacking);
+                }
+                else if (GetComponent<IAGuerrier>().classID > 1 && timerEffect >= timerThirdAttack && attack3Landed == false)
+                {
+                    attack3Landed = true;
+                    InstantiateArrow(targetAttacking);
+                }
+
+                yield return new WaitForSeconds(GetComponent<IAGuerrier>().animAttackCD);
+                animAttack++;
+            }
+        }
+
+        if (GetComponent<Enemy>().isDead == false)
+        {
+            if (attack1Landed == false)
+            {
+                attack1Landed = true;
+                InstantiateArrow(targetAttacking);
+            }
+            else if (GetComponent<IAGuerrier>().classID > 0 && attack2Landed == false)
+            {
+                attack2Landed = true;
+                InstantiateArrow(targetAttacking);
+            }
+            else if (GetComponent<IAGuerrier>().classID > 1 && attack3Landed == false)
+            {
+                attack3Landed = true;
+                InstantiateArrow(targetAttacking);
+            }
+
+            GetComponent<IAGuerrier>().isAttacking = false;
+            GetComponent<IAGuerrier>().canAttack = false;
+            GetComponent<IAGuerrier>().attackTimer = 0f;
+
+            if (transform.position.x < targetAttacking.transform.position.x)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+                GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+                GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
+            }
+        }
+    }
+
+    private float FindAngle(Vector2 targetPosition)
+    {
+        Vector2 myPos = new Vector3(transform.position.x, transform.position.y);
+        Vector3 dir = myPos - targetPosition;
+        dir = transform.InverseTransformDirection(dir);
+
+        return (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+    }
+
+    private void InstantiateArrow(GameObject targetAttacking)
+    {
+        GameObject obj = null;
+
+        GetComponent<IAGuerrier>().newPos.x = transform.position.x;
+        GetComponent<IAGuerrier>().newPos.y = transform.position.y;
+        if (GetComponent<IAGuerrier>().directionAttack == Shoots.Direction.RIGHT ||
+            GetComponent<IAGuerrier>().directionAttack == Shoots.Direction.TOPRIGHT ||
+            GetComponent<IAGuerrier>().directionAttack == Shoots.Direction.BOTTOMRIGHT)
+            GetComponent<IAGuerrier>().newPos.x = transform.position.x + 0.1f;
+        else if (GetComponent<IAGuerrier>().directionAttack == Shoots.Direction.LEFT ||
+            GetComponent<IAGuerrier>().directionAttack == Shoots.Direction.TOPLEFT ||
+            GetComponent<IAGuerrier>().directionAttack == Shoots.Direction.BOTTOMLEFT)
+            GetComponent<IAGuerrier>().newPos.x = transform.position.x - 0.1f;
+        else if (GetComponent<IAGuerrier>().directionAttack == Shoots.Direction.BOTTOM)
+            GetComponent<IAGuerrier>().newPos.y = transform.position.y - 0.1f;
+        else if (GetComponent<IAGuerrier>().directionAttack == Shoots.Direction.TOP)
+            GetComponent<IAGuerrier>().newPos.y = transform.position.y + 0.1f;
+
+        if (GetComponent<Enemy>().isDead == false)
+        {
+            obj = (GameObject)Instantiate(GetComponent<IAGuerrier>().projectile, GetComponent<IAGuerrier>().newPos, transform.rotation);
+            obj.GetComponent<ArrowEnemy>().GetPos(targetAttacking.transform.position, GetComponent<IAGuerrier>().damage[GetComponent<IAGuerrier>().difficulty], FindAngle(targetAttacking.transform.position) + 180f, gameObject);
         }
     }
 }

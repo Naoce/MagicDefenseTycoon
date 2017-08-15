@@ -100,6 +100,16 @@ public class GameManager : MonoBehaviour
     public  GameObject      MissionsPanelSheet3Difficulty2;
     public  GameObject      MissionsPanelSheet3Difficulty3;
     public  GameObject      MissionsPanelSheet3Difficulty4;
+    public  GameObject      MissionsPanelSheet4;
+    public  Image           MissionsPanelSheet4Type;
+    public  GameObject      MissionsPanelSheet4Difficulty2;
+    public  GameObject      MissionsPanelSheet4Difficulty3;
+    public  GameObject      MissionsPanelSheet4Difficulty4;
+    public  GameObject      MissionsPanelSheet5;
+    public  Image           MissionsPanelSheet5Type;
+    public  GameObject      MissionsPanelSheet5Difficulty2;
+    public  GameObject      MissionsPanelSheet5Difficulty3;
+    public  GameObject      MissionsPanelSheet5Difficulty4;
 
     public  Sprite          tabOffSprite;
     public  Sprite          tabOnSprite;

@@ -704,6 +704,66 @@ public class Buttons : MonoBehaviour
         }
         else
             GetComponent<GameManager>().MissionsPanelSheet3.SetActive(false);
+
+        //Sheet4
+        if (GetComponent<GameManager>().listMissions.Count > 3)
+        {
+            GetComponent<GameManager>().MissionsPanelSheet4.SetActive(true);
+
+            if (GetComponent<GameManager>().listMissions[3].GetComponent<MissionSheet>().type == MapManager.MapType.Boss)
+                GetComponent<GameManager>().MissionsPanelSheet4Type.sprite = GetComponent<GameManager>().littlebossSprite;
+            else if (GetComponent<GameManager>().listMissions[3].GetComponent<MissionSheet>().type == MapManager.MapType.Capture)
+                GetComponent<GameManager>().MissionsPanelSheet4Type.sprite = GetComponent<GameManager>().littlecaptureSprite;
+            else
+                GetComponent<GameManager>().MissionsPanelSheet4Type.sprite = GetComponent<GameManager>().littledefenseSprite;
+
+            if (GetComponent<GameManager>().listMissions[3].GetComponent<MissionSheet>().difficulty > 1)
+                GetComponent<GameManager>().MissionsPanelSheet4Difficulty2.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet4Difficulty2.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[3].GetComponent<MissionSheet>().difficulty > 2)
+                GetComponent<GameManager>().MissionsPanelSheet4Difficulty3.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet4Difficulty3.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[3].GetComponent<MissionSheet>().difficulty > 3)
+                GetComponent<GameManager>().MissionsPanelSheet4Difficulty4.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet4Difficulty4.SetActive(false);
+        }
+        else
+            GetComponent<GameManager>().MissionsPanelSheet4.SetActive(false);
+
+        //Sheet5
+        if (GetComponent<GameManager>().listMissions.Count > 4)
+        {
+            GetComponent<GameManager>().MissionsPanelSheet5.SetActive(true);
+
+            if (GetComponent<GameManager>().listMissions[4].GetComponent<MissionSheet>().type == MapManager.MapType.Boss)
+                GetComponent<GameManager>().MissionsPanelSheet5Type.sprite = GetComponent<GameManager>().littlebossSprite;
+            else if (GetComponent<GameManager>().listMissions[4].GetComponent<MissionSheet>().type == MapManager.MapType.Capture)
+                GetComponent<GameManager>().MissionsPanelSheet5Type.sprite = GetComponent<GameManager>().littlecaptureSprite;
+            else
+                GetComponent<GameManager>().MissionsPanelSheet5Type.sprite = GetComponent<GameManager>().littledefenseSprite;
+
+            if (GetComponent<GameManager>().listMissions[4].GetComponent<MissionSheet>().difficulty > 1)
+                GetComponent<GameManager>().MissionsPanelSheet5Difficulty2.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet5Difficulty2.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[4].GetComponent<MissionSheet>().difficulty > 2)
+                GetComponent<GameManager>().MissionsPanelSheet5Difficulty3.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet5Difficulty3.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[4].GetComponent<MissionSheet>().difficulty > 3)
+                GetComponent<GameManager>().MissionsPanelSheet5Difficulty4.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet5Difficulty4.SetActive(false);
+        }
+        else
+            GetComponent<GameManager>().MissionsPanelSheet5.SetActive(false);
     }
 
     public void FillMissionsMainSheet(int id)
@@ -892,31 +952,61 @@ public class Buttons : MonoBehaviour
         int damage = 0;
         float attackspeed = 0;
 
+        int levelAgent = 0;
+
+        if (GetComponent<GameManager>().currSave == 1)
+        {
+            if (GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetID == 0)
+                levelAgent = PlayerPrefs.GetInt("Load1Agent1Level");
+            else if (GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetID == 1)
+                levelAgent = PlayerPrefs.GetInt("Load1Agent2Level");
+            else if (GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetID == 2)
+                levelAgent = PlayerPrefs.GetInt("Load1Agent3Level");
+        }
+        else if (GetComponent<GameManager>().currSave == 2)
+        {
+            if (GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetID == 0)
+                levelAgent = PlayerPrefs.GetInt("Load2Agent1Level");
+            else if (GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetID == 1)
+                levelAgent = PlayerPrefs.GetInt("Load2Agent2Level");
+            else if (GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetID == 2)
+                levelAgent = PlayerPrefs.GetInt("Load2Agent3Level");
+        }
+        else
+        {
+            if (GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetID == 0)
+                levelAgent = PlayerPrefs.GetInt("Load3Agent1Level");
+            else if (GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetID == 1)
+                levelAgent = PlayerPrefs.GetInt("Load3Agent2Level");
+            else if (GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetID == 2)
+                levelAgent = PlayerPrefs.GetInt("Load3Agent3Level");
+        }
+
         if (GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
         {
-            hp = GetComponent<GameManager>().agentTypeKnightMaxHP[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level];
-            damage = GetComponent<GameManager>().agentTypeKnightDamage[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level];
-            attackspeed = GetComponent<GameManager>().agentTypeKnightAS[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level];
+            hp = GetComponent<GameManager>().agentTypeKnightMaxHP[levelAgent];
+            damage = GetComponent<GameManager>().agentTypeKnightDamage[levelAgent];
+            attackspeed = GetComponent<GameManager>().agentTypeKnightAS[levelAgent];
         }
 
         else if (GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Rogue)
         {
-            hp = GetComponent<GameManager>().agentTypeRogueMaxHP[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level];
-            damage = GetComponent<GameManager>().agentTypeRogueDamage[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level];
-            attackspeed = GetComponent<GameManager>().agentTypeRogueAS[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level];
+            hp = GetComponent<GameManager>().agentTypeRogueMaxHP[levelAgent];
+            damage = GetComponent<GameManager>().agentTypeRogueDamage[levelAgent];
+            attackspeed = GetComponent<GameManager>().agentTypeRogueAS[levelAgent];
         }
         else
         {
-            hp = GetComponent<GameManager>().agentTypeSwordsmanMaxHP[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level];
-            damage = GetComponent<GameManager>().agentTypeSwordsmanDamage[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level];
-            attackspeed = GetComponent<GameManager>().agentTypeSwordsmanAS[GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level];
+            hp = GetComponent<GameManager>().agentTypeSwordsmanMaxHP[levelAgent];
+            damage = GetComponent<GameManager>().agentTypeSwordsmanDamage[levelAgent];
+            attackspeed = GetComponent<GameManager>().agentTypeSwordsmanAS[levelAgent];
         }
 
         if (GetComponent<GameManager>().englishLanguage == true)
         {
             GetComponent<GameManager>().TavernDescription.GetComponent<Text>().text = GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetName +
                                                             "\nClass : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
-                                                            "\nLevel : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level +
+                                                            "\nLevel : " + levelAgent +
                                                             "\n\nHealth points : " + hp +
                                                             "\nDamage per second : " + System.Math.Round((damage / attackspeed), 2) +
                                                             "\n\nPrestige needed : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetPrestige;
@@ -926,7 +1016,7 @@ public class Buttons : MonoBehaviour
         {
             GetComponent<GameManager>().TavernDescription.GetComponent<Text>().text = GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetName +
                                                             "\nClasse : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
-                                                            "\nNiveau : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().level +
+                                                            "\nNiveau : " + levelAgent +
                                                             "\n\nPoints de vie : " + hp +
                                                             "\nDégâts par seconde : " + System.Math.Round((damage / attackspeed), 2) +
                                                             "\n\nPrestige nécessaire : " + GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetPrestige;
@@ -1357,30 +1447,60 @@ public class Buttons : MonoBehaviour
         int damage = 0;
         float attackspeed = 0;
 
-        if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+        int levelAgent = 0;
+
+        if (GetComponent<GameManager>().currSave == 1)
         {
-            hp = GetComponent<GameManager>().agentTypeKnightMaxHP[GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level];
-            damage = GetComponent<GameManager>().agentTypeKnightDamage[GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level];
-            attackspeed = GetComponent<GameManager>().agentTypeKnightAS[GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level];
+            if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetID == 0)
+                levelAgent = PlayerPrefs.GetInt("Load1Agent1Level");
+            else if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetID == 1)
+                levelAgent = PlayerPrefs.GetInt("Load1Agent2Level");
+            else if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetID == 2)
+                levelAgent = PlayerPrefs.GetInt("Load1Agent3Level");
         }
-        else if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Rogue)
+        else if (GetComponent<GameManager>().currSave == 2)
         {
-            hp = GetComponent<GameManager>().agentTypeRogueMaxHP[GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level];
-            damage = GetComponent<GameManager>().agentTypeRogueDamage[GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level];
-            attackspeed = GetComponent<GameManager>().agentTypeRogueAS[GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level];
+            if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetID == 0)
+                levelAgent = PlayerPrefs.GetInt("Load2Agent1Level");
+            else if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetID == 1)
+                levelAgent = PlayerPrefs.GetInt("Load2Agent2Level");
+            else if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetID == 2)
+                levelAgent = PlayerPrefs.GetInt("Load2Agent3Level");
         }
         else
         {
-            hp = GetComponent<GameManager>().agentTypeSwordsmanMaxHP[GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level];
-            damage = GetComponent<GameManager>().agentTypeSwordsmanDamage[GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level];
-            attackspeed = GetComponent<GameManager>().agentTypeSwordsmanAS[GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level];
+            if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetID == 0)
+                levelAgent = PlayerPrefs.GetInt("Load3Agent1Level");
+            else if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetID == 1)
+                levelAgent = PlayerPrefs.GetInt("Load3Agent2Level");
+            else if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetID == 2)
+                levelAgent = PlayerPrefs.GetInt("Load3Agent3Level");
+        }
+
+        if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Knight)
+        {
+            hp = GetComponent<GameManager>().agentTypeKnightMaxHP[levelAgent];
+            damage = GetComponent<GameManager>().agentTypeKnightDamage[levelAgent];
+            attackspeed = GetComponent<GameManager>().agentTypeKnightAS[levelAgent];
+        }
+        else if (GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetClass == IAGuerrierAgent.AgentClass.Rogue)
+        {
+            hp = GetComponent<GameManager>().agentTypeRogueMaxHP[levelAgent];
+            damage = GetComponent<GameManager>().agentTypeRogueDamage[levelAgent];
+            attackspeed = GetComponent<GameManager>().agentTypeRogueAS[levelAgent];
+        }
+        else
+        {
+            hp = GetComponent<GameManager>().agentTypeSwordsmanMaxHP[levelAgent];
+            damage = GetComponent<GameManager>().agentTypeSwordsmanDamage[levelAgent];
+            attackspeed = GetComponent<GameManager>().agentTypeSwordsmanAS[levelAgent];
         }
 
         if (GetComponent<GameManager>().englishLanguage == true)
         {
             GetComponent<GameManager>().RosterTextDescription.GetComponent<Text>().text = GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetName +
                                     "\nClass : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
-                                    "\nLevel : " + GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level +
+                                    "\nLevel : " + levelAgent +
                                     "\n\nHealth points : " + hp +
                                     "\nDamage per second : " + System.Math.Round((damage / attackspeed), 2);
 
@@ -1393,7 +1513,7 @@ public class Buttons : MonoBehaviour
         {
             GetComponent<GameManager>().RosterTextDescription.GetComponent<Text>().text = GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetName +
                                     "\nClasse : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
-                                    "\nNiveau : " + GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().level +
+                                    "\nNiveau : " + levelAgent +
                                     "\n\nPoints de vie : " + hp +
                                     "\nDégâts par seconde : " + System.Math.Round((damage / attackspeed), 2);
 
@@ -1588,7 +1708,11 @@ public class Buttons : MonoBehaviour
             case 0:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell1();
                 GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell1_1();
-                GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                {
+                    GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 1:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell1();
@@ -1597,9 +1721,17 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell1_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell1_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell1_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                }
                 break;
             case 2:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell1();
@@ -1608,16 +1740,34 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell1_2") == 1 && PlayerPrefs.GetInt("Load1Spell1_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell1_2") == 1 && PlayerPrefs.GetInt("Load2Spell1_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell1_2") == 1 && PlayerPrefs.GetInt("Load3Spell1_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
             case 3:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell2();
                 GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell2_1();
-                GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                {
+                    GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    if (level < 3)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 4:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell2();
@@ -1626,9 +1776,25 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell2_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell2_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell2_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 2)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 5:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell2();
@@ -1637,16 +1803,39 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell2_2") == 1 && PlayerPrefs.GetInt("Load1Spell2_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell2_2") == 1 && PlayerPrefs.GetInt("Load2Spell2_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell2_2") == 1 && PlayerPrefs.GetInt("Load3Spell2_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 2)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
             case 6:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell3();
                 GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell3_1();
-                GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                {
+                    GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    if (level < 5)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 7:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell3();
@@ -1655,9 +1844,25 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell3_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell3_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell3_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 4)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 8:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell3();
@@ -1666,16 +1871,39 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell3_2") == 1 && PlayerPrefs.GetInt("Load1Spell3_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell3_2") == 1 && PlayerPrefs.GetInt("Load2Spell3_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell3_2") == 1 && PlayerPrefs.GetInt("Load3Spell3_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 4)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
             case 9:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell4();
                 GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell4_1();
-                GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                {
+                    GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    if (level < 7)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 10:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell4();
@@ -1684,9 +1912,25 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell4_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell4_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell4_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 6)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 11:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell4();
@@ -1695,16 +1939,39 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell4_2") == 1 && PlayerPrefs.GetInt("Load1Spell4_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell4_2") == 1 && PlayerPrefs.GetInt("Load2Spell4_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell4_2") == 1 && PlayerPrefs.GetInt("Load3Spell4_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 6)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
             case 12:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell5();
                 GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell5_1();
-                GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                {
+                    GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    if (level < 9)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 13:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell5();
@@ -1713,9 +1980,25 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell5_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell5_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell5_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 8)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 14:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell5();
@@ -1724,16 +2007,39 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell5_2") == 1 && PlayerPrefs.GetInt("Load1Spell5_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell5_2") == 1 && PlayerPrefs.GetInt("Load2Spell5_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell5_2") == 1 && PlayerPrefs.GetInt("Load3Spell5_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 8)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
     
             case 15:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell6();
                 GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell6_1();
-                GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                {
+                    GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    if (level < 11)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 16:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell6();
@@ -1742,9 +2048,25 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell6_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell6_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell6_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 10)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 17:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell6();
@@ -1753,16 +2075,39 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell6_2") == 1 && PlayerPrefs.GetInt("Load1Spell6_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell6_2") == 1 && PlayerPrefs.GetInt("Load2Spell6_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell6_2") == 1 && PlayerPrefs.GetInt("Load3Spell6_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 10)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
             case 18:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell7();
                 GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell7_1();
-                GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                {
+                    GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    if (level < 13)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 19:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell7();
@@ -1771,9 +2116,25 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell7_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell7_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell7_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 12)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 20:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell7();
@@ -1782,16 +2143,39 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell7_2") == 1 && PlayerPrefs.GetInt("Load1Spell7_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell7_2") == 1 && PlayerPrefs.GetInt("Load2Spell7_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell7_2") == 1 && PlayerPrefs.GetInt("Load3Spell7_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 12)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
             case 21:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell8();
                 GetComponent<GameManager>().SkillTreeDescription.text = GetComponent<TradManager>().GetDescriptionElementalSpell8_1();
-                GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                {
+                    GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    if (level < 15)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 22:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell8();
@@ -1800,9 +2184,25 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell8_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell8_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell8_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 14)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 23:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalSpell8();
@@ -1811,9 +2211,25 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell8_2") == 1 && PlayerPrefs.GetInt("Load1Spell8_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell8_2") == 1 && PlayerPrefs.GetInt("Load2Spell8_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell8_2") == 1 && PlayerPrefs.GetInt("Load3Spell8_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+
+                    if (level > 14)
+                        GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    else
+                        GetComponent<GameManager>().SkillTreeLevelText.color = Color.red;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
@@ -1824,9 +2240,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_1") == 0 && PlayerPrefs.GetInt("Load1Passive2_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_1") == 0 && PlayerPrefs.GetInt("Load2Passive2_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive1_1") == 0 && PlayerPrefs.GetInt("Load3Passive2_1") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                } 
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 25:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive1();
@@ -1835,9 +2263,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_1") == 1 && PlayerPrefs.GetInt("Load1Passive1_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_1") == 1 && PlayerPrefs.GetInt("Load2Passive1_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive1_1") == 1 && PlayerPrefs.GetInt("Load3Passive1_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 26:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive1();
@@ -1846,9 +2286,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_2") == 1 && PlayerPrefs.GetInt("Load1Passive1_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_2") == 1 && PlayerPrefs.GetInt("Load2Passive1_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive1_2") == 1 && PlayerPrefs.GetInt("Load3Passive1_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
@@ -1859,9 +2311,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_1") == 0 && PlayerPrefs.GetInt("Load1Passive2_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_1") == 0 && PlayerPrefs.GetInt("Load2Passive2_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive1_1") == 0 && PlayerPrefs.GetInt("Load3Passive2_1") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 28:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive2();
@@ -1870,9 +2334,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive2_1") == 1 && PlayerPrefs.GetInt("Load1Passive2_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive2_1") == 1 && PlayerPrefs.GetInt("Load2Passive2_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive2_1") == 1 && PlayerPrefs.GetInt("Load3Passive2_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 29:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive2();
@@ -1881,9 +2357,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive2_2") == 1 && PlayerPrefs.GetInt("Load1Passive2_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive2_2") == 1 && PlayerPrefs.GetInt("Load2Passive2_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive2_2") == 1 && PlayerPrefs.GetInt("Load3Passive2_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
@@ -1894,9 +2382,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive3_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive3_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive3_1") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 31:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive3();
@@ -1905,9 +2405,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive3_1") == 1 && PlayerPrefs.GetInt("Load1Passive3_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive3_1") == 1 && PlayerPrefs.GetInt("Load2Passive3_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive3_1") == 1 && PlayerPrefs.GetInt("Load3Passive3_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 32:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive3();
@@ -1916,9 +2428,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive3_2") == 1 && PlayerPrefs.GetInt("Load1Passive3_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive3_2") == 1 && PlayerPrefs.GetInt("Load2Passive3_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive3_2") == 1 && PlayerPrefs.GetInt("Load3Passive3_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
@@ -1929,9 +2453,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive4_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive4_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive4_1") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 34:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive4();
@@ -1940,9 +2476,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive4_1") == 1 && PlayerPrefs.GetInt("Load1Passive4_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive4_1") == 1 && PlayerPrefs.GetInt("Load2Passive4_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive4_1") == 1 && PlayerPrefs.GetInt("Load3Passive4_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 35:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive4();
@@ -1951,9 +2499,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive4_2") == 1 && PlayerPrefs.GetInt("Load1Passive4_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive4_2") == 1 && PlayerPrefs.GetInt("Load2Passive4_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive4_2") == 1 && PlayerPrefs.GetInt("Load3Passive4_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
@@ -1964,9 +2524,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_1") == 0 && PlayerPrefs.GetInt("Load1Passive6_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_1") == 0 && PlayerPrefs.GetInt("Load2Passive6_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive5_1") == 0 && PlayerPrefs.GetInt("Load3Passive6_1") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 37:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive5();
@@ -1975,9 +2547,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_1") == 1 && PlayerPrefs.GetInt("Load1Passive5_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_1") == 1 && PlayerPrefs.GetInt("Load2Passive5_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive5_1") == 1 && PlayerPrefs.GetInt("Load3Passive5_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 38:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive5();
@@ -1986,9 +2570,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_2") == 1 && PlayerPrefs.GetInt("Load1Passive5_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_2") == 1 && PlayerPrefs.GetInt("Load2Passive5_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive5_2") == 1 && PlayerPrefs.GetInt("Load3Passive5_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
 
 
@@ -1999,9 +2595,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_1") == 0 && PlayerPrefs.GetInt("Load1Passive6_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_1") == 0 && PlayerPrefs.GetInt("Load2Passive6_1") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive5_1") == 0 && PlayerPrefs.GetInt("Load3Passive6_1") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 40:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive6();
@@ -2010,9 +2618,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive6_1") == 1 && PlayerPrefs.GetInt("Load1Passive6_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive6_1") == 1 && PlayerPrefs.GetInt("Load2Passive6_2") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive6_1") == 1 && PlayerPrefs.GetInt("Load3Passive6_2") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
             case 41:
                 GetComponent<GameManager>().SkillTreeTitle.text = GetComponent<TradManager>().GetTitleElementalPassive6();
@@ -2021,9 +2641,21 @@ public class Buttons : MonoBehaviour
                     ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive6_2") == 1 && PlayerPrefs.GetInt("Load1Passive6_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive6_2") == 1 && PlayerPrefs.GetInt("Load2Passive6_3") == 0) ||
                     (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive6_2") == 1 && PlayerPrefs.GetInt("Load3Passive6_3") == 0)))
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(true);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+                    GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 else
+                {
                     GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
+                    GetComponent<GameManager>().SkillTreeLevelText.color = colorBlack;
+
+                    if (actionPoints == 0)
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = Color.red;
+                    else
+                        GetComponent<GameManager>().SkillTreeActionPoints.color = colorBlack;
+                }
                 break;
         }
     }

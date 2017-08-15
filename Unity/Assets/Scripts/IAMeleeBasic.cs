@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class IAMeleeBasic : MonoBehaviour
 {
-    private GameObject gm;
+    private GameObject  gm;
+    public  float       timerSecondAttack;
+    public  float       timerThirdAttack;
 
     void Start()
     {
@@ -15,13 +17,6 @@ public class IAMeleeBasic : MonoBehaviour
     {
         if (gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().gamePaused == false)
         {
-            if (GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Magician &&
-                GetComponent<IAGuerrier>().hasLaunched == false &&
-                GetComponent<IAGuerrier>().target != null)
-            {
-                GetComponent<IAGuerrier>().hasLaunched = true;
-                GetComponent<IAGuerrier>().InstantiateCheck(GetComponent<IAGuerrier>().target.transform.position);
-            }
             if (GetComponent<IAGuerrier>().isSlowed == true)
             {
                 GetComponent<IAGuerrier>().timerSlow += Time.deltaTime;
@@ -48,7 +43,7 @@ public class IAMeleeBasic : MonoBehaviour
                     {
                         if (GetComponent<IAGuerrier>().tornado != null)
                         {
-                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x - 1f, transform.position.y, 0f);
+                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x - 1f, transform.position.y, transform.position.y / 1000f);
                             transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
                             transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
                             if (transform.position.x < GetComponent<IAGuerrier>().tornado.transform.position.x - 0.25f)
@@ -59,7 +54,7 @@ public class IAMeleeBasic : MonoBehaviour
                     {
                         if (GetComponent<IAGuerrier>().tornado != null)
                         {
-                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x + 1f, transform.position.y, 0f);
+                            Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().tornado.transform.position.x + 1f, transform.position.y, transform.position.y / 1000f);
                             transform.Translate(new Vector3(0f, -(GetComponent<IAGuerrier>().tornado.transform.position.x - transform.position.x) / 50f, 0f));
                             transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * 1.5f);
                             if (transform.position.x > GetComponent<IAGuerrier>().tornado.transform.position.x + 0.25f)
@@ -97,35 +92,25 @@ public class IAMeleeBasic : MonoBehaviour
                     (GetComponent<IAGuerrier>().target.tag == "Defense" &&
                     GetComponent<IAGuerrier>().target.GetComponent<Defense>().isDead == false)))
                 {
-                    if (GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Magician &&
-                        GetComponent<IAGuerrier>().canShootProjectile == false)
-                        GetComponent<IAGuerrier>().needToMove = true;
-                    else
+                    GetComponent<IAGuerrier>().needToMove = false;
+                    if (GetComponent<IAGuerrier>().canAttack == true)
                     {
-                        GetComponent<IAGuerrier>().needToMove = false;
-                        if (GetComponent<IAGuerrier>().canAttack == true)
+                        GetComponent<IAGuerrier>().isAttacking = true;
+                        GetComponent<IAGuerrier>().targetAttacking = GetComponent<IAGuerrier>().target;
+                        GetComponent<IAGuerrier>().canAttack = false;
+                        StartCoroutine(AttackAnimation(GetComponent<IAGuerrier>().target.transform.position));
+                    }
+                    else if (GetComponent<IAGuerrier>().isAttacking == false)
+                    {
+                        if (transform.position.x < GetComponent<IAGuerrier>().target.transform.position.x)
                         {
-                            GetComponent<IAGuerrier>().isAttacking = true;
-                            GetComponent<IAGuerrier>().targetAttacking = GetComponent<IAGuerrier>().target;
-                            GetComponent<IAGuerrier>().canAttack = false;
-                            if (GetComponent<IAGuerrier>().type != IAGuerrier.EnemyType.Magician)
-                                StartCoroutine(GetComponent<IAGuerrier>().AttackAnimation(GetComponent<IAGuerrier>().target.transform.position));
-                            else if (GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Magician &&
-                                    GetComponent<IAGuerrier>().canShootProjectile == true)
-                                StartCoroutine(GetComponent<IAGuerrier>().AttackDistanceAnimation(GetComponent<IAGuerrier>().target.transform.position));
+                            GetComponent<SpriteRenderer>().flipX = false;
+                            GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
                         }
-                        else if (GetComponent<IAGuerrier>().isAttacking == false)
+                        else
                         {
-                            if (GetComponent<IAGuerrier>().rightSide == true)
-                            {
-                                GetComponent<SpriteRenderer>().flipX = false;
-                                GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
-                            }
-                            else
-                            {
-                                GetComponent<SpriteRenderer>().flipX = true;
-                                GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
-                            }
+                            GetComponent<SpriteRenderer>().flipX = true;
+                            GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
                         }
                     }
                 }
@@ -153,7 +138,7 @@ public class IAMeleeBasic : MonoBehaviour
                             GetComponent<IAGuerrier>().newPos = GetComponent<AStar>().StartPathFinding(GetComponent<IAGuerrier>().target.transform.position);
                     }
 
-                    Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().newPos.x, GetComponent<IAGuerrier>().newPos.y, 0f);
+                    Vector3 destPos = new Vector3(GetComponent<IAGuerrier>().newPos.x, GetComponent<IAGuerrier>().newPos.y, transform.position.y / 1000f);
                     transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * (GetComponent<IAGuerrier>().speed - GetComponent<IAGuerrier>().slow));
 
                     if (GetComponent<IAGuerrier>().timer > GetComponent<IAGuerrier>().animTime &&
@@ -177,6 +162,158 @@ public class IAMeleeBasic : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    public IEnumerator AttackAnimation(Vector2 directionPos)
+    {
+        float timerEffect = 0f;
+        bool attack1Landed = false;
+        bool attack2Landed = false;
+        bool attack3Landed = false;
+        int animAttack = 0;
+        while (animAttack < GetComponent<IAGuerrier>().rightAttackSprites.Length)
+        {
+            if (GetComponent<Enemy>().isDead == true || Vector2.Distance(GetComponent<IAGuerrier>().targetAttacking.transform.position, transform.position) > (GetComponent<IAGuerrier>().range + 0.25f))
+            {
+                GetComponent<IAGuerrier>().isAttacking = false;
+                GetComponent<IAGuerrier>().canAttack = false;
+
+                if (attack1Landed == true)
+                    GetComponent<IAGuerrier>().attackTimer = 0f;
+                else
+                    GetComponent<IAGuerrier>().attackTimer = GetComponent<IAGuerrier>().attackCooldown;
+
+                yield break;
+            }
+            else
+            {
+                if (transform.position.x < GetComponent<IAGuerrier>().targetAttacking.transform.position.x)
+                {
+                    GetComponent<SpriteRenderer>().flipX = false;
+                    GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightAttackSprites[animAttack];
+                }
+                else
+                {
+                    GetComponent<SpriteRenderer>().flipX = true;
+                    GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightAttackSprites[animAttack];
+                }
+
+                timerEffect += GetComponent<IAGuerrier>().animAttackCD;
+                if (timerEffect >= GetComponent<IAGuerrier>().attackEffectCD &&
+                    attack1Landed == false)
+                {
+                    attack1Landed = true;
+                    CheckTargetAttacking();
+                }
+                else if (GetComponent<IAGuerrier>().sheetClass == IAGuerrier.EnemyClass.Thief && GetComponent<IAGuerrier>().classID > 0 && timerEffect >= timerSecondAttack && attack2Landed == false)
+                {
+                    attack2Landed = true;
+                    CheckTargetAttacking();
+                }
+                else if (GetComponent<IAGuerrier>().sheetClass == IAGuerrier.EnemyClass.Thief && GetComponent<IAGuerrier>().classID > 1 && timerEffect >= timerThirdAttack && attack3Landed == false)
+                {
+                    attack3Landed = true;
+                    CheckTargetAttacking();
+                }
+
+                yield return new WaitForSeconds(GetComponent<IAGuerrier>().animAttackCD);
+                animAttack++;
+            }
+        }
+
+        if (GetComponent<Enemy>().isDead == false && Vector2.Distance(GetComponent<IAGuerrier>().targetAttacking.transform.position, transform.position) <= (GetComponent<IAGuerrier>().range + 0.25f))
+        {
+            if (attack1Landed == false)
+            {
+                attack1Landed = true;
+                CheckTargetAttacking();
+            }
+            else if (GetComponent<IAGuerrier>().sheetClass == IAGuerrier.EnemyClass.Thief && GetComponent<IAGuerrier>().classID > 0 && attack2Landed == false)
+            {
+                attack2Landed = true;
+                CheckTargetAttacking();
+            }
+            else if (GetComponent<IAGuerrier>().sheetClass == IAGuerrier.EnemyClass.Thief && GetComponent<IAGuerrier>().classID > 1 && attack3Landed == false)
+            {
+                attack3Landed = true;
+                CheckTargetAttacking();
+            }
+
+            if (GetComponent<Enemy>().isDead == false)
+            {
+                GetComponent<IAGuerrier>().isAttacking = false;
+                GetComponent<IAGuerrier>().canAttack = false;
+                GetComponent<IAGuerrier>().attackTimer = 0f;
+
+                if (transform.position.x < GetComponent<IAGuerrier>().targetAttacking.transform.position.x)
+                {
+                    GetComponent<SpriteRenderer>().flipX = false;
+                    GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
+                }
+                else
+                {
+                    GetComponent<SpriteRenderer>().flipX = true;
+                    GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
+                }
+            }
+        }
+    }
+
+    private void CheckTargetAttacking()
+    {
+        if (GetComponent<IAGuerrier>().sheetClass == IAGuerrier.EnemyClass.Warrior &&
+            GetComponent<IAGuerrier>().classID == 0)
+        {
+            InflictDamage(GetComponent<IAGuerrier>().targetAttacking);
+        }
+        else if (GetComponent<IAGuerrier>().sheetClass == IAGuerrier.EnemyClass.Warrior &&
+                 GetComponent<IAGuerrier>().classID == 1)
+        {
+            float distanceAlly = 0f;
+            foreach(GameObject ally in GetComponent<IAGuerrier>().gm.GetComponent<MapManager>().alliesList)
+            {
+                distanceAlly = Vector2.Distance(transform.position, ally.transform.position);
+                if ((distanceAlly <= 0.55f && ally.tag == "Defense") ||
+                    (distanceAlly <= 0.75f && GetComponent<IAGuerrier>().rightSide == true && transform.position.x < ally.transform.position.x) ||
+                    (distanceAlly <= 0.75f && GetComponent<IAGuerrier>().rightSide == false && transform.position.x > ally.transform.position.x))
+                    InflictDamage(ally);
+            }
+        }
+        else if (GetComponent<IAGuerrier>().sheetClass == IAGuerrier.EnemyClass.Warrior &&
+                 GetComponent<IAGuerrier>().classID == 2)
+        {
+            float distanceAlly = 0f;
+            foreach (GameObject ally in GetComponent<IAGuerrier>().gm.GetComponent<MapManager>().alliesList)
+            {
+                distanceAlly = Vector2.Distance(transform.position, ally.transform.position);
+                if ((distanceAlly <= 0.75f && ally.tag == "Defense") ||
+                    (distanceAlly <= 1f && GetComponent<IAGuerrier>().rightSide == true && transform.position.x < ally.transform.position.x) ||
+                    (distanceAlly <= 1f && GetComponent<IAGuerrier>().rightSide == false && transform.position.x > ally.transform.position.x))
+                    InflictDamage(ally);
+            }
+        }
+        else if (GetComponent<IAGuerrier>().sheetClass == IAGuerrier.EnemyClass.Thief)
+        {
+            InflictDamage(GetComponent<IAGuerrier>().targetAttacking);
+        }
+    }
+
+    private void InflictDamage(GameObject obj)
+    {
+        if (obj != null)
+        {
+            if (gm.GetComponent<MapManager>().gm.GetComponent<GameManager>().bloodless == true || obj.tag == "Defense")
+                Instantiate(GetComponent<IAGuerrier>().hitSprite, obj.transform.position, transform.rotation);
+            else
+                Instantiate(GetComponent<IAGuerrier>().bloodSprite, obj.transform.position, transform.rotation);
+
+            if (obj.tag == "Player")
+                obj.GetComponent<StatsPlayer>().TakeDamage(GetComponent<IAGuerrier>().damage[GetComponent<IAGuerrier>().difficulty], transform.position, gameObject);
+            else if (obj.tag == "AgentGuerrier")
+                obj.GetComponent<IAGuerrierAgent>().TakeDamage(GetComponent<IAGuerrier>().damage[GetComponent<IAGuerrier>().difficulty], transform.position);
+            else if (obj.tag == "Defense")
+                obj.GetComponent<Defense>().TakeDamage(GetComponent<IAGuerrier>().damage[GetComponent<IAGuerrier>().difficulty]);
         }
     }
 }

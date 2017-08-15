@@ -25,6 +25,7 @@ public class MageElemental : MonoBehaviour
     public  GameObject  dragonD;
     public  GameObject  dragonSFX;
 
+    private GameObject  gm;
     private Vector2     newPos = new Vector2(0, 0);
     private Quaternion  rot = new Quaternion(0, 0, 0, 0);
     private float       projectileRotation = 0f;
@@ -69,6 +70,7 @@ public class MageElemental : MonoBehaviour
 
     void Start ()
     {
+        gm = GameObject.Find("GameManager");
         GetComponent<Shoots>().rangeSpell1 = 3f;
         GetComponent<Shoots>().rangeSpell3 = 3f;
         GetComponent<Shoots>().rangeSpell4 = 3f;
@@ -78,7 +80,9 @@ public class MageElemental : MonoBehaviour
         GetComponent<Deplacements>().movementBonus = 1f;
         GetComponent<Shoots>().movementBonus = 0f;
 
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().currSave == 1)
+        GetComponent<Shoots>().usingSpell1Icon = gm.GetComponent<GameManager>().usingSpell1Icon;
+
+        if (gm.GetComponent<GameManager>().currSave == 1)
         {
             if (PlayerPrefs.GetInt("Load1Spell1_3") == 1)
             {
@@ -373,7 +377,7 @@ public class MageElemental : MonoBehaviour
             if (PlayerPrefs.GetInt("Load1DecorationCarpet") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
         }
-        else if (GetComponent<Shoots>().gm.GetComponent<GameManager>().currSave == 2)
+        else if (gm.GetComponent<GameManager>().currSave == 2)
         {
             if (PlayerPrefs.GetInt("Load2Spell1_3") == 1)
             {
@@ -664,7 +668,7 @@ public class MageElemental : MonoBehaviour
             if (PlayerPrefs.GetInt("Load2DecorationCarpet") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
         }
-        else if (GetComponent<Shoots>().gm.GetComponent<GameManager>().currSave == 3)
+        else if (gm.GetComponent<GameManager>().currSave == 3)
         {
             if (PlayerPrefs.GetInt("Load3Spell1_3") == 1)
             {
@@ -972,12 +976,12 @@ public class MageElemental : MonoBehaviour
 	
 	void Update ()
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().gamePaused == false)
+        if (gm.GetComponent<GameManager>().gamePaused == false)
         {
             if (isUnderMana == true)
             {
                 manaTimer += Time.deltaTime;
-                if (manaTimer > GetComponent<Shoots>().cooldownManaEffect)
+                if (manaTimer >= GetComponent<Shoots>().cooldownManaEffect)
                 {
                     isUnderMana = false;
                     speedCD = 1f;
@@ -988,7 +992,7 @@ public class MageElemental : MonoBehaviour
             {
                 timerAttack += Time.deltaTime * speedCD;
                 GetComponent<Shoots>().cdSpell1.GetComponent<Slider>().value = 1 - (float)timerAttack / (float)GetComponent<Shoots>().cooldownAttack;
-                if (timerAttack > GetComponent<Shoots>().cooldownAttack)
+                if (timerAttack >= GetComponent<Shoots>().cooldownAttack)
                 {
                     timerAttack = 0f;
                     GetComponent<Shoots>().cdSpell1.GetComponent<Slider>().value = 0;
@@ -999,7 +1003,7 @@ public class MageElemental : MonoBehaviour
             {
                 timerSpell2 += Time.deltaTime * speedCD;
                 GetComponent<Shoots>().cdSpell2.GetComponent<Slider>().value = 1 - (float)timerSpell2 / (float)GetComponent<Shoots>().cooldownSpell2;
-                if (timerSpell2 > GetComponent<Shoots>().cooldownSpell2)
+                if (timerSpell2 >= GetComponent<Shoots>().cooldownSpell2)
                 {
                     timerSpell2 = 0f;
                     GetComponent<Shoots>().cdSpell2.GetComponent<Slider>().value = 0;
@@ -1010,7 +1014,7 @@ public class MageElemental : MonoBehaviour
             {
                 timerSpell3 += Time.deltaTime * speedCD;
                 GetComponent<Shoots>().cdSpell3.GetComponent<Slider>().value = 1 - (float)timerSpell3 / (float)GetComponent<Shoots>().cooldownSpell3;
-                if (timerSpell3 > GetComponent<Shoots>().cooldownSpell3)
+                if (timerSpell3 >= GetComponent<Shoots>().cooldownSpell3)
                 {
                     timerSpell3 = 0f;
                     GetComponent<Shoots>().cdSpell3.GetComponent<Slider>().value = 0;
@@ -1021,7 +1025,7 @@ public class MageElemental : MonoBehaviour
             {
                 timerSpell4 += Time.deltaTime * speedCD;
                 GetComponent<Shoots>().cdSpell4.GetComponent<Slider>().value = 1 - (float)timerSpell4 / (float)GetComponent<Shoots>().cooldownSpell4;
-                if (timerSpell4 > GetComponent<Shoots>().cooldownSpell4)
+                if (timerSpell4 >= GetComponent<Shoots>().cooldownSpell4)
                 {
                     timerSpell4 = 0f;
                     GetComponent<Shoots>().cdSpell4.GetComponent<Slider>().value = 0;
@@ -1032,7 +1036,7 @@ public class MageElemental : MonoBehaviour
             {
                 timerSpell5 += Time.deltaTime * speedCD;
                 GetComponent<Shoots>().cdSpell5.GetComponent<Slider>().value = 1 - (float)timerSpell5 / (float)GetComponent<Shoots>().cooldownSpell5;
-                if (timerSpell5 > GetComponent<Shoots>().cooldownSpell5)
+                if (timerSpell5 >= GetComponent<Shoots>().cooldownSpell5)
                 {
                     timerSpell5 = 0f;
                     GetComponent<Shoots>().cdSpell5.GetComponent<Slider>().value = 0;
@@ -1043,7 +1047,7 @@ public class MageElemental : MonoBehaviour
             {
                 timerSpell6 += Time.deltaTime * speedCD;
                 GetComponent<Shoots>().cdSpell6.GetComponent<Slider>().value = 1 - (float)timerSpell6 / (float)GetComponent<Shoots>().cooldownSpell6;
-                if (timerSpell6 > GetComponent<Shoots>().cooldownSpell6)
+                if (timerSpell6 >= GetComponent<Shoots>().cooldownSpell6)
                 {
                     timerSpell6 = 0f;
                     GetComponent<Shoots>().cdSpell6.GetComponent<Slider>().value = 0;
@@ -1054,7 +1058,7 @@ public class MageElemental : MonoBehaviour
             {
                 timerSpell7 += Time.deltaTime * speedCD;
                 GetComponent<Shoots>().cdSpell7.GetComponent<Slider>().value = 1 - (float)timerSpell7 / (float)GetComponent<Shoots>().cooldownSpell7;
-                if (timerSpell7 > GetComponent<Shoots>().cooldownSpell7)
+                if (timerSpell7 >= GetComponent<Shoots>().cooldownSpell7)
                 {
                     timerSpell7 = 0f;
                     GetComponent<Shoots>().cdSpell7.GetComponent<Slider>().value = 0;
@@ -1065,7 +1069,7 @@ public class MageElemental : MonoBehaviour
             {
                 timerSpell8 += Time.deltaTime * speedCD;
                 GetComponent<Shoots>().cdSpell8.GetComponent<Slider>().value = 1 - (float)timerSpell8 / (float)GetComponent<Shoots>().cooldownSpell8;
-                if (timerSpell8 > GetComponent<Shoots>().cooldownSpell8)
+                if (timerSpell8 >= GetComponent<Shoots>().cooldownSpell8)
                 {
                     timerSpell8 = 0f;
                     GetComponent<Shoots>().cdSpell8.GetComponent<Slider>().value = 0;
@@ -1076,7 +1080,7 @@ public class MageElemental : MonoBehaviour
             {
                 timerObject1 += Time.deltaTime * speedCD;
                 GetComponent<Shoots>().cdObject1.GetComponent<Slider>().value = 1 - (float)timerObject1 / (float)GetComponent<Shoots>().cooldownObject1;
-                if (timerObject1 > GetComponent<Shoots>().cooldownObject1)
+                if (timerObject1 >= GetComponent<Shoots>().cooldownObject1)
                 {
                     timerObject1 = 0f;
                     GetComponent<Shoots>().cdObject1.GetComponent<Slider>().value = 0;
@@ -1087,7 +1091,7 @@ public class MageElemental : MonoBehaviour
             {
                 timerObject2 += Time.deltaTime * speedCD;
                 GetComponent<Shoots>().cdObject2.GetComponent<Slider>().value = 1 - (float)timerObject2 / (float)GetComponent<Shoots>().cooldownObject2;
-                if (timerObject2 > GetComponent<Shoots>().cooldownObject2)
+                if (timerObject2 >= GetComponent<Shoots>().cooldownObject2)
                 {
                     timerObject2 = 0f;
                     GetComponent<Shoots>().cdObject2.GetComponent<Slider>().value = 0;
@@ -1100,7 +1104,7 @@ public class MageElemental : MonoBehaviour
                 {
                     timerObject3 += Time.deltaTime * speedCD;
                     GetComponent<Shoots>().cdObject3.GetComponent<Slider>().value = 1 - (float)timerObject3 / (float)GetComponent<Shoots>().cooldownObject3;
-                    if (timerObject3 > GetComponent<Shoots>().cooldownObject3)
+                    if (timerObject3 >= GetComponent<Shoots>().cooldownObject3)
                     {
                         timerObject3 = 0f;
                         GetComponent<Shoots>().cdObject3.GetComponent<Slider>().value = 0;
@@ -1109,7 +1113,7 @@ public class MageElemental : MonoBehaviour
                 }
                 else if (GetComponent<Shoots>().isRuneHeal == true)
                 {
-                    if (timerObject3 > GetComponent<Shoots>().cooldownObject3)
+                    if (timerObject3 >= GetComponent<Shoots>().cooldownObject3)
                     {
                         if (GetComponent<StatsPlayer>().IsFullLife() == true)
                             GetComponent<Shoots>().cdObject3.GetComponent<Slider>().value = 0;
@@ -1198,9 +1202,9 @@ public class MageElemental : MonoBehaviour
                 SelectSpell8(false);
             }
             else if ((Input.GetKeyDown(KeyCode.A) &&
-                    GetComponent<Shoots>().gm.GetComponent<GameManager>().englishLanguage == false) ||
+                    gm.GetComponent<GameManager>().englishLanguage == false) ||
                     (Input.GetKeyDown(KeyCode.Q) &&
-                    GetComponent<Shoots>().gm.GetComponent<GameManager>().englishLanguage == true))
+                    gm.GetComponent<GameManager>().englishLanguage == true))
             {
                 UseObject1();
             }
@@ -1253,14 +1257,14 @@ public class MageElemental : MonoBehaviour
 
     public void SelectSpell1(bool fromClick)
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true &&
+        if (gm.GetComponent<GameManager>().smartcast == true &&
             fromClick == false)
         {
             UseSpell1();
         }
         else
         {
-            if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == false)
+            if (gm.GetComponent<GameManager>().smartcast == false)
             {
                 Vector3 newScale = new Vector3(GetComponent<Shoots>().rangeSpell1 * 2, GetComponent<Shoots>().rangeSpell1 * 2, 1);
                 GetComponent<Shoots>().rangeIndicator.transform.localScale = newScale;
@@ -1285,14 +1289,14 @@ public class MageElemental : MonoBehaviour
 
     public void SelectSpell2(bool fromClick)
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true &&
+        if (gm.GetComponent<GameManager>().smartcast == true &&
             fromClick == false)
         {
             UseSpell2();
         }
         else
         {
-            if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == false)
+            if (gm.GetComponent<GameManager>().smartcast == false)
             {
                 Vector3 newScale = new Vector3(GetComponent<Shoots>().rangeSpell2 * 2, GetComponent<Shoots>().rangeSpell2 * 2, 1);
                 GetComponent<Shoots>().rangeIndicator.transform.localScale = newScale;
@@ -1318,14 +1322,14 @@ public class MageElemental : MonoBehaviour
 
     public void SelectSpell3(bool fromClick)
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true &&
+        if (gm.GetComponent<GameManager>().smartcast == true &&
             fromClick == false)
         {
             UseSpell3();
         }
         else
         {
-            if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == false)
+            if (gm.GetComponent<GameManager>().smartcast == false)
             {
                 Vector3 newScale = new Vector3(GetComponent<Shoots>().rangeSpell3 * 2, GetComponent<Shoots>().rangeSpell3 * 2, 1);
                 GetComponent<Shoots>().rangeIndicator.transform.localScale = newScale;
@@ -1351,14 +1355,14 @@ public class MageElemental : MonoBehaviour
 
     public void SelectSpell4(bool fromClick)
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true &&
+        if (gm.GetComponent<GameManager>().smartcast == true &&
             fromClick == false)
         {
             UseSpell4();
         }
         else
         {
-            if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == false)
+            if (gm.GetComponent<GameManager>().smartcast == false)
             {
                 Vector3 newScale = new Vector3(GetComponent<Shoots>().rangeSpell4 * 2, GetComponent<Shoots>().rangeSpell4 * 2, 1);
                 GetComponent<Shoots>().rangeIndicator.transform.localScale = newScale;
@@ -1384,14 +1388,14 @@ public class MageElemental : MonoBehaviour
 
     public void SelectSpell5(bool fromClick)
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true &&
+        if (gm.GetComponent<GameManager>().smartcast == true &&
             fromClick == false)
         {
             UseSpell5();
         }
         else
         {
-            if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == false)
+            if (gm.GetComponent<GameManager>().smartcast == false)
             {
                 Vector3 newScale = new Vector3(GetComponent<Shoots>().rangeSpell5 * 2, GetComponent<Shoots>().rangeSpell5 * 2, 1);
                 GetComponent<Shoots>().rangeIndicator.transform.localScale = newScale;
@@ -1417,14 +1421,14 @@ public class MageElemental : MonoBehaviour
 
     public void SelectSpell6(bool fromClick)
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true &&
+        if (gm.GetComponent<GameManager>().smartcast == true &&
             fromClick == false)
         {
             UseSpell6();
         }
         else
         {
-            if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == false)
+            if (gm.GetComponent<GameManager>().smartcast == false)
             {
                 Vector3 newScale = new Vector3(GetComponent<Shoots>().rangeSpell6 * 2, GetComponent<Shoots>().rangeSpell6 * 2, 1);
                 GetComponent<Shoots>().rangeIndicator.transform.localScale = newScale;
@@ -1450,14 +1454,14 @@ public class MageElemental : MonoBehaviour
 
     public void SelectSpell7(bool fromClick)
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true &&
+        if (gm.GetComponent<GameManager>().smartcast == true &&
             fromClick == false)
         {
             UseSpell7();
         }
         else
         {
-            if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == false)
+            if (gm.GetComponent<GameManager>().smartcast == false)
             {
                 Vector3 newScale = new Vector3(GetComponent<Shoots>().rangeSpell7 * 2, GetComponent<Shoots>().rangeSpell7 * 2, 1);
                 GetComponent<Shoots>().rangeIndicator.transform.localScale = newScale;
@@ -1483,7 +1487,7 @@ public class MageElemental : MonoBehaviour
 
     public void SelectSpell8(bool fromClick)
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true &&
+        if (gm.GetComponent<GameManager>().smartcast == true &&
             fromClick == false)
         {
             UseSpell8();
@@ -1602,7 +1606,7 @@ public class MageElemental : MonoBehaviour
 
     void UseSpell1()
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true)
             GetComponent<Shoots>().rangeIndicator.SetActive(false);
 
         if (GetComponent<Shoots>().canShoot == true &&
@@ -1617,14 +1621,14 @@ public class MageElemental : MonoBehaviour
             FindShootDirection();
             spell1Ready = false;
             GameObject sfx = (GameObject)Instantiate(fireballSFX, transform.position, transform.rotation);
-            sfx.GetComponent<AudioSource>().volume = GetComponent<Shoots>().gm.GetComponent<GameManager>().volumeSFX / 100;
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             StartCoroutine(InstantiateProjectile(GetComponent<Shoots>().cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)));
         }
     }
 
     void UseSpell2()
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true)
             GetComponent<Shoots>().rangeIndicator.SetActive(false);
 
         if (GetComponent<Shoots>().canShoot == true &&
@@ -1647,7 +1651,7 @@ public class MageElemental : MonoBehaviour
                     FindShootDirection();
                     spell2Ready = false;
                     GameObject sfx = (GameObject)Instantiate(thunderboltSFX, transform.position, transform.rotation);
-                    sfx.GetComponent<AudioSource>().volume = GetComponent<Shoots>().gm.GetComponent<GameManager>().volumeSFX / 100;
+                    sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
                     StartCoroutine(GoBackToAA());
                 }
             }
@@ -1656,7 +1660,7 @@ public class MageElemental : MonoBehaviour
 
     void UseSpell3()
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true)
             GetComponent<Shoots>().rangeIndicator.SetActive(false);
 
         if (GetComponent<Shoots>().canShoot == true &&
@@ -1676,7 +1680,7 @@ public class MageElemental : MonoBehaviour
             FindShootDirection();
             spell3Ready = false;
             GameObject sfx = (GameObject)Instantiate(iceShardSFX, transform.position, transform.rotation);
-            sfx.GetComponent<AudioSource>().volume = GetComponent<Shoots>().gm.GetComponent<GameManager>().volumeSFX / 100;
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             StartCoroutine(InstantiateEclatsGlace(GetComponent<Shoots>().cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)));
             StartCoroutine(GoBackToAA());
         }
@@ -1684,7 +1688,7 @@ public class MageElemental : MonoBehaviour
 
     void UseSpell4()
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true)
             GetComponent<Shoots>().rangeIndicator.SetActive(false);
 
         if (GetComponent<Shoots>().canShoot == true &&
@@ -1704,7 +1708,7 @@ public class MageElemental : MonoBehaviour
             FindShootDirection();
             spell4Ready = false;
             GameObject sfx = (GameObject)Instantiate(meteorSFX, transform.position, transform.rotation);
-            sfx.GetComponent<AudioSource>().volume = GetComponent<Shoots>().gm.GetComponent<GameManager>().volumeSFX / 100;
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             StartCoroutine(SpellMeteore());
             StartCoroutine(GoBackToAA());
         }
@@ -1712,7 +1716,7 @@ public class MageElemental : MonoBehaviour
 
     void UseSpell5()
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true)
             GetComponent<Shoots>().rangeIndicator.SetActive(false);
 
         if (GetComponent<Shoots>().canShoot == true &&
@@ -1732,7 +1736,7 @@ public class MageElemental : MonoBehaviour
             FindShootDirection();
             spell5Ready = false;
             GameObject sfx = (GameObject)Instantiate(tornadoSFX, transform.position, transform.rotation);
-            sfx.GetComponent<AudioSource>().volume = GetComponent<Shoots>().gm.GetComponent<GameManager>().volumeSFX / 100;
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             StartCoroutine(SpellTornade());
             StartCoroutine(GoBackToAA());
         }
@@ -1740,7 +1744,7 @@ public class MageElemental : MonoBehaviour
 
     void UseSpell6()
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true)
 
             GetComponent<Shoots>().rangeIndicator.SetActive(false);
         if (GetComponent<Shoots>().canShoot == true &&
@@ -1766,7 +1770,7 @@ public class MageElemental : MonoBehaviour
                     FindShootDirection();
                     spell6Ready = false;
                     GameObject sfx = (GameObject)Instantiate(icePrisonSFX, transform.position, transform.rotation);
-                    sfx.GetComponent<AudioSource>().volume = GetComponent<Shoots>().gm.GetComponent<GameManager>().volumeSFX / 100;
+                    sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
                     StartCoroutine(GoBackToAA());
                 }
             }
@@ -1774,7 +1778,7 @@ public class MageElemental : MonoBehaviour
     }
     void UseSpell7()
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true)
 
             GetComponent<Shoots>().rangeIndicator.SetActive(false);
         if (spell7Ready == true &&
@@ -1797,7 +1801,7 @@ public class MageElemental : MonoBehaviour
 
     void UseSpell8()
     {
-        if (GetComponent<Shoots>().gm.GetComponent<GameManager>().smartcast == true)
+        if (gm.GetComponent<GameManager>().smartcast == true)
             GetComponent<Shoots>().rangeIndicator.SetActive(false);
 
         if (GetComponent<Shoots>().canShoot == true &&
@@ -1817,7 +1821,7 @@ public class MageElemental : MonoBehaviour
             FindShootDirection();
             spell8Ready = false;
             GameObject sfx = (GameObject)Instantiate(dragonSFX, transform.position, transform.rotation);
-            sfx.GetComponent<AudioSource>().volume = GetComponent<Shoots>().gm.GetComponent<GameManager>().volumeSFX / 100;
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             StartCoroutine(SpellDragonFeu(GetComponent<Shoots>().cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition)));
             StartCoroutine(GoBackToAA());
         }
@@ -1831,13 +1835,13 @@ public class MageElemental : MonoBehaviour
             GetComponent<StatsPlayer>().stockHealthPotion > 0)
         {
             GetComponent<StatsPlayer>().stockHealthPotion--;
-            GetComponent<Shoots>().gm.GetComponent<GameManager>().textStockHealthPotion.GetComponent<Text>().text = GetComponent<StatsPlayer>().stockHealthPotion.ToString();
+            gm.GetComponent<GameManager>().textStockHealthPotion.GetComponent<Text>().text = GetComponent<StatsPlayer>().stockHealthPotion.ToString();
             GetComponent<Shoots>().cdObject1.GetComponent<Slider>().value = 1;
             GetComponent<Deplacements>().isAttacking = true;
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             object1Ready = false;
             GameObject sfx = (GameObject)Instantiate(GetComponent<Shoots>().potionHealthSFX, transform.position, transform.rotation);
-            sfx.GetComponent<AudioSource>().volume = GetComponent<Shoots>().gm.GetComponent<GameManager>().volumeSFX / 100;
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             GetComponent<StatsPlayer>().Heal(10);
         }
     }
@@ -1850,14 +1854,14 @@ public class MageElemental : MonoBehaviour
             GetComponent<StatsPlayer>().stockManaPotion > 0)
         {
             GetComponent<StatsPlayer>().stockManaPotion--;
-            GetComponent<Shoots>().gm.GetComponent<GameManager>().textStockManaPotion.GetComponent<Text>().text = GetComponent<StatsPlayer>().stockManaPotion.ToString();
+            gm.GetComponent<GameManager>().textStockManaPotion.GetComponent<Text>().text = GetComponent<StatsPlayer>().stockManaPotion.ToString();
             GetComponent<Shoots>().cdObject2.GetComponent<Slider>().value = 1;
             GetComponent<Deplacements>().isAttacking = true;
             GetComponent<Deplacements>().currentNumeroAnim = 1;
             object2Ready = false;
             isUnderMana = true;
             GameObject sfx = (GameObject)Instantiate(GetComponent<Shoots>().potionManaSFX, transform.position, transform.rotation);
-            sfx.GetComponent<AudioSource>().volume = GetComponent<Shoots>().gm.GetComponent<GameManager>().volumeSFX / 100;
+            sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
             speedCD = 2f;
         }
     }
@@ -1936,17 +1940,33 @@ public class MageElemental : MonoBehaviour
 
         GameObject obj2 = null;
         obj2 = (GameObject)Instantiate(iceShard, newPos, rot);
-        obj2.GetComponent<IceShard>().GetPos(directionPos, GetComponent<Shoots>().damageSpell3, projectileRotation, gameObject);
+        obj2.GetComponent<IceShard>().GetPos(directionPos, GetComponent<Shoots>().damageSpell3 + GetComponent<Shoots>().decorationBonusDamage, projectileRotation, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj3 = null;
         obj3 = (GameObject)Instantiate(iceShard, newPos, rot);
-        obj3.GetComponent<IceShard>().GetPos(directionPos, GetComponent<Shoots>().damageSpell3, projectileRotation, gameObject);
+        obj3.GetComponent<IceShard>().GetPos(directionPos, GetComponent<Shoots>().damageSpell3 + GetComponent<Shoots>().decorationBonusDamage, projectileRotation, gameObject);
         yield return new WaitForSeconds(0.07f);
 
         GameObject obj4 = null;
         obj4 = (GameObject)Instantiate(iceShard, newPos, rot);
-        obj4.GetComponent<IceShard>().GetPos(directionPos, GetComponent<Shoots>().damageSpell3, projectileRotation, gameObject);
+        obj4.GetComponent<IceShard>().GetPos(directionPos, GetComponent<Shoots>().damageSpell3 + GetComponent<Shoots>().decorationBonusDamage, projectileRotation, gameObject);
+
+        if (numberShards > 4)
+        {
+            yield return new WaitForSeconds(0.07f);
+            GameObject obj5 = null;
+            obj5 = (GameObject)Instantiate(iceShard, newPos, rot);
+            obj5.GetComponent<IceShard>().GetPos(directionPos, GetComponent<Shoots>().damageSpell3 + GetComponent<Shoots>().decorationBonusDamage, projectileRotation, gameObject);
+        }
+
+        if (numberShards > 5)
+        {
+            yield return new WaitForSeconds(0.07f);
+            GameObject obj6 = null;
+            obj6 = (GameObject)Instantiate(iceShard, newPos, rot);
+            obj6.GetComponent<IceShard>().GetPos(directionPos, GetComponent<Shoots>().damageSpell3 + GetComponent<Shoots>().decorationBonusDamage, projectileRotation, gameObject);
+        }
     }
 
     IEnumerator SpellFoudre(GameObject go)
@@ -2070,7 +2090,7 @@ public class MageElemental : MonoBehaviour
         yield return new WaitForSeconds(0.35f);
 
         GameObject sfx = (GameObject)Instantiate(earthquakeSFX, transform.position, transform.rotation);
-        sfx.GetComponent<AudioSource>().volume = GetComponent<Shoots>().gm.GetComponent<GameManager>().volumeSFX / 100;
+        sfx.GetComponent<AudioSource>().volume = gm.GetComponent<GameManager>().volumeSFX / 100;
 
         int damageBonus = 0;
         if (GetComponent<Shoots>().nextSpellDamageRune == true)

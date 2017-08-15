@@ -55,7 +55,7 @@ public class Deplacements : MonoBehaviour
     public Sprite botAttack3;
     public Sprite botAttack4;
 
-    private Vector2 	            newPosition = new Vector2(0, 0);
+    private Vector3 	            newPosition = new Vector3(0, 0, 0);
     private Vector3                 newPosCam = new Vector3(0, 0, -10);
     public  int                     currentNumeroAnim = 1;
     private float                   timer = 0f;
@@ -96,11 +96,11 @@ public class Deplacements : MonoBehaviour
                     gm.GetComponent<GameManager>().englishLanguage == false) ||
                     (Input.GetKey(KeyCode.W) &&
                     gm.GetComponent<GameManager>().englishLanguage == true))
-                    newPosition = new Vector2(transform.position.x + 1, transform.position.y + 1);
+                    newPosition = new Vector3(transform.position.x + 1, transform.position.y + 1, transform.position.y / 1000f);
                 else if (Input.GetKey(KeyCode.S))
-                    newPosition = new Vector2(transform.position.x + 1, transform.position.y - 1);
+                    newPosition = new Vector3(transform.position.x + 1, transform.position.y - 1, transform.position.y / 1000f);
                 else
-                    newPosition = new Vector2(transform.position.x + 1, transform.position.y);
+                    newPosition = new Vector3(transform.position.x + 1, transform.position.y, transform.position.y / 1000f);
 
                 if (newPosition.x > mapManager.GetComponent<MapManager>().LimitD)
                     newPosition.x = mapManager.GetComponent<MapManager>().LimitD;
@@ -116,10 +116,10 @@ public class Deplacements : MonoBehaviour
                 else
                     celerityRuneBonus = 1;
 
-                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
+                transform.position = Vector3.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
 
                 timer += Time.deltaTime;
-                if (timer > animTime)
+                if (timer >= animTime)
                 {
                     if (isAttacking == true)
                         AttackAnimation();
@@ -163,11 +163,11 @@ public class Deplacements : MonoBehaviour
                     gm.GetComponent<GameManager>().englishLanguage == false) ||
                     (Input.GetKey(KeyCode.W) &&
                     gm.GetComponent<GameManager>().englishLanguage == true))
-                    newPosition = new Vector2(transform.position.x - 1, transform.position.y + 1);
+                    newPosition = new Vector3(transform.position.x - 1, transform.position.y + 1, transform.position.y / 1000f);
                 else if (Input.GetKey(KeyCode.S))
-                    newPosition = new Vector2(transform.position.x - 1, transform.position.y - 1);
+                    newPosition = new Vector3(transform.position.x - 1, transform.position.y - 1, transform.position.y / 1000f);
                 else
-                    newPosition = new Vector2(transform.position.x - 1, transform.position.y);
+                    newPosition = new Vector3(transform.position.x - 1, transform.position.y, transform.position.y / 1000f);
 
                 if (newPosition.x < mapManager.GetComponent<MapManager>().LimitG)
                     newPosition.x = mapManager.GetComponent<MapManager>().LimitG;
@@ -183,10 +183,10 @@ public class Deplacements : MonoBehaviour
                 else
                     celerityRuneBonus = 1;
 
-                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
+                transform.position = Vector3.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
 
                 timer += Time.deltaTime;
-                if (timer > animTime)
+                if (timer >= animTime)
                 {
                     if (isAttacking == true)
                         AttackAnimation();
@@ -227,7 +227,7 @@ public class Deplacements : MonoBehaviour
                     gm.GetComponent<GameManager>().englishLanguage == true)) &&
                     isMovingHorizontally == false)
             {
-                newPosition = new Vector2(transform.position.x, transform.position.y + 1);
+                newPosition = new Vector3(transform.position.x, transform.position.y + 1, transform.position.y / 1000f);
 
                 if (newPosition.y > mapManager.GetComponent<MapManager>().LimitH)
                     newPosition.y = mapManager.GetComponent<MapManager>().LimitH;
@@ -237,10 +237,10 @@ public class Deplacements : MonoBehaviour
                 else
                     celerityRuneBonus = 1;
 
-                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
+                transform.position = Vector3.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
 
                 timer += Time.deltaTime;
-                if (timer > animTime)
+                if (timer >= animTime)
                 {
                     if (isAttacking == true)
                         AttackAnimation();
@@ -276,7 +276,7 @@ public class Deplacements : MonoBehaviour
             else if (Input.GetKey(KeyCode.S) &&
                     isMovingHorizontally == false)
             {
-                newPosition = new Vector2(transform.position.x, transform.position.y - 1);
+                newPosition = new Vector3(transform.position.x, transform.position.y - 1, transform.position.y / 1000f);
 
                 if (newPosition.y < mapManager.GetComponent<MapManager>().LimitB)
                     newPosition.y = mapManager.GetComponent<MapManager>().LimitB;
@@ -286,10 +286,10 @@ public class Deplacements : MonoBehaviour
                 else
                     celerityRuneBonus = 1;
 
-                transform.position = Vector2.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
+                transform.position = Vector3.MoveTowards(transform.position, newPosition, Time.deltaTime * speed * celerityRuneBonus * movementBonus);
 
                 timer += Time.deltaTime;
-                if (timer > animTime)
+                if (timer >= animTime)
                 {
                     if (isAttacking == true)
                         AttackAnimation();
@@ -326,7 +326,7 @@ public class Deplacements : MonoBehaviour
             (isMovingHorizontally == false))
             {
                 timer += Time.deltaTime;
-                if (timer > animTime)
+                if (timer >= animTime)
                 {
                     AttackAnimation();
                     timer = 0f;
@@ -336,7 +336,7 @@ public class Deplacements : MonoBehaviour
                 (isMovingHorizontally == false))
             {
                 timer += Time.deltaTime;
-                if (timer > animTime)
+                if (timer >= animTime)
                 {
                     if (movementDirection == Shoots.Direction.BOTTOM)
                         GetComponent<SpriteRenderer>().sprite = botIdle;

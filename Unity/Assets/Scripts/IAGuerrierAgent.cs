@@ -10,25 +10,26 @@ public class IAGuerrierAgent : MonoBehaviour
         Rogue,
         Knight
     };
-    public  int         SheetID;
-    public  string      SheetName;
-    public  AgentClass  SheetClass;
-    public  int         SheetPrestige;
-    public  int         SheetFee;
+    public  int        SheetID;
+    public  string     SheetName;
+    public  AgentClass SheetClass;
+    public  int        SheetPrestige;
+    public  int        SheetFee;
 
-    public GameObject   hitSprite;
+    public  GameObject   hitSprite;
+    public  GameObject   bloodSprite;
 
-    public Sprite       rightIdle;
-    public Sprite[]     rightSprites;
-    public Sprite[]     rightDeathSprites;
-    public Sprite[]     rightAttackSprites;
-    public float        animMoveCD;
-    public float        animAttackCD;
-    public float        animDeathCD;
+    public  Sprite       rightIdle;
+    public  Sprite[]     rightSprites;
+    public  Sprite[]     rightDeathSprites;
+    public  Sprite[]     rightAttackSprites;
+    public  float        animMoveCD;
+    public  float        animAttackCD;
+    public  float        animDeathCD;
 
-    public GameObject   potionHealthSFX;
-    public GameObject   healthBarGreen;
-    public Slider       healthBarGreenHUD;
+    public  GameObject   potionHealthSFX;
+    public  GameObject   healthBarGreen;
+    public  Slider       healthBarGreenHUD;
     private Slider      xpBarHUD;
     private GameObject  potion1;
     private GameObject  potion2;
@@ -331,7 +332,7 @@ public class IAGuerrierAgent : MonoBehaviour
                         canAttack == false)
                     {
                         attackTimer += Time.deltaTime;
-                        if (attackTimer > attackCooldown)
+                        if (attackTimer >= attackCooldown)
                         {
                             attackTimer = 0f;
                             canAttack = true;
@@ -373,10 +374,10 @@ public class IAGuerrierAgent : MonoBehaviour
                         else
                             rightSide = false;
 
-                        Vector3 destPos = new Vector3(newPos.x, newPos.y, 0f);
+                        Vector3 destPos = new Vector3(newPos.x, newPos.y, transform.position.y / 1000f);
                         transform.position = Vector3.MoveTowards(transform.position, destPos, Time.deltaTime * (speed - slow));
 
-                        if (timer > animMoveCD &&
+                        if (timer >= animMoveCD &&
                         (transform.position.y != newPos.y ||
                         transform.position.x != newPos.x))
                         {
@@ -568,8 +569,10 @@ public class IAGuerrierAgent : MonoBehaviour
                     if (targetAttacking != null &&
                         isDead == false)
                     {
-                        GameObject obj = (GameObject)Instantiate(hitSprite, targetAttacking.transform.position, transform.rotation);
-                        obj.transform.SetParent(targetAttacking.transform);
+                        if (gm.GetComponent<GameManager>().bloodless == true || targetAttacking.tag == "Capture")
+                            Instantiate(hitSprite, targetAttacking.transform.position, transform.rotation);
+                        else
+                            Instantiate(bloodSprite, targetAttacking.transform.position, transform.rotation);
 
                         if (targetAttacking != null &&
                         (targetAttacking.tag == "EnemyGuerrier" || targetAttacking.tag == "BossGuerrier"))
@@ -718,6 +721,11 @@ public class IAGuerrierAgent : MonoBehaviour
         {
             TakeDamage(other.GetComponent<ProjectileEnemy>().damage, other.transform.position);
             other.GetComponent<ProjectileEnemy>().ExplosionChar();
+        }
+        else if (other.tag == "EnemyArrow")
+        {
+            TakeDamage(other.GetComponent<ArrowEnemy>().damage, other.transform.position);
+            other.GetComponent<ArrowEnemy>().ExplosionChar(false);
         }
     }
 }

@@ -6,20 +6,20 @@ public class SpriteOnStart : MonoBehaviour
     public Sprite[] spriteTab;
     public float timeAnim;
     private int iTab = 0;
+    private float timer = 0f;
 
-    void Start()
+    void Update()
     {
-        StartCoroutine(StartAnimation());
-    }
+        timer += Time.deltaTime;
 
-    IEnumerator StartAnimation()
-    {
-        GetComponent<SpriteRenderer>().sprite = spriteTab[iTab++];
-        yield return new WaitForSeconds(timeAnim);
+        if (timer >= timeAnim)
+        {
+            timer = 0f;
 
-        if (iTab < spriteTab.Length)
-            StartCoroutine(StartAnimation());
-        else
-            Destroy(this.gameObject);
+            if (iTab < spriteTab.Length)
+                GetComponent<SpriteRenderer>().sprite = spriteTab[iTab++];
+            else
+                Destroy(this.gameObject);
+        }
     }
 }

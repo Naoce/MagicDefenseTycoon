@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\AStar.cs" />
     <Compile Include="Assets\Scripts\Agent.cs" />
     <Compile Include="Assets\Scripts\AnimOnStart.cs" />
+    <Compile Include="Assets\Scripts\ArrowEnemy.cs" />
     <Compile Include="Assets\Scripts\BulleInfo.cs" />
     <Compile Include="Assets\Scripts\Buttons.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Assets\Scripts\IAMeleeBasic.cs" />
     <Compile Include="Assets\Scripts\IARange.cs" />
     <Compile Include="Assets\Scripts\IceShard.cs" />
+    <Compile Include="Assets\Scripts\MageElemental.cs" />
     <Compile Include="Assets\Scripts\MapManager.cs" />
     <Compile Include="Assets\Scripts\MissionSheet.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />

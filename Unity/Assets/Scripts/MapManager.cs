@@ -182,7 +182,7 @@ public class MapManager : MonoBehaviour
                 UpdateMap3();
             else if (mapID == 4)
                 UpdateMap4();
-            else if (mapID == 5)
+            else if (mapID == 5 || mapID == 6 || mapID == 7)
                 UpdateMap5();
         }
     }
@@ -195,8 +195,6 @@ public class MapManager : MonoBehaviour
             if (timerSpawn > timerMax)
             {
                 timerSpawn = 0f;
-            //    InstantiateGuerrierNormal(posLeft, new Vector2(posLeft.x, posLeft.y - 0.5f));
-             //   InstantiateGuerrierPlayer(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
             }
         }
         if (idGen == maxIdGen && canSpawn == true)
@@ -218,7 +216,6 @@ public class MapManager : MonoBehaviour
                 gm.GetComponent<GameManager>().gamePaused == false)
         {
             player.GetComponent<Deplacements>().isDead = true;
-            gm.GetComponent<GameManager>().StartVictory();
         }
         if (enemiesList.Count > 0 || canSpawn == true)
         {
@@ -244,8 +241,6 @@ public class MapManager : MonoBehaviour
             if (timerSpawn > timerMax)
             {
                 timerSpawn = 0f;
-             //   InstantiateGuerrierNormal(posLeft, new Vector2(posLeft.x, posLeft.y - 0.5f));
-             //   InstantiateGuerrierPlayer(posRight, new Vector2(posRight.x, posRight.y - 0.5f));
             }
         }
         if (canSpawn == true)
@@ -272,8 +267,6 @@ public class MapManager : MonoBehaviour
             if (timerSpawn > timerMax)
             {
                 timerSpawn = 0f;
-           //     InstantiateGuerrierNormal(posLeft, new Vector2(posLeft.x, posLeft.y + 0.5f));
-           //     InstantiateGuerrierPlayer(posRight, new Vector2(posRight.x, posRight.y + 0.5f));
             }
         }
         else if (canSpawn == false &&
@@ -281,7 +274,6 @@ public class MapManager : MonoBehaviour
                 gm.GetComponent<GameManager>().gamePaused == false)
         {
             player.GetComponent<Deplacements>().isDead = true;
-            gm.GetComponent<GameManager>().StartVictory();
         }
         if (enemiesList.Count > 0 || canSpawn == true)
         {
@@ -343,7 +335,7 @@ public class MapManager : MonoBehaviour
                 gm.GetComponent<GameManager>().gamePaused == false)
         {
             player.GetComponent<Deplacements>().isDead = true;
-            gm.GetComponent<GameManager>().StartVictory();
+            WinGame();
         }
 
         if (enemiesList.Count > 0 || canSpawn == true)
@@ -393,7 +385,6 @@ public class MapManager : MonoBehaviour
                 gm.GetComponent<GameManager>().gamePaused == false)
         {
             player.GetComponent<Deplacements>().isDead = true;
-            gm.GetComponent<GameManager>().StartVictory();
         }
         if (enemiesList.Count > 0 || canSpawn == true)
         {
@@ -1410,7 +1401,9 @@ public class MapManager : MonoBehaviour
 
         if (mapID == 3 ||
             mapID == 4 ||
-            mapID == 5)
+            mapID == 5 ||
+            mapID == 6 ||
+            mapID == 7)
         {
             tabNodes = new GameObject[21][];
             tabNodes[0] = new GameObject[22];

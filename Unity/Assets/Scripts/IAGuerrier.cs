@@ -8,28 +8,33 @@ public class IAGuerrier : MonoBehaviour
         Normal,
         Player,
         Objectif,
-        Magician
+        Range
+    };
+
+    public enum EnemyClass
+    {
+        Warrior,
+        Archer,
+        Thief,
+        Dragon
     };
 
     public  GameObject  hitSprite;
+    public  GameObject  bloodSprite;
 
     public  Sprite[]    rightSprites;
     public  Sprite      rightIdle;
     public  Sprite[]    rightDeathSprites;
     public  Sprite[]    rightAttackSprites;
 
-    public  Sprite      topIdle;
-    public  Sprite[]    topAttackSprites;
-
-    public  Sprite      botIdle;
-    public  Sprite[]    botAttackSprites;
-
     public  GameObject  healthBarGreen;
     public  EnemyType   type;
+    public  EnemyClass  sheetClass;
+    public  int         classID;
 
     public 	GameObject	player;
-    private GameObject  gm;
-    private GameObject  gameManager;
+    public  GameObject  gm;
+    public  GameObject  gameManager;
     public  Vector2     newPos;
     public  GameObject  projectile;
     public  GameObject  projectileCheck;
@@ -53,7 +58,7 @@ public class IAGuerrier : MonoBehaviour
     public  bool        changedTarget;
     public  GameObject  targetAttacking;
 
-    private int         difficulty;
+    public  int         difficulty;
     private int         currHP;
     public  int[]       maxHP;
     public  int[]       damage;
@@ -76,7 +81,7 @@ public class IAGuerrier : MonoBehaviour
     public  bool        isBoss;
     public  bool        hasLaunched;
     public  bool        canShootProjectile;
-    private Shoots.Direction directionAttack;
+    public  Shoots.Direction directionAttack;
 
 	void Start () 
 	{
@@ -253,180 +258,6 @@ public class IAGuerrier : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public IEnumerator AttackAnimation(Vector2 directionPos)
-    {
-        bool animRight;
-        if (transform.position.x > directionPos.x)
-        {
-            rightSide = false;
-            animRight = false;
-        }
-        else
-        {
-            rightSide = true;
-            animRight = true;
-        }
-
-        float timerEffect = 0f;
-        bool attackLanded = false;
-        int animAttack = 0;
-        while (animAttack < rightAttackSprites.Length)
-        {
-            if (GetComponent<Enemy>().isDead == true)
-                yield break;
-            else
-            {
-                if (animRight == true)
-                {
-                    GetComponent<SpriteRenderer>().flipX = false;
-                    GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
-                }
-                else
-                {
-                    GetComponent<SpriteRenderer>().flipX = true;
-                    GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
-                }
-
-                timerEffect += animAttackCD;
-                if (timerEffect >= attackEffectCD &&
-                    attackLanded == false)
-                {
-                    attackLanded = true;
-                    if (targetAttacking != null)
-                    {
-                        GameObject obj = (GameObject)Instantiate(hitSprite, targetAttacking.transform.position, transform.rotation);
-                        obj.transform.SetParent(targetAttacking.transform);
-
-                        if (targetAttacking.tag == "Player")
-                            player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position, gameObject);
-                        else if (targetAttacking.tag == "AgentGuerrier")
-                            targetAttacking.GetComponent<IAGuerrierAgent>().TakeDamage(damage[difficulty], transform.position);
-                        else if (targetAttacking.tag == "Defense")
-                            targetAttacking.GetComponent<Defense>().TakeDamage(damage[difficulty]);
-                    }
-                }
-
-                yield return new WaitForSeconds(animAttackCD);
-                animAttack++;
-            }
-        }
-
-        if (timerEffect >= attackEffectCD &&
-            attackLanded == false &&
-            GetComponent<Enemy>().isDead == false)
-        {
-            attackLanded = true;
-            if (target != null)
-            {
-                GameObject obj = (GameObject)Instantiate(hitSprite, target.transform.position, transform.rotation);
-                obj.transform.SetParent(target.transform);
-                if (targetAttacking == target)
-                {
-                    if (target.tag == "Player")
-                        player.GetComponent<StatsPlayer>().TakeDamage(damage[difficulty], transform.position, gameObject);
-                    else if (target.tag == "AgentGuerrier")
-                        target.GetComponent<IAGuerrierAgent>().TakeDamage(damage[difficulty], transform.position);
-                    else if (target.tag == "Defense")
-                        target.GetComponent<Defense>().TakeDamage(damage[difficulty]);
-                }
-            }
-        }
-
-        if (GetComponent<Enemy>().isDead == false)
-        {
-            isAttacking = false;
-            canAttack = false;
-            attackTimer = animAttackCD * rightAttackSprites.Length;
-
-            if (rightSide == true)
-            {
-                GetComponent<SpriteRenderer>().flipX = false;
-                GetComponent<SpriteRenderer>().sprite = rightIdle;
-            }
-            else
-            {
-                GetComponent<SpriteRenderer>().flipX = true;
-                GetComponent<SpriteRenderer>().sprite = rightIdle;
-            }
-        }
-    }
-
-    public IEnumerator AttackDistanceAnimation(Vector2 targetPos)
-    {
-        FindShootDirection(targetPos);
-
-        int animAttack = 0;
-        while (animAttack < rightAttackSprites.Length &&
-                GetComponent<Enemy>().isDead == false)
-        {
-            if (directionAttack == Shoots.Direction.RIGHT ||
-                directionAttack == Shoots.Direction.TOPRIGHT ||
-                directionAttack == Shoots.Direction.BOTTOMRIGHT)
-            {
-                GetComponent<SpriteRenderer>().flipX = false;
-                GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
-            }
-            else if (directionAttack == Shoots.Direction.LEFT ||
-                directionAttack == Shoots.Direction.TOPLEFT ||
-                directionAttack == Shoots.Direction.BOTTOMLEFT)
-            {
-                GetComponent<SpriteRenderer>().flipX = true;
-                GetComponent<SpriteRenderer>().sprite = rightAttackSprites[animAttack];
-            }
-            else if (directionAttack == Shoots.Direction.BOTTOM)
-            {
-                GetComponent<SpriteRenderer>().flipX = false;
-                GetComponent<SpriteRenderer>().sprite = botAttackSprites[animAttack];
-            }
-            else if (directionAttack == Shoots.Direction.TOP)
-            {
-                GetComponent<SpriteRenderer>().flipX = false;
-                GetComponent<SpriteRenderer>().sprite = topAttackSprites[animAttack];
-            }
-
-            yield return new WaitForSeconds(attackCooldown);
-            animAttack++;
-        }
-
-        GameObject obj = null;
-
-        newPos.x = transform.position.x;
-        newPos.y = transform.position.y;
-        if (directionAttack == Shoots.Direction.RIGHT ||
-            directionAttack == Shoots.Direction.TOPRIGHT ||
-            directionAttack == Shoots.Direction.BOTTOMRIGHT)
-            newPos.x = transform.position.x + 0.1f;
-        else if (directionAttack == Shoots.Direction.LEFT ||
-            directionAttack == Shoots.Direction.TOPLEFT ||
-            directionAttack == Shoots.Direction.BOTTOMLEFT)
-            newPos.x = transform.position.x - 0.1f;
-        else if (directionAttack == Shoots.Direction.BOTTOM)
-            newPos.y = transform.position.y - 0.1f;
-        else if (directionAttack == Shoots.Direction.TOP)
-            newPos.y = transform.position.y + 0.1f;
-
-        if (GetComponent<Enemy>().isDead == false)
-        {
-            obj = (GameObject)Instantiate(projectile, newPos, transform.rotation);
-            obj.GetComponent<ProjectileEnemy>().GetPos(targetPos, damage[difficulty], directionAttack, gameObject);
-        }
-
-        isAttacking = false;
-        canAttack = false;
-        attackTimer = animAttackCD * rightAttackSprites.Length;
-
-        if (rightSide == true)
-        {
-            GetComponent<SpriteRenderer>().flipX = false;
-            GetComponent<SpriteRenderer>().sprite = rightIdle;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().flipX = true;
-            GetComponent<SpriteRenderer>().sprite = rightIdle;
-        }
-    }
-
     public void FindShootDirection(Vector2 targetPos)
     {
         Vector2 newPosTop = new Vector2(transform.position.x, transform.position.y + 1);
@@ -520,13 +351,13 @@ public class IAGuerrier : MonoBehaviour
         float distanceNew;
         bool first = true;
 
-        if (type == EnemyType.Normal ||
-            type == EnemyType.Magician)
+        if (GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Normal ||
+            GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Range)
         {
             foreach (GameObject go in gm.GetComponent<MapManager>().alliesList)
             {
                 if (go.name == "Defense" ||
-                    go.gameObject == player.gameObject ||
+                    go.gameObject == GetComponent<IAGuerrier>().player.gameObject ||
                     go.GetComponent<IAGuerrierAgent>().isDead == false)
                 {
                     distanceNew = Vector2.Distance(transform.position, go.transform.position);
@@ -547,9 +378,9 @@ public class IAGuerrier : MonoBehaviour
                 }
             }
         }
-        else if (type == EnemyType.Player)
-            return (player);
-        else if (type == EnemyType.Objectif)
+        else if (GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Player)
+            return (GetComponent<IAGuerrier>().player);
+        else if (GetComponent<IAGuerrier>().type == IAGuerrier.EnemyType.Objectif)
             return (gm.GetComponent<MapManager>().defense);
 
         return (obj);

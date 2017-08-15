@@ -7,55 +7,52 @@ public class SpriteAnimTimer : MonoBehaviour
     public  float       timeAnim;
     private int         iTab = 0;
     private float       timer = 0f;
+    private float       timerTotal = 0f;
     public  float       timerMax;
     public  bool        loop;
     public  bool        doNotDestroy;
     public  bool        onStart;
     public  bool        isPlaying;
 
-    private void Start()
-    {
-        if (onStart == true)
-            StartCoroutine(StartAnimation());
-    }
-
     private void Update()
     {
         timer += Time.deltaTime;
-        if (timer > timerMax &&
-            doNotDestroy == false)
-            Destroy(gameObject);
-        else if (timer > timerMax &&
-            doNotDestroy == true &&
-            loop == false)
-            isPlaying = false;
-    }
+        timerTotal += Time.deltaTime;
 
-    IEnumerator StartAnimation()
-    {
-        GetComponent<SpriteRenderer>().sprite = spriteTab[iTab++];
-        yield return new WaitForSeconds(timeAnim);
-
-        if (iTab < spriteTab.Length &&
-                isPlaying == true)
-            StartCoroutine(StartAnimation());
-        else if (iTab >= spriteTab.Length &&
-                loop == true &&
-                isPlaying == true)
+        if (timer > timeAnim)
         {
-            iTab = 0;
-            StartCoroutine(StartAnimation());
+            timer = 0f;
+            if (timerTotal >= timerMax && doNotDestroy == false)
+            {
+                if (doNotDestroy == false)
+                    Destroy(gameObject);
+                else
+                    isPlaying = false;
+            }
+            else
+            {
+                if (iTab < spriteTab.Length)
+                    GetComponent<SpriteRenderer>().sprite = spriteTab[iTab++];
+                else
+                {
+                    if (loop == true)
+                    {
+                        iTab = 0;
+                        GetComponent<SpriteRenderer>().sprite = spriteTab[iTab++];
+                    }
+                }
+            }
         }
     }
-
 
     public void StartAnim(float duration)
     {
         if (isPlaying == false)
         {
             isPlaying = true;
+            timerTotal = 0f;
+            timer = 0f;
             timerMax = duration;
-            StartCoroutine(StartAnimation());
         }
     }
 }

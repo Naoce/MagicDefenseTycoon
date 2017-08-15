@@ -248,7 +248,7 @@ public class TradManager : MonoBehaviour
     public string GetTextElemental()
     {
         if (isInEnglish)
-            return ("The elemental mage makes use of elements as fire, electricity, ice and wind to fight his enemies.");
+            return ("The elemental mage makes use of elements such as fire, electricity, ice and wind to fight his enemies.");
         else
             return ("Le mage élémentaire utilise le feu, la foudre, la glace et le vent pour combattre ses ennemis.");
     }
@@ -1408,7 +1408,7 @@ public class TradManager : MonoBehaviour
             else if (className == "Knight")
                 return ("Chevalier");
             else
-                return ("Voleur");
+                return ("Assassin");
         }
     }
 }

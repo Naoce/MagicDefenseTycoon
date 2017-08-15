@@ -54,4 +54,18 @@ public class Defense : MonoBehaviour
         yield return (0f);
         mapManager.GetComponent<MapManager>().LoseGame();
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "ProjectileEnemy")
+        {
+            TakeDamage(other.GetComponent<ProjectileEnemy>().damage);
+            other.GetComponent<ProjectileEnemy>().ExplosionChar();
+        }
+        else if (other.tag == "EnemyArrow")
+        {
+            TakeDamage(other.GetComponent<ArrowEnemy>().damage);
+            other.GetComponent<ArrowEnemy>().ExplosionChar(true);
+        }
+    }
 }
