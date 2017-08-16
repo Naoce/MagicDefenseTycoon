@@ -365,7 +365,6 @@ public class MageElemental : MonoBehaviour
             if (PlayerPrefs.GetInt("Load1DecorationBanner") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
 
-
             int equipment = PlayerPrefs.GetInt("Load1DecorationWeapons");
 
             if (equipment == 1)
@@ -1202,9 +1201,9 @@ public class MageElemental : MonoBehaviour
                 SelectSpell8(false);
             }
             else if ((Input.GetKeyDown(KeyCode.A) &&
-                    gm.GetComponent<GameManager>().englishLanguage == false) ||
+                    gm.GetComponent<GameManager>().zqsdMode == true) ||
                     (Input.GetKeyDown(KeyCode.Q) &&
-                    gm.GetComponent<GameManager>().englishLanguage == true))
+                    gm.GetComponent<GameManager>().zqsdMode == false))
             {
                 UseObject1();
             }

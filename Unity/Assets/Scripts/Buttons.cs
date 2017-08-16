@@ -18,25 +18,46 @@ public class Buttons : MonoBehaviour
 
     void Start()
     {
-        if (PlayerPrefs.GetInt("WASDModeSet") == 0)
+        if (PlayerPrefs.GetInt("ZQSDModeSet") == 0)
         {
-            PlayerPrefs.SetInt("WASDMode", 1);
-            GetComponent<GameManager>().englishLanguage = true;
-            GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxChecked;
+            PlayerPrefs.SetInt("ZQSDMode", 0);
+            GetComponent<GameManager>().zqsdMode = false;
+            GetComponent<GameManager>().zqsdModeButton.GetComponent<Image>().sprite = boxNotChecked;
+            GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "Q";
         }
         else
         {
-            if (PlayerPrefs.GetInt("WASDMode") == 1)
+            if (PlayerPrefs.GetInt("ZQSDMode") == 1)
+            {
+                GetComponent<GameManager>().zqsdMode = true;
+                GetComponent<GameManager>().zqsdModeButton.GetComponent<Image>().sprite = boxChecked;
+                GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "A";
+            }
+            else
+            {
+                GetComponent<GameManager>().zqsdMode = false;
+                GetComponent<GameManager>().zqsdModeButton.GetComponent<Image>().sprite = boxNotChecked;
+                GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "Q";
+            }
+        }
+
+        if (PlayerPrefs.GetInt("LanguageModeSet") == 0)
+        {
+            PlayerPrefs.SetInt("LanguageMode", 1);
+            GetComponent<GameManager>().englishLanguage = true;
+            GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = boxChecked;
+        }
+        else
+        {
+            if (PlayerPrefs.GetInt("LanguageMode") == 1)
             {
                 GetComponent<GameManager>().englishLanguage = true;
-                GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxChecked;
-                GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "Q";
+                GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = boxChecked;
             }
             else
             {
                 GetComponent<GameManager>().englishLanguage = false;
-                GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxNotChecked;
-                GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "A";
+                GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = boxNotChecked;
             }
         }
 
@@ -360,14 +381,14 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("Windowed", 0);
             GetComponent<GameManager>().windowed = false;
             obj.GetComponent<Image>().sprite = boxNotChecked;
-            Screen.fullScreen = true;
+            Screen.SetResolution(1920, 1080, true);
         }
         else
         {
             PlayerPrefs.SetInt("Windowed", 1);
             GetComponent<GameManager>().windowed = true;
             obj.GetComponent<Image>().sprite = boxChecked;
-            Screen.fullScreen = false;
+            Screen.SetResolution(1280, 720, false);
         }
     }
 
@@ -4029,21 +4050,21 @@ public class Buttons : MonoBehaviour
                     if (isInDecorationPanel == true)
                     {
                         if (GetComponent<GameManager>().DecorationCurrentBannerSelected == 0)
-                            GetComponent<GameManager>().DecorationRedBannerCrowns.SetActive(true);
-                        else
                             GetComponent<GameManager>().DecorationRedBannerWeapons.SetActive(true);
+                        else
+                            GetComponent<GameManager>().DecorationRedBannerCrowns.SetActive(true);
                     }
 
                     break;
 
                 case 1:
-                    GetComponent<GameManager>().DecorationRedBannerCrowns.SetActive(true);
-                    GetComponent<GameManager>().DecorationRedBannerWeapons.SetActive(false);
+                    GetComponent<GameManager>().DecorationRedBannerCrowns.SetActive(false);
+                    GetComponent<GameManager>().DecorationRedBannerWeapons.SetActive(true);
                     break;
 
                 case 2:
-                    GetComponent<GameManager>().DecorationRedBannerCrowns.SetActive(false);
-                    GetComponent<GameManager>().DecorationRedBannerWeapons.SetActive(true);
+                    GetComponent<GameManager>().DecorationRedBannerCrowns.SetActive(true);
+                    GetComponent<GameManager>().DecorationRedBannerWeapons.SetActive(false);
                     break;
             }
 
@@ -4160,21 +4181,21 @@ public class Buttons : MonoBehaviour
                     if (isInDecorationPanel == true)
                     {
                         if (GetComponent<GameManager>().DecorationCurrentBannerSelected == 0)
-                            GetComponent<GameManager>().DecorationBlueBannerCrowns.SetActive(true);
-                        else
                             GetComponent<GameManager>().DecorationBlueBannerWeapons.SetActive(true);
+                        else
+                            GetComponent<GameManager>().DecorationBlueBannerCrowns.SetActive(true);
                     }
 
                     break;
 
                 case 1:
-                    GetComponent<GameManager>().DecorationBlueBannerCrowns.SetActive(true);
-                    GetComponent<GameManager>().DecorationBlueBannerWeapons.SetActive(false);
+                    GetComponent<GameManager>().DecorationBlueBannerCrowns.SetActive(false);
+                    GetComponent<GameManager>().DecorationBlueBannerWeapons.SetActive(true);
                     break;
 
                 case 2:
-                    GetComponent<GameManager>().DecorationBlueBannerCrowns.SetActive(false);
-                    GetComponent<GameManager>().DecorationBlueBannerWeapons.SetActive(true);
+                    GetComponent<GameManager>().DecorationBlueBannerCrowns.SetActive(true);
+                    GetComponent<GameManager>().DecorationBlueBannerWeapons.SetActive(false);
                     break;
             }
 
@@ -4291,21 +4312,21 @@ public class Buttons : MonoBehaviour
                     if (isInDecorationPanel == true)
                     {
                         if (GetComponent<GameManager>().DecorationCurrentBannerSelected == 0)
-                            GetComponent<GameManager>().DecorationYellowBannerCrowns.SetActive(true);
-                        else
                             GetComponent<GameManager>().DecorationYellowBannerWeapons.SetActive(true);
+                        else
+                            GetComponent<GameManager>().DecorationYellowBannerCrowns.SetActive(true);
                     }
 
                     break;
 
                 case 1:
-                    GetComponent<GameManager>().DecorationYellowBannerCrowns.SetActive(true);
-                    GetComponent<GameManager>().DecorationYellowBannerWeapons.SetActive(false);
+                    GetComponent<GameManager>().DecorationYellowBannerCrowns.SetActive(false);
+                    GetComponent<GameManager>().DecorationYellowBannerWeapons.SetActive(true);
                     break;
 
                 case 2:
-                    GetComponent<GameManager>().DecorationYellowBannerCrowns.SetActive(false);
-                    GetComponent<GameManager>().DecorationYellowBannerWeapons.SetActive(true);
+                    GetComponent<GameManager>().DecorationYellowBannerCrowns.SetActive(true);
+                    GetComponent<GameManager>().DecorationYellowBannerWeapons.SetActive(false);
                     break;
             }
 
@@ -4592,22 +4613,40 @@ public class Buttons : MonoBehaviour
 
     public void SwitchWASD()
     {
+        if (GetComponent<GameManager>().zqsdMode == false)
+        {
+            PlayerPrefs.SetInt("ZQSDMode", 1);
+            PlayerPrefs.SetInt("ZQSDModeSet", 1);
+            GetComponent<GameManager>().zqsdMode = true;
+            GetComponent<GameManager>().zqsdModeButton.GetComponent<Image>().sprite = boxChecked;
+            GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "A";
+        }
+        else
+        {
+            PlayerPrefs.SetInt("ZQSDMode", 0);
+            PlayerPrefs.SetInt("ZQSDModeSet", 1);
+            GetComponent<GameManager>().zqsdMode = false;
+            GetComponent<GameManager>().zqsdModeButton.GetComponent<Image>().sprite = boxNotChecked;
+            GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "Q";
+        }
+    }
+
+    public void SwitchLanguage()
+    {
         if (GetComponent<GameManager>().englishLanguage == false)
         {
-            PlayerPrefs.SetInt("WASDMode", 1);
-            PlayerPrefs.SetInt("WASDModeSet", 1);
+            PlayerPrefs.SetInt("LanguageMode", 1);
+            PlayerPrefs.SetInt("LanguageModeSet", 1);
             GetComponent<GameManager>().englishLanguage = true;
-            GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxChecked;
-            GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "Q";
+            GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = boxChecked;
             GetComponent<TradManager>().ResetTexts();
         }
         else
         {
-            PlayerPrefs.SetInt("WASDMode", 0);
-            PlayerPrefs.SetInt("WASDModeSet", 1);
+            PlayerPrefs.SetInt("LanguageMode", 0);
+            PlayerPrefs.SetInt("LanguageModeSet", 1);
             GetComponent<GameManager>().englishLanguage = false;
-            GetComponent<GameManager>().wasdModeButton.GetComponent<Image>().sprite = boxNotChecked;
-            GetComponent<GameManager>().healthPotionHotkeyText.GetComponent<Text>().text = "A";
+            GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = boxNotChecked;
             GetComponent<TradManager>().ResetTexts();
         }
     }
@@ -4809,13 +4848,14 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().volumeSFXMinus.SetActive(false);
         GetComponent<GameManager>().volumeSFXText.SetActive(false);
         GetComponent<GameManager>().scrollOptions6.GetComponent<Animator>().SetBool("StartAnim", true);
-        GetComponent<GameManager>().wasdModeButton.SetActive(false);
-        GetComponent<GameManager>().wasdModeText.SetActive(false);
+        GetComponent<GameManager>().zqsdModeButton.SetActive(false);
+        GetComponent<GameManager>().zqsdModeText.SetActive(false);
         GetComponent<GameManager>().scrollOptions7.GetComponent<Animator>().SetBool("StartAnim", true);
         GetComponent<GameManager>().windowedButton.SetActive(false);
         GetComponent<GameManager>().windowedText.SetActive(false);
         GetComponent<GameManager>().scrollOptions8.GetComponent<Animator>().SetBool("StartAnim", true);
-        GetComponent<GameManager>().returnText.SetActive(false);
+        GetComponent<GameManager>().LanguageButton.SetActive(false);
+        GetComponent<GameManager>().LanguageText.SetActive(false);
     }
 
     public void EndAnimationPanelOptions()
@@ -4832,11 +4872,12 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().volumeSFXPlus.SetActive(true);
         GetComponent<GameManager>().volumeSFXMinus.SetActive(true);
         GetComponent<GameManager>().volumeSFXText.SetActive(true);
-        GetComponent<GameManager>().wasdModeButton.SetActive(true);
-        GetComponent<GameManager>().wasdModeText.SetActive(true);
+        GetComponent<GameManager>().zqsdModeButton.SetActive(true);
+        GetComponent<GameManager>().zqsdModeText.SetActive(true);
         GetComponent<GameManager>().windowedButton.SetActive(true);
         GetComponent<GameManager>().windowedText.SetActive(true);
-        GetComponent<GameManager>().returnText.SetActive(true);
+        GetComponent<GameManager>().LanguageButton.SetActive(true);
+        GetComponent<GameManager>().LanguageText.SetActive(true);
     }
 
     public void LoadAgentsInRoster()

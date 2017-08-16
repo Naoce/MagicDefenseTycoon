@@ -270,26 +270,38 @@ public class IAMeleeBasic : MonoBehaviour
         else if (GetComponent<IAGuerrier>().sheetClass == IAGuerrier.EnemyClass.Warrior &&
                  GetComponent<IAGuerrier>().classID == 1)
         {
+            bool rightAttack;
+            if (transform.position.x < GetComponent<IAGuerrier>().targetAttacking.transform.position.x)
+                rightAttack = true;
+            else
+                rightAttack = false;
             float distanceAlly = 0f;
+
             foreach(GameObject ally in GetComponent<IAGuerrier>().gm.GetComponent<MapManager>().alliesList)
             {
                 distanceAlly = Vector2.Distance(transform.position, ally.transform.position);
                 if ((distanceAlly <= 0.55f && ally.tag == "Defense") ||
-                    (distanceAlly <= 0.75f && GetComponent<IAGuerrier>().rightSide == true && transform.position.x < ally.transform.position.x) ||
-                    (distanceAlly <= 0.75f && GetComponent<IAGuerrier>().rightSide == false && transform.position.x > ally.transform.position.x))
+                    (distanceAlly <= 0.75f && rightAttack == true && transform.position.x < ally.transform.position.x) ||
+                    (distanceAlly <= 0.75f && rightAttack == false && transform.position.x > ally.transform.position.x))
                     InflictDamage(ally);
             }
         }
         else if (GetComponent<IAGuerrier>().sheetClass == IAGuerrier.EnemyClass.Warrior &&
                  GetComponent<IAGuerrier>().classID == 2)
         {
+            bool rightAttack;
+            if (transform.position.x < GetComponent<IAGuerrier>().targetAttacking.transform.position.x)
+                rightAttack = true;
+            else
+                rightAttack = false;
             float distanceAlly = 0f;
+
             foreach (GameObject ally in GetComponent<IAGuerrier>().gm.GetComponent<MapManager>().alliesList)
             {
                 distanceAlly = Vector2.Distance(transform.position, ally.transform.position);
                 if ((distanceAlly <= 0.75f && ally.tag == "Defense") ||
-                    (distanceAlly <= 1f && GetComponent<IAGuerrier>().rightSide == true && transform.position.x < ally.transform.position.x) ||
-                    (distanceAlly <= 1f && GetComponent<IAGuerrier>().rightSide == false && transform.position.x > ally.transform.position.x))
+                    (distanceAlly <= 1f && rightAttack == true && transform.position.x < ally.transform.position.x) ||
+                    (distanceAlly <= 1f && rightAttack == false && transform.position.x > ally.transform.position.x))
                     InflictDamage(ally);
             }
         }

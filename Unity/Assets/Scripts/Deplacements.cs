@@ -93,9 +93,9 @@ public class Deplacements : MonoBehaviour
                 isMovingHorizontally = true;
 
                 if ((Input.GetKey(KeyCode.Z) &&
-                    gm.GetComponent<GameManager>().englishLanguage == false) ||
+                    gm.GetComponent<GameManager>().zqsdMode == true) ||
                     (Input.GetKey(KeyCode.W) &&
-                    gm.GetComponent<GameManager>().englishLanguage == true))
+                    gm.GetComponent<GameManager>().zqsdMode == false))
                     newPosition = new Vector3(transform.position.x + 1, transform.position.y + 1, transform.position.y / 1000f);
                 else if (Input.GetKey(KeyCode.S))
                     newPosition = new Vector3(transform.position.x + 1, transform.position.y - 1, transform.position.y / 1000f);
@@ -153,16 +153,16 @@ public class Deplacements : MonoBehaviour
                 }
             }
             else if ((Input.GetKey(KeyCode.Q) &&
-                    gm.GetComponent<GameManager>().englishLanguage == false) ||
+                    gm.GetComponent<GameManager>().zqsdMode == true) ||
                     (Input.GetKey(KeyCode.A) &&
-                    gm.GetComponent<GameManager>().englishLanguage == true))
+                    gm.GetComponent<GameManager>().zqsdMode == false))
             {
                 isMovingHorizontally = true;
 
                 if ((Input.GetKey(KeyCode.Z) &&
-                    gm.GetComponent<GameManager>().englishLanguage == false) ||
+                    gm.GetComponent<GameManager>().zqsdMode == true) ||
                     (Input.GetKey(KeyCode.W) &&
-                    gm.GetComponent<GameManager>().englishLanguage == true))
+                    gm.GetComponent<GameManager>().zqsdMode == false))
                     newPosition = new Vector3(transform.position.x - 1, transform.position.y + 1, transform.position.y / 1000f);
                 else if (Input.GetKey(KeyCode.S))
                     newPosition = new Vector3(transform.position.x - 1, transform.position.y - 1, transform.position.y / 1000f);
@@ -222,9 +222,9 @@ public class Deplacements : MonoBehaviour
             else
                 isMovingHorizontally = false;
             if (((Input.GetKey(KeyCode.Z) &&
-                    gm.GetComponent<GameManager>().englishLanguage == false) ||
+                    gm.GetComponent<GameManager>().zqsdMode == true) ||
                     (Input.GetKey(KeyCode.W) &&
-                    gm.GetComponent<GameManager>().englishLanguage == true)) &&
+                    gm.GetComponent<GameManager>().zqsdMode == false)) &&
                     isMovingHorizontally == false)
             {
                 newPosition = new Vector3(transform.position.x, transform.position.y + 1, transform.position.y / 1000f);

@@ -466,7 +466,7 @@ public class TradManager : MonoBehaviour
         if (isInEnglish)
             return ("Spells pop-up");
         else
-            return ("Bulles infos");
+            return ("Infobulles");
     }
 
     public string GetTextLanguage()

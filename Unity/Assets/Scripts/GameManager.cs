@@ -293,6 +293,7 @@ public class GameManager : MonoBehaviour
     public  bool            bloodless;
     public  bool            showSpellsInfo;
     public  bool            englishLanguage;
+    public  bool            zqsdMode;
     public  bool            windowed;
     public  int             coins;
     public  int             prestige;
@@ -418,12 +419,13 @@ public class GameManager : MonoBehaviour
     public  GameObject      volumeSFXMinus;
     public  GameObject      volumeSFXPlus;
     public  GameObject      volumeSFXText;
-    public  GameObject      wasdModeButton;
-    public  GameObject      wasdModeText;
+    public  GameObject      LanguageButton;
+    public  GameObject      LanguageText;
+    public  GameObject      zqsdModeButton;
+    public  GameObject      zqsdModeText;
     public  GameObject      healthPotionHotkeyText;
     public  GameObject      windowedButton;
     public  GameObject      windowedText;
-    public  GameObject      returnText;
 
     public  GameObject      textStockHealthPotion;
     public  GameObject      textStockManaPotion;
@@ -511,13 +513,22 @@ public class GameManager : MonoBehaviour
             volumeSFX = PlayerPrefs.GetInt("SFXVolume");
         else
             volumeSFX = 50f;
-        volumeSFXText.GetComponent<Text>().text = "SFX volume : " + GetComponent<GameManager>().volumeSFX + "%";
+
+        if (PlayerPrefs.GetInt("LanguageModeSet") == 0 || PlayerPrefs.GetInt("LanguageMode") == 1)
+            volumeSFXText.GetComponent<Text>().text = "SFX volume : " + volumeMusic + "%";
+        else
+            volumeSFXText.GetComponent<Text>().text = "Volume effets : " + volumeMusic + "%";
 
         if (PlayerPrefs.GetInt("MusicVolumeSet") == 1)
             volumeMusic = PlayerPrefs.GetInt("MusicVolume");
         else
             volumeMusic = 50f;
-        volumeMusicText.GetComponent<Text>().text = "Music volume : " + volumeMusic + "%";
+
+        if (PlayerPrefs.GetInt("LanguageModeSet") == 0 || PlayerPrefs.GetInt("LanguageMode")  == 1)
+            volumeMusicText.GetComponent<Text>().text = "Music volume : " + volumeMusic + "%";
+        else
+            volumeMusicText.GetComponent<Text>().text = "Volume musique : " + volumeMusic + "%";
+
         GetComponent<AudioSource>().volume = volumeMusic / 100;
 
         if (PlayerPrefs.GetInt("Bloodless") == 0)
@@ -558,13 +569,13 @@ public class GameManager : MonoBehaviour
         {
             GetComponent<GameManager>().windowed = false;
             windowedButton.GetComponent<Image>().sprite = GetComponent<Buttons>().boxNotChecked;
-            Screen.fullScreen = true;
+            Screen.SetResolution(1920, 1080, true);
         }
         else
         {
             GetComponent<GameManager>().windowed = true;
             windowedButton.GetComponent<Image>().sprite = GetComponent<Buttons>().boxChecked;
-            Screen.fullScreen = false;
+            Screen.SetResolution(1280, 720, false);
         }
 
         if (PlayerPrefs.GetInt("Load1Created") == 1)
