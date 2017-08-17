@@ -44,7 +44,7 @@ public class AnimOnStart : MonoBehaviour
 
     public void StartAnimationByScript()
     {
-        if (gameObject.active)
+        if (gameObject.activeSelf == true)
         {
             iTab = 0;
             playOnStart = true;

@@ -646,16 +646,6 @@ public class MapManager : MonoBehaviour
             canSpawn = false;
     }
 
-    public void ActivateBlood()
-    {
-        //bloodObj = (GameObject)Instantiate(blood, transform.position, transform.rotation);
-    }
-
-    public void DesactivateBlood()
-    {
-        //Destroy(bloodObj.gameObject);
-    }
-
     IEnumerator Map1()
     {
         yield return new WaitForSeconds(0.25f);

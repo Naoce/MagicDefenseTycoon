@@ -6,9 +6,6 @@ public class Buttons : MonoBehaviour
 {
     public  Sprite  boxChecked;
     public  Sprite  boxNotChecked;
-    public  Sprite  contourWhite;
-    public  Sprite  contourGreen;
-    public  Sprite  contourRed;
     private Color   colorBlack = new Color(0.19f, 0.19f, 0.19f, 1f);
 
     void Awake()
@@ -45,19 +42,16 @@ public class Buttons : MonoBehaviour
         {
             PlayerPrefs.SetInt("LanguageMode", 1);
             GetComponent<GameManager>().englishLanguage = true;
-            GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = boxChecked;
         }
         else
         {
             if (PlayerPrefs.GetInt("LanguageMode") == 1)
             {
                 GetComponent<GameManager>().englishLanguage = true;
-                GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = boxChecked;
             }
             else
             {
                 GetComponent<GameManager>().englishLanguage = false;
-                GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = boxNotChecked;
             }
         }
 
@@ -205,6 +199,7 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().hudStar2.SetActive(false);
         GetComponent<GameManager>().hudStar3.SetActive(false);
         GetComponent<GameManager>().hudVictory.SetActive(false);
+        GetComponent<GameManager>().hudVictoryCoinsScroll.SetActive(false);
         GetComponent<GameManager>().hudDefeat.SetActive(false);
         GetComponent<GameManager>().hudButtonTryAgain.SetActive(false);
         GetComponent<GameManager>().hudButtonReturnToMenu.SetActive(false);
@@ -280,64 +275,24 @@ public class Buttons : MonoBehaviour
         }
     }
 
-    public void MusicMinus(GameObject obj)
+    public void MusicVolumeChange()
     {
-        GetComponent<GameManager>().volumeMusic -= 10;
-        if (GetComponent<GameManager>().volumeMusic < 0)
-            GetComponent<GameManager>().volumeMusic = 0;
+        GetComponent<GameManager>().volumeMusic = GetComponent<GameManager>().volumeMusicSlider.GetComponent<Slider>().value * 100f;
         PlayerPrefs.SetInt("MusicVolumeSet", 1);
         PlayerPrefs.SetInt("MusicVolume", (int)GetComponent<GameManager>().volumeMusic);
-        if (GetComponent<GameManager>().englishLanguage == true)
-            obj.GetComponent<Text>().text = "Music volume : " + GetComponent<GameManager>().volumeMusic + "%";
-        else
-            obj.GetComponent<Text>().text = "Volume musique : " + GetComponent<GameManager>().volumeMusic + "%";
+        GetComponent<GameManager>().volumeMusicText.GetComponent<Text>().text = ((int)GetComponent<GameManager>().volumeMusic).ToString() + "%";
 
         if (GetComponent<GameManager>().isInGame == true)
             GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
         GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
     }
 
-    public void MusicPlus(GameObject obj)
+    public void SFXVolumeChange()
     {
-        GetComponent<GameManager>().volumeMusic += 10;
-        if (GetComponent<GameManager>().volumeMusic > 100)
-            GetComponent<GameManager>().volumeMusic = 100;
-        PlayerPrefs.SetInt("MusicVolumeSet", 1);
-        PlayerPrefs.SetInt("MusicVolume", (int)GetComponent<GameManager>().volumeMusic);
-        if (GetComponent<GameManager>().englishLanguage == true)
-            obj.GetComponent<Text>().text = "Music volume : " + GetComponent<GameManager>().volumeMusic + "%";
-        else
-            obj.GetComponent<Text>().text = "Volume musique : " + GetComponent<GameManager>().volumeMusic + "%";
-
-        if (GetComponent<GameManager>().isInGame == true)
-            GetComponent<GameManager>().musicCombatObj.GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
-        GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
-    }
-
-    public void SFXMinus(GameObject obj)
-    {
-        GetComponent<GameManager>().volumeSFX -= 10;
-        if (GetComponent<GameManager>().volumeSFX < 0)
-            GetComponent<GameManager>().volumeSFX = 0;
+        GetComponent<GameManager>().volumeSFX = GetComponent<GameManager>().volumeSFXSlider.GetComponent<Slider>().value * 100f;
         PlayerPrefs.SetInt("SFXVolumeSet", 1);
         PlayerPrefs.SetInt("SFXVolume", (int)GetComponent<GameManager>().volumeSFX);
-        if (GetComponent<GameManager>().englishLanguage == true)
-            obj.GetComponent<Text>().text = "SFX volume : " + GetComponent<GameManager>().volumeSFX + "%";
-        else
-            obj.GetComponent<Text>().text = "Volume effets : " + GetComponent<GameManager>().volumeSFX + "%";
-    }
-
-    public void SFXPlus(GameObject obj)
-    {
-        GetComponent<GameManager>().volumeSFX += 10;
-        if (GetComponent<GameManager>().volumeSFX > 100)
-            GetComponent<GameManager>().volumeSFX = 100;
-        PlayerPrefs.SetInt("SFXVolumeSet", 1);
-        PlayerPrefs.SetInt("SFXVolume", (int)GetComponent<GameManager>().volumeSFX);
-        if (GetComponent<GameManager>().englishLanguage == true)
-            obj.GetComponent<Text>().text = "SFX volume : " + GetComponent<GameManager>().volumeSFX + "%";
-        else
-            obj.GetComponent<Text>().text = "Volume effets : " + GetComponent<GameManager>().volumeSFX + "%";
+        GetComponent<GameManager>().volumeSFXText.GetComponent<Text>().text = ((int)GetComponent<GameManager>().volumeSFX).ToString() + "%";
     }
 
     public void BloodTrigger(GameObject obj)
@@ -345,13 +300,11 @@ public class Buttons : MonoBehaviour
         if (GetComponent<GameManager>().bloodless == true)
         {
             PlayerPrefs.SetInt("Bloodless", 0);
-            GetComponent<GameManager>().ActivateBlood();
             obj.GetComponent<Image>().sprite = boxNotChecked;
         }
         else
         {
             PlayerPrefs.SetInt("Bloodless", 1);
-            GetComponent<GameManager>().DesactivateBlood();
             obj.GetComponent<Image>().sprite = boxChecked;
         }
     }
@@ -2681,6 +2634,91 @@ public class Buttons : MonoBehaviour
         }
     }
 
+    public void ResetSkillRectAvailable()
+    {
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable1_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable1_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable1_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable1_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable2_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable2_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable2_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable2_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable3_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable3_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable3_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable3_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable4_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable4_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable4_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable4_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable5_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable5_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable5_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable5_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable6_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable6_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable6_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable6_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable7_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable7_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable7_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable7_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable8_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable8_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreeSpellRectAvailable8_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable8_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable1_1.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable1_1.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable1_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable1_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable1_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable1_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable2_1.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable2_1.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable2_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable2_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable2_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable2_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable3_1.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable3_1.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable3_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable3_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable3_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable3_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable4_1.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable4_1.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable4_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable4_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable4_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable4_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable5_1.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable5_1.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable5_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable5_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable5_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable5_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable6_1.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable6_1.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable6_2.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable6_2.GetComponent<AnimOnStart>().StartAnimationByScript();
+        if (GetComponent<GameManager>().SkillTreePassiveRectAvailable6_3.activeSelf == true)
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable6_3.GetComponent<AnimOnStart>().StartAnimationByScript();
+    }
+
     public void LearnSkillBySkillTree()
     {
         GetComponent<GameManager>().SkillTreeLearn.SetActive(false);
@@ -3007,6 +3045,7 @@ public class Buttons : MonoBehaviour
         }
 
         UpdateSkillTreeSkillRect();
+        ResetSkillRectAvailable();
     }
 
     public void UpdateSkillTreeSkillRect()
@@ -3020,234 +3059,366 @@ public class Buttons : MonoBehaviour
         else
             level = PlayerPrefs.GetInt("Load3PlayerLevel");
 
-        GetComponent<GameManager>().SkillTreeSpellRect1_1.sprite = contourGreen;
-
         if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell1_2") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell1_2") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell1_2") == 1))
-            GetComponent<GameManager>().SkillTreeSpellRect1_2.sprite = contourGreen;
+        {
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable1_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable1_2.SetActive(false);
+        }
         else
-            GetComponent<GameManager>().SkillTreeSpellRect1_2.sprite = contourWhite;
+        {
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable1_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable1_2.SetActive(false);
+        }
 
         if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell1_3") == 1) ||
            (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell1_3") == 1) ||
            (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell1_3") == 1))
-            GetComponent<GameManager>().SkillTreeSpellRect1_3.sprite = contourGreen;
+        {
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable1_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable1_3.SetActive(false);
+        }
         else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell1_2") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell1_2") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell1_2") == 1))
-            GetComponent<GameManager>().SkillTreeSpellRect1_3.sprite = contourWhite;
+        {
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable1_3.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable1_3.SetActive(false);
+        }
         else
-            GetComponent<GameManager>().SkillTreeSpellRect1_3.sprite = contourRed;
+        {
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable1_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable1_3.SetActive(true);
+        }
 
 
         if (level > 2)
         {
-            GetComponent<GameManager>().SkillTreeSpellRect2_1.sprite = contourGreen;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable2_1.SetActive(false);
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell2_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell2_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell2_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect2_2.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable2_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable2_2.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect2_2.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable2_2.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable2_2.SetActive(false);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell2_3") == 1) ||
                (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell2_3") == 1) ||
                (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell2_3") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect2_3.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable2_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable2_3.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell2_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell2_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell2_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect2_3.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable2_3.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable2_3.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect2_3.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable2_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable2_3.SetActive(true);
+            }
         }
         else
         {
-            GetComponent<GameManager>().SkillTreeSpellRect2_1.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect2_2.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect2_3.sprite = contourRed;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable2_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable2_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable2_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable2_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable2_3.SetActive(true);
         }
 
 
         if (level > 4)
         {
-            GetComponent<GameManager>().SkillTreeSpellRect3_1.sprite = contourGreen;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable3_1.SetActive(false);
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell3_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell3_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell3_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect3_2.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable3_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable3_2.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect3_2.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable3_2.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable3_2.SetActive(false);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell3_3") == 1) ||
                (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell3_3") == 1) ||
                (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell3_3") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect3_3.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable3_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable3_3.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell3_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell3_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell3_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect3_3.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable3_3.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable3_3.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect3_3.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable3_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable3_3.SetActive(true);
+            }
         }
         else
         {
-            GetComponent<GameManager>().SkillTreeSpellRect3_1.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect3_2.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect3_3.sprite = contourRed;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable3_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable3_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable3_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable3_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable3_3.SetActive(true);
         }
 
 
         if (level > 6)
         {
-            GetComponent<GameManager>().SkillTreeSpellRect4_1.sprite = contourGreen;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable4_1.SetActive(false);
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell4_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell4_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell4_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect4_2.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable4_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable4_2.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect4_2.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable4_2.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable4_2.SetActive(false);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell4_3") == 1) ||
                (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell4_3") == 1) ||
                (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell4_3") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect4_3.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable4_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable4_3.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell4_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell4_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell4_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect4_3.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable4_3.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable4_3.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect4_3.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable4_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable4_3.SetActive(true);
+            }
         }
         else
         {
-            GetComponent<GameManager>().SkillTreeSpellRect4_1.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect4_2.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect4_3.sprite = contourRed;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable4_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable4_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable4_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable4_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable4_3.SetActive(true);
         }
 
 
         if (level > 8)
         {
-            GetComponent<GameManager>().SkillTreeSpellRect5_1.sprite = contourGreen;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable5_1.SetActive(false);
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell5_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell5_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell5_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect5_2.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable5_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable5_2.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect5_2.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable5_2.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable5_2.SetActive(false);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell5_3") == 1) ||
                (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell5_3") == 1) ||
                (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell5_3") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect5_3.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable5_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable5_3.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell5_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell5_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell5_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect5_3.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable5_3.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable5_3.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect5_3.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable5_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable5_3.SetActive(true);
+            }
         }
         else
         {
-            GetComponent<GameManager>().SkillTreeSpellRect5_1.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect5_2.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect5_3.sprite = contourRed;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable5_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable5_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable5_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable5_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable5_3.SetActive(true);
         }
 
 
         if (level > 10)
         {
-            GetComponent<GameManager>().SkillTreeSpellRect6_1.sprite = contourGreen;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable6_1.SetActive(false);
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell6_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell6_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell6_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect6_2.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable6_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable6_2.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect6_2.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable6_2.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable6_2.SetActive(false);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell6_3") == 1) ||
                (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell6_3") == 1) ||
                (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell6_3") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect6_3.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable6_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable6_3.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell6_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell6_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell6_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect6_3.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable6_3.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable6_3.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect6_3.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable6_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable6_3.SetActive(true);
+            }
         }
         else
         {
-            GetComponent<GameManager>().SkillTreeSpellRect6_1.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect6_2.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect6_3.sprite = contourRed;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable6_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable6_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable6_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable6_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable6_3.SetActive(true);
         }
 
 
         if (level > 12)
         {
-            GetComponent<GameManager>().SkillTreeSpellRect7_1.sprite = contourGreen;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable7_1.SetActive(false);
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell7_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell7_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell7_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect7_2.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable7_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable7_2.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect7_2.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable7_2.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable7_2.SetActive(false);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell7_3") == 1) ||
                (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell7_3") == 1) ||
                (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell7_3") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect7_3.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable7_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable7_3.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell7_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell7_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell7_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect7_3.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable7_3.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable7_3.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect7_3.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable7_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable7_3.SetActive(true);
+            }
         }
         else
         {
-            GetComponent<GameManager>().SkillTreeSpellRect7_1.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect7_2.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect7_3.sprite = contourRed;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable7_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable7_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable7_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable7_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable7_3.SetActive(true);
         }
 
 
         if (level > 14)
         {
-            GetComponent<GameManager>().SkillTreeSpellRect8_1.sprite = contourGreen;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable8_1.SetActive(false);
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell8_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell8_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell8_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect8_2.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable8_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable8_2.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect8_2.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable8_2.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable8_2.SetActive(false);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell8_3") == 1) ||
                (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell8_3") == 1) ||
                (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell8_3") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect8_3.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable8_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable8_3.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Spell8_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Spell8_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Spell8_2") == 1))
-                GetComponent<GameManager>().SkillTreeSpellRect8_3.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable8_3.SetActive(true);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable8_3.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreeSpellRect8_3.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreeSpellRectAvailable8_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreeSpellRectNotAvailable8_3.SetActive(true);
+            }
         }
         else
         {
-            GetComponent<GameManager>().SkillTreeSpellRect8_1.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect8_2.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreeSpellRect8_3.sprite = contourRed;
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable8_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable8_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable8_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreeSpellRectAvailable8_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreeSpellRectNotAvailable8_3.SetActive(true);
         }
 
 
@@ -3255,40 +3426,67 @@ public class Buttons : MonoBehaviour
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive2_1") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive2_1") == 1))
         {
-            GetComponent<GameManager>().SkillTreePassiveRect1_1.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreePassiveRect1_2.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreePassiveRect1_3.sprite = contourRed;
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable1_1.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect1_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable1_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect1_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable1_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect1_3.SetActive(true);
         }
         else
         {
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive1_1") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect1_1.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable1_1.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect1_1.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect1_1.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable1_1.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect1_1.SetActive(false);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive1_2") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect1_2.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable1_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect1_2.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive1_1") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect1_2.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable1_2.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect1_2.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect1_2.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable1_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect1_2.SetActive(true);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_3") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_3") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive1_3") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect1_3.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable1_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect1_3.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive1_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive1_2") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect1_3.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable1_3.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect1_3.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect1_3.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable1_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect1_3.SetActive(true);
+            }
         }
 
 
@@ -3296,141 +3494,243 @@ public class Buttons : MonoBehaviour
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive1_1") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive1_1") == 1))
         {
-            GetComponent<GameManager>().SkillTreePassiveRect2_1.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreePassiveRect2_2.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreePassiveRect2_3.sprite = contourRed;
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable2_1.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect2_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable2_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect2_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable2_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect2_3.SetActive(true);
         }
         else
         {
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive2_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive2_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive2_1") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect2_1.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable2_1.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect2_1.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect2_1.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable2_1.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect2_1.SetActive(false);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive2_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive2_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive2_2") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect2_2.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable2_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect2_2.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive2_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive2_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive2_1") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect2_2.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable2_2.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect2_2.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect2_2.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable2_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect2_2.SetActive(true);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive2_3") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive2_3") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive2_3") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect2_3.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable2_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect2_3.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive2_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive2_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive2_2") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect2_3.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable2_3.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect2_3.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect2_3.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable2_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect2_3.SetActive(true);
+            }
         }
 
 
         if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive3_1") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive3_1") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive3_1") == 1))
-            GetComponent<GameManager>().SkillTreePassiveRect3_1.sprite = contourGreen;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable3_1.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect3_1.SetActive(false);
+        }
         else
-            GetComponent<GameManager>().SkillTreePassiveRect3_1.sprite = contourWhite;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable3_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect3_1.SetActive(false);
+        }
 
         if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive3_2") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive3_2") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive3_2") == 1))
-            GetComponent<GameManager>().SkillTreePassiveRect3_2.sprite = contourGreen;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable3_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect3_2.SetActive(false);
+        }
         else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive3_1") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive3_1") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive3_1") == 1))
-            GetComponent<GameManager>().SkillTreePassiveRect3_2.sprite = contourWhite;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable3_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect3_2.SetActive(false);
+        }
         else
-            GetComponent<GameManager>().SkillTreePassiveRect3_2.sprite = contourRed;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable3_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect3_2.SetActive(true);
+        }
 
         if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive3_3") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive3_3") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive3_3") == 1))
-            GetComponent<GameManager>().SkillTreePassiveRect3_3.sprite = contourGreen;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable3_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect3_3.SetActive(false);
+        }
         else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive3_2") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive3_2") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive3_2") == 1))
-            GetComponent<GameManager>().SkillTreePassiveRect3_3.sprite = contourWhite;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable3_3.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect3_3.SetActive(false);
+        }
         else
-            GetComponent<GameManager>().SkillTreePassiveRect3_3.sprite = contourRed;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable3_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect3_3.SetActive(true);
+        }
 
 
         if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive4_1") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive4_1") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive4_1") == 1))
-            GetComponent<GameManager>().SkillTreePassiveRect4_1.sprite = contourGreen;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable4_1.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect4_1.SetActive(false);
+        }
         else
-            GetComponent<GameManager>().SkillTreePassiveRect4_1.sprite = contourWhite;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable4_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect4_1.SetActive(false);
+        }
 
         if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive4_2") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive4_2") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive4_2") == 1))
-            GetComponent<GameManager>().SkillTreePassiveRect4_2.sprite = contourGreen;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable4_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect4_2.SetActive(false);
+        }
         else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive4_1") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive4_1") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive4_1") == 1))
-            GetComponent<GameManager>().SkillTreePassiveRect4_2.sprite = contourWhite;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable4_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect4_2.SetActive(false);
+        }
         else
-            GetComponent<GameManager>().SkillTreePassiveRect4_2.sprite = contourRed;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable4_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect4_2.SetActive(true);
+        }
 
         if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive4_3") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive4_3") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive4_3") == 1))
-            GetComponent<GameManager>().SkillTreePassiveRect4_3.sprite = contourGreen;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable4_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect4_3.SetActive(false);
+        }
         else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive4_2") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive4_2") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive4_2") == 1))
-            GetComponent<GameManager>().SkillTreePassiveRect4_3.sprite = contourWhite;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable4_3.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect4_3.SetActive(false);
+        }
         else
-            GetComponent<GameManager>().SkillTreePassiveRect4_3.sprite = contourRed;
+        {
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable4_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect4_3.SetActive(true);
+        }
 
 
         if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive6_1") == 1) ||
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive6_1") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive6_1") == 1))
         {
-            GetComponent<GameManager>().SkillTreePassiveRect5_1.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreePassiveRect5_2.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreePassiveRect5_3.sprite = contourRed;
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable5_1.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect5_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable5_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect5_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable5_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect5_3.SetActive(true);
         }
         else
         {
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive5_1") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect5_1.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable5_1.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect5_1.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect5_1.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable5_1.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect5_1.SetActive(false);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive5_2") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect5_2.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable5_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect5_2.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive5_1") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect5_2.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable5_2.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect5_2.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect5_2.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable5_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect5_2.SetActive(true);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_3") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_3") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive5_3") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect5_3.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable5_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect5_3.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive5_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive5_2") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect5_3.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable5_3.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect5_3.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect5_3.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable5_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect5_3.SetActive(true);
+            }
         }
 
 
@@ -3438,40 +3738,67 @@ public class Buttons : MonoBehaviour
             (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive5_1") == 1) ||
             (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive5_1") == 1))
         {
-            GetComponent<GameManager>().SkillTreePassiveRect6_1.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreePassiveRect6_2.sprite = contourRed;
-            GetComponent<GameManager>().SkillTreePassiveRect6_3.sprite = contourRed;
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable6_1.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect6_1.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable6_2.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect6_2.SetActive(true);
+            GetComponent<GameManager>().SkillTreePassiveRectAvailable6_3.SetActive(false);
+            GetComponent<GameManager>().SkillTreePassiveNotAvailableRect6_3.SetActive(true);
         }
         else
         {
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive6_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive6_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive6_1") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect6_1.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable6_1.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect6_1.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect6_1.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable6_1.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect6_1.SetActive(false);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive6_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive6_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive6_2") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect6_2.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable6_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect6_2.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive6_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive6_1") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive6_1") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect6_2.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable6_2.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect6_2.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect6_2.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable6_2.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect6_2.SetActive(true);
+            }
 
             if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive6_3") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive6_3") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive6_3") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect6_3.sprite = contourGreen;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable6_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect6_3.SetActive(false);
+            }
             else if ((GetComponent<GameManager>().currSave == 1 && PlayerPrefs.GetInt("Load1Passive6_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 2 && PlayerPrefs.GetInt("Load2Passive6_2") == 1) ||
                 (GetComponent<GameManager>().currSave == 3 && PlayerPrefs.GetInt("Load3Passive6_2") == 1))
-                GetComponent<GameManager>().SkillTreePassiveRect6_3.sprite = contourWhite;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable6_3.SetActive(true);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect6_3.SetActive(false);
+            }
             else
-                GetComponent<GameManager>().SkillTreePassiveRect6_3.sprite = contourRed;
+            {
+                GetComponent<GameManager>().SkillTreePassiveRectAvailable6_3.SetActive(false);
+                GetComponent<GameManager>().SkillTreePassiveNotAvailableRect6_3.SetActive(true);
+            }
         }
     }
 
@@ -4638,7 +4965,6 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("LanguageMode", 1);
             PlayerPrefs.SetInt("LanguageModeSet", 1);
             GetComponent<GameManager>().englishLanguage = true;
-            GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = boxChecked;
             GetComponent<TradManager>().ResetTexts();
         }
         else
@@ -4646,7 +4972,6 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("LanguageMode", 0);
             PlayerPrefs.SetInt("LanguageModeSet", 1);
             GetComponent<GameManager>().englishLanguage = false;
-            GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = boxNotChecked;
             GetComponent<TradManager>().ResetTexts();
         }
     }
@@ -4840,12 +5165,10 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().showSpellsInfoIcon.SetActive(false);
         GetComponent<GameManager>().showSpellsInfoText.SetActive(false);
         GetComponent<GameManager>().scrollOptions4.GetComponent<Animator>().SetBool("StartAnim", true);
-        GetComponent<GameManager>().volumeMusicPlus.SetActive(false);
-        GetComponent<GameManager>().volumeMusicMinus.SetActive(false);
+        GetComponent<GameManager>().volumeMusicSlider.SetActive(false);
         GetComponent<GameManager>().volumeMusicText.SetActive(false);
         GetComponent<GameManager>().scrollOptions5.GetComponent<Animator>().SetBool("StartAnim", true);
-        GetComponent<GameManager>().volumeSFXPlus.SetActive(false);
-        GetComponent<GameManager>().volumeSFXMinus.SetActive(false);
+        GetComponent<GameManager>().volumeSFXSlider.SetActive(false);
         GetComponent<GameManager>().volumeSFXText.SetActive(false);
         GetComponent<GameManager>().scrollOptions6.GetComponent<Animator>().SetBool("StartAnim", true);
         GetComponent<GameManager>().zqsdModeButton.SetActive(false);
@@ -4866,11 +5189,9 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().bloodlessText.SetActive(true);
         GetComponent<GameManager>().showSpellsInfoIcon.SetActive(true);
         GetComponent<GameManager>().showSpellsInfoText.SetActive(true);
-        GetComponent<GameManager>().volumeMusicPlus.SetActive(true);
-        GetComponent<GameManager>().volumeMusicMinus.SetActive(true);
+        GetComponent<GameManager>().volumeMusicSlider.SetActive(true);
         GetComponent<GameManager>().volumeMusicText.SetActive(true);
-        GetComponent<GameManager>().volumeSFXPlus.SetActive(true);
-        GetComponent<GameManager>().volumeSFXMinus.SetActive(true);
+        GetComponent<GameManager>().volumeSFXSlider.SetActive(true);
         GetComponent<GameManager>().volumeSFXText.SetActive(true);
         GetComponent<GameManager>().zqsdModeButton.SetActive(true);
         GetComponent<GameManager>().zqsdModeText.SetActive(true);

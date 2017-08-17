@@ -167,48 +167,83 @@ public class GameManager : MonoBehaviour
     public  Text            SkillTreeTitle;
     public  Text            SkillTreeDescription;
     public  GameObject      SkillTreeLearn;
-    public  Image           SkillTreeSpellRect1_1;
-    public  Image           SkillTreeSpellRect1_2;
-    public  Image           SkillTreeSpellRect1_3;
-    public  Image           SkillTreeSpellRect2_1;
-    public  Image           SkillTreeSpellRect2_2;
-    public  Image           SkillTreeSpellRect2_3;
-    public  Image           SkillTreeSpellRect3_1;
-    public  Image           SkillTreeSpellRect3_2;
-    public  Image           SkillTreeSpellRect3_3;
-    public  Image           SkillTreeSpellRect4_1;
-    public  Image           SkillTreeSpellRect4_2;
-    public  Image           SkillTreeSpellRect4_3;
-    public  Image           SkillTreeSpellRect5_1;
-    public  Image           SkillTreeSpellRect5_2;
-    public  Image           SkillTreeSpellRect5_3;
-    public  Image           SkillTreeSpellRect6_1;
-    public  Image           SkillTreeSpellRect6_2;
-    public  Image           SkillTreeSpellRect6_3;
-    public  Image           SkillTreeSpellRect7_1;
-    public  Image           SkillTreeSpellRect7_2;
-    public  Image           SkillTreeSpellRect7_3;
-    public  Image           SkillTreeSpellRect8_1;
-    public  Image           SkillTreeSpellRect8_2;
-    public  Image           SkillTreeSpellRect8_3;
-    public  Image           SkillTreePassiveRect1_1;
-    public  Image           SkillTreePassiveRect1_2;
-    public  Image           SkillTreePassiveRect1_3;
-    public  Image           SkillTreePassiveRect2_1;
-    public  Image           SkillTreePassiveRect2_2;
-    public  Image           SkillTreePassiveRect2_3;
-    public  Image           SkillTreePassiveRect3_1;
-    public  Image           SkillTreePassiveRect3_2;
-    public  Image           SkillTreePassiveRect3_3;
-    public  Image           SkillTreePassiveRect4_1;
-    public  Image           SkillTreePassiveRect4_2;
-    public  Image           SkillTreePassiveRect4_3;
-    public  Image           SkillTreePassiveRect5_1;
-    public  Image           SkillTreePassiveRect5_2;
-    public  Image           SkillTreePassiveRect5_3;
-    public  Image           SkillTreePassiveRect6_1;
-    public  Image           SkillTreePassiveRect6_2;
-    public  Image           SkillTreePassiveRect6_3;
+
+    public  GameObject      SkillTreeSpellRectAvailable1_2;
+    public  GameObject      SkillTreeSpellRectAvailable1_3;
+    public  GameObject      SkillTreeSpellRectAvailable2_2;
+    public  GameObject      SkillTreeSpellRectAvailable2_3;
+    public  GameObject      SkillTreeSpellRectAvailable3_2;
+    public  GameObject      SkillTreeSpellRectAvailable3_3;
+    public  GameObject      SkillTreeSpellRectAvailable4_2;
+    public  GameObject      SkillTreeSpellRectAvailable4_3;
+    public  GameObject      SkillTreeSpellRectAvailable5_2;
+    public  GameObject      SkillTreeSpellRectAvailable5_3;
+    public  GameObject      SkillTreeSpellRectAvailable6_2;
+    public  GameObject      SkillTreeSpellRectAvailable6_3;
+    public  GameObject      SkillTreeSpellRectAvailable7_2;
+    public  GameObject      SkillTreeSpellRectAvailable7_3;
+    public  GameObject      SkillTreeSpellRectAvailable8_2;
+    public  GameObject      SkillTreeSpellRectAvailable8_3;
+    public  GameObject      SkillTreePassiveRectAvailable1_1;
+    public  GameObject      SkillTreePassiveRectAvailable1_2;
+    public  GameObject      SkillTreePassiveRectAvailable1_3;
+    public  GameObject      SkillTreePassiveRectAvailable2_1;
+    public  GameObject      SkillTreePassiveRectAvailable2_2;
+    public  GameObject      SkillTreePassiveRectAvailable2_3;
+    public  GameObject      SkillTreePassiveRectAvailable3_1;
+    public  GameObject      SkillTreePassiveRectAvailable3_2;
+    public  GameObject      SkillTreePassiveRectAvailable3_3;
+    public  GameObject      SkillTreePassiveRectAvailable4_1;
+    public  GameObject      SkillTreePassiveRectAvailable4_2;
+    public  GameObject      SkillTreePassiveRectAvailable4_3;
+    public  GameObject      SkillTreePassiveRectAvailable5_1;
+    public  GameObject      SkillTreePassiveRectAvailable5_2;
+    public  GameObject      SkillTreePassiveRectAvailable5_3;
+    public  GameObject      SkillTreePassiveRectAvailable6_1;
+    public  GameObject      SkillTreePassiveRectAvailable6_2;
+    public  GameObject      SkillTreePassiveRectAvailable6_3;
+
+    public  GameObject      SkillTreeSpellRectNotAvailable1_2;
+    public  GameObject      SkillTreeSpellRectNotAvailable1_3;
+    public  GameObject      SkillTreeSpellRectNotAvailable2_1;
+    public  GameObject      SkillTreeSpellRectNotAvailable2_2;
+    public  GameObject      SkillTreeSpellRectNotAvailable2_3;
+    public  GameObject      SkillTreeSpellRectNotAvailable3_1;
+    public  GameObject      SkillTreeSpellRectNotAvailable3_2;
+    public  GameObject      SkillTreeSpellRectNotAvailable3_3;
+    public  GameObject      SkillTreeSpellRectNotAvailable4_1;
+    public  GameObject      SkillTreeSpellRectNotAvailable4_2;
+    public  GameObject      SkillTreeSpellRectNotAvailable4_3;
+    public  GameObject      SkillTreeSpellRectNotAvailable5_1;
+    public  GameObject      SkillTreeSpellRectNotAvailable5_2;
+    public  GameObject      SkillTreeSpellRectNotAvailable5_3;
+    public  GameObject      SkillTreeSpellRectNotAvailable6_1;
+    public  GameObject      SkillTreeSpellRectNotAvailable6_2;
+    public  GameObject      SkillTreeSpellRectNotAvailable6_3;
+    public  GameObject      SkillTreeSpellRectNotAvailable7_1;
+    public  GameObject      SkillTreeSpellRectNotAvailable7_2;
+    public  GameObject      SkillTreeSpellRectNotAvailable7_3;
+    public  GameObject      SkillTreeSpellRectNotAvailable8_1;
+    public  GameObject      SkillTreeSpellRectNotAvailable8_2;
+    public  GameObject      SkillTreeSpellRectNotAvailable8_3;
+    public  GameObject      SkillTreePassiveNotAvailableRect1_1;
+    public  GameObject      SkillTreePassiveNotAvailableRect1_2;
+    public  GameObject      SkillTreePassiveNotAvailableRect1_3;
+    public  GameObject      SkillTreePassiveNotAvailableRect2_1;
+    public  GameObject      SkillTreePassiveNotAvailableRect2_2;
+    public  GameObject      SkillTreePassiveNotAvailableRect2_3;
+    public  GameObject      SkillTreePassiveNotAvailableRect3_1;
+    public  GameObject      SkillTreePassiveNotAvailableRect3_2;
+    public  GameObject      SkillTreePassiveNotAvailableRect3_3;
+    public  GameObject      SkillTreePassiveNotAvailableRect4_1;
+    public  GameObject      SkillTreePassiveNotAvailableRect4_2;
+    public  GameObject      SkillTreePassiveNotAvailableRect4_3;
+    public  GameObject      SkillTreePassiveNotAvailableRect5_1;
+    public  GameObject      SkillTreePassiveNotAvailableRect5_2;
+    public  GameObject      SkillTreePassiveNotAvailableRect5_3;
+    public  GameObject      SkillTreePassiveNotAvailableRect6_1;
+    public  GameObject      SkillTreePassiveNotAvailableRect6_2;
+    public  GameObject      SkillTreePassiveNotAvailableRect6_3;
 
     public  GameObject      PanelDecoration;
     public  Text            DecorationDescriptionText;
@@ -333,6 +368,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      hudStar1;
     public  GameObject      hudStar2;
     public  GameObject      hudStar3;
+    public  GameObject      hudVictoryCoinsScroll;
     public  GameObject      hudButtonTryAgain;
     public  GameObject      hudButtonReturnToMenu;
 
@@ -413,11 +449,9 @@ public class GameManager : MonoBehaviour
     public  GameObject      bloodlessText;
     public  GameObject      showSpellsInfoIcon;
     public  GameObject      showSpellsInfoText;
-    public  GameObject      volumeMusicMinus;
-    public  GameObject      volumeMusicPlus;
+    public  GameObject      volumeMusicSlider;
     public  GameObject      volumeMusicText;
-    public  GameObject      volumeSFXMinus;
-    public  GameObject      volumeSFXPlus;
+    public  GameObject      volumeSFXSlider;
     public  GameObject      volumeSFXText;
     public  GameObject      LanguageButton;
     public  GameObject      LanguageText;
@@ -514,20 +548,16 @@ public class GameManager : MonoBehaviour
         else
             volumeSFX = 50f;
 
-        if (PlayerPrefs.GetInt("LanguageModeSet") == 0 || PlayerPrefs.GetInt("LanguageMode") == 1)
-            volumeSFXText.GetComponent<Text>().text = "SFX volume : " + volumeMusic + "%";
-        else
-            volumeSFXText.GetComponent<Text>().text = "Volume effets : " + volumeMusic + "%";
+        volumeSFXText.GetComponent<Text>().text = ((int)volumeSFX).ToString() + "%";
+        volumeSFXSlider.GetComponent<Slider>().value = volumeSFX / 100;
 
         if (PlayerPrefs.GetInt("MusicVolumeSet") == 1)
             volumeMusic = PlayerPrefs.GetInt("MusicVolume");
         else
             volumeMusic = 50f;
 
-        if (PlayerPrefs.GetInt("LanguageModeSet") == 0 || PlayerPrefs.GetInt("LanguageMode")  == 1)
-            volumeMusicText.GetComponent<Text>().text = "Music volume : " + volumeMusic + "%";
-        else
-            volumeMusicText.GetComponent<Text>().text = "Volume musique : " + volumeMusic + "%";
+        volumeMusicText.GetComponent<Text>().text = ((int)volumeMusic).ToString() + "%";
+        volumeMusicSlider.GetComponent<Slider>().value = volumeMusic / 100;
 
         GetComponent<AudioSource>().volume = volumeMusic / 100;
 
@@ -868,6 +898,8 @@ public class GameManager : MonoBehaviour
         obj.GetComponent<AudioSource>().volume = volumeMusic / 100;
         SetNormalMouse(cam.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition));
         hudInGame.SetActive(false);
+
+        StartCoroutine(ScrollCoinsAnimation());
         StartCoroutine(VictoryAnimation());
     }
 
@@ -970,6 +1002,23 @@ public class GameManager : MonoBehaviour
             mapManager.GetComponent<MapManager>().player.GetComponent<MageElemental>().UseObject2();
     }
 
+    IEnumerator ScrollCoinsAnimation()
+    {
+        int coinsToAdd = listMissions[currMissionSelected].GetComponent<MissionSheet>().reward;
+
+        hudVictoryCoinsScroll.GetComponentInChildren<Text>().text = (coins - coinsToAdd).ToString();
+        hudVictoryCoinsScroll.SetActive(true);
+
+        while (coinsToAdd > 0)
+        {
+            hudVictoryCoinsScroll.GetComponentInChildren<Text>().text = (coins - coinsToAdd).ToString();
+            yield return new WaitForSeconds(0.05f);
+            coinsToAdd--;
+        }
+
+        hudVictoryCoinsScroll.GetComponentInChildren<Text>().text = (coins - coinsToAdd).ToString();
+    }
+
     IEnumerator VictoryAnimation()
     {
         hudVictory.SetActive(true);
@@ -1003,19 +1052,5 @@ public class GameManager : MonoBehaviour
 
         hudButtonReturnToMenu.SetActive(true);
         yield return new WaitForSeconds(0.4f);
-    }
-
-    public void ActivateBlood()
-    {
-        bloodless = false;
-        if (isInGame == true)
-            mapManager.GetComponent<MapManager>().ActivateBlood();
-    }
-
-    public void DesactivateBlood()
-    {
-        bloodless = true;
-        if (isInGame == true)
-            mapManager.GetComponent<MapManager>().DesactivateBlood();
     }
 }
