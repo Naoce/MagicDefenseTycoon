@@ -81,6 +81,8 @@ public class TradManager : MonoBehaviour
     public Text MenuTextOptionsPopUp;
     public Text MenuTextOptionsLanguage;
     public Text MenuTextOptionsWindowed;
+    public Text MenuTextOptionsMusicInfo;
+    public Text MenuTextOptionsSFXInfo;
     public Text MenuTextOptionsReturn;
 
     public Text HUDTextTitleSpell1;
@@ -166,6 +168,8 @@ public class TradManager : MonoBehaviour
         MenuTextOptionsPopUp.text = GetTextPopUp();
         MenuTextOptionsLanguage.text = GetTextLanguage();
         MenuTextOptionsWindowed.text = GetTextWindowed();
+        MenuTextOptionsMusicInfo.text = GetTextMusicInfo();
+        MenuTextOptionsSFXInfo.text = GetTextSFXInfo();
         MenuTextOptionsReturn.text = GetTextReturn();
 
         HUDTextTitleSpell1.text = GetTitleElementalSpell1();
@@ -485,6 +489,22 @@ public class TradManager : MonoBehaviour
             return ("Fenêtré");
     }
 
+    public string GetTextMusicInfo()
+    {
+        if (isInEnglish)
+            return ("Change the volume of the musics.");
+        else
+            return ("Change le volume des musiques.");
+    }
+
+    public string GetTextSFXInfo()
+    {
+        if (isInEnglish)
+            return ("Change the volume of the sound effects.");
+        else
+            return ("Change le volume des effets sonores.");
+    }
+
     public string GetTextTryAgain()
     {
         if (isInEnglish)
@@ -560,17 +580,33 @@ public class TradManager : MonoBehaviour
     public string GetDecorationTitleEquipment1()
     {
         if (isInEnglish)
-            return ("Weapon racks");
+            return ("Steel weapons");
         else
-            return ("Râtelier d'armes");
+            return ("Armes en acier");
     }
 
     public string GetDecorationTitleEquipment2()
     {
         if (isInEnglish)
-            return ("Shield racks");
+            return ("Golden weapons");
         else
-            return ("Râtelier de boucliers");
+            return ("Armes en or");
+    }
+
+    public string GetDecorationTitleShields1()
+    {
+        if (isInEnglish)
+            return ("Resistant shields");
+        else
+            return ("Boucliers résistants");
+    }
+
+    public string GetDecorationTitleShields2()
+    {
+        if (isInEnglish)
+            return ("Crown shields");
+        else
+            return ("Boucliers somptueux");
     }
 
     public string GetDecorationTitleCarpet1()
@@ -664,9 +700,25 @@ public class TradManager : MonoBehaviour
     public string GetDecorationDescriptionEquipment2()
     {
         if (isInEnglish)
-            return (GetDecorationTitleEquipment2() + "\n\nEvery attack against the mage or his allies will do 1 less point of damage.\n\nPrice : 30 gold coins");
+            return (GetDecorationTitleEquipment2() + "\n\nPrestige +10.\n\nPrice : 30 gold coins");
         else
-            return (GetDecorationTitleEquipment2() + "\n\nChaque attaque lancée contre le mage ou ses alliés fera 1 point de dégât en moins.\n\nPrix : 30 pièces d'or");
+            return (GetDecorationTitleEquipment2() + "\n\nPrestige +10.\n\nPrix : 30 pièces d'or");
+    }
+
+    public string GetDecorationDescriptionShields1()
+    {
+        if (isInEnglish)
+            return (GetDecorationTitleEquipment1() + "\n\nEvery attack against the mage or his allies will do 1 less point of damage.\n\nPrice : 30 gold coins");
+        else
+            return (GetDecorationTitleEquipment1() + "\n\nChaque attaque lancée contre le mage ou ses alliés fera 1 point de dégât en moins.\n\nPrix : 30 pièces d'or");
+    }
+
+    public string GetDecorationDescriptionShields2()
+    {
+        if (isInEnglish)
+            return (GetDecorationTitleEquipment2() + "\n\nPrestige +10.\n\nPrice : 30 gold coins");
+        else
+            return (GetDecorationTitleEquipment2() + "\n\nPrestige +10.\n\nPrix : 30 pièces d'or");
     }
 
     public string GetDecorationDescriptionCarpet1()

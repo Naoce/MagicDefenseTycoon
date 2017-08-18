@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\Capture.cs" />
      <Compile Include="Assets\Scripts\CharacterMenu.cs" />
      <Compile Include="Assets\Scripts\CheckPath.cs" />
+     <Compile Include="Assets\Scripts\CoinSlide.cs" />
      <Compile Include="Assets\Scripts\Defense.cs" />
      <Compile Include="Assets\Scripts\Deplacements.cs" />
      <Compile Include="Assets\Scripts\DoNotDestroyOnLoad.cs" />

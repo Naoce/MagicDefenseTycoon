@@ -282,11 +282,19 @@ public class GameManager : MonoBehaviour
     public  GameObject      DecorationPrevCarpet;
     public  Text            DecorationTextCarpet;
 
+    public  GameObject      DecorationScrollShields;
+    public  int             DecorationCurrentShieldsSelected;
+    public  GameObject      DecorationNextShields;
+    public  GameObject      DecorationPrevShields;
+    public  Text            DecorationTextShields;
+
     public  GameObject      PanelRedQG;
     public  GameObject      DecorationRedBannerWeapons;
     public  GameObject      DecorationRedBannerCrowns;
-    public  GameObject      DecorationRedShields;
-    public  GameObject      DecorationRedWeapons;
+    public  GameObject      DecorationRedShieldsDefense;
+    public  GameObject      DecorationRedShieldsPrestige;
+    public  GameObject      DecorationRedWeaponsDamage;
+    public  GameObject      DecorationRedWeaponsPrestige;
     public  GameObject      DecorationRedGodOfWar;
     public  GameObject      DecorationRedGodOfTime;
     public  GameObject      DecorationRedGodOfLife;
@@ -296,8 +304,10 @@ public class GameManager : MonoBehaviour
     public  GameObject      PanelBlueQG;
     public  GameObject      DecorationBlueBannerWeapons;
     public  GameObject      DecorationBlueBannerCrowns;
-    public  GameObject      DecorationBlueShields;
-    public  GameObject      DecorationBlueWeapons;
+    public  GameObject      DecorationBlueShieldsDefense;
+    public  GameObject      DecorationBlueShieldsPrestige;
+    public  GameObject      DecorationBlueWeaponsDamage;
+    public  GameObject      DecorationBlueWeaponsPrestige;
     public  GameObject      DecorationBlueGodOfWar;
     public  GameObject      DecorationBlueGodOfTime;
     public  GameObject      DecorationBlueGodOfLife;
@@ -307,8 +317,10 @@ public class GameManager : MonoBehaviour
     public  GameObject      PanelYellowQG;
     public  GameObject      DecorationYellowBannerWeapons;
     public  GameObject      DecorationYellowBannerCrowns;
-    public  GameObject      DecorationYellowShields;
-    public  GameObject      DecorationYellowWeapons;
+    public  GameObject      DecorationYellowShieldsDefense;
+    public  GameObject      DecorationYellowShieldsPrestige;
+    public  GameObject      DecorationYellowWeaponsDamage;
+    public  GameObject      DecorationYellowWeaponsPrestige;
     public  GameObject      DecorationYellowGodOfWar;
     public  GameObject      DecorationYellowGodOfTime;
     public  GameObject      DecorationYellowGodOfLife;
@@ -369,6 +381,7 @@ public class GameManager : MonoBehaviour
     public  GameObject      hudStar2;
     public  GameObject      hudStar3;
     public  GameObject      hudVictoryCoinsScroll;
+    public  GameObject      hudVictoryCoin;
     public  GameObject      hudButtonTryAgain;
     public  GameObject      hudButtonReturnToMenu;
 
@@ -451,8 +464,10 @@ public class GameManager : MonoBehaviour
     public  GameObject      showSpellsInfoText;
     public  GameObject      volumeMusicSlider;
     public  GameObject      volumeMusicText;
+    public  GameObject      bulleInfoMusic;
     public  GameObject      volumeSFXSlider;
     public  GameObject      volumeSFXText;
+    public  GameObject      bulleInfoSFX;
     public  GameObject      LanguageButton;
     public  GameObject      LanguageText;
     public  GameObject      zqsdModeButton;
@@ -1008,15 +1023,18 @@ public class GameManager : MonoBehaviour
 
         hudVictoryCoinsScroll.GetComponentInChildren<Text>().text = (coins - coinsToAdd).ToString();
         hudVictoryCoinsScroll.SetActive(true);
+        hudVictoryCoin.SetActive(true);
 
         while (coinsToAdd > 0)
         {
+            hudVictoryCoin.GetComponent<CoinSlide>().StartAnimation();
             hudVictoryCoinsScroll.GetComponentInChildren<Text>().text = (coins - coinsToAdd).ToString();
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.2f);
             coinsToAdd--;
         }
 
         hudVictoryCoinsScroll.GetComponentInChildren<Text>().text = (coins - coinsToAdd).ToString();
+        hudVictoryCoin.SetActive(false);
     }
 
     IEnumerator VictoryAnimation()

@@ -348,7 +348,7 @@ public class MageElemental : MonoBehaviour
 
             if (chimney == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
-            else if (chimney == 3)
+            else if (chimney == 2)
                 GetComponent<Shoots>().decorationBonusTanking++;
 
 
@@ -365,13 +365,11 @@ public class MageElemental : MonoBehaviour
             if (PlayerPrefs.GetInt("Load1DecorationBanner") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
 
-            int equipment = PlayerPrefs.GetInt("Load1DecorationWeapons");
-
-            if (equipment == 1)
+            if (PlayerPrefs.GetInt("Load1DecorationWeapons") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
-            else if (equipment == 2)
-                GetComponent<Shoots>().decorationBonusTanking++;
 
+            if (PlayerPrefs.GetInt("Load1DecorationShields") == 1)
+                GetComponent<Shoots>().decorationBonusTanking++;
 
             if (PlayerPrefs.GetInt("Load1DecorationCarpet") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
@@ -638,7 +636,7 @@ public class MageElemental : MonoBehaviour
 
             if (chimney == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
-            else if (chimney == 3)
+            else if (chimney == 2)
                 GetComponent<Shoots>().decorationBonusTanking++;
 
 
@@ -655,14 +653,11 @@ public class MageElemental : MonoBehaviour
             if (PlayerPrefs.GetInt("Load2DecorationBanner") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
 
-
-            int equipment = PlayerPrefs.GetInt("Load2DecorationWeapons");
-
-            if (equipment == 1)
+            if (PlayerPrefs.GetInt("Load2DecorationWeapons") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
-            else if (equipment == 2)
-                GetComponent<Shoots>().decorationBonusTanking++;
 
+            if (PlayerPrefs.GetInt("Load2DecorationShields") == 1)
+                GetComponent<Shoots>().decorationBonusTanking++;
 
             if (PlayerPrefs.GetInt("Load2DecorationCarpet") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
@@ -929,7 +924,7 @@ public class MageElemental : MonoBehaviour
 
             if (chimney == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
-            else if (chimney == 3)
+            else if (chimney == 2)
                 GetComponent<Shoots>().decorationBonusTanking++;
 
 
@@ -946,14 +941,11 @@ public class MageElemental : MonoBehaviour
             if (PlayerPrefs.GetInt("Load3DecorationBanner") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
 
-
-            int equipment = PlayerPrefs.GetInt("Load3DecorationWeapons");
-
-            if (equipment == 1)
+            if (PlayerPrefs.GetInt("Load3DecorationWeapons") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;
-            else if (equipment == 2)
-                GetComponent<Shoots>().decorationBonusTanking++;
 
+            if (PlayerPrefs.GetInt("Load3DecorationShields") == 1)
+                GetComponent<Shoots>().decorationBonusTanking++;
 
             if (PlayerPrefs.GetInt("Load3DecorationCarpet") == 1)
                 GetComponent<Shoots>().decorationBonusDamage++;

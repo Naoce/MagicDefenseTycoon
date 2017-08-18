@@ -6,6 +6,8 @@ public class Buttons : MonoBehaviour
 {
     public  Sprite  boxChecked;
     public  Sprite  boxNotChecked;
+    public  Sprite  englishSprite;
+    public  Sprite  frenchSprite;
     private Color   colorBlack = new Color(0.19f, 0.19f, 0.19f, 1f);
 
     void Awake()
@@ -42,16 +44,19 @@ public class Buttons : MonoBehaviour
         {
             PlayerPrefs.SetInt("LanguageMode", 1);
             GetComponent<GameManager>().englishLanguage = true;
+            GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = englishSprite;
         }
         else
         {
             if (PlayerPrefs.GetInt("LanguageMode") == 1)
             {
                 GetComponent<GameManager>().englishLanguage = true;
+                GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = englishSprite;
             }
             else
             {
                 GetComponent<GameManager>().englishLanguage = false;
+                GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = frenchSprite;
             }
         }
 
@@ -200,6 +205,7 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().hudStar3.SetActive(false);
         GetComponent<GameManager>().hudVictory.SetActive(false);
         GetComponent<GameManager>().hudVictoryCoinsScroll.SetActive(false);
+        GetComponent<GameManager>().hudVictoryCoin.SetActive(false);
         GetComponent<GameManager>().hudDefeat.SetActive(false);
         GetComponent<GameManager>().hudButtonTryAgain.SetActive(false);
         GetComponent<GameManager>().hudButtonReturnToMenu.SetActive(false);
@@ -287,12 +293,32 @@ public class Buttons : MonoBehaviour
         GetComponent<AudioSource>().volume = GetComponent<GameManager>().volumeMusic / 100;
     }
 
+    public void DisplayInfoMusic()
+    {
+        GetComponent<GameManager>().bulleInfoMusic.SetActive(true);
+    }
+
+    public void HideInfoMusic()
+    {
+        GetComponent<GameManager>().bulleInfoMusic.SetActive(false);
+    }
+
     public void SFXVolumeChange()
     {
         GetComponent<GameManager>().volumeSFX = GetComponent<GameManager>().volumeSFXSlider.GetComponent<Slider>().value * 100f;
         PlayerPrefs.SetInt("SFXVolumeSet", 1);
         PlayerPrefs.SetInt("SFXVolume", (int)GetComponent<GameManager>().volumeSFX);
         GetComponent<GameManager>().volumeSFXText.GetComponent<Text>().text = ((int)GetComponent<GameManager>().volumeSFX).ToString() + "%";
+    }
+
+    public void DisplayInfoSFX()
+    {
+        GetComponent<GameManager>().bulleInfoSFX.SetActive(true);
+    }
+
+    public void HideInfoSFX()
+    {
+        GetComponent<GameManager>().bulleInfoSFX.SetActive(false);
     }
 
     public void BloodTrigger(GameObject obj)
@@ -3809,6 +3835,7 @@ public class Buttons : MonoBehaviour
         DecorationSelectScroll(2);
         DecorationSelectScroll(3);
         DecorationSelectScroll(4);
+        DecorationSelectScroll(5);
 
         GetComponent<GameManager>().PanelRoster.SetActive(false);
         GetComponent<GameManager>().PanelSkillTree.SetActive(false);
@@ -3992,25 +4019,25 @@ public class Buttons : MonoBehaviour
         {
             GetComponent<GameManager>().DecorationCurrentWeaponsSelected++;
 
-            GetComponent<GameManager>().DecorationRedWeapons.SetActive(false);
-            GetComponent<GameManager>().DecorationBlueWeapons.SetActive(false);
-            GetComponent<GameManager>().DecorationYellowWeapons.SetActive(false);
+            GetComponent<GameManager>().DecorationRedWeaponsPrestige.SetActive(true);
+            GetComponent<GameManager>().DecorationBlueWeaponsPrestige.SetActive(true);
+            GetComponent<GameManager>().DecorationYellowWeaponsPrestige.SetActive(true);
 
-            GetComponent<GameManager>().DecorationRedShields.SetActive(true);
-            GetComponent<GameManager>().DecorationBlueShields.SetActive(true);
-            GetComponent<GameManager>().DecorationYellowShields.SetActive(true);
+            GetComponent<GameManager>().DecorationRedWeaponsDamage.SetActive(false);
+            GetComponent<GameManager>().DecorationBlueWeaponsDamage.SetActive(false);
+            GetComponent<GameManager>().DecorationYellowWeaponsDamage.SetActive(false);
         }
         else
         {
             GetComponent<GameManager>().DecorationCurrentWeaponsSelected = 0;
 
-            GetComponent<GameManager>().DecorationRedShields.SetActive(false);
-            GetComponent<GameManager>().DecorationBlueShields.SetActive(false);
-            GetComponent<GameManager>().DecorationYellowShields.SetActive(false);
+            GetComponent<GameManager>().DecorationRedWeaponsPrestige.SetActive(false);
+            GetComponent<GameManager>().DecorationBlueWeaponsPrestige.SetActive(false);
+            GetComponent<GameManager>().DecorationYellowWeaponsPrestige.SetActive(false);
 
-            GetComponent<GameManager>().DecorationRedWeapons.SetActive(true);
-            GetComponent<GameManager>().DecorationBlueWeapons.SetActive(true);
-            GetComponent<GameManager>().DecorationYellowWeapons.SetActive(true);
+            GetComponent<GameManager>().DecorationRedWeaponsDamage.SetActive(true);
+            GetComponent<GameManager>().DecorationBlueWeaponsDamage.SetActive(true);
+            GetComponent<GameManager>().DecorationYellowWeaponsDamage.SetActive(true);
         }
 
         DecorationSelectScroll(3);
@@ -4044,6 +4071,36 @@ public class Buttons : MonoBehaviour
         }
 
         DecorationSelectScroll(4);
+    }
+
+    public void DecorationSwitchShields()
+    {
+        if (GetComponent<GameManager>().DecorationCurrentShieldsSelected == 0)
+        {
+            GetComponent<GameManager>().DecorationCurrentShieldsSelected++;
+
+            GetComponent<GameManager>().DecorationRedShieldsPrestige.SetActive(true);
+            GetComponent<GameManager>().DecorationBlueShieldsPrestige.SetActive(true);
+            GetComponent<GameManager>().DecorationYellowShieldsPrestige.SetActive(true);
+
+            GetComponent<GameManager>().DecorationRedShieldsDefense.SetActive(false);
+            GetComponent<GameManager>().DecorationBlueShieldsDefense.SetActive(false);
+            GetComponent<GameManager>().DecorationYellowShieldsDefense.SetActive(false);
+        }
+        else
+        {
+            GetComponent<GameManager>().DecorationCurrentShieldsSelected = 0;
+
+            GetComponent<GameManager>().DecorationRedShieldsPrestige.SetActive(false);
+            GetComponent<GameManager>().DecorationBlueShieldsPrestige.SetActive(false);
+            GetComponent<GameManager>().DecorationYellowShieldsPrestige.SetActive(false);
+
+            GetComponent<GameManager>().DecorationRedShieldsDefense.SetActive(true);
+            GetComponent<GameManager>().DecorationBlueShieldsDefense.SetActive(true);
+            GetComponent<GameManager>().DecorationYellowShieldsDefense.SetActive(true);
+        }
+
+        DecorationSelectScroll(5);
     }
 
     public void DecorationBuy()
@@ -4129,20 +4186,26 @@ public class Buttons : MonoBehaviour
         {
             GetComponent<GameManager>().coins -= 30;
 
+            if (GetComponent<GameManager>().DecorationCurrentWeaponsSelected == 1)
+                GetComponent<GameManager>().prestige += 10;
+
             if (GetComponent<GameManager>().currSave == 1)
             {
                 PlayerPrefs.SetInt("Load1DecorationWeapons", GetComponent<GameManager>().DecorationCurrentWeaponsSelected + 1);
                 PlayerPrefs.SetInt("Load1Coins", GetComponent<GameManager>().coins);
+                PlayerPrefs.SetInt("Load1Prestige", GetComponent<GameManager>().prestige);
             }
             else if (GetComponent<GameManager>().currSave == 2)
             {
                 PlayerPrefs.SetInt("Load2DecorationWeapons", GetComponent<GameManager>().DecorationCurrentWeaponsSelected + 1);
                 PlayerPrefs.SetInt("Load2Coins", GetComponent<GameManager>().coins);
+                PlayerPrefs.SetInt("Load2Prestige", GetComponent<GameManager>().prestige);
             }
             else
             {
                 PlayerPrefs.SetInt("Load3DecorationWeapons", GetComponent<GameManager>().DecorationCurrentWeaponsSelected + 1);
                 PlayerPrefs.SetInt("Load3Coins", GetComponent<GameManager>().coins);
+                PlayerPrefs.SetInt("Load3Prestige", GetComponent<GameManager>().prestige);
             }
         }
         else if (GetComponent<GameManager>().DecorationScrollSelected == 4)
@@ -4174,6 +4237,32 @@ public class Buttons : MonoBehaviour
                 PlayerPrefs.SetInt("Load3Prestige", GetComponent<GameManager>().prestige);
             }
         }
+        else if (GetComponent<GameManager>().DecorationScrollSelected == 5)
+        {
+            GetComponent<GameManager>().coins -= 30;
+
+            if (GetComponent<GameManager>().DecorationCurrentShieldsSelected == 1)
+                GetComponent<GameManager>().prestige += 10;
+
+            if (GetComponent<GameManager>().currSave == 1)
+            {
+                PlayerPrefs.SetInt("Load1DecorationShields", GetComponent<GameManager>().DecorationCurrentShieldsSelected + 1);
+                PlayerPrefs.SetInt("Load1Coins", GetComponent<GameManager>().coins);
+                PlayerPrefs.SetInt("Load1Prestige", GetComponent<GameManager>().prestige);
+            }
+            else if (GetComponent<GameManager>().currSave == 2)
+            {
+                PlayerPrefs.SetInt("Load2DecorationShields", GetComponent<GameManager>().DecorationCurrentShieldsSelected + 1);
+                PlayerPrefs.SetInt("Load2Coins", GetComponent<GameManager>().coins);
+                PlayerPrefs.SetInt("Load2Prestige", GetComponent<GameManager>().prestige);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("Load3DecorationShields", GetComponent<GameManager>().DecorationCurrentShieldsSelected + 1);
+                PlayerPrefs.SetInt("Load3Coins", GetComponent<GameManager>().coins);
+                PlayerPrefs.SetInt("Load3Prestige", GetComponent<GameManager>().prestige);
+            }
+        }
 
         DecorationSelectScroll(GetComponent<GameManager>().DecorationScrollSelected);
         UpdateDecoration(true);
@@ -4189,6 +4278,7 @@ public class Buttons : MonoBehaviour
         int decorationBanner = 0;
         int decorationWeapons = 0;
         int decorationCarpet = 0;
+        int decorationShields = 0;
 
         if (GetComponent<GameManager>().currSave == 1)
         {
@@ -4197,6 +4287,7 @@ public class Buttons : MonoBehaviour
             decorationBanner = PlayerPrefs.GetInt("Load1DecorationBanner");
             decorationWeapons = PlayerPrefs.GetInt("Load1DecorationWeapons");
             decorationCarpet = PlayerPrefs.GetInt("Load1DecorationCarpet");
+            decorationShields = PlayerPrefs.GetInt("Load1DecorationShields");
         }
         else if (GetComponent<GameManager>().currSave == 2)
         {
@@ -4205,6 +4296,7 @@ public class Buttons : MonoBehaviour
             decorationBanner = PlayerPrefs.GetInt("Load2DecorationBanner");
             decorationWeapons = PlayerPrefs.GetInt("Load2DecorationWeapons");
             decorationCarpet = PlayerPrefs.GetInt("Load2DecorationCarpet");
+            decorationShields = PlayerPrefs.GetInt("Load2DecorationShields");
         }
         else
         {
@@ -4213,6 +4305,7 @@ public class Buttons : MonoBehaviour
             decorationBanner = PlayerPrefs.GetInt("Load3DecorationBanner");
             decorationWeapons = PlayerPrefs.GetInt("Load3DecorationWeapons");
             decorationCarpet = PlayerPrefs.GetInt("Load3DecorationCarpet");
+            decorationShields = PlayerPrefs.GetInt("Load3DecorationShields");
         }
 
         if (decorationColor == 0)
@@ -4226,6 +4319,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().DecorationScrollBanner.SetActive(false);
             GetComponent<GameManager>().DecorationScrollWeapons.SetActive(false);
             GetComponent<GameManager>().DecorationScrollCarpet.SetActive(false);
+            GetComponent<GameManager>().DecorationScrollShields.SetActive(false);
 
             if (isInDecorationPanel == true)
             {
@@ -4315,6 +4409,24 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().DecorationPrevCarpet.SetActive(false);
                     break;
             }
+
+            switch (decorationShields)
+            {
+                case 0:
+                    GetComponent<GameManager>().DecorationNextShields.SetActive(true);
+                    GetComponent<GameManager>().DecorationPrevShields.SetActive(true);
+                    break;
+
+                case 1:
+                    GetComponent<GameManager>().DecorationNextShields.SetActive(false);
+                    GetComponent<GameManager>().DecorationPrevShields.SetActive(false);
+                    break;
+
+                case 2:
+                    GetComponent<GameManager>().DecorationNextShields.SetActive(false);
+                    GetComponent<GameManager>().DecorationPrevShields.SetActive(false);
+                    break;
+            }
         }
 
 
@@ -4329,6 +4441,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().DecorationScrollBanner.SetActive(true);
             GetComponent<GameManager>().DecorationScrollWeapons.SetActive(true);
             GetComponent<GameManager>().DecorationScrollCarpet.SetActive(true);
+            GetComponent<GameManager>().DecorationScrollShields.SetActive(true);
 
             switch (decorationGod)
             {
@@ -4398,27 +4511,27 @@ public class Buttons : MonoBehaviour
             switch (decorationWeapons)
             {
                 case 0:
-                    GetComponent<GameManager>().DecorationRedWeapons.SetActive(false);
-                    GetComponent<GameManager>().DecorationRedShields.SetActive(false);
+                    GetComponent<GameManager>().DecorationRedWeaponsDamage.SetActive(false);
+                    GetComponent<GameManager>().DecorationRedWeaponsPrestige.SetActive(false);
 
                     if (isInDecorationPanel == true)
                     {
                         if (GetComponent<GameManager>().DecorationCurrentWeaponsSelected == 0)
-                            GetComponent<GameManager>().DecorationRedWeapons.SetActive(true);
+                            GetComponent<GameManager>().DecorationRedWeaponsDamage.SetActive(true);
                         else
-                            GetComponent<GameManager>().DecorationRedShields.SetActive(true);
+                            GetComponent<GameManager>().DecorationRedWeaponsPrestige.SetActive(true);
                     }
 
                     break;
 
                 case 1:
-                    GetComponent<GameManager>().DecorationRedWeapons.SetActive(true);
-                    GetComponent<GameManager>().DecorationRedShields.SetActive(false);
+                    GetComponent<GameManager>().DecorationRedWeaponsDamage.SetActive(true);
+                    GetComponent<GameManager>().DecorationRedWeaponsPrestige.SetActive(false);
                     break;
 
                 case 2:
-                    GetComponent<GameManager>().DecorationRedWeapons.SetActive(false);
-                    GetComponent<GameManager>().DecorationRedShields.SetActive(true);
+                    GetComponent<GameManager>().DecorationRedWeaponsDamage.SetActive(false);
+                    GetComponent<GameManager>().DecorationRedWeaponsPrestige.SetActive(true);
                     break;
             }
 
@@ -4448,6 +4561,33 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().DecorationRedCarpet.SetActive(true);
                     break;
             }
+
+            switch (decorationShields)
+            {
+                case 0:
+                    GetComponent<GameManager>().DecorationRedShieldsDefense.SetActive(false);
+                    GetComponent<GameManager>().DecorationRedShieldsPrestige.SetActive(false);
+
+                    if (isInDecorationPanel == true)
+                    {
+                        if (GetComponent<GameManager>().DecorationCurrentShieldsSelected == 0)
+                            GetComponent<GameManager>().DecorationRedShieldsDefense.SetActive(true);
+                        else
+                            GetComponent<GameManager>().DecorationRedShieldsPrestige.SetActive(true);
+                    }
+
+                    break;
+
+                case 1:
+                    GetComponent<GameManager>().DecorationRedShieldsDefense.SetActive(true);
+                    GetComponent<GameManager>().DecorationRedShieldsPrestige.SetActive(false);
+                    break;
+
+                case 2:
+                    GetComponent<GameManager>().DecorationRedShieldsDefense.SetActive(false);
+                    GetComponent<GameManager>().DecorationRedShieldsPrestige.SetActive(true);
+                    break;
+            }
         }
         else if (decorationColor == 2)
         {
@@ -4460,6 +4600,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().DecorationScrollBanner.SetActive(true);
             GetComponent<GameManager>().DecorationScrollWeapons.SetActive(true);
             GetComponent<GameManager>().DecorationScrollCarpet.SetActive(true);
+            GetComponent<GameManager>().DecorationScrollShields.SetActive(true);
 
             switch (decorationGod)
             {
@@ -4529,27 +4670,27 @@ public class Buttons : MonoBehaviour
             switch (decorationWeapons)
             {
                 case 0:
-                    GetComponent<GameManager>().DecorationBlueWeapons.SetActive(false);
-                    GetComponent<GameManager>().DecorationBlueShields.SetActive(false);
+                    GetComponent<GameManager>().DecorationBlueWeaponsDamage.SetActive(false);
+                    GetComponent<GameManager>().DecorationBlueWeaponsPrestige.SetActive(false);
 
                     if (isInDecorationPanel == true)
                     {
                         if (GetComponent<GameManager>().DecorationCurrentWeaponsSelected == 0)
-                            GetComponent<GameManager>().DecorationBlueWeapons.SetActive(true);
+                            GetComponent<GameManager>().DecorationBlueWeaponsDamage.SetActive(true);
                         else
-                            GetComponent<GameManager>().DecorationBlueShields.SetActive(true);
+                            GetComponent<GameManager>().DecorationBlueWeaponsPrestige.SetActive(true);
                     }
 
                     break;
 
                 case 1:
-                    GetComponent<GameManager>().DecorationBlueWeapons.SetActive(true);
-                    GetComponent<GameManager>().DecorationBlueShields.SetActive(false);
+                    GetComponent<GameManager>().DecorationBlueWeaponsDamage.SetActive(true);
+                    GetComponent<GameManager>().DecorationBlueWeaponsPrestige.SetActive(false);
                     break;
 
                 case 2:
-                    GetComponent<GameManager>().DecorationBlueWeapons.SetActive(false);
-                    GetComponent<GameManager>().DecorationBlueShields.SetActive(true);
+                    GetComponent<GameManager>().DecorationBlueWeaponsDamage.SetActive(false);
+                    GetComponent<GameManager>().DecorationBlueWeaponsPrestige.SetActive(true);
                     break;
             }
 
@@ -4579,6 +4720,33 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().DecorationBlueCarpet.SetActive(false);
                     break;
             }
+
+            switch (decorationShields)
+            {
+                case 0:
+                    GetComponent<GameManager>().DecorationBlueShieldsDefense.SetActive(false);
+                    GetComponent<GameManager>().DecorationBlueShieldsPrestige.SetActive(false);
+
+                    if (isInDecorationPanel == true)
+                    {
+                        if (GetComponent<GameManager>().DecorationCurrentShieldsSelected == 0)
+                            GetComponent<GameManager>().DecorationBlueShieldsDefense.SetActive(true);
+                        else
+                            GetComponent<GameManager>().DecorationBlueShieldsPrestige.SetActive(true);
+                    }
+
+                    break;
+
+                case 1:
+                    GetComponent<GameManager>().DecorationBlueShieldsDefense.SetActive(true);
+                    GetComponent<GameManager>().DecorationBlueShieldsPrestige.SetActive(false);
+                    break;
+
+                case 2:
+                    GetComponent<GameManager>().DecorationBlueShieldsDefense.SetActive(false);
+                    GetComponent<GameManager>().DecorationBlueShieldsPrestige.SetActive(true);
+                    break;
+            }
         }
         else if (decorationColor == 3)
         {
@@ -4591,6 +4759,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().DecorationScrollBanner.SetActive(true);
             GetComponent<GameManager>().DecorationScrollWeapons.SetActive(true);
             GetComponent<GameManager>().DecorationScrollCarpet.SetActive(true);
+            GetComponent<GameManager>().DecorationScrollShields.SetActive(true);
 
             switch (decorationGod)
             {
@@ -4660,27 +4829,27 @@ public class Buttons : MonoBehaviour
             switch (decorationWeapons)
             {
                 case 0:
-                    GetComponent<GameManager>().DecorationYellowWeapons.SetActive(false);
-                    GetComponent<GameManager>().DecorationYellowShields.SetActive(false);
+                    GetComponent<GameManager>().DecorationYellowWeaponsDamage.SetActive(false);
+                    GetComponent<GameManager>().DecorationYellowWeaponsPrestige.SetActive(false);
 
                     if (isInDecorationPanel == true)
                     {
                         if (GetComponent<GameManager>().DecorationCurrentWeaponsSelected == 0)
-                            GetComponent<GameManager>().DecorationYellowWeapons.SetActive(true);
+                            GetComponent<GameManager>().DecorationYellowWeaponsDamage.SetActive(true);
                         else
-                            GetComponent<GameManager>().DecorationYellowShields.SetActive(true);
+                            GetComponent<GameManager>().DecorationYellowWeaponsPrestige.SetActive(true);
                     }
 
                     break;
 
                 case 1:
-                    GetComponent<GameManager>().DecorationYellowWeapons.SetActive(true);
-                    GetComponent<GameManager>().DecorationYellowShields.SetActive(false);
+                    GetComponent<GameManager>().DecorationYellowWeaponsDamage.SetActive(true);
+                    GetComponent<GameManager>().DecorationYellowWeaponsPrestige.SetActive(false);
                     break;
 
                 case 2:
-                    GetComponent<GameManager>().DecorationYellowWeapons.SetActive(false);
-                    GetComponent<GameManager>().DecorationYellowShields.SetActive(true);
+                    GetComponent<GameManager>().DecorationYellowWeaponsDamage.SetActive(false);
+                    GetComponent<GameManager>().DecorationYellowWeaponsPrestige.SetActive(true);
                     break;
             }
 
@@ -4710,6 +4879,33 @@ public class Buttons : MonoBehaviour
                     GetComponent<GameManager>().DecorationYellowCarpet.SetActive(false);
                     break;
             }
+
+            switch (decorationShields)
+            {
+                case 0:
+                    GetComponent<GameManager>().DecorationYellowShieldsDefense.SetActive(false);
+                    GetComponent<GameManager>().DecorationYellowShieldsPrestige.SetActive(false);
+
+                    if (isInDecorationPanel == true)
+                    {
+                        if (GetComponent<GameManager>().DecorationCurrentShieldsSelected == 0)
+                            GetComponent<GameManager>().DecorationYellowShieldsDefense.SetActive(true);
+                        else
+                            GetComponent<GameManager>().DecorationYellowShieldsPrestige.SetActive(true);
+                    }
+
+                    break;
+
+                case 1:
+                    GetComponent<GameManager>().DecorationYellowShieldsDefense.SetActive(true);
+                    GetComponent<GameManager>().DecorationYellowShieldsPrestige.SetActive(false);
+                    break;
+
+                case 2:
+                    GetComponent<GameManager>().DecorationYellowShieldsDefense.SetActive(false);
+                    GetComponent<GameManager>().DecorationYellowShieldsPrestige.SetActive(true);
+                    break;
+            }
         }
     }
 
@@ -4736,6 +4932,7 @@ public class Buttons : MonoBehaviour
         int decorationBanner = 0;
         int decorationWeapons = 0;
         int decorationCarpet = 0;
+        int decorationShields = 0;
 
         if (GetComponent<GameManager>().currSave == 1)
         {
@@ -4744,6 +4941,7 @@ public class Buttons : MonoBehaviour
             decorationBanner = PlayerPrefs.GetInt("Load1DecorationBanner");
             decorationWeapons = PlayerPrefs.GetInt("Load1DecorationWeapons");
             decorationCarpet = PlayerPrefs.GetInt("Load1DecorationCarpet");
+            decorationShields = PlayerPrefs.GetInt("Load1DecorationShields");
         }
         else if (GetComponent<GameManager>().currSave == 2)
         {
@@ -4752,6 +4950,7 @@ public class Buttons : MonoBehaviour
             decorationBanner = PlayerPrefs.GetInt("Load2DecorationBanner");
             decorationWeapons = PlayerPrefs.GetInt("Load2DecorationWeapons");
             decorationCarpet = PlayerPrefs.GetInt("Load2DecorationCarpet");
+            decorationShields = PlayerPrefs.GetInt("Load2DecorationShields");
         }
         else
         {
@@ -4760,6 +4959,7 @@ public class Buttons : MonoBehaviour
             decorationBanner = PlayerPrefs.GetInt("Load3DecorationBanner");
             decorationWeapons = PlayerPrefs.GetInt("Load3DecorationWeapons");
             decorationCarpet = PlayerPrefs.GetInt("Load3DecorationCarpet");
+            decorationShields = PlayerPrefs.GetInt("Load3DecorationShields");
         }
 
         if (scroll == 0)
@@ -4929,6 +5129,40 @@ public class Buttons : MonoBehaviour
                 GetComponent<GameManager>().DecorationDescriptionText.text = GetComponent<TradManager>().GetDecorationDescriptionCarpet2();
             }
         }
+        else if (scroll == 5)
+        {
+            if (decorationShields != 0)
+            {
+                GetComponent<GameManager>().DecorationCoinsText.color = colorBlack;
+                GetComponent<GameManager>().DecorationScrollBuy.SetActive(false);
+            }
+
+            if (decorationShields == 0)
+            {
+                DecorationCheckScrollBuy(30);
+
+                if (GetComponent<GameManager>().DecorationCurrentShieldsSelected == 0)
+                {
+                    GetComponent<GameManager>().DecorationTextShields.text = GetComponent<TradManager>().GetDecorationTitleShields1();
+                    GetComponent<GameManager>().DecorationDescriptionText.text = GetComponent<TradManager>().GetDecorationDescriptionShields1();
+                }
+                else
+                {
+                    GetComponent<GameManager>().DecorationTextShields.text = GetComponent<TradManager>().GetDecorationTitleShields2();
+                    GetComponent<GameManager>().DecorationDescriptionText.text = GetComponent<TradManager>().GetDecorationDescriptionShields2();
+                }
+            }
+            else if (decorationShields == 1)
+            {
+                GetComponent<GameManager>().DecorationTextShields.text = GetComponent<TradManager>().GetDecorationTitleShields1();
+                GetComponent<GameManager>().DecorationDescriptionText.text = GetComponent<TradManager>().GetDecorationDescriptionShields1();
+            }
+            else
+            {
+                GetComponent<GameManager>().DecorationTextShields.text = GetComponent<TradManager>().GetDecorationTitleShields2();
+                GetComponent<GameManager>().DecorationDescriptionText.text = GetComponent<TradManager>().GetDecorationDescriptionShields2();
+            }
+        }
     }
 
     public void ReturnToIntro()
@@ -4965,6 +5199,7 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("LanguageMode", 1);
             PlayerPrefs.SetInt("LanguageModeSet", 1);
             GetComponent<GameManager>().englishLanguage = true;
+            GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = englishSprite;
             GetComponent<TradManager>().ResetTexts();
         }
         else
@@ -4972,6 +5207,7 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("LanguageMode", 0);
             PlayerPrefs.SetInt("LanguageModeSet", 1);
             GetComponent<GameManager>().englishLanguage = false;
+            GetComponent<GameManager>().LanguageButton.GetComponent<Image>().sprite = frenchSprite;
             GetComponent<TradManager>().ResetTexts();
         }
     }
@@ -5442,6 +5678,7 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load1DecorationBanner", 0);
         PlayerPrefs.SetInt("Load1DecorationWeapons", 0);
         PlayerPrefs.SetInt("Load1DecorationCarpet", 0);
+        PlayerPrefs.SetInt("Load1DecorationShields", 0);
 
         GetComponent<GameManager>().load1Created = false;
         GetComponent<GameManager>().load1Name.GetComponent<Text>().text = GetComponent<TradManager>().GetTextEmptySave();
@@ -5603,6 +5840,7 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load2DecorationBanner", 0);
         PlayerPrefs.SetInt("Load2DecorationWeapons", 0);
         PlayerPrefs.SetInt("Load2DecorationCarpet", 0);
+        PlayerPrefs.SetInt("Load2DecorationShields", 0);
 
         GetComponent<GameManager>().load2Created = false;
         GetComponent<GameManager>().load2Name.GetComponent<Text>().text = GetComponent<TradManager>().GetTextEmptySave();
@@ -5764,6 +6002,7 @@ public class Buttons : MonoBehaviour
         PlayerPrefs.SetInt("Load3DecorationBanner", 0);
         PlayerPrefs.SetInt("Load3DecorationWeapons", 0);
         PlayerPrefs.SetInt("Load3DecorationCarpet", 0);
+        PlayerPrefs.SetInt("Load3DecorationShields", 0);
 
         GetComponent<GameManager>().load3Created = false;
         GetComponent<GameManager>().load3Name.GetComponent<Text>().text = GetComponent<TradManager>().GetTextEmptySave();
