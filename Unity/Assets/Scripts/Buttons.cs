@@ -68,8 +68,6 @@ public class Buttons : MonoBehaviour
         if (Time.timeScale == 1)
         {
             GetComponent<GameManager>().hudPanelOptions.SetActive(false);
-            GetComponent<GameManager>().panelIntro.SetActive(true);
-            StartCoroutine(AnimationPanelIntro());
             GetComponent<GameManager>().isInOptionsFromIntro = false;
         }
         else
@@ -88,7 +86,6 @@ public class Buttons : MonoBehaviour
 
     public void OptionsFromIntro()
     {
-        GetComponent<GameManager>().panelIntro.SetActive(false);
         GetComponent<GameManager>().hudPanelOptions.SetActive(true);
         AnimationPanelOptions();
         GetComponent<GameManager>().isInOptionsFromIntro = true;
@@ -114,6 +111,9 @@ public class Buttons : MonoBehaviour
 
     void NewGame()
     {
+        GetComponent<GameManager>().menuScrollOptions.SetActive(false);
+        GetComponent<GameManager>().menuScrollTutorial.SetActive(false);
+        GetComponent<GameManager>().menuScrollBestiary.SetActive(false);
         GetComponent<GameManager>().panelMissions.SetActive(false);
         GetComponent<GameManager>().capturePanel.SetActive(false);
         GetComponent<GameManager>().defensePanel.SetActive(false);
@@ -258,6 +258,9 @@ public class Buttons : MonoBehaviour
         Application.LoadLevel("SceneMenu");
         GetComponent<GameManager>().PlayMusicMenu();
         StartCoroutine(AnimationPanelMenu());
+        GetComponent<GameManager>().menuScrollOptions.SetActive(true);
+        GetComponent<GameManager>().menuScrollTutorial.SetActive(true);
+        //GetComponent<GameManager>().menuScrollBestiary.SetActive(true);
     }
 
     public void QuitApp()
@@ -327,11 +330,13 @@ public class Buttons : MonoBehaviour
         {
             PlayerPrefs.SetInt("Bloodless", 0);
             obj.GetComponent<Image>().sprite = boxNotChecked;
+            GetComponent<GameManager>().bloodless = false;
         }
         else
         {
             PlayerPrefs.SetInt("Bloodless", 1);
             obj.GetComponent<Image>().sprite = boxChecked;
+            GetComponent<GameManager>().bloodless = true;
         }
     }
 
@@ -350,24 +355,6 @@ public class Buttons : MonoBehaviour
             PlayerPrefs.SetInt("SpellsInfo", 1);
             GetComponent<GameManager>().showSpellsInfo = true;
             obj.GetComponent<Image>().sprite = boxChecked;
-        }
-    }
-
-    public void WindowedModeTrigger(GameObject obj)
-    {
-        if (GetComponent<GameManager>().windowed == true)
-        {
-            PlayerPrefs.SetInt("Windowed", 0);
-            GetComponent<GameManager>().windowed = false;
-            obj.GetComponent<Image>().sprite = boxNotChecked;
-            Screen.SetResolution(1920, 1080, true);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("Windowed", 1);
-            GetComponent<GameManager>().windowed = true;
-            obj.GetComponent<Image>().sprite = boxChecked;
-            Screen.SetResolution(1280, 720, false);
         }
     }
 
@@ -5410,8 +5397,7 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().zqsdModeButton.SetActive(false);
         GetComponent<GameManager>().zqsdModeText.SetActive(false);
         GetComponent<GameManager>().scrollOptions7.GetComponent<Animator>().SetBool("StartAnim", true);
-        GetComponent<GameManager>().windowedButton.SetActive(false);
-        GetComponent<GameManager>().windowedText.SetActive(false);
+        GetComponent<GameManager>().optionsReturnText.SetActive(false);
         GetComponent<GameManager>().scrollOptions8.GetComponent<Animator>().SetBool("StartAnim", true);
         GetComponent<GameManager>().LanguageButton.SetActive(false);
         GetComponent<GameManager>().LanguageText.SetActive(false);
@@ -5431,8 +5417,7 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().volumeSFXText.SetActive(true);
         GetComponent<GameManager>().zqsdModeButton.SetActive(true);
         GetComponent<GameManager>().zqsdModeText.SetActive(true);
-        GetComponent<GameManager>().windowedButton.SetActive(true);
-        GetComponent<GameManager>().windowedText.SetActive(true);
+        GetComponent<GameManager>().optionsReturnText.SetActive(true);
         GetComponent<GameManager>().LanguageButton.SetActive(true);
         GetComponent<GameManager>().LanguageText.SetActive(true);
     }

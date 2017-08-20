@@ -21,6 +21,8 @@ public class TradManager : MonoBehaviour
 
     // A Modifier lors d'un changement de langue - Debut
     public Text MenuTextIntroPlay;
+    public Text MenuTextCredits;
+    public Text MenuTextNews;
     public Text MenuTextQuit;
 
     public Text MenuTextSave1;
@@ -76,14 +78,16 @@ public class TradManager : MonoBehaviour
     public Text MenuTextInGameRestart;
     public Text MenuTextInGameForfeit;
 
+    public Text MenuTextScrollTutorial;
+    public Text MenuTextScrollBestiary;
+
     public Text MenuTextOptionsSmartcast;
     public Text MenuTextOptionsBloodless;
     public Text MenuTextOptionsPopUp;
     public Text MenuTextOptionsLanguage;
-    public Text MenuTextOptionsWindowed;
+    public Text MenuTextOptionsReturn;
     public Text MenuTextOptionsMusicInfo;
     public Text MenuTextOptionsSFXInfo;
-    public Text MenuTextOptionsReturn;
 
     public Text HUDTextTitleSpell1;
     public Text HUDTextTitleSpell2;
@@ -105,6 +109,8 @@ public class TradManager : MonoBehaviour
         isInEnglish = GetComponent<GameManager>().englishLanguage;
 
         MenuTextIntroPlay.text = GetTextPlay();
+        MenuTextCredits.text = GetTextCredits();
+        MenuTextNews.text = GetTextNews();
         MenuTextQuit.text = GetTextQuit();
 
         if (PlayerPrefs.GetInt("Load1Created") == 0)
@@ -163,11 +169,13 @@ public class TradManager : MonoBehaviour
         MenuTextInGameRestart.text = GetTextRestart();
         MenuTextInGameForfeit.text = GetTextForfeit();
 
+        MenuTextScrollTutorial.text = GetTextTutorial();
+        MenuTextScrollBestiary.text = GetTextBestiary();
+
         MenuTextOptionsSmartcast.text = GetTextSmartcast();
         MenuTextOptionsBloodless.text = GetTextBloodless();
         MenuTextOptionsPopUp.text = GetTextPopUp();
         MenuTextOptionsLanguage.text = GetTextLanguage();
-        MenuTextOptionsWindowed.text = GetTextWindowed();
         MenuTextOptionsMusicInfo.text = GetTextMusicInfo();
         MenuTextOptionsSFXInfo.text = GetTextSFXInfo();
         MenuTextOptionsReturn.text = GetTextReturn();
@@ -199,6 +207,22 @@ public class TradManager : MonoBehaviour
             return ("Play");
         else
             return ("Jouer");
+    }
+
+    public string GetTextCredits()
+    {
+        if (isInEnglish)
+            return ("Credits");
+        else
+            return ("Crédits");
+    }
+
+    public string GetTextNews()
+    {
+        if (isInEnglish)
+            return ("News");
+        else
+            return ("Actualités");
     }
 
     public string GetTextQuit()
@@ -449,6 +473,22 @@ public class TradManager : MonoBehaviour
             return ("Abandonner");
     }
 
+    public string GetTextTutorial()
+    {
+        if (isInEnglish)
+            return ("Tutorial");
+        else
+            return ("Tutoriel");
+    }
+
+    public string GetTextBestiary()
+    {
+        if (isInEnglish)
+            return ("Bestiary");
+        else
+            return ("Bestiaire");
+    }
+
     public string GetTextSmartcast()
     {
         if (isInEnglish)
@@ -479,14 +519,6 @@ public class TradManager : MonoBehaviour
             return ("English");
         else
             return ("Français");
-    }
-
-    public string GetTextWindowed()
-    {
-        if (isInEnglish)
-            return ("Windowed");
-        else
-            return ("Fenêtré");
     }
 
     public string GetTextMusicInfo()
