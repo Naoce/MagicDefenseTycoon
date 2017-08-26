@@ -110,6 +110,26 @@ public class GameManager : MonoBehaviour
     public  GameObject      MissionsPanelSheet5Difficulty2;
     public  GameObject      MissionsPanelSheet5Difficulty3;
     public  GameObject      MissionsPanelSheet5Difficulty4;
+    public  GameObject      MissionsPanelSheet6;
+    public  Image           MissionsPanelSheet6Type;
+    public  GameObject      MissionsPanelSheet6Difficulty2;
+    public  GameObject      MissionsPanelSheet6Difficulty3;
+    public  GameObject      MissionsPanelSheet6Difficulty4;
+    public  GameObject      MissionsPanelSheet7;
+    public  Image           MissionsPanelSheet7Type;
+    public  GameObject      MissionsPanelSheet7Difficulty2;
+    public  GameObject      MissionsPanelSheet7Difficulty3;
+    public  GameObject      MissionsPanelSheet7Difficulty4;
+    public  GameObject      MissionsPanelSheet8;
+    public  Image           MissionsPanelSheet8Type;
+    public  GameObject      MissionsPanelSheet8Difficulty2;
+    public  GameObject      MissionsPanelSheet8Difficulty3;
+    public  GameObject      MissionsPanelSheet8Difficulty4;
+    public  GameObject      MissionsPanelSheet9;
+    public  Image           MissionsPanelSheet9Type;
+    public  GameObject      MissionsPanelSheet9Difficulty2;
+    public  GameObject      MissionsPanelSheet9Difficulty3;
+    public  GameObject      MissionsPanelSheet9Difficulty4;
 
     public  Sprite          tabOffSprite;
     public  Sprite          tabOnSprite;
@@ -390,6 +410,8 @@ public class GameManager : MonoBehaviour
     public  GameObject      scrollIntro2;
     public  GameObject      scrollIntro3;
     public  GameObject      scrollIntro4;
+
+    public  GameObject      PanelCredits;
 
     public  GameObject      panelSave;
     public  GameObject      scrollSave1;
@@ -801,7 +823,7 @@ public class GameManager : MonoBehaviour
         mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().canShoot = false;
         if (showSpellsInfo == true)
         {
-            int healCount = 20 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusHealing;
+            int healCount = 10 + mapManager.GetComponent<MapManager>().player.GetComponent<Shoots>().decorationBonusHealing;
             GetComponent<TradManager>().HUDTextDescriptionPotion1.text = GetComponent<TradManager>().GetDescriptionPotion1_1() + healCount + GetComponent<TradManager>().GetDescriptionPotion1_2();
             bulleInfoObject1.SetActive(true);
         }

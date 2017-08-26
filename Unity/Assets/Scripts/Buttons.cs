@@ -628,7 +628,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().MissionsPanelSheet1Difficulty3.SetActive(false);
 
         if (GetComponent<GameManager>().listMissions[0].GetComponent<MissionSheet>().difficulty > 3)
-            GetComponent<GameManager>().MissionsPanelSheet1Difficulty3.SetActive(true);
+            GetComponent<GameManager>().MissionsPanelSheet1Difficulty4.SetActive(true);
         else
             GetComponent<GameManager>().MissionsPanelSheet1Difficulty4.SetActive(false);
 
@@ -751,6 +751,96 @@ public class Buttons : MonoBehaviour
         }
         else
             GetComponent<GameManager>().MissionsPanelSheet5.SetActive(false);
+
+        //Sheet6
+        if (GetComponent<GameManager>().listMissions.Count > 5)
+        {
+            GetComponent<GameManager>().MissionsPanelSheet6.SetActive(true);
+
+            if (GetComponent<GameManager>().listMissions[5].GetComponent<MissionSheet>().type == MapManager.MapType.Boss)
+                GetComponent<GameManager>().MissionsPanelSheet6Type.sprite = GetComponent<GameManager>().littlebossSprite;
+            else if (GetComponent<GameManager>().listMissions[5].GetComponent<MissionSheet>().type == MapManager.MapType.Capture)
+                GetComponent<GameManager>().MissionsPanelSheet6Type.sprite = GetComponent<GameManager>().littlecaptureSprite;
+            else
+                GetComponent<GameManager>().MissionsPanelSheet6Type.sprite = GetComponent<GameManager>().littledefenseSprite;
+
+            if (GetComponent<GameManager>().listMissions[5].GetComponent<MissionSheet>().difficulty > 1)
+                GetComponent<GameManager>().MissionsPanelSheet6Difficulty2.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet6Difficulty2.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[5].GetComponent<MissionSheet>().difficulty > 2)
+                GetComponent<GameManager>().MissionsPanelSheet6Difficulty3.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet6Difficulty3.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[5].GetComponent<MissionSheet>().difficulty > 3)
+                GetComponent<GameManager>().MissionsPanelSheet6Difficulty4.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet6Difficulty4.SetActive(false);
+        }
+        else
+            GetComponent<GameManager>().MissionsPanelSheet6.SetActive(false);
+
+        //Sheet7
+        if (GetComponent<GameManager>().listMissions.Count > 6)
+        {
+            GetComponent<GameManager>().MissionsPanelSheet7.SetActive(true);
+
+            if (GetComponent<GameManager>().listMissions[6].GetComponent<MissionSheet>().type == MapManager.MapType.Boss)
+                GetComponent<GameManager>().MissionsPanelSheet7Type.sprite = GetComponent<GameManager>().littlebossSprite;
+            else if (GetComponent<GameManager>().listMissions[6].GetComponent<MissionSheet>().type == MapManager.MapType.Capture)
+                GetComponent<GameManager>().MissionsPanelSheet7Type.sprite = GetComponent<GameManager>().littlecaptureSprite;
+            else
+                GetComponent<GameManager>().MissionsPanelSheet7Type.sprite = GetComponent<GameManager>().littledefenseSprite;
+
+            if (GetComponent<GameManager>().listMissions[6].GetComponent<MissionSheet>().difficulty > 1)
+                GetComponent<GameManager>().MissionsPanelSheet7Difficulty2.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet7Difficulty2.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[6].GetComponent<MissionSheet>().difficulty > 2)
+                GetComponent<GameManager>().MissionsPanelSheet7Difficulty3.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet7Difficulty3.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[6].GetComponent<MissionSheet>().difficulty > 3)
+                GetComponent<GameManager>().MissionsPanelSheet7Difficulty4.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet7Difficulty4.SetActive(false);
+        }
+        else
+            GetComponent<GameManager>().MissionsPanelSheet7.SetActive(false);
+
+        //Sheet8
+        if (GetComponent<GameManager>().listMissions.Count > 7)
+        {
+            GetComponent<GameManager>().MissionsPanelSheet8.SetActive(true);
+
+            if (GetComponent<GameManager>().listMissions[7].GetComponent<MissionSheet>().type == MapManager.MapType.Boss)
+                GetComponent<GameManager>().MissionsPanelSheet8Type.sprite = GetComponent<GameManager>().littlebossSprite;
+            else if (GetComponent<GameManager>().listMissions[7].GetComponent<MissionSheet>().type == MapManager.MapType.Capture)
+                GetComponent<GameManager>().MissionsPanelSheet8Type.sprite = GetComponent<GameManager>().littlecaptureSprite;
+            else
+                GetComponent<GameManager>().MissionsPanelSheet8Type.sprite = GetComponent<GameManager>().littledefenseSprite;
+
+            if (GetComponent<GameManager>().listMissions[7].GetComponent<MissionSheet>().difficulty > 1)
+                GetComponent<GameManager>().MissionsPanelSheet8Difficulty2.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet8Difficulty2.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[7].GetComponent<MissionSheet>().difficulty > 2)
+                GetComponent<GameManager>().MissionsPanelSheet8Difficulty3.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet8Difficulty3.SetActive(false);
+
+            if (GetComponent<GameManager>().listMissions[7].GetComponent<MissionSheet>().difficulty > 3)
+                GetComponent<GameManager>().MissionsPanelSheet8Difficulty4.SetActive(true);
+            else
+                GetComponent<GameManager>().MissionsPanelSheet8Difficulty4.SetActive(false);
+        }
+        else
+            GetComponent<GameManager>().MissionsPanelSheet8.SetActive(false);
     }
 
     public void FillMissionsMainSheet(int id)
@@ -774,7 +864,7 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().MissionsPanelMainSheetDifficulty3.SetActive(false);
 
         if (GetComponent<GameManager>().listMissions[id].GetComponent<MissionSheet>().difficulty > 3)
-            GetComponent<GameManager>().MissionsPanelMainSheetDifficulty3.SetActive(true);
+            GetComponent<GameManager>().MissionsPanelMainSheetDifficulty4.SetActive(true);
         else
             GetComponent<GameManager>().MissionsPanelMainSheetDifficulty4.SetActive(false);
         if (GetComponent<GameManager>().englishLanguage == true)
@@ -846,6 +936,10 @@ public class Buttons : MonoBehaviour
             FillTavernMainSheet(0);
             GetComponent<GameManager>().TavernAgent1.SetActive(true);
             GetComponent<GameManager>().TavernTabAgent1.SetActive(true);
+
+            GetComponent<GameManager>().TavernAgentObj[1] = null;
+            GetComponent<GameManager>().TavernAgentObj[2] = null;
+            GetComponent<GameManager>().TavernAgentObj[3] = null;
 
             HighlightTavernTab(0);
 
@@ -991,7 +1085,7 @@ public class Buttons : MonoBehaviour
 
         if (GetComponent<GameManager>().englishLanguage == true)
         {
-            GetComponent<GameManager>().TavernDescription.GetComponent<Text>().text = GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetName +
+            GetComponent<GameManager>().TavernDescription.GetComponent<Text>().text = GetComponent<TradManager>().GetNameAlly(GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetID) +
                                                             "\nClass : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
                                                             "\nLevel : " + levelAgent +
                                                             "\n\nHealth points : " + hp +
@@ -1001,7 +1095,7 @@ public class Buttons : MonoBehaviour
         }
         else
         {
-            GetComponent<GameManager>().TavernDescription.GetComponent<Text>().text = GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetName +
+            GetComponent<GameManager>().TavernDescription.GetComponent<Text>().text = GetComponent<TradManager>().GetNameAlly(GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetID) +
                                                             "\nClasse : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().TavernAgentObj[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
                                                             "\nNiveau : " + levelAgent +
                                                             "\n\nPoints de vie : " + hp +
@@ -1060,38 +1154,50 @@ public class Buttons : MonoBehaviour
             GetComponent<GameManager>().TavernAgent1Recruited = true;
             GetComponent<GameManager>().TavernAgent1.SetActive(false);
             GetComponent<GameManager>().TavernTabAgent1.SetActive(false);
+            GetComponent<GameManager>().TavernAgentObj[0] = null;
         }
         else if (GetComponent<GameManager>().currAgentSelected == 1)
         {
             GetComponent<GameManager>().TavernAgent2Recruited = true;
             GetComponent<GameManager>().TavernAgent2.SetActive(false);
             GetComponent<GameManager>().TavernTabAgent2.SetActive(false);
+            GetComponent<GameManager>().TavernAgentObj[1] = null;
         }
         else if (GetComponent<GameManager>().currAgentSelected == 2)
         {
             GetComponent<GameManager>().TavernAgent3Recruited = true;
             GetComponent<GameManager>().TavernAgent3.SetActive(false);
             GetComponent<GameManager>().TavernTabAgent3.SetActive(false);
+            GetComponent<GameManager>().TavernAgentObj[2] = null;
         }
         else
         {
             GetComponent<GameManager>().TavernAgent4Recruited = true;
             GetComponent<GameManager>().TavernAgent4.SetActive(false);
             GetComponent<GameManager>().TavernTabAgent4.SetActive(false);
+            GetComponent<GameManager>().TavernAgentObj[3] = null;
         }
 
         if (GetComponent<GameManager>().TavernAgent1Recruited == false &&
             GetComponent<GameManager>().TavernAgentObj[0] != null)
+        {
             FillTavernMainSheet(0);
+        }
         else if (GetComponent<GameManager>().TavernAgent2Recruited == false &&
             GetComponent<GameManager>().TavernAgentObj[1] != null)
+        {
             FillTavernMainSheet(1);
+        }
         else if (GetComponent<GameManager>().TavernAgent3Recruited == false &&
             GetComponent<GameManager>().TavernAgentObj[2] != null)
+        {
             FillTavernMainSheet(2);
+        }
         else if (GetComponent<GameManager>().TavernAgent4Recruited == false &&
             GetComponent<GameManager>().TavernAgentObj[3] != null)
+        {
             FillTavernMainSheet(3);
+        }
         else
         {
             GetComponent<GameManager>().TavernDescription.SetActive(false);
@@ -1485,7 +1591,7 @@ public class Buttons : MonoBehaviour
 
         if (GetComponent<GameManager>().englishLanguage == true)
         {
-            GetComponent<GameManager>().RosterTextDescription.GetComponent<Text>().text = GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetName +
+            GetComponent<GameManager>().RosterTextDescription.GetComponent<Text>().text = GetComponent<TradManager>().GetNameAlly(GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetID) +
                                     "\nClass : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
                                     "\nLevel : " + levelAgent +
                                     "\n\nHealth points : " + hp +
@@ -1498,7 +1604,7 @@ public class Buttons : MonoBehaviour
         }
         else
         {
-            GetComponent<GameManager>().RosterTextDescription.GetComponent<Text>().text = GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetName +
+            GetComponent<GameManager>().RosterTextDescription.GetComponent<Text>().text = GetComponent<TradManager>().GetNameAlly(GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetID) +
                                     "\nClasse : " + GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().rosterAgents[id].GetComponent<IAGuerrierAgent>().SheetClass.ToString()) +
                                     "\nNiveau : " + levelAgent +
                                     "\n\nPoints de vie : " + hp +
@@ -5504,6 +5610,22 @@ public class Buttons : MonoBehaviour
 
             counter++;
         }
+    }
+
+    public void OpenNews()
+    {
+        Application.OpenURL("https://www.facebook.com/HeroicMercenaries/");
+    }
+
+    public void OpenCredits()
+    {
+        GetComponent<GameManager>().PanelCredits.SetActive(true);
+    }
+
+    public void CloseCredits()
+    {
+        GetComponent<GameManager>().PanelCredits.SetActive(false);
+        ReturnToIntro();
     }
 
     public void LoadFile1()

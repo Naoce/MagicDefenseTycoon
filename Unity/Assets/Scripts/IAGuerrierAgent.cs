@@ -10,8 +10,8 @@ public class IAGuerrierAgent : MonoBehaviour
         Rogue,
         Knight
     };
+
     public  int        SheetID;
-    public  string     SheetName;
     public  AgentClass SheetClass;
     public  int        SheetPrestige;
     public  int        SheetFee;

@@ -351,16 +351,16 @@ public class Deplacements : MonoBehaviour
             }
 
             newPosCam.x = transform.position.x;
-            if (newPosCam.x < mapManager.GetComponent<MapManager>().LimitG + 5f)
-                newPosCam.x = mapManager.GetComponent<MapManager>().LimitG + 5f;
-            else if (newPosCam.x > mapManager.GetComponent<MapManager>().LimitD - 5f)
-                newPosCam.x = mapManager.GetComponent<MapManager>().LimitD - 5f;
+            if (newPosCam.x < mapManager.GetComponent<MapManager>().LimitG + 5.25f)
+                newPosCam.x = mapManager.GetComponent<MapManager>().LimitG + 5.25f;
+            else if (newPosCam.x > mapManager.GetComponent<MapManager>().LimitD - 5.25f)
+                newPosCam.x = mapManager.GetComponent<MapManager>().LimitD - 5.25f;
 
             newPosCam.y = transform.position.y;
-            if (newPosCam.y < mapManager.GetComponent<MapManager>().LimitB + 2.6f)
-                newPosCam.y = mapManager.GetComponent<MapManager>().LimitB + 2.6f;
-            else if (newPosCam.y > mapManager.GetComponent<MapManager>().LimitH - 2.7f)
-                newPosCam.y = mapManager.GetComponent<MapManager>().LimitH - 2.7f;
+            if (newPosCam.y < mapManager.GetComponent<MapManager>().LimitB + 2.75f)
+                newPosCam.y = mapManager.GetComponent<MapManager>().LimitB + 2.75f;
+            else if (newPosCam.y > mapManager.GetComponent<MapManager>().LimitH - 2.75f)
+                newPosCam.y = mapManager.GetComponent<MapManager>().LimitH - 2.75f;
 
             cam.transform.position = newPosCam;
         }

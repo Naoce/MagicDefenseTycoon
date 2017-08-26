@@ -25,6 +25,13 @@ public class TradManager : MonoBehaviour
     public Text MenuTextNews;
     public Text MenuTextQuit;
 
+    public Text MenuTextCreditsGraphics;
+    public Text MenuTextCreditsDev;
+    public Text MenuTextCreditsMusics;
+    public Text MenuTextCreditsRights;
+    public Text MenuTextCreditsThanks;
+    public Text MenuTextCreditsReturn;
+
     public Text MenuTextSave1;
     public Text MenuTextSave2;
     public Text MenuTextSave3;
@@ -112,6 +119,13 @@ public class TradManager : MonoBehaviour
         MenuTextCredits.text = GetTextCredits();
         MenuTextNews.text = GetTextNews();
         MenuTextQuit.text = GetTextQuit();
+
+        MenuTextCreditsGraphics.text = GetTextGraphics();
+        MenuTextCreditsDev.text = GetTextDev();
+        MenuTextCreditsMusics.text = GetTextMusics();
+        MenuTextCreditsRights.text = GetTextRights();
+        MenuTextCreditsThanks.text = GetTextThanks();
+        MenuTextCreditsReturn.text = GetTextReturn();
 
         if (PlayerPrefs.GetInt("Load1Created") == 0)
             MenuTextSave1.text = GetTextEmptySave();
@@ -231,6 +245,46 @@ public class TradManager : MonoBehaviour
             return ("Quit");
         else
             return ("Quitter");
+    }
+
+    public string GetTextGraphics()
+    {
+        if (isInEnglish)
+            return ("Graphics : Garavagno Damien");
+        else
+            return ("Graphismes : Garavagno Damien");
+    }
+
+    public string GetTextDev()
+    {
+        if (isInEnglish)
+            return ("Development : Albalat Olivier");
+        else
+            return ("Développement : Albalat Olivier");
+    }
+
+    public string GetTextMusics()
+    {
+        if (isInEnglish)
+            return ("Musics : Durupt Samuel");
+        else
+            return ("Musiques : Durupt Samuel");
+    }
+
+    public string GetTextRights()
+    {
+        if (isInEnglish)
+            return ("All rights reserved to DamNaoceGames.");
+        else
+            return ("Tous droits réservés à DamNaoceGames.");
+    }
+
+    public string GetTextThanks()
+    {
+        if (isInEnglish)
+            return ("Special thanks :\nPiednoir Sébastien for his continous support, advices and tests.");
+        else
+            return ("Remerciements spéciaux :\nPiednoir Sébastien pour son soutien continu, ses conseils et tests.");
     }
 
     public string GetTextEmptySave()
@@ -510,7 +564,7 @@ public class TradManager : MonoBehaviour
         if (isInEnglish)
             return ("Spells pop-up");
         else
-            return ("Infobulles");
+            return ("Infobulles des sorts");
     }
 
     public string GetTextLanguage()
@@ -524,15 +578,15 @@ public class TradManager : MonoBehaviour
     public string GetTextMusicInfo()
     {
         if (isInEnglish)
-            return ("Change the volume of the musics.");
+            return ("Set the music volume.");
         else
-            return ("Change le volume des musiques.");
+            return ("Change le volume de la musique.");
     }
 
     public string GetTextSFXInfo()
     {
         if (isInEnglish)
-            return ("Change the volume of the sound effects.");
+            return ("Set the sound effects volume.");
         else
             return ("Change le volume des effets sonores.");
     }
@@ -1493,6 +1547,31 @@ public class TradManager : MonoBehaviour
                 return ("Chevalier");
             else
                 return ("Assassin");
+        }
+    }
+
+    public string GetNameAlly(int id)
+    {
+        if (id == 0)
+        {
+            if (isInEnglish)
+                return ("Kevin Unlucky");
+            else
+                return ("Berbard Lermitte");
+        }
+        else if (id == 1)
+        {
+            if (isInEnglish)
+                return ("Al Beeback");
+            else
+                return ("Yvon Lachever");
+        }
+        else
+        {
+            if (isInEnglish)
+                return ("Justin Time");
+            else
+                return ("Jean Bon");
         }
     }
 }

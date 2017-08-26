@@ -191,7 +191,7 @@ public class IAArcher : MonoBehaviour
         int animAttack = 0;
         while (animAttack < GetComponent<IAGuerrier>().rightAttackSprites.Length)
         {
-            if (GetComponent<Enemy>().isDead == true)
+            if (GetComponent<Enemy>().isDead == true || targetAttacking == null)
                 yield break;
             else
             {
@@ -251,15 +251,18 @@ public class IAArcher : MonoBehaviour
             GetComponent<IAGuerrier>().canAttack = false;
             GetComponent<IAGuerrier>().attackTimer = 0f;
 
-            if (transform.position.x < targetAttacking.transform.position.x)
+            if (GetComponent<Enemy>().isDead == false && targetAttacking != null)
             {
-                GetComponent<SpriteRenderer>().flipX = false;
-                GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
-            }
-            else
-            {
-                GetComponent<SpriteRenderer>().flipX = true;
-                GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
+                if (transform.position.x < targetAttacking.transform.position.x)
+                {
+                    GetComponent<SpriteRenderer>().flipX = false;
+                    GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
+                }
+                else
+                {
+                    GetComponent<SpriteRenderer>().flipX = true;
+                    GetComponent<SpriteRenderer>().sprite = GetComponent<IAGuerrier>().rightIdle;
+                }
             }
         }
     }
