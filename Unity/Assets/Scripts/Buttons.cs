@@ -99,6 +99,249 @@ public class Buttons : MonoBehaviour
         GetComponent<GameManager>().isInOptions = true;
     }
 
+    public void OpenBestiary()
+    {
+        GetComponent<GameManager>().menuScrollOptions.SetActive(false);
+        GetComponent<GameManager>().menuScrollTutorial.SetActive(false);
+        GetComponent<GameManager>().menuScrollBestiary.SetActive(false);
+
+        SelectEnemiesPanelBestiary();
+
+        GetComponent<GameManager>().panelBestiary.SetActive(true);
+    }
+
+    public void SelectEnemiesPanelBestiary()
+    {
+        GetComponent<GameManager>().panelBestiaryHeroes.SetActive(false);
+        GetComponent<GameManager>().panelBestiaryAllies.SetActive(false);
+        GetComponent<GameManager>().panelBestiaryEnemies.SetActive(true);
+
+        GetComponent<GameManager>().panelBestiaryIconEnemies.GetComponent<RectTransform>().localPosition = new Vector3(-425, 380, 0);
+        GetComponent<GameManager>().panelBestiaryIconAllies.GetComponent<RectTransform>().localPosition = new Vector3(-300, 350, 0);
+        GetComponent<GameManager>().panelBestiaryIconHeroes.GetComponent<RectTransform>().localPosition = new Vector3(-175, 350, 0);
+
+        BestiarySelectCharacter(0);
+
+    }
+    public void SelectAlliesPanelBestiary()
+    {
+        GetComponent<GameManager>().panelBestiaryEnemies.SetActive(false);
+        GetComponent<GameManager>().panelBestiaryHeroes.SetActive(false);
+        GetComponent<GameManager>().panelBestiaryAllies.SetActive(true);
+
+        GetComponent<GameManager>().panelBestiaryIconEnemies.GetComponent<RectTransform>().localPosition = new Vector3(-425, 350, 0);
+        GetComponent<GameManager>().panelBestiaryIconAllies.GetComponent<RectTransform>().localPosition = new Vector3(-300, 380, 0);
+        GetComponent<GameManager>().panelBestiaryIconHeroes.GetComponent<RectTransform>().localPosition = new Vector3(-175, 350, 0);
+
+        BestiarySelectCharacter(9);
+    }
+
+    public void SelectHeroesPanelBestiary()
+    {
+        GetComponent<GameManager>().panelBestiaryEnemies.SetActive(false);
+        GetComponent<GameManager>().panelBestiaryAllies.SetActive(false);
+        GetComponent<GameManager>().panelBestiaryHeroes.SetActive(true);
+
+        GetComponent<GameManager>().panelBestiaryIconEnemies.GetComponent<RectTransform>().localPosition = new Vector3(-425, 350, 0);
+        GetComponent<GameManager>().panelBestiaryIconAllies.GetComponent<RectTransform>().localPosition = new Vector3(-300, 350, 0);
+        GetComponent<GameManager>().panelBestiaryIconHeroes.GetComponent<RectTransform>().localPosition = new Vector3(-175, 380, 0);
+
+        BestiarySelectCharacter(12);
+    }
+
+    public void CloseBestiary()
+    {
+        GetComponent<GameManager>().panelBestiary.SetActive(false);
+
+        GetComponent<GameManager>().menuScrollOptions.SetActive(true);
+        GetComponent<GameManager>().menuScrollTutorial.SetActive(true);
+        GetComponent<GameManager>().menuScrollBestiary.SetActive(true);
+    }
+
+    public void BestiarySelectCharacter(int id)
+    {
+         if (id == 0)
+        {
+            float damage = GetComponent<GameManager>().CharacterBandit.GetComponent<IAGuerrier>().damage[GetComponent<GameManager>().difficulty];
+            float attackspeed = GetComponent<GameManager>().CharacterBandit.GetComponent<IAGuerrier>().attackCooldown + GetComponent<GameManager>().CharacterBandit.GetComponent<IAGuerrier>().rightAttackSprites.Length * GetComponent<GameManager>().CharacterBandit.GetComponent<IAGuerrier>().animAttackCD;
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextBandit();
+            GetComponent<GameManager>().panelBestiaryClassType.text = GetComponent<TradManager>().GetTextTypeWarrior();
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().CharacterBandit.GetComponent<IAGuerrier>().maxHP[GetComponent<GameManager>().difficulty].ToString();
+            GetComponent<GameManager>().panelBestiaryXPText.text = GetComponent<GameManager>().CharacterBandit.GetComponent<IAGuerrier>().valueXP.ToString();
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage / attackspeed), 2).ToString();
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextClosest();
+        }
+        else if (id == 1)
+        {
+            float damage = GetComponent<GameManager>().CharacterBarbarian.GetComponent<IAGuerrier>().damage[GetComponent<GameManager>().difficulty];
+            float attackspeed = GetComponent<GameManager>().CharacterBarbarian.GetComponent<IAGuerrier>().attackCooldown + GetComponent<GameManager>().CharacterBarbarian.GetComponent<IAGuerrier>().rightAttackSprites.Length * GetComponent<GameManager>().CharacterBarbarian.GetComponent<IAGuerrier>().animAttackCD;
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextBarbare();
+            GetComponent<GameManager>().panelBestiaryClassType.text = GetComponent<TradManager>().GetTextTypeWarrior();
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().CharacterBarbarian.GetComponent<IAGuerrier>().maxHP[GetComponent<GameManager>().difficulty].ToString();
+            GetComponent<GameManager>().panelBestiaryXPText.text = GetComponent<GameManager>().CharacterBarbarian.GetComponent<IAGuerrier>().valueXP.ToString();
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage / attackspeed), 2).ToString();
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextClosest();
+        }
+        else if (id == 2)
+        {
+            float damage = GetComponent<GameManager>().CharacterChaosWarrior.GetComponent<IAGuerrier>().damage[GetComponent<GameManager>().difficulty];
+            float attackspeed = GetComponent<GameManager>().CharacterChaosWarrior.GetComponent<IAGuerrier>().attackCooldown + GetComponent<GameManager>().CharacterChaosWarrior.GetComponent<IAGuerrier>().rightAttackSprites.Length * GetComponent<GameManager>().CharacterChaosWarrior.GetComponent<IAGuerrier>().animAttackCD;
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextChaosWarrior();
+            GetComponent<GameManager>().panelBestiaryClassType.text = GetComponent<TradManager>().GetTextTypeWarrior();
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().CharacterChaosWarrior.GetComponent<IAGuerrier>().maxHP[GetComponent<GameManager>().difficulty].ToString();
+            GetComponent<GameManager>().panelBestiaryXPText.text = GetComponent<GameManager>().CharacterChaosWarrior.GetComponent<IAGuerrier>().valueXP.ToString();
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage / attackspeed), 2).ToString();
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextClosest();
+        }
+        else if (id == 3)
+        {
+            float damage = GetComponent<GameManager>().CharacterArcher.GetComponent<IAGuerrier>().damage[GetComponent<GameManager>().difficulty];
+            float attackspeed = GetComponent<GameManager>().CharacterArcher.GetComponent<IAGuerrier>().attackCooldown + GetComponent<GameManager>().CharacterArcher.GetComponent<IAGuerrier>().rightAttackSprites.Length * GetComponent<GameManager>().CharacterArcher.GetComponent<IAGuerrier>().animAttackCD;
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextArcher();
+            GetComponent<GameManager>().panelBestiaryClassType.text = GetComponent<TradManager>().GetTextTypeArcher();
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().CharacterArcher.GetComponent<IAGuerrier>().maxHP[GetComponent<GameManager>().difficulty].ToString();
+            GetComponent<GameManager>().panelBestiaryXPText.text = GetComponent<GameManager>().CharacterArcher.GetComponent<IAGuerrier>().valueXP.ToString();
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage / attackspeed), 2).ToString();
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextClosest();
+        }
+        else if (id == 4)
+        {
+            float damage = GetComponent<GameManager>().CharacterRanger.GetComponent<IAGuerrier>().damage[GetComponent<GameManager>().difficulty] * 2;
+            float attackspeed = GetComponent<GameManager>().CharacterRanger.GetComponent<IAGuerrier>().attackCooldown + GetComponent<GameManager>().CharacterRanger.GetComponent<IAGuerrier>().rightAttackSprites.Length * GetComponent<GameManager>().CharacterRanger.GetComponent<IAGuerrier>().animAttackCD;
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextRanger();
+            GetComponent<GameManager>().panelBestiaryClassType.text = GetComponent<TradManager>().GetTextTypeArcher();
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().CharacterRanger.GetComponent<IAGuerrier>().maxHP[GetComponent<GameManager>().difficulty].ToString();
+            GetComponent<GameManager>().panelBestiaryXPText.text = GetComponent<GameManager>().CharacterRanger.GetComponent<IAGuerrier>().valueXP.ToString();
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage / attackspeed), 2).ToString();
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextClosest();
+        }
+        else if (id == 5)
+        {
+            float damage = GetComponent<GameManager>().CharacterEliteArcher.GetComponent<IAGuerrier>().damage[GetComponent<GameManager>().difficulty] * 3;
+            float attackspeed = GetComponent<GameManager>().CharacterEliteArcher.GetComponent<IAGuerrier>().attackCooldown + GetComponent<GameManager>().CharacterEliteArcher.GetComponent<IAGuerrier>().rightAttackSprites.Length * GetComponent<GameManager>().CharacterEliteArcher.GetComponent<IAGuerrier>().animAttackCD;
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextEliteArcher();
+            GetComponent<GameManager>().panelBestiaryClassType.text = GetComponent<TradManager>().GetTextTypeArcher();
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().CharacterEliteArcher.GetComponent<IAGuerrier>().maxHP[GetComponent<GameManager>().difficulty].ToString();
+            GetComponent<GameManager>().panelBestiaryXPText.text = GetComponent<GameManager>().CharacterEliteArcher.GetComponent<IAGuerrier>().valueXP.ToString();
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage / attackspeed), 2).ToString();
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextClosest();
+        }
+        else if (id == 6)
+        {
+            float damage = GetComponent<GameManager>().CharacterRobber.GetComponent<IAGuerrier>().damage[GetComponent<GameManager>().difficulty];
+            float attackspeed = GetComponent<GameManager>().CharacterRobber.GetComponent<IAGuerrier>().attackCooldown + GetComponent<GameManager>().CharacterRobber.GetComponent<IAGuerrier>().rightAttackSprites.Length * GetComponent<GameManager>().CharacterRobber.GetComponent<IAGuerrier>().animAttackCD;
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextRobber();
+            GetComponent<GameManager>().panelBestiaryClassType.text = GetComponent<TradManager>().GetTextTypeThief();
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().CharacterRobber.GetComponent<IAGuerrier>().maxHP[GetComponent<GameManager>().difficulty].ToString();
+            GetComponent<GameManager>().panelBestiaryXPText.text = GetComponent<GameManager>().CharacterRobber.GetComponent<IAGuerrier>().valueXP.ToString();
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage / attackspeed), 2).ToString();
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextPlayer();
+        }
+        else if (id == 7)
+        {
+            float damage = GetComponent<GameManager>().CharacterHitman.GetComponent<IAGuerrier>().damage[GetComponent<GameManager>().difficulty] * 2;
+            float attackspeed = GetComponent<GameManager>().CharacterHitman.GetComponent<IAGuerrier>().attackCooldown + GetComponent<GameManager>().CharacterHitman.GetComponent<IAGuerrier>().rightAttackSprites.Length * GetComponent<GameManager>().CharacterHitman.GetComponent<IAGuerrier>().animAttackCD;
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextHitman();
+            GetComponent<GameManager>().panelBestiaryClassType.text = GetComponent<TradManager>().GetTextTypeThief();
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().CharacterHitman.GetComponent<IAGuerrier>().maxHP[GetComponent<GameManager>().difficulty].ToString();
+            GetComponent<GameManager>().panelBestiaryXPText.text = GetComponent<GameManager>().CharacterHitman.GetComponent<IAGuerrier>().valueXP.ToString();
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage / attackspeed), 2).ToString();
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextPlayer();
+        }
+        else if (id == 8)
+        {
+            float damage = GetComponent<GameManager>().CharacterNinja.GetComponent<IAGuerrier>().damage[GetComponent<GameManager>().difficulty] * 3;
+            float attackspeed = GetComponent<GameManager>().CharacterNinja.GetComponent<IAGuerrier>().attackCooldown + GetComponent<GameManager>().CharacterNinja.GetComponent<IAGuerrier>().rightAttackSprites.Length * GetComponent<GameManager>().CharacterNinja.GetComponent<IAGuerrier>().animAttackCD;
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextNinja();
+            GetComponent<GameManager>().panelBestiaryClassType.text = GetComponent<TradManager>().GetTextTypeThief();
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().CharacterNinja.GetComponent<IAGuerrier>().maxHP[GetComponent<GameManager>().difficulty].ToString();
+            GetComponent<GameManager>().panelBestiaryXPText.text = GetComponent<GameManager>().CharacterNinja.GetComponent<IAGuerrier>().valueXP.ToString();
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage / attackspeed), 2).ToString();
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextPlayer();
+        }
+        else if (id == 9)
+        {
+            float damage1 = GetComponent<GameManager>().agentTypeKnightDamage[0];
+            float attackspeed1 = GetComponent<GameManager>().agentTypeKnightAS[0];
+
+            float damage10 = GetComponent<GameManager>().agentTypeKnightDamage[9];
+            float attackspeed10 = GetComponent<GameManager>().agentTypeKnightAS[9];
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().agentID0.GetComponent<IAGuerrierAgent>().SheetClass.ToString());
+            GetComponent<GameManager>().panelBestiaryClassType.text = "";
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().agentTypeKnightMaxHP[0] + " - " + GetComponent<GameManager>().agentTypeKnightMaxHP[9];
+            GetComponent<GameManager>().panelBestiaryXPText.text = "0";
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage1 / attackspeed1), 2) + " - " + System.Math.Round((damage10 / attackspeed10), 2);
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextClosest();
+        }
+        else if (id == 10)
+        {
+            float damage1 = GetComponent<GameManager>().agentTypeRogueDamage[0];
+            float attackspeed1 = GetComponent<GameManager>().agentTypeRogueAS[0];
+
+            float damage10 = GetComponent<GameManager>().agentTypeRogueDamage[9];
+            float attackspeed10 = GetComponent<GameManager>().agentTypeRogueAS[9];
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().agentID1.GetComponent<IAGuerrierAgent>().SheetClass.ToString());
+            GetComponent<GameManager>().panelBestiaryClassType.text = "";
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().agentTypeRogueMaxHP[0] + " - " + GetComponent<GameManager>().agentTypeRogueMaxHP[9];
+            GetComponent<GameManager>().panelBestiaryXPText.text = "0";
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage1 / attackspeed1), 2) + " - " + System.Math.Round((damage10 / attackspeed10), 2);
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextClosest();
+        }
+        else if (id == 11)
+        {
+            float damage1 = GetComponent<GameManager>().agentTypeSwordsmanDamage[0];
+            float attackspeed1 = GetComponent<GameManager>().agentTypeSwordsmanAS[0];
+
+            float damage10 = GetComponent<GameManager>().agentTypeSwordsmanDamage[9];
+            float attackspeed10 = GetComponent<GameManager>().agentTypeSwordsmanAS[9];
+
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTitleClass(GetComponent<GameManager>().agentID2.GetComponent<IAGuerrierAgent>().SheetClass.ToString());
+            GetComponent<GameManager>().panelBestiaryClassType.text = "";
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().agentTypeSwordsmanMaxHP[0] + " - " + GetComponent<GameManager>().agentTypeSwordsmanMaxHP[9];
+            GetComponent<GameManager>().panelBestiaryXPText.text = "0";
+            GetComponent<GameManager>().panelBestiaryDPSText.text = System.Math.Round((damage1 / attackspeed1), 2) + " - " + System.Math.Round((damage10 / attackspeed10), 2);
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextClosest();
+        }
+        else if (id == 12)
+        {
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextTitleElemental();
+            GetComponent<GameManager>().panelBestiaryClassType.text = "";
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().playerMaxHP[0] + " - " + GetComponent<GameManager>().playerMaxHP[9];
+            GetComponent<GameManager>().panelBestiaryXPText.text = "0";
+            GetComponent<GameManager>().panelBestiaryDPSText.text = "> 9000";
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextFree();
+        }
+        else if (id == 13)
+        {
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextTitleDemonic();
+            GetComponent<GameManager>().panelBestiaryClassType.text = "";
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().playerMaxHP[0] + " - " + GetComponent<GameManager>().playerMaxHP[9];
+            GetComponent<GameManager>().panelBestiaryXPText.text = "0";
+            GetComponent<GameManager>().panelBestiaryDPSText.text = "> 9000";
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextFree();
+        }
+        else if (id == 14)
+        {
+            GetComponent<GameManager>().panelBestiaryClassName.text = GetComponent<TradManager>().GetTextTitleRadiant();
+            GetComponent<GameManager>().panelBestiaryClassType.text = "";
+            GetComponent<GameManager>().panelBestiaryHPText.text = GetComponent<GameManager>().playerMaxHP[0] + " - " + GetComponent<GameManager>().playerMaxHP[9];
+            GetComponent<GameManager>().panelBestiaryXPText.text = "0";
+            GetComponent<GameManager>().panelBestiaryDPSText.text = "> 9000";
+            GetComponent<GameManager>().panelBestiaryTargetText.text = GetComponent<TradManager>().GetTextFree();
+        }
+    }
+
     public void ShowCredits()
     {
         GetComponent<GameManager>().textCredits.SetActive(true);

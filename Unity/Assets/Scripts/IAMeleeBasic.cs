@@ -78,7 +78,7 @@ public class IAMeleeBasic : MonoBehaviour
                     GetComponent<IAGuerrier>().canAttack == false)
                 {
                     GetComponent<IAGuerrier>().attackTimer += Time.deltaTime;
-                    if (GetComponent<IAGuerrier>().attackTimer > GetComponent<IAGuerrier>().attackCooldown)
+                    if (GetComponent<IAGuerrier>().attackTimer >= GetComponent<IAGuerrier>().attackCooldown)
                     {
                         GetComponent<IAGuerrier>().attackTimer = 0f;
                         GetComponent<IAGuerrier>().canAttack = true;

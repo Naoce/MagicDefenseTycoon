@@ -88,6 +88,17 @@ public class TradManager : MonoBehaviour
     public Text MenuTextScrollTutorial;
     public Text MenuTextScrollBestiary;
 
+    public Image MenuTextBestiaryEnemies;
+    public Image MenuTextBestiaryAllies;
+    public Image MenuTextBestiaryHeroes;
+
+    public Sprite BestiaryEnemiesEN;
+    public Sprite BestiaryEnemiesFR;
+    public Sprite BestiaryAlliesEN;
+    public Sprite BestiaryAlliesFR;
+    public Sprite BestiaryHeroesEN;
+    public Sprite BestiaryHeroesFR;
+
     public Text MenuTextOptionsSmartcast;
     public Text MenuTextOptionsBloodless;
     public Text MenuTextOptionsPopUp;
@@ -185,6 +196,10 @@ public class TradManager : MonoBehaviour
 
         MenuTextScrollTutorial.text = GetTextTutorial();
         MenuTextScrollBestiary.text = GetTextBestiary();
+
+        MenuTextBestiaryEnemies.sprite = GetSpriteBestiaryEnemies();
+        MenuTextBestiaryAllies.sprite = GetSpriteBestiaryAllies();
+        MenuTextBestiaryHeroes.sprite = GetSpriteBestiaryHeroes();
 
         MenuTextOptionsSmartcast.text = GetTextSmartcast();
         MenuTextOptionsBloodless.text = GetTextBloodless();
@@ -541,6 +556,30 @@ public class TradManager : MonoBehaviour
             return ("Bestiary");
         else
             return ("Bestiaire");
+    }
+
+    public Sprite GetSpriteBestiaryEnemies()
+    {
+        if (isInEnglish)
+            return (BestiaryEnemiesEN);
+        else
+            return (BestiaryEnemiesFR);
+    }
+
+    public Sprite GetSpriteBestiaryAllies()
+    {
+        if (isInEnglish)
+            return (BestiaryAlliesEN);
+        else
+            return (BestiaryAlliesFR);
+    }
+
+    public Sprite GetSpriteBestiaryHeroes()
+    {
+        if (isInEnglish)
+            return (BestiaryHeroesEN);
+        else
+            return (BestiaryHeroesFR);
     }
 
     public string GetTextSmartcast()
@@ -1533,6 +1572,126 @@ public class TradManager : MonoBehaviour
             return ("Level 3\nIce spells deal 3 additional points of damage.\nYou can only learn one mastery skill.");
         else
             return ("Niveau 3\nLes sorts de glace infligent 3 points de dégâts supplémentaires.\nVous ne pouvez apprendre qu'une seule compétence de maîtrise.");
+    }
+
+    public string GetTextBandit()
+    {
+        if (isInEnglish)
+            return ("Bandit");
+        else
+            return ("Brigand");
+    }
+
+    public string GetTextBarbare()
+    {
+        if (isInEnglish)
+            return ("Barbarian");
+        else
+            return ("Barbare");
+    }
+
+    public string GetTextChaosWarrior()
+    {
+        if (isInEnglish)
+            return ("Warrior of Chaos");
+        else
+            return ("Guerrier du Chaos");
+    }
+
+    public string GetTextTypeWarrior()
+    {
+        if (isInEnglish)
+            return ("Warrior");
+        else
+            return ("Guerrier");
+    }
+
+    public string GetTextArcher()
+    {
+        if (isInEnglish)
+            return ("Young archer");
+        else
+            return ("Jeune archer");
+    }
+
+    public string GetTextRanger()
+    {
+        if (isInEnglish)
+            return ("Ranger");
+        else
+            return ("Chasseur");
+    }
+
+    public string GetTextEliteArcher()
+    {
+        if (isInEnglish)
+            return ("Elite archer");
+        else
+            return ("Archer d'élite");
+    }
+
+    public string GetTextTypeArcher()
+    {
+        if (isInEnglish)
+            return ("Archer");
+        else
+            return ("Archer");
+    }
+
+    public string GetTextRobber()
+    {
+        if (isInEnglish)
+            return ("Robber");
+        else
+            return ("Voleur");
+    }
+
+    public string GetTextHitman()
+    {
+        if (isInEnglish)
+            return ("Hitman");
+        else
+            return ("Tueur à gages");
+    }
+
+    public string GetTextNinja()
+    {
+        if (isInEnglish)
+            return ("Ninja");
+        else
+            return ("Ninja");
+    }
+
+    public string GetTextTypeThief()
+    {
+        if (isInEnglish)
+            return ("Thief");
+        else
+            return ("Assassin");
+    }
+
+    public string GetTextClosest()
+    {
+        if (isInEnglish)
+            return ("Closest");
+        else
+            return ("La plus proche");
+    }
+
+    public string GetTextPlayer()
+    {
+        if (isInEnglish)
+            return ("Player");
+        else
+            return ("Joueur");
+    }
+
+    public string GetTextFree()
+    {
+        if (isInEnglish)
+            return ("Free");
+        else
+            return ("Libre");
     }
 
     public string GetTitleClass(string className)

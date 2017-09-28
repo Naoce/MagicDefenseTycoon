@@ -41,6 +41,16 @@ public class GameManager : MonoBehaviour
 
     public  int             currMageType;
 
+    public  GameObject      CharacterBandit;
+    public  GameObject      CharacterBarbarian;
+    public  GameObject      CharacterChaosWarrior;
+    public  GameObject      CharacterArcher;
+    public  GameObject      CharacterRanger;
+    public  GameObject      CharacterEliteArcher;
+    public  GameObject      CharacterRobber;
+    public  GameObject      CharacterHitman;
+    public  GameObject      CharacterNinja;
+
     public  GameObject      agentID0;
     public  GameObject      agentID1;
     public  GameObject      agentID2;
@@ -457,6 +467,20 @@ public class GameManager : MonoBehaviour
     public  GameObject      panelTutorial;
     public  int             currentSlideTutorial;
     public  GameObject[]    tutorialSlides;
+
+    public  GameObject      panelBestiary;
+    public  GameObject      panelBestiaryHeroes;
+    public  GameObject      panelBestiaryAllies;
+    public  GameObject      panelBestiaryEnemies;
+    public  GameObject      panelBestiaryIconHeroes;
+    public  GameObject      panelBestiaryIconAllies;
+    public  GameObject      panelBestiaryIconEnemies;
+    public  Text            panelBestiaryClassName;
+    public  Text            panelBestiaryClassType;
+    public  Text            panelBestiaryHPText;
+    public  Text            panelBestiaryXPText;
+    public  Text            panelBestiaryDPSText;
+    public  Text            panelBestiaryTargetText;
 
     public  GameObject      hudPanelMenu;
     public  GameObject      scrollHUDMenu1;
